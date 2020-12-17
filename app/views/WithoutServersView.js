@@ -30,29 +30,40 @@ const styles = StyleSheet.create({
 });
 
 class WithoutServerView extends React.Component {
-	static navigationOptions = () => ({
-		title: 'Rocket.Chat',
-		headerLeft: () => (
-			<HeaderButton.CancelModal
-				onPress={ShareExtension.close}
-				testID='share-extension-close'
-			/>
-		)
-	})
+  static navigationOptions = () => ({
+    title: "Pigeon",
+    headerLeft: () => (
+      <HeaderButton.CancelModal
+        onPress={ShareExtension.close}
+        testID="share-extension-close"
+      />
+    ),
+  });
 
-	static propTypes = {
-		theme: PropTypes.string
-	}
+  static propTypes = {
+    theme: PropTypes.string,
+  };
 
-	render() {
-		const { theme } = this.props;
-		return (
-			<View style={[styles.container, { backgroundColor: themes[theme].backgroundColor }]}>
-				<Text style={[styles.title, { color: themes[theme].titleText }]}>{I18n.t('Without_Servers')}</Text>
-				<Text style={[styles.content, { color: themes[theme].titleText }]}>{I18n.t('You_need_to_access_at_least_one_RocketChat_server_to_share_something')}</Text>
-			</View>
-		);
-	}
+  render() {
+    const { theme } = this.props;
+    return (
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: themes[theme].backgroundColor },
+        ]}
+      >
+        <Text style={[styles.title, { color: themes[theme].titleText }]}>
+          {I18n.t("Without_Servers")}
+        </Text>
+        <Text style={[styles.content, { color: themes[theme].titleText }]}>
+          {I18n.t(
+            "You_need_to_access_at_least_one_RocketChat_server_to_share_something"
+          )}
+        </Text>
+      </View>
+    );
+  }
 }
 
 export default withTheme(WithoutServerView);

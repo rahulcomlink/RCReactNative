@@ -121,7 +121,7 @@ class AttachmentView extends React.Component {
 			const extension = image_url ? `.${ mime.extension(image_type) || 'jpg' }` : `.${ mime.extension(video_type) || 'mp4' }`;
 			const path = `${ RNFetchBlob.fs.dirs.DocumentDir + SHA256(url) + extension }`;
 			const file = await RNFetchBlob.config({ path }).fetch('GET', mediaAttachment).then(res => res.path());
-			await CameraRoll.save(file, { album: 'Rocket.Chat' });
+			await CameraRoll.save(file, { album: "Pigeon" });
 			EventEmitter.emit(LISTENER, { message: I18n.t('saved_to_gallery') });
 		} catch (e) {
 			EventEmitter.emit(LISTENER, { message: I18n.t(image_url ? 'error-save-image' : 'error-save-video') });

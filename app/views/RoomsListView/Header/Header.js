@@ -102,7 +102,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-	serverName: 'Rocket.Chat'
+  serverName: "Pigeon",
 };
 
 export default Header;

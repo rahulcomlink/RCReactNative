@@ -28,7 +28,7 @@ export default () => (
 						type: 'section',
 						text: {
 							type: 'mrkdwn',
-							text: '*Rocket.Chat is free, unlimited and open source* 🚀\nIf you have any doubt ask to @rocketcat'
+							text: '*Pigeon is free, unlimited and open source* 🚀\nIf you have any doubt ask to @rocketcat'
 						}
 					},
 					{

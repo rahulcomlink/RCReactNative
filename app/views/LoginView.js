@@ -49,168 +49,216 @@ const styles = StyleSheet.create({
 });
 
 class LoginView extends React.Component {
-	static navigationOptions = ({ route, navigation }) => ({
-		title: route.params?.title ?? 'Rocket.Chat',
-		headerRight: () => <HeaderButton.Legal testID='login-view-more' navigation={navigation} />
-	})
+  static navigationOptions = ({ route, navigation }) => ({
+    title: route.params?.title ?? "Pigeon",
+    headerRight: () => (
+      <HeaderButton.Legal testID="login-view-more" navigation={navigation} />
+    ),
+  });
 
-	static propTypes = {
-		navigation: PropTypes.object,
-		route: PropTypes.object,
-		Site_Name: PropTypes.string,
-		Accounts_RegistrationForm: PropTypes.string,
-		Accounts_RegistrationForm_LinkReplacementText: PropTypes.string,
-		Accounts_EmailOrUsernamePlaceholder: PropTypes.string,
-		Accounts_PasswordPlaceholder: PropTypes.string,
-		Accounts_PasswordReset: PropTypes.bool,
-		Accounts_ShowFormLogin: PropTypes.bool,
-		isFetching: PropTypes.bool,
-		error: PropTypes.object,
-		failure: PropTypes.bool,
-		theme: PropTypes.string,
-		loginRequest: PropTypes.func,
-		inviteLinkToken: PropTypes.string
-	}
+  static propTypes = {
+    navigation: PropTypes.object,
+    route: PropTypes.object,
+    Site_Name: PropTypes.string,
+    Accounts_RegistrationForm: PropTypes.string,
+    Accounts_RegistrationForm_LinkReplacementText: PropTypes.string,
+    Accounts_EmailOrUsernamePlaceholder: PropTypes.string,
+    Accounts_PasswordPlaceholder: PropTypes.string,
+    Accounts_PasswordReset: PropTypes.bool,
+    Accounts_ShowFormLogin: PropTypes.bool,
+    isFetching: PropTypes.bool,
+    error: PropTypes.object,
+    failure: PropTypes.bool,
+    theme: PropTypes.string,
+    loginRequest: PropTypes.func,
+    inviteLinkToken: PropTypes.string,
+  };
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			user: props.route.params?.username ?? '',
-			password: ''
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: props.route.params?.username ?? "",
+      password: "",
+    };
+  }
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		const { error } = this.props;
-		if (nextProps.failure && !equal(error, nextProps.error)) {
-			Alert.alert(I18n.t('Oops'), I18n.t('Login_error'));
-		}
-	}
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { error } = this.props;
+    if (nextProps.failure && !equal(error, nextProps.error)) {
+      Alert.alert(I18n.t("Oops"), I18n.t("Login_error"));
+    }
+  }
 
-	get showRegistrationButton() {
-		const { Accounts_RegistrationForm, inviteLinkToken } = this.props;
-		return Accounts_RegistrationForm === 'Public' || (Accounts_RegistrationForm === 'Secret URL' && inviteLinkToken?.length);
-	}
+  get showRegistrationButton() {
+    const { Accounts_RegistrationForm, inviteLinkToken } = this.props;
+    return (
+      Accounts_RegistrationForm === "Public" ||
+      (Accounts_RegistrationForm === "Secret URL" && inviteLinkToken?.length)
+    );
+  }
 
-	login = () => {
-		const { navigation, Site_Name } = this.props;
-		navigation.navigate('LoginView', { title: Site_Name });
-	}
+  login = () => {
+    const { navigation, Site_Name } = this.props;
+    navigation.navigate("LoginView", { title: Site_Name });
+  };
 
-	register = () => {
-		const { navigation, Site_Name } = this.props;
-		navigation.navigate('RegisterView', { title: Site_Name });
-	}
+  register = () => {
+    const { navigation, Site_Name } = this.props;
+    navigation.navigate("RegisterView", { title: Site_Name });
+  };
 
-	forgotPassword = () => {
-		const { navigation, Site_Name } = this.props;
-		navigation.navigate('ForgotPasswordView', { title: Site_Name });
-	}
+  forgotPassword = () => {
+    const { navigation, Site_Name } = this.props;
+    navigation.navigate("ForgotPasswordView", { title: Site_Name });
+  };
 
-	valid = () => {
-		const { user, password } = this.state;
-		return user.trim() && password.trim();
-	}
+  valid = () => {
+    const { user, password } = this.state;
+    return user.trim() && password.trim();
+  };
 
-	submit = () => {
-		if (!this.valid()) {
-			return;
-		}
+  submit = () => {
+    if (!this.valid()) {
+      return;
+    }
 
-		const { user, password } = this.state;
-		const { loginRequest } = this.props;
-		Keyboard.dismiss();
-		loginRequest({ user, password });
-	}
+    const { user, password } = this.state;
+    const { loginRequest } = this.props;
+    Keyboard.dismiss();
+    loginRequest({ user, password });
+  };
 
-	renderUserForm = () => {
-		const { user } = this.state;
-		const {
-			Accounts_EmailOrUsernamePlaceholder, Accounts_PasswordPlaceholder, Accounts_PasswordReset, Accounts_RegistrationForm_LinkReplacementText, isFetching, theme, Accounts_ShowFormLogin
-		} = this.props;
+  renderUserForm = () => {
+    const { user } = this.state;
+    const {
+      Accounts_EmailOrUsernamePlaceholder,
+      Accounts_PasswordPlaceholder,
+      Accounts_PasswordReset,
+      Accounts_RegistrationForm_LinkReplacementText,
+      isFetching,
+      theme,
+      Accounts_ShowFormLogin,
+    } = this.props;
 
-		if (!Accounts_ShowFormLogin) {
-			return null;
-		}
+    if (!Accounts_ShowFormLogin) {
+      return null;
+    }
 
-		return (
-			<>
-				<Text style={[styles.title, sharedStyles.textBold, { color: themes[theme].titleText }]}>{I18n.t('Login')}</Text>
-				<TextInput
-					label='Email or username'
-					containerStyle={styles.inputContainer}
-					placeholder={Accounts_EmailOrUsernamePlaceholder || I18n.t('Username_or_email')}
-					keyboardType='email-address'
-					returnKeyType='next'
-					onChangeText={value => this.setState({ user: value })}
-					onSubmitEditing={() => { this.passwordInput.focus(); }}
-					testID='login-view-email'
-					textContentType='username'
-					autoCompleteType='username'
-					theme={theme}
-					value={user}
-				/>
-				<TextInput
-					label='Password'
-					containerStyle={styles.inputContainer}
-					inputRef={(e) => { this.passwordInput = e; }}
-					placeholder={Accounts_PasswordPlaceholder || I18n.t('Password')}
-					returnKeyType='send'
-					secureTextEntry
-					onSubmitEditing={this.submit}
-					onChangeText={value => this.setState({ password: value })}
-					testID='login-view-password'
-					textContentType='password'
-					autoCompleteType='password'
-					theme={theme}
-				/>
-				<Button
-					title={I18n.t('Login')}
-					type='primary'
-					onPress={this.submit}
-					testID='login-view-submit'
-					loading={isFetching}
-					disabled={!this.valid()}
-					theme={theme}
-					style={styles.loginButton}
-				/>
-				{Accounts_PasswordReset && (
-					<Button
-						title={I18n.t('Forgot_password')}
-						type='secondary'
-						onPress={this.forgotPassword}
-						testID='login-view-forgot-password'
-						theme={theme}
-						color={themes[theme].auxiliaryText}
-						fontSize={14}
-					/>
-				)}
-				{this.showRegistrationButton ? (
-					<View style={styles.bottomContainer}>
-						<Text style={[styles.bottomContainerText, { color: themes[theme].auxiliaryText }]}>{I18n.t('Dont_Have_An_Account')}</Text>
-						<Text
-							style={[styles.bottomContainerTextBold, { color: themes[theme].actionTintColor }]}
-							onPress={this.register}
-							testID='login-view-register'
-						>{I18n.t('Create_account')}
-						</Text>
-					</View>
-				) : (<Text style={[styles.registerDisabled, { color: themes[theme].auxiliaryText }]}>{Accounts_RegistrationForm_LinkReplacementText}</Text>)}
-			</>
-		);
-	}
+    return (
+      <>
+        <Text
+          style={[
+            styles.title,
+            sharedStyles.textBold,
+            { color: themes[theme].titleText },
+          ]}
+        >
+          {I18n.t("Login")}
+        </Text>
+        <TextInput
+          label="Email or username"
+          containerStyle={styles.inputContainer}
+          placeholder={
+            Accounts_EmailOrUsernamePlaceholder || I18n.t("Username_or_email")
+          }
+          keyboardType="email-address"
+          returnKeyType="next"
+          onChangeText={(value) => this.setState({ user: value })}
+          onSubmitEditing={() => {
+            this.passwordInput.focus();
+          }}
+          testID="login-view-email"
+          textContentType="username"
+          autoCompleteType="username"
+          theme={theme}
+          value={user}
+        />
+        <TextInput
+          label="Password"
+          containerStyle={styles.inputContainer}
+          inputRef={(e) => {
+            this.passwordInput = e;
+          }}
+          placeholder={Accounts_PasswordPlaceholder || I18n.t("Password")}
+          returnKeyType="send"
+          secureTextEntry
+          onSubmitEditing={this.submit}
+          onChangeText={(value) => this.setState({ password: value })}
+          testID="login-view-password"
+          textContentType="password"
+          autoCompleteType="password"
+          theme={theme}
+        />
+        <Button
+          title={I18n.t("Login")}
+          type="primary"
+          onPress={this.submit}
+          testID="login-view-submit"
+          loading={isFetching}
+          disabled={!this.valid()}
+          theme={theme}
+          style={styles.loginButton}
+        />
+        {Accounts_PasswordReset && (
+          <Button
+            title={I18n.t("Forgot_password")}
+            type="secondary"
+            onPress={this.forgotPassword}
+            testID="login-view-forgot-password"
+            theme={theme}
+            color={themes[theme].auxiliaryText}
+            fontSize={14}
+          />
+        )}
+        {this.showRegistrationButton ? (
+          <View style={styles.bottomContainer}>
+            <Text
+              style={[
+                styles.bottomContainerText,
+                { color: themes[theme].auxiliaryText },
+              ]}
+            >
+              {I18n.t("Dont_Have_An_Account")}
+            </Text>
+            <Text
+              style={[
+                styles.bottomContainerTextBold,
+                { color: themes[theme].actionTintColor },
+              ]}
+              onPress={this.register}
+              testID="login-view-register"
+            >
+              {I18n.t("Create_account")}
+            </Text>
+          </View>
+        ) : (
+          <Text
+            style={[
+              styles.registerDisabled,
+              { color: themes[theme].auxiliaryText },
+            ]}
+          >
+            {Accounts_RegistrationForm_LinkReplacementText}
+          </Text>
+        )}
+      </>
+    );
+  };
 
-	render() {
-		const { Accounts_ShowFormLogin, theme, navigation } = this.props;
-		return (
-			<FormContainer theme={theme} testID='login-view'>
-				<FormContainerInner>
-					<LoginServices separator={Accounts_ShowFormLogin} navigation={navigation} />
-					{this.renderUserForm()}
-				</FormContainerInner>
-			</FormContainer>
-		);
-	}
+  render() {
+    const { Accounts_ShowFormLogin, theme, navigation } = this.props;
+    return (
+      <FormContainer theme={theme} testID="login-view">
+        <FormContainerInner>
+          <LoginServices
+            separator={Accounts_ShowFormLogin}
+            navigation={navigation}
+          />
+          {this.renderUserForm()}
+        </FormContainerInner>
+      </FormContainer>
+    );
+  }
 }
 
 const mapStateToProps = state => ({

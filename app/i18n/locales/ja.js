@@ -229,8 +229,8 @@ export default {
     'アプリを表示中にはバナーを上部に表示し、デスクトップには通知を送ります。',
 	Invisible: '状態を隠す',
 	Invite: '招待',
-	is_a_valid_RocketChat_instance: 'は正しいRocket.Chatのインスタンスです',
-	is_not_a_valid_RocketChat_instance: 'はRocket.Chatのインスタンスではありません',
+	is_a_valid_RocketChat_instance: 'は正しいPigeonのインスタンスです',
+	is_not_a_valid_RocketChat_instance: 'はPigeonのインスタンスではありません',
 	is_typing: 'が入力中',
 	Invalid_or_expired_invite_token: '招待トークンが無効か、期限が切れています',
 	Invalid_server_version:
@@ -269,7 +269,7 @@ export default {
 	Messages: 'メッセージ',
 	Message_Reported: 'メッセージを報告しました',
 	Microphone_Permission_Message:
-    'Rocket.Chatは音声メッセージを送信するのにマイクのアクセスの許可が必要です。',
+    'Pigeonは音声メッセージを送信するのにマイクのアクセスの許可が必要です。',
 	Microphone_Permission: 'マイクの許可',
 	Mute: 'ミュート',
 	muted: 'ミュートした',
@@ -295,7 +295,7 @@ export default {
 	No_Reactions: 'リアクションなし',
 	No_Read_Receipts: '未読通知はありません',
 	Not_logged: 'ログされていません',
-	Not_RC_Server: 'Rocket.Chatサーバーではありません。\n{{contact}}',
+	Not_RC_Server: 'Pigeonサーバーではありません。\n{{contact}}',
 	Nothing: '何もなし',
 	Nothing_to_save: '保存するものはありません！',
 	Notify_active_in_this_room: 'このルームのアクティブなユーザーに通知する',
@@ -305,7 +305,7 @@ export default {
 	Notification_Preferences: '通知設定',
 	Offline: 'オフライン',
 	Oops: 'おっと！',
-	Onboarding_title: 'Rocket.Chatへようこそ',
+	Onboarding_title: 'Pigeonへようこそ',
 	Online: 'オンライン',
 	Only_authorized_users_can_write_new_messages:
     '承認されたユーザーだけが新しいメッセージを書き込めます',
@@ -483,7 +483,7 @@ export default {
 	Whats_your_2fa: '2段階認証のコードを入力してください',
 	Without_Servers: 'サーバーを除く',
 	Write_External_Permission_Message:
-    'Rocket.Chatは画像を保存するためにギャラリーへのアクセスを求めています。',
+    'Pigeonは画像を保存するためにギャラリーへのアクセスを求めています。',
 	Write_External_Permission: 'ギャラリーへのアクセス許可',
 	Yes_action_it: 'はい、{{action}}します！',
 	Yesterday: '昨日',
