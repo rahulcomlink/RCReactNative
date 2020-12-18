@@ -1,6 +1,6 @@
-package chat.rocket.reactnative.share;
+package com.comlinkinc.android.pigeon.share;
 
-import chat.rocket.reactnative.BuildConfig;
+import com.comlinkinc.android.pigeon.BuildConfig;
 
 import chat.rocket.SharePackage;
 

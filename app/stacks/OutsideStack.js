@@ -25,46 +25,62 @@ const _OutsideStack = ({ root }) => {
 	const { theme } = React.useContext(ThemeContext);
 
 	return (
-		<Outside.Navigator screenOptions={{ ...defaultHeader, ...themedHeader(theme), ...StackAnimation }}>
-			{root === ROOT_OUTSIDE ? (
-				<Outside.Screen
-					name='OnboardingView'
-					component={OnboardingView}
-					options={OnboardingView.navigationOptions}
-				/>
-			) : null}
-			<Outside.Screen
-				name='NewServerView'
-				component={NewServerView}
-				options={NewServerView.navigationOptions}
-			/>
-			<Outside.Screen
-				name='WorkspaceView'
-				component={WorkspaceView}
-				options={WorkspaceView.navigationOptions}
-			/>
-			<Outside.Screen
-				name='LoginView'
-				component={LoginView}
-				options={LoginView.navigationOptions}
-			/>
-			<Outside.Screen
-				name='ForgotPasswordView'
-				component={ForgotPasswordView}
-				options={ForgotPasswordView.navigationOptions}
-			/>
-			<Outside.Screen
-				name='RegisterView'
-				component={RegisterView}
-				options={RegisterView.navigationOptions}
-			/>
-			<Outside.Screen
-				name='LegalView'
-				component={LegalView}
-				options={LegalView.navigationOptions}
-			/>
-		</Outside.Navigator>
-	);
+    <Outside.Navigator
+      screenOptions={{
+        ...defaultHeader,
+        ...themedHeader(theme),
+        ...StackAnimation,
+      }}
+    >
+      {root === ROOT_OUTSIDE ? (
+        // <Outside.Screen
+        // name='NewServerView'
+        // component={NewServerView}
+        // options={NewServerView.navigationOptions}
+        // />
+        <Outside.Screen
+          name="NewServerView"
+          component={NewServerView}
+          options={NewServerView.navigationOptions}
+        />
+      ) : null}
+      <Outside.Screen
+        name="LoginView"
+        component={LoginView}
+        options={LoginView.navigationOptions}
+      />
+      {/* <Outside.Screen
+        name="NewServerView"
+        component={NewServerView}
+        options={NewServerView.navigationOptions}
+      /> */}
+      <Outside.Screen
+        name="WorkspaceView"
+        component={WorkspaceView}
+        options={WorkspaceView.navigationOptions}
+      />
+      {/* <Outside.Screen
+        name="LoginView"
+        component={LoginView}
+        options={LoginView.navigationOptions}
+      /> */}
+      <Outside.Screen
+        name="ForgotPasswordView"
+        component={ForgotPasswordView}
+        options={ForgotPasswordView.navigationOptions}
+      />
+      <Outside.Screen
+        name="RegisterView"
+        component={RegisterView}
+        options={RegisterView.navigationOptions}
+      />
+      <Outside.Screen
+        name="LegalView"
+        component={LegalView}
+        options={LegalView.navigationOptions}
+      />
+    </Outside.Navigator>
+  );
 };
 
 const mapStateToProps = state => ({

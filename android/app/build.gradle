@@ -140,7 +140,7 @@ android {
     }
 
     defaultConfig {
-        applicationId APPLICATION_ID
+        applicationId "com.comlinkinc.android.pigeon"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode VERSIONCODE as Integer
@@ -150,7 +150,7 @@ android {
             manifestPlaceholders = [BugsnagAPIKey: BugsnagAPIKey as String]
             missingDimensionStrategy "RNNotifications.reactNativeVersion", "reactNative60" // See note below!
         }
-        resValue "string", "rn_config_reader_custom_package", "chat.rocket.reactnative"
+        resValue "string", "rn_config_reader_custom_package", "com.comlinkinc.android.pigeon"
     }
 
     signingConfigs {

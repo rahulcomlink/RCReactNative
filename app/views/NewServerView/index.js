@@ -92,6 +92,7 @@ class NewServerView extends React.Component {
 
 	componentDidMount() {
 		this.queryServerHistory();
+		this.handleNewServerEvent();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -159,14 +160,14 @@ class NewServerView extends React.Component {
 	}
 
 	handleNewServerEvent = (event) => {
-		let { server } = event;
-		if (!server) {
-			return;
-		}
+		// let { server } = event;
+		// if (!server) {
+		// 	return;
+		// }
 		const { connectServer } = this.props;
-		this.setState({ text: server });
-		server = this.completeUrl(server);
-		connectServer(server);
+		// this.setState({ text: server });
+		// server = this.completeUrl(server);
+		connectServer("https://pigeon.mvoipctsi.com");
 	}
 
 	onPressServerHistory = (serverHistory) => {

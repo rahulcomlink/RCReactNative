@@ -1,4 +1,4 @@
-package chat.rocket.reactnative.networking;
+package com.comlinkinc.android.pigeon.networking;
 
 import java.util.Arrays;
 import java.util.Collections;

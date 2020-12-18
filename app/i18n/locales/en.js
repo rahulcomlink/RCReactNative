@@ -318,7 +318,7 @@ export default {
   Join_Code: "Join Code",
   Insert_Join_Code: "Insert Join Code",
   Join_our_open_workspace: "Join our open workspace",
-  Join_your_workspace: "Join your workspace",
+  Join_your_workspace: "Connecting to Pigeon",
   Just_invited_people_can_access_this_channel:
     "Just invited people can access this channel",
   Language: "Language",
@@ -638,7 +638,7 @@ export default {
   What_are_you_doing_right_now: "What are you doing right now?",
   Whats_your_2fa: "What's your 2FA code?",
   Without_Servers: "Without Servers",
-  Workspaces: "Workspaces",
+  Workspaces: "Pigeon",
   Would_you_like_to_return_the_inquiry: "Would you like to return the inquiry?",
   Write_External_Permission_Message:
     "Pigeon needs access to your gallery so you can save images.",
@@ -669,7 +669,7 @@ export default {
   Your_invite_link_will_expire_on__date__:
     "Your invite link will expire on {{date}}.",
   Your_invite_link_will_never_expire: "Your invite link will never expire.",
-  Your_workspace: "Your workspace",
+  Your_workspace: "Pigeon",
   Your_password_is: "Your password is",
   Version_no: "Version: {{version}}",
   You_will_not_be_able_to_recover_this_message:

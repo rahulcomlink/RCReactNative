@@ -1,4 +1,4 @@
-package chat.rocket.reactnative;
+package com.comlinkinc.android.pigeon;
 
 import android.database.Cursor;
 import android.util.Base64;

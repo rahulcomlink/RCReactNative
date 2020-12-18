@@ -42,7 +42,7 @@ const ServerInput = ({
 	return (
 		<View style={styles.container}>
 			<TextInput
-				label='Enter workspace URL'
+				label='Enter server URL'
 				placeholder='Ex. your-company.rocket.chat'
 				containerStyle={styles.inputContainer}
 				value={text}

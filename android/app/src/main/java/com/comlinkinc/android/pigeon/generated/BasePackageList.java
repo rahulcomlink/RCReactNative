@@ -1,4 +1,4 @@
-package chat.rocket.reactnative.generated;
+package com.comlinkinc.android.pigeon.generated;
 
 import java.util.Arrays;
 import java.util.List;

@@ -255,7 +255,7 @@ Code block
       <StoriesSeparator style={styles.separator} title="Lists" theme={theme} />
       <View style={styles.container}>
         <Markdown
-          msg={"* Open Source\n* Rocket.Chat\n  - nodejs\n  - ReactNative"}
+          msg={"* Open Source\n* Pigeon\n  - nodejs\n  - ReactNative"}
           theme={theme}
         />
       </View>
@@ -266,7 +266,7 @@ Code block
         theme={theme}
       />
       <View style={styles.container}>
-        <Markdown msg={"1. Open Source\n2. Rocket.Chat"} theme={theme} />
+        <Markdown msg={"1. Open Source\n2. Pigeon"} theme={theme} />
       </View>
 
       <StoriesSeparator

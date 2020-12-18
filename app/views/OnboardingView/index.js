@@ -70,9 +70,9 @@ class OnboardingView extends React.Component {
 	}
 
 	connectServer = () => {
-		logEvent(events.ONBOARD_JOIN_A_WORKSPACE);
+		logEvent(events.LOGIN_DEFAULT_LOGIN_F);
 		const { navigation } = this.props;
-		navigation.navigate('NewServerView');
+		navigation.navigate("LoginView");
 	}
 
 	createWorkspace = async() => {
