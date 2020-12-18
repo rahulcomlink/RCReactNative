@@ -54,11 +54,11 @@ const _OutsideStack = ({ root }) => {
         component={NewServerView}
         options={NewServerView.navigationOptions}
       /> */}
-      <Outside.Screen
+      {/* <Outside.Screen
         name="WorkspaceView"
         component={WorkspaceView}
         options={WorkspaceView.navigationOptions}
-      />
+      /> */}
       {/* <Outside.Screen
         name="LoginView"
         component={LoginView}

@@ -155,7 +155,7 @@ const handleServerRequest = function* handleServerRequest({ server, username, fr
 		if (serverInfo) {
 			yield RocketChat.getLoginServices(server);
 			yield RocketChat.getLoginSettings({ server });
-			Navigation.navigate('WorkspaceView');
+			Navigation.navigate("LoginView");
 
 			if (fromServerHistory) {
 				Navigation.navigate('LoginView', { username });

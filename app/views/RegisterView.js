@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 class RegisterView extends React.Component {
 	static navigationOptions = ({ route, navigation }) => ({
 		title: route.params?.title ?? 'Pigeon',
-		headerRight: () => <HeaderButton.Legal testID='register-view-more' navigation={navigation} />
+		// headerRight: () => <HeaderButton.Legal testID='register-view-more' navigation={navigation} />
 	});
 
 	static propTypes = {

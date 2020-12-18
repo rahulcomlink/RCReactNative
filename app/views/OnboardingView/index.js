@@ -70,7 +70,7 @@ class OnboardingView extends React.Component {
 	}
 
 	connectServer = () => {
-		logEvent(events.LOGIN_DEFAULT_LOGIN_F);
+		logEvent(events.LOGIN_DEFAULT_LOGIN);
 		const { navigation } = this.props;
 		navigation.navigate("LoginView");
 	}

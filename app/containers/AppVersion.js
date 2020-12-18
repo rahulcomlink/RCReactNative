@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 const AppVersion = React.memo(({ theme }) => (
 	<View style={styles.container}>
-		<Text style={[styles.text, { color: themes[theme].auxiliaryText }]}>{I18n.t('Version_no', { version: '' })}<Text style={styles.bold}>{getReadableVersion}</Text></Text>
+		{/* <Text style={[styles.text, { color: themes[theme].auxiliaryText }]}>{I18n.t('Version_no', { version: '' })}<Text style={styles.bold}>{getReadableVersion}</Text></Text> */}
 	</View>
 ));
 

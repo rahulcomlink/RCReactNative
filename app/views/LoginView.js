@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-	Text, View, StyleSheet, Keyboard, Alert
-} from 'react-native';
+  Text,
+  View,
+  StyleSheet,
+  Keyboard,
+  Alert,
+  BackHandler,
+} from "react-native";
 import { connect } from 'react-redux';
 import equal from 'deep-equal';
 
@@ -49,11 +54,24 @@ const styles = StyleSheet.create({
 });
 
 class LoginView extends React.Component {
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
+  }
+
+  handleBackButton() {
+    return true;
+  }
+
   static navigationOptions = ({ route, navigation }) => ({
     title: route.params?.title ?? "Pigeon",
-    headerRight: () => (
-      <HeaderButton.Legal testID="login-view-more" navigation={navigation} />
-    ),
+    headerLeft: null,
+    // headerRight: () => (
+    //   <HeaderButton.Legal testID="login-view-more" navigation={navigation} />
+    // ),
   });
 
   static propTypes = {

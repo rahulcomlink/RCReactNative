@@ -32,32 +32,33 @@ import SSLPinning from '../../utils/sslPinning';
 import RocketChat from '../../lib/rocketchat';
 
 const styles = StyleSheet.create({
-	title: {
-		...sharedStyles.textBold,
-		fontSize: 22
-	},
-	certificatePicker: {
-		marginBottom: 32,
-		alignItems: 'center',
-		justifyContent: 'flex-end'
-	},
-	chooseCertificateTitle: {
-		fontSize: 13,
-		...sharedStyles.textRegular
-	},
-	chooseCertificate: {
-		fontSize: 13,
-		...sharedStyles.textSemibold
-	},
-	description: {
-		...sharedStyles.textRegular,
-		fontSize: 14,
-		textAlign: 'left',
-		marginBottom: 24
-	},
-	connectButton: {
-		marginBottom: 0
-	}
+  title: {
+    ...sharedStyles.textBold,
+    fontSize: 22,
+    textAlign: "center",
+  },
+  certificatePicker: {
+    marginBottom: 32,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  chooseCertificateTitle: {
+    fontSize: 13,
+    ...sharedStyles.textRegular,
+  },
+  chooseCertificate: {
+    fontSize: 13,
+    ...sharedStyles.textSemibold,
+  },
+  description: {
+    ...sharedStyles.textRegular,
+    fontSize: 14,
+    textAlign: "left",
+    marginBottom: 24,
+  },
+  connectButton: {
+    marginBottom: 0,
+  },
 });
 
 class NewServerView extends React.Component {
@@ -111,8 +112,9 @@ class NewServerView extends React.Component {
 		const { adding, navigation } = this.props;
 		if (adding) {
 			navigation.setOptions({
-				headerLeft: () => <HeaderButton.CloseModal navigation={navigation} onPress={this.close} testID='new-server-view-close' />
-			});
+        headerLeft: null,
+        // headerLeft: () => <HeaderButton.CloseModal navigation={navigation} onPress={this.close} testID='new-server-view-close' />
+      });
 		}
 	}
 
