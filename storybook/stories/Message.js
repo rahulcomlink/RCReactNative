@@ -27,7 +27,7 @@ const author = {
 	_id: 'userid',
 	username: 'diego.mello'
 };
-const baseUrl = 'https://open.rocket.chat';
+const baseUrl = "https://pigeon.mvoipctsi.com";
 const date = new Date(2017, 10, 10, 10);
 const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
@@ -192,10 +192,10 @@ export default ({ theme }) => {
 
       <Separator title="Mentions" theme={theme} />
       <Message
-        msg="@rocket.cat @diego.mello @all @here #general"
+        msg="@pigeon.cat @diego.mello @all @here #general"
         mentions={[
           {
-            username: "rocket.cat",
+            username: "pigeon.cat",
           },
           {
             username: "diego.mello",
@@ -214,10 +214,10 @@ export default ({ theme }) => {
         ]}
       />
       <Message
-        msg="@rocket.cat Lorem ipsum dolor @diego.mello sit amet, @all consectetur adipiscing @here elit, sed do eiusmod tempor #general incididunt ut labore et dolore magna aliqua."
+        msg="@pigeon.cat Lorem ipsum dolor @diego.mello sit amet, @all consectetur adipiscing @here elit, sed do eiusmod tempor #general incididunt ut labore et dolore magna aliqua."
         mentions={[
           {
-            username: "rocket.cat",
+            username: "pigeon.cat",
           },
           {
             username: "diego.mello",
@@ -265,7 +265,7 @@ export default ({ theme }) => {
             emoji: ":joy:",
             usernames: [
               { value: "username" },
-              { value: "rocket.cat" },
+              { value: "pigeon.cat" },
               { value: "diego.mello" },
             ],
           },
@@ -273,7 +273,7 @@ export default ({ theme }) => {
             emoji: ":marioparty:",
             usernames: [
               { value: "username" },
-              { value: "rocket.cat" },
+              { value: "pigeon.cat" },
               { value: "diego.mello" },
               { value: "user1" },
               { value: "user1" },
@@ -340,7 +340,7 @@ export default ({ theme }) => {
         msg="Fourth message"
         author={{
           ...author,
-          username: "rocket.cat",
+          username: "pigeon.cat",
         }}
       />
       <Message msg="Third message" />
@@ -348,7 +348,7 @@ export default ({ theme }) => {
         msg="Second message"
         author={{
           ...author,
-          username: "rocket.cat",
+          username: "pigeon.cat",
         }}
       />
       <Message msg="First message" />
@@ -358,7 +358,7 @@ export default ({ theme }) => {
         msg="Fourth message"
         author={{
           ...author,
-          username: "rocket.cat",
+          username: "pigeon.cat",
         }}
       />
       <MessageSeparator ts={date} unread theme={theme} />
@@ -368,7 +368,7 @@ export default ({ theme }) => {
         msg="Second message"
         author={{
           ...author,
-          username: "rocket.cat",
+          username: "pigeon.cat",
         }}
         isHeader={false}
       />
@@ -376,7 +376,7 @@ export default ({ theme }) => {
         msg="Second message"
         author={{
           ...author,
-          username: "rocket.cat",
+          username: "pigeon.cat",
         }}
       />
       <MessageSeparator ts={date} theme={theme} />
@@ -496,7 +496,7 @@ export default ({ theme }) => {
         msg="I'm fine!"
         attachments={[
           {
-            author_name: "rocket.cat",
+            author_name: "pigeon.cat",
             ts: date,
             timeFormat: "LT",
             text: "How are you? :nyan_rocket:",
@@ -663,8 +663,8 @@ export default ({ theme }) => {
       <Message
         urls={[
           {
-            url: "https://rocket.chat",
-            image: "https://rocket.chat/images/blog/post.jpg",
+            url: "https://pigeon.mvoipctsi.com",
+            image: "https://pigeon.mvoipctsi.com/images/blog/post.jpg",
             title: "Pigeon - Free, Open Source, Enterprise Team Chat",
             description:
               "Pigeon is the leading open source team chat software solution. Free, unlimited and completely customizable with on-premises and SaaS cloud hosting.",
@@ -705,7 +705,7 @@ export default ({ theme }) => {
         msg="Message"
         attachments={[
           {
-            author_name: "rocket.cat",
+            author_name: "pigeon.cat",
             ts: date,
             timeFormat: "LT",
             text: "Custom fields",
@@ -740,7 +740,7 @@ export default ({ theme }) => {
         msg="Message"
         attachments={[
           {
-            author_name: "rocket.cat",
+            author_name: "pigeon.cat",
             ts: date,
             timeFormat: "LT",
             text: "Custom fields",
@@ -758,7 +758,7 @@ export default ({ theme }) => {
             ],
           },
           {
-            author_name: "rocket.cat",
+            author_name: "pigeon.cat",
             ts: date,
             timeFormat: "LT",
             text: "Custom fields 2",
@@ -825,7 +825,7 @@ export default ({ theme }) => {
         isInfo
         attachments={[
           {
-            author_name: "rocket.cat",
+            author_name: "pigeon.cat",
             ts: date,
             timeFormat: "LT",
             text: "First message",
@@ -837,20 +837,20 @@ export default ({ theme }) => {
       <Message type="ul" isInfo />
 
       <Separator title="User removed" theme={theme} />
-      <Message msg="rocket.cat" type="ru" isInfo />
+      <Message msg="pigeon.cat" type="ru" isInfo />
 
       <Separator title="User added" theme={theme} />
-      <Message msg="rocket.cat" type="au" isInfo />
+      <Message msg="pigeon.cat" type="au" isInfo />
 
       <Separator title="User muted" theme={theme} />
-      <Message msg="rocket.cat" type="user-muted" isInfo />
+      <Message msg="pigeon.cat" type="user-muted" isInfo />
 
       <Separator title="User unmuted" theme={theme} />
-      <Message msg="rocket.cat" type="user-unmuted" isInfo />
+      <Message msg="pigeon.cat" type="user-unmuted" isInfo />
 
       <Separator title="Role added" theme={theme} />
       <Message
-        msg="rocket.cat"
+        msg="pigeon.cat"
         role="admin" // eslint-disable-line
         type="subscription-role-added"
         isInfo
@@ -858,7 +858,7 @@ export default ({ theme }) => {
 
       <Separator title="Role removed" theme={theme} />
       <Message
-        msg="rocket.cat"
+        msg="pigeon.cat"
         role="admin" // eslint-disable-line
         type="subscription-role-removed"
         isInfo

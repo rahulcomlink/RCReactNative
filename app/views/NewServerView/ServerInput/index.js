@@ -78,7 +78,7 @@ const ServerInput = ({
       /> */}
         <TextInput
           label="Enter server URL"
-          placeholder="Ex. your-company.rocket.chat"
+          placeholder="Ex. your-company name"
           containerStyle={styles.inputContainer}
           value={text}
           returnKeyType="send"

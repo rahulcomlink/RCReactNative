@@ -41,7 +41,9 @@ describe('Create room screen', () => {
 			});
 
 			it('should search user and navigate', async() => {
-				await element(by.id('new-message-view-search')).replaceText('rocket.cat');
+				await element(by.id("new-message-view-search")).replaceText(
+          "pigeon.cat"
+        );
 				await waitFor(element(by.id('new-message-view-item-rocket.cat'))).toExist().withTimeout(60000);
 				await element(by.id('new-message-view-item-rocket.cat')).tap();
 				await waitFor(element(by.id('room-view'))).toExist().withTimeout(10000);

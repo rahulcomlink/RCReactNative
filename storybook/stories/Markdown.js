@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-const baseUrl = 'https://open.rocket.chat';
+const baseUrl = "https://pigeon.mvoipctsi.com";
 const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const lineBreakText = `a
 b
@@ -89,18 +89,18 @@ export default ({ theme }) => {
         <Markdown msg={longText} theme={theme} numberOfLines={1} preview />
         <Markdown msg={lineBreakText} theme={theme} numberOfLines={1} preview />
         <Markdown
-          msg="@rocket.cat @name1 @all @here @unknown #general #unknown"
+          msg="@pigeon.cat @name1 @all @here @unknown #general #unknown"
           theme={theme}
           numberOfLines={1}
           preview
           mentions={[
-            { _id: "random", name: "Rocket Cat", username: "rocket.cat" },
+            { _id: "random", name: "Rocket Cat", username: "pigeon.cat" },
             { _id: "random2", name: "Name", username: "name1" },
             { _id: "here", username: "here" },
             { _id: "all", username: "all" },
           ]}
           channels={[{ _id: "123", name: "test-channel" }]}
-          username="rocket.cat"
+          username="pigeon.cat"
         />
         <Markdown
           msg="Testing: 😃 :+1: :marioparty:"
@@ -118,15 +118,15 @@ export default ({ theme }) => {
       />
       <View style={styles.container}>
         <Markdown
-          msg="@rocket.cat @name1 @all @here @unknown"
+          msg="@pigeon.cat @name1 @all @here @unknown"
           theme={theme}
           mentions={[
-            { _id: "random", name: "Rocket Cat", username: "rocket.cat" },
+            { _id: "random", name: "Rocket Cat", username: "pigeon.cat" },
             { _id: "random2", name: "Name", username: "name1" },
             { _id: "here", username: "here" },
             { _id: "all", username: "all" },
           ]}
-          username="rocket.cat"
+          username="pigeon.cat"
         />
       </View>
 
@@ -137,15 +137,15 @@ export default ({ theme }) => {
       />
       <View style={styles.container}>
         <Markdown
-          msg="@rocket.cat @name1 @all @here @unknown"
+          msg="@pigeon.cat @name1 @all @here @unknown"
           theme={theme}
           mentions={[
-            { _id: "random", name: "Rocket Cat", username: "rocket.cat" },
+            { _id: "random", name: "Rocket Cat", username: "pigeon.cat" },
             { _id: "random2", name: "Name", username: "name1" },
             { _id: "here", username: "here" },
             { _id: "all", username: "all" },
           ]}
-          username="rocket.cat"
+          username="pigeon.cat"
           useRealName
         />
       </View>
@@ -197,11 +197,11 @@ this is a normal line`}
       <StoriesSeparator style={styles.separator} title="Links" theme={theme} />
       <View style={styles.container}>
         <Markdown
-          msg="[Markdown link](https://rocket.chat): `[description](url)`"
+          msg="[Markdown link](https://pigeon.mvoipctsi.com): `[description](url)`"
           theme={theme}
         />
         <Markdown
-          msg="<https://rocket.chat|Formatted Link>: `<url|description>`"
+          msg="<https://pigeon.mvoipctsi.com|Formatted Link>: `<url|description>`"
           theme={theme}
         />
       </View>

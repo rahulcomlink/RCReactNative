@@ -15,7 +15,7 @@ const author = {
 	username: 'rocket.cat',
 	name: 'Rocket Cat'
 };
-const baseUrl = 'https://open.rocket.chat';
+const baseUrl = 'https://pigeon.mvoipctsi.com';
 const date = new Date(2020, 10, 10, 10);
 const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const defaultItem = {
@@ -49,24 +49,24 @@ const listDecorator = story => (
 );
 
 const reducers = combineReducers({
-	login: () => ({
-		user: {
-			id: 'abc',
-			username: 'rocket.cat',
-			name: 'Rocket Cat'
-		}
-	}),
-	server: () => ({
-		server: 'https://open.rocket.chat',
-		version: '3.7.0'
-	}),
-	share: () => ({
-		server: 'https://open.rocket.chat',
-		version: '3.7.0'
-	}),
-	settings: () => ({
-		blockUnauthenticatedAccess: false
-	})
+  login: () => ({
+    user: {
+      id: "abc",
+      username: "rocket.cat",
+      name: "Rocket Cat",
+    },
+  }),
+  server: () => ({
+    server: "https://pigeon.mvoipctsi.com",
+    version: "3.7.0",
+  }),
+  share: () => ({
+    server: "https://pigeon.mvoipctsi.com",
+    version: "3.7.0",
+  }),
+  settings: () => ({
+    blockUnauthenticatedAccess: false,
+  }),
 });
 const store = createStore(reducers);
 

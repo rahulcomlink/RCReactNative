@@ -7,7 +7,7 @@ import RoomItemComponent from '../../app/presentation/RoomItem/RoomItem';
 import { longText } from '../utils';
 import StoriesSeparator from './StoriesSeparator';
 
-const baseUrl = 'https://open.rocket.chat';
+const baseUrl = "https://pigeon.mvoipctsi.com";
 const { width } = Dimensions.get('window');
 let _theme = 'light';
 const lastMessage = {
@@ -20,18 +20,18 @@ const updatedAt = {
 	date: '10:00'
 };
 
-const RoomItem = props => (
-	<RoomItemComponent
-		rid='abc'
-		type='d'
-		name='rocket.cat'
-		avatar='rocket.cat'
-		baseUrl={baseUrl}
-		width={width}
-		theme={_theme}
-		{...updatedAt}
-		{...props}
-	/>
+const RoomItem = (props) => (
+  <RoomItemComponent
+    rid="abc"
+    type="d"
+    name="pigeon.cat"
+    avatar="pigeon.cat"
+    baseUrl={baseUrl}
+    width={width}
+    theme={_theme}
+    {...updatedAt}
+    {...props}
+  />
 );
 
 // eslint-disable-next-line react/prop-types
@@ -88,7 +88,7 @@ export default ({ theme }) => {
 				showLastMessage
 				lastMessage={{
 					u: {
-						username: 'rocket.chat'
+						username: 'pigeon.chat'
 					},
 					msg: '2'
 				}}

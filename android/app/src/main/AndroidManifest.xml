@@ -40,21 +40,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
+                <!-- <data
                     android:host="go.rocket.chat"
                     android:scheme="https" />
                 <data
                     android:host="jitsi.rocket.chat"
-                    android:scheme="https" />
+                    android:scheme="https" /> -->
                 <data
                     android:host="room"
                     android:scheme="rocketchat" />
                 <data
                     android:host="auth"
                     android:scheme="rocketchat" />
-                <data
+                <!-- <data
                     android:host="jitsi.rocket.chat"
-                    android:scheme="rocketchat" />
+                    android:scheme="rocketchat" /> -->
             </intent-filter>
         </activity>
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />

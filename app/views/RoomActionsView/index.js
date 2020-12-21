@@ -290,7 +290,7 @@ class RoomActionsView extends React.Component {
 		const { setLoadingInvite, navigation } = this.props;
 		const { rid } = room;
 		try {
-			setLoadingInvite(true);
+			setLoadingInvite(false);
 			await RocketChat.addUsersToRoom(rid);
 			navigation.pop();
 		} catch (e) {

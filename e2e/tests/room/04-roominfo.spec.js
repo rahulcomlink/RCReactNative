@@ -9,7 +9,7 @@ const privateRoomName = data.groups.private.name
 async function navigateToRoomInfo(type) {
 	let room;
 	if (type === 'd') {
-		room = 'rocket.cat';
+		room = "pigeon.cat";
 	} else {
 		room = privateRoomName;
 	}

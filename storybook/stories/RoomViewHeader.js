@@ -46,28 +46,28 @@ const Header = props => (
 export default ({ theme }) => {
 	_theme = theme;
 	return (
-		<ScrollView style={{ backgroundColor: themes[theme].auxiliaryBackground }}>
-			<StoriesSeparator title='Basic' theme={theme} />
-			<Header />
+    <ScrollView style={{ backgroundColor: themes[theme].auxiliaryBackground }}>
+      <StoriesSeparator title="Basic" theme={theme} />
+      <Header />
 
-			<StoriesSeparator title='Types' theme={theme} />
-			<Header type='d' />
-			<Header type='c' />
-			<Header type='p' />
-			<Header type='discussion' />
-			<Header type='thread' />
+      <StoriesSeparator title="Types" theme={theme} />
+      <Header type="d" />
+      <Header type="c" />
+      <Header type="p" />
+      <Header type="discussion" />
+      <Header type="thread" />
 
-			<StoriesSeparator title='Typing' theme={theme} />
-			<Header usersTyping={['diego.mello']} />
-			<Header usersTyping={['diego.mello', 'rocket.cat']} />
-			<Header usersTyping={['diego.mello', 'rocket.cat', 'detoxrn']} />
+      <StoriesSeparator title="Typing" theme={theme} />
+      <Header usersTyping={["diego.mello"]} />
+      <Header usersTyping={["diego.mello", "pigeon.cat"]} />
+      <Header usersTyping={["diego.mello", "pigeon.cat", "detoxrn"]} />
 
-			<StoriesSeparator title='Title scroll' theme={theme} />
-			<Header title='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' />
-			<Header
-				title='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-				usersTyping={['diego.mello', 'rocket.cat', 'detoxrn']}
-			/>
-		</ScrollView>
-	);
+      <StoriesSeparator title="Title scroll" theme={theme} />
+      <Header title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+      <Header
+        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        usersTyping={["diego.mello", "pigeon.cat", "detoxrn"]}
+      />
+    </ScrollView>
+  );
 };

@@ -8,7 +8,7 @@ const { sendMessage } = require('../../helpers/data_setup')
 async function navigateToRoomActions(type) {
 	let room;
 	if (type === 'd') {
-		room = 'rocket.cat';
+		room = "pigeon.cat";
 	} else {
 		room = data.groups.private.name;
 	}
@@ -351,7 +351,7 @@ describe('Room actions screen', () => {
 				await element(by.id('room-actions-add-user')).tap();
 
 				// add rocket.cat
-				const rocketCat = 'rocket.cat';
+				const rocketCat = "pigeon.cat";
 				await waitFor(element(by.id(`select-users-view-item-${ rocketCat }`))).toExist().withTimeout(10000);
 				await element(by.id(`select-users-view-item-${ rocketCat }`)).tap();
 				await waitFor(element(by.id(`selected-user-${ rocketCat }`))).toExist().withTimeout(5000);

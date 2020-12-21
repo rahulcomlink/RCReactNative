@@ -35,7 +35,7 @@ describe('Rooms list screen', () => {
 
 	describe('Usage', () => {
 		it('should search room and navigate', async() => {
-			await searchRoom('rocket.cat');
+			await searchRoom("pigeon.cat");
 			await waitFor(element(by.id('rooms-list-view-item-rocket.cat'))).toBeVisible().withTimeout(60000);
 			await element(by.id('rooms-list-view-item-rocket.cat')).tap();
 			await waitFor(element(by.id('room-view'))).toBeVisible().withTimeout(10000);

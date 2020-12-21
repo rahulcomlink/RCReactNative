@@ -20,7 +20,7 @@ import MessageContext from '../../app/containers/message/Context';
 import { themes } from '../../app/constants/colors';
 
 // MessageProvider
-const baseUrl = 'https://open.rocket.chat';
+const baseUrl = "https://pigeon.mvoipctsi.com";
 const user = {
 	id: '',
 	username: 'diego.mello',
@@ -31,23 +31,23 @@ const user = {
 const theme = 'light';
 
 const reducers = combineReducers({
-	settings: () => ({}),
-	login: () => ({
-		user: {
-			username: 'diego.mello'
-		}
-	}),
-	server: () => ({
-		server: 'https://open.rocket.chat',
-		version: '3.7.0'
-	}),
-	share: () => ({
-		server: 'https://open.rocket.chat',
-		version: '3.7.0',
-		settings: {}
-	}),
-	meteor: () => ({ connected: true }),
-	activeUsers: () => ({ abc: { status: 'online', statusText: 'dog' } })
+  settings: () => ({}),
+  login: () => ({
+    user: {
+      username: "diego.mello",
+    },
+  }),
+  server: () => ({
+    server: "https://pigeon.mvoipctsi.com",
+    version: "3.7.0",
+  }),
+  share: () => ({
+    server: "https://pigeon.mvoipctsi.com",
+    version: "3.7.0",
+    settings: {},
+  }),
+  meteor: () => ({ connected: true }),
+  activeUsers: () => ({ abc: { status: "online", statusText: "dog" } }),
 });
 const store = createStore(reducers);
 
