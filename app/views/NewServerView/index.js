@@ -79,7 +79,7 @@ class NewServerView extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.setHeader();
+		// this.setHeader();
 
 		this.state = {
 			text: '',
@@ -324,7 +324,7 @@ class NewServerView extends React.Component {
 				keyboardShouldPersistTaps='never'
 			>
 				<FormContainerInner>
-					<Text style={[styles.title, { color: themes[theme].titleText }]}>{I18n.t('Join_your_workspace')}</Text>
+					{/* <Text style={[styles.title, { color: themes[theme].titleText }]}>{I18n.t('Join_your_workspace')}</Text> */}
 					<ServerInput
 						text={text}
 						theme={theme}

@@ -41,7 +41,11 @@ const _OutsideStack = ({ root }) => {
         <Outside.Screen
           name="NewServerView"
           component={NewServerView}
-          options={NewServerView.navigationOptions}
+          // options={NewServerView.navigationOptions}
+          options={{
+            title: "Pigeon",
+            headerShown: false,
+          }}
         />
       ) : null}
       <Outside.Screen
