@@ -4,10 +4,6 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
-	<key>com.apple.developer.applesignin</key>
-	<array>
-		<string>Default</string>
-	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:go.rocket.chat</string>
@@ -15,7 +11,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.ios.chat.rocket</string>
+		<string>group.com.comlinkinc.pigeon</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
