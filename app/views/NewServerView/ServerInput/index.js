@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
   },
   logo: {
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor: "rgba(1,1,1,1)",
     width: 600,
-    height: 800,
+    height: 1000,
   },
   backdrop: {
     flex: 1,
@@ -121,7 +121,7 @@ const ServerInput = ({
       <View style={styles.overlay}>
         <Image
           style={styles.logo}
-          source={require("/Users/tushar/ReactNative/Pigeon_Code_RN/Chat_Pigeon/Rocket.Chat.ReactNative/android/app/src/main/res/drawable/splash_screen.png")}
+          source={require("/Users/Apple/Documents/ComlinkProjects/pigeonwithoutsip1/PigeonReactNative/android/app/src/main/res/drawable/splash_screen.png")}
         />
       </View>
     </View>
