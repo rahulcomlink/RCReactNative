@@ -69,21 +69,25 @@ const Header = React.memo(({
 	}
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity
+			{/*comlink changes to hide server name*/}
+			{/*<TouchableOpacity
 				onPress={onPress}
 				testID='rooms-list-header-server-dropdown-button'
-			>
+			>*/}
 				<View style={styles.button}>
-					<Text style={[styles.title, isFetching && styles.serverSmall, titleColorStyle, { fontSize: titleFontSize }]} numberOfLines={1}>{serverName}</Text>
-					<CustomIcon
+					{/*</View><Text style={[styles.title, isFetching && styles.serverSmall, titleColorStyle, { fontSize: titleFontSize }]} numberOfLines={1}>{serverName}</Text>*/}
+
+					<Text style={[styles.title, isFetching && styles.serverSmall, titleColorStyle, { fontSize: titleFontSize }]} numberOfLines={1}>Pigeon</Text>
+					
+					{/*<CustomIcon
 						name='chevron-down'
 						color={themes[theme].headerTintColor}
 						style={[showServerDropdown && styles.upsideDown]}
 						size={18}
-					/>
+					/>*/}	
 				</View>
-				{subtitle ? <Text style={[styles.subtitle, { color: themes[theme].auxiliaryText, fontSize: subTitleFontSize }]} numberOfLines={1}>{subtitle}</Text> : null}
-			</TouchableOpacity>
+				{/*{subtitle ? <Text style={[styles.subtitle, { color: themes[theme].auxiliaryText, fontSize: subTitleFontSize }]} numberOfLines={1}>{subtitle}</Text> : null}*/}
+			{/*</TouchableOpacity>*/}
 		</View>
 	);
 });

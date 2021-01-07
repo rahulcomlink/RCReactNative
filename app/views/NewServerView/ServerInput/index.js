@@ -43,9 +43,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
   },
   logo: {
-    backgroundColor: "rgba(1,1,1,1)",
-    width: 600,
-    height: 1000,
+   backgroundColor: "rgba(1,1,1,1)",
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   backdrop: {
     flex: 1,
@@ -105,13 +106,14 @@ const ServerInput = ({
             <FlatList
               data={serversHistory}
               renderItem={({ item }) => (
-                <Item
-                  item={item}
+             <Item
+                item={item}
                   theme={theme}
-                  onPress={() => onPressServerHistory(item)}
-                  onDelete={onDelete}
+                 onPress={() => onPressServerHistory(item)}
+                 onDelete={onDelete}
                 />
-              )}
+             )} 
+              
               ItemSeparatorComponent={List.Separator}
               keyExtractor={(item) => item.id}
             />

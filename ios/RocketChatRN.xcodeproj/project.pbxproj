@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1842B7AA25A33E04003C9D96 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 1842B7A625A33E03003C9D96 /* main.jsbundle */; };
+		1894E4B825A6F996000A7EBA /* Piigeon Logo 01-04.png in Resources */ = {isa = PBXBuildFile; fileRef = 1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */; };
 		1E0426E6251A5467008F022C /* RoomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0426E5251A5467008F022C /* RoomType.swift */; };
 		1E068CFE24FD2DC700A0FFC1 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E068CFD24FD2DC700A0FFC1 /* AppGroup.swift */; };
 		1E068D0124FD2E0500A0FFC1 /* AppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E068D0024FD2E0500A0FFC1 /* AppGroup.m */; };
@@ -92,6 +93,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RocketChatRN/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RocketChatRN/main.m; sourceTree = "<group>"; };
 		1842B7A625A33E03003C9D96 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Piigeon Logo 01-04.png"; sourceTree = "<group>"; };
 		1E01C81B2511208400FEF824 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		1E01C8202511301400FEF824 /* PushResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushResponse.swift; sourceTree = "<group>"; };
 		1E01C8242511303100FEF824 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				7A3268F524F04FFE0050E241 /* custom.ttf */,
+				1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				7A3268F624F04FFE0050E241 /* custom.ttf in Resources */,
 				7A14FCED257FEB3A005BDCD4 /* Experimental.xcassets in Resources */,
+				1894E4B825A6F996000A7EBA /* Piigeon Logo 01-04.png in Resources */,
 				1842B7AA25A33E04003C9D96 /* main.jsbundle in Resources */,
 				7A006F14229C83B600803143 /* GoogleService-Info.plist in Resources */,
 				7A0D62D2242AB187006D5C06 /* LaunchScreen.storyboard in Resources */,
