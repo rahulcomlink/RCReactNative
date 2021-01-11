@@ -1,10 +1,11 @@
 def taskRequests = getGradle().getStartParameter().getTaskRequests().toString().toLowerCase()
 def isFoss = taskRequests.contains("foss")
+def isPlay = taskRequests.contains("play")
 
 apply plugin: "com.android.application"
 apply plugin: 'kotlin-android'
 
-if (!isFoss) {
+if (!isFoss && !isPlay) {
     apply plugin: 'com.google.firebase.crashlytics'
     apply plugin: 'com.bugsnag.android.gradle'
 }
@@ -108,7 +109,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -155,6 +156,10 @@ android {
 
     signingConfigs {
         release {
+            storeFile file('/Users/tushar/Android/testjks')
+            storePassword '123456789'
+            keyAlias 'test'
+            keyPassword '123456789'
             if (project.hasProperty('KEYSTORE')) {
                 storeFile file(KEYSTORE)
                 storePassword KEYSTORE_PASSWORD
@@ -174,9 +179,10 @@ android {
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources enableProguardInReleaseBuilds
             setProguardFiles([getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'])
             signingConfig signingConfigs.release
-            if (!isFoss) {
+            if (!isFoss && !isPlay) {
                 firebaseCrashlytics {
                     nativeSymbolUploadEnabled true
                 }
@@ -256,6 +262,12 @@ android {
             enableSplit = true
         }
     }
+
+    dexOptions {
+        incremental = true
+        preDexLibraries = false
+        javaMaxHeapSize "4g" // 2g should be also OK
+    }
 }
 
 dependencies {
@@ -303,6 +315,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-if (!isFoss) {
+if (!isFoss && !isPlay) {
     apply plugin: 'com.google.gms.google-services'
 }

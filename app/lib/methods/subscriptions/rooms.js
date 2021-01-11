@@ -331,7 +331,7 @@ export default function subscribeRooms() {
 				status: messagesStatus.SENT,
 				u: {
 					_id,
-					username: 'rocket.cat'
+					username: 'pigeon.cat'
 				}
 			};
 			try {

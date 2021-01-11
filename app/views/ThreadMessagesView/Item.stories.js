@@ -11,9 +11,9 @@ import { themes } from '../../constants/colors';
 import { ThemeContext } from '../../theme';
 
 const author = {
-	_id: 'userid',
-	username: 'rocket.cat',
-	name: 'Rocket Cat'
+  _id: "userid",
+  username: "pigeon.cat",
+  name: "Pigeon Cat",
 };
 const baseUrl = 'https://pigeon.mvoipctsi.com';
 const date = new Date(2020, 10, 10, 10);
@@ -52,8 +52,8 @@ const reducers = combineReducers({
   login: () => ({
     user: {
       id: "abc",
-      username: "rocket.cat",
-      name: "Rocket Cat",
+      username: "pigeon.cat",
+      name: "Pigeon Cat",
     },
   }),
   server: () => ({
