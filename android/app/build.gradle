@@ -5,7 +5,7 @@ def isPlay = taskRequests.contains("play")
 apply plugin: "com.android.application"
 apply plugin: 'kotlin-android'
 
-if (!isFoss && !isPlay) {
+if (!isFoss) {
     apply plugin: 'com.google.firebase.crashlytics'
     apply plugin: 'com.bugsnag.android.gradle'
 }
@@ -109,7 +109,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -182,7 +182,7 @@ android {
             shrinkResources enableProguardInReleaseBuilds
             setProguardFiles([getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'])
             signingConfig signingConfigs.release
-            if (!isFoss && !isPlay) {
+            if (!isFoss) {
                 firebaseCrashlytics {
                     nativeSymbolUploadEnabled true
                 }
@@ -315,6 +315,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-if (!isFoss && !isPlay) {
+if (!isFoss) {
     apply plugin: 'com.google.gms.google-services'
 }
