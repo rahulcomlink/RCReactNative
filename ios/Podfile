@@ -17,9 +17,10 @@ target 'RocketChatRN' do
   all_pods
 end
 
-target 'ShareRocketChatRN' do
-  all_pods
-end
+#target 'ShareRocketChatRN' do
+#  all_pods
+#end
+
 
 # used to get user credentials
 target 'NotificationService' do

@@ -123,7 +123,7 @@ const ServerInput = ({
       <View style={styles.overlay}>
         <Image
           style={styles.logo}
-          source={require("/Users/Apple/Documents/ComlinkProjects/pigeonwithoutsip1/PigeonReactNative/android/app/src/main/res/drawable/splash_screen.png")}
+          source={require("../../../static/images/splash_screen.png")}
         />
       </View>
     </View>
