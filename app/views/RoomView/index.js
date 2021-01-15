@@ -456,17 +456,29 @@ class RoomView extends React.Component {
 		const { room } = this.state;
 		const { t } = room;
 
+		const roomUserId = RocketChat.getUidDirectMessage(room);
+
 		if (t === 'd' && !RocketChat.isGroupChat(room)) {
 			try {
-				const roomUserId = RocketChat.getUidDirectMessage(room);
 				this.setState({ roomUserId }, () => this.setHeader());
 
+				debugger;
 				const result = await RocketChat.getUserInfo(roomUserId);
+				debugger;
 				if (result.success) {
+					debugger;
+					var deviceToken  = result.user.getCustomFields().getDeviceToken();
 					return result.user;
 				}
 			} catch (e) {
 				log(e);
+			}
+		} else {
+			try {
+				const result = await RocketChat.getUserInfo(roomUserId);
+			} catch (e) {
+				log(e);
+				t
 			}
 		}
 
