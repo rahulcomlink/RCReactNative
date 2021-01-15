@@ -5,15 +5,12 @@ require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
 
 def all_pods
   config = use_native_modules!
-  use_unimodules!
-  use_react_native!(:path => config["reactNativePath"])
-  use_flipper!
-end
+  use_unimodules!\
 
 target 'RocketChatRN' do
   # force use our own JitsiMeetSDK
   pod 'JitsiMeetSDK', :git => 'https://github.com/RocketChat/jitsi-meet-ios-sdk-releases.git'
-
+  pod 'Firebase/Messaging'
   all_pods
 end
 
@@ -25,6 +22,7 @@ end
 # used to get user credentials
 target 'NotificationService' do
   all_pods
+  pod 'Firebase/Messaging'
 end
 
 post_install do |installer|

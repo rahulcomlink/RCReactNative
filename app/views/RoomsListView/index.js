@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import {
 	View,
@@ -63,6 +63,9 @@ import { E2E_BANNER_TYPE } from '../../lib/encryption/constants';
 
 import { getInquiryQueueSelector } from '../../ee/omnichannel/selectors/inquiry';
 import { changeLivechatStatus, isOmnichannelStatusAvailable } from '../../ee/omnichannel/lib';
+import firebaseToken  from '../../NotificationHandling/firebaseToken';
+import messaging from '@react-native-firebase/messaging';
+import { token } from '@rocket.chat/sdk/lib/settings';
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
 const CHATS_HEADER = 'Chats';
@@ -178,6 +181,43 @@ class RoomsListView extends React.Component {
 		 * it means the user has resumed the app, so selectServer needs to be triggered,
 		 * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
 		 */
+		// const deviceToken = firebaseToken;
+		// console.debug('get device token :', deviceToken);
+		// console.debug(deviceToken);
+
+		{/*
+		//useEffect(() => {
+			// Get the device token
+			messaging()
+			  .getToken()
+			  .then(token => {
+				console.debug('get device token : ',token);
+						console.debug(token);
+				//return saveTokenToDatabase(token);
+			  });
+			  
+			// If using other push notification providers (ie Amazon SNS, etc)
+			// you may need to get the APNs token instead for iOS:
+			// if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+		
+			// Listen to whether the token changes
+			return messaging().onTokenRefresh(token => {
+			  //saveTokenToDatabase(token);
+			});
+		 // }, []);
+		*/}
+		
+
+
+		{/*
+		messaging().getToken().then(token => 
+			{
+				console.debug('get device token : ',token);
+				console.debug(token);
+
+			})
+		*/}
+
 		if (appState === 'foreground') {
 			this.getSubscriptions();
 		}
@@ -320,6 +360,33 @@ class RoomsListView extends React.Component {
 		if (insets.left !== prevProps.insets.left || insets.right !== prevProps.insets.right) {
 			this.setHeader();
 		}
+
+		const deviceToken = firebaseToken;
+		console.debug('deviceToken :', deviceToken);
+		console.debug(deviceToken);
+
+		//useEffect(() => {
+			// Get the device token
+			messaging()
+			  .getToken()
+			  .then(token => {
+				console.debug('get device token : ',token);
+						console.debug(token);
+
+						const customFields = {devicetoken : token, os : }
+      					RocketChat.saveUserProfile()
+				//return saveTokenToDatabase(token);
+			  });
+			  
+			// If using other push notification providers (ie Amazon SNS, etc)
+			// you may need to get the APNs token instead for iOS:
+			// if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+		
+			// Listen to whether the token changes
+			return messaging().onTokenRefresh(token => {
+			  //saveTokenToDatabase(token);
+			});
+		 // }, []);
 	}
 
 	componentWillUnmount() {
