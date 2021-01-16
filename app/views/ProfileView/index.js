@@ -240,7 +240,6 @@ class ProfileView extends React.Component {
 					return this.handleError(e, 'setAvatarFromService', 'changing_avatar');
 				}
 			}
-
 			const result = await RocketChat.saveUserProfile(params, customFields);
 
 			if (result.success) {

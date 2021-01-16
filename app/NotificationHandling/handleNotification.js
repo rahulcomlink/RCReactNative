@@ -14,4 +14,10 @@ sendDeviceToken(){
       })
       .catch((error) => console.error(error));
     }
+
+    sendDeviceTokenToServer() {
+      const customFields = {}
+      RocketChat.saveUserProfile()
     }
+  
+ }

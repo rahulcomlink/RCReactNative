@@ -66,6 +66,9 @@ import { changeLivechatStatus, isOmnichannelStatusAvailable } from '../../ee/omn
 import firebaseToken  from '../../NotificationHandling/firebaseToken';
 import messaging from '@react-native-firebase/messaging';
 import { token } from '@rocket.chat/sdk/lib/settings';
+import Api from '@rocket.chat/sdk/lib/api/api';
+import User from '../../lib/database/model/User';
+import { usesMetricSystem } from 'react-native-localize';
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
 const CHATS_HEADER = 'Chats';
@@ -181,43 +184,7 @@ class RoomsListView extends React.Component {
 		 * it means the user has resumed the app, so selectServer needs to be triggered,
 		 * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
 		 */
-		// const deviceToken = firebaseToken;
-		// console.debug('get device token :', deviceToken);
-		// console.debug(deviceToken);
-
-		{/*
-		//useEffect(() => {
-			// Get the device token
-			messaging()
-			  .getToken()
-			  .then(token => {
-				console.debug('get device token : ',token);
-						console.debug(token);
-				//return saveTokenToDatabase(token);
-			  });
-			  
-			// If using other push notification providers (ie Amazon SNS, etc)
-			// you may need to get the APNs token instead for iOS:
-			// if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
 		
-			// Listen to whether the token changes
-			return messaging().onTokenRefresh(token => {
-			  //saveTokenToDatabase(token);
-			});
-		 // }, []);
-		*/}
-		
-
-
-		{/*
-		messaging().getToken().then(token => 
-			{
-				console.debug('get device token : ',token);
-				console.debug(token);
-
-			})
-		*/}
-
 		if (appState === 'foreground') {
 			this.getSubscriptions();
 		}
@@ -361,10 +328,8 @@ class RoomsListView extends React.Component {
 			this.setHeader();
 		}
 
-		const deviceToken = firebaseToken;
-		console.debug('deviceToken :', deviceToken);
-		console.debug(deviceToken);
-
+		// custom comlink changes to save device token on server
+		const os1 = isIOS ? 'ios' : 'android'
 		//useEffect(() => {
 			// Get the device token
 			messaging()
@@ -372,9 +337,18 @@ class RoomsListView extends React.Component {
 			  .then(token => {
 				console.debug('get device token : ',token);
 						console.debug(token);
-
-						const customFields = {devicetoken : token, os : }
-      					RocketChat.saveUserProfile()
+						const params =  {}
+						const customFields = {}
+						customFields.devicetoken = token
+						customFields.os = os1
+						console.debug('chat params :', params)
+						console.debug('chat customFields :', customFields)
+						
+						try {
+						  RocketChat.saveUserProfile(params, customFields)
+			  			}catch(e) {
+							console.debug('rocket.chat save user profile exception : ', e)
+						}
 				//return saveTokenToDatabase(token);
 			  });
 			  

@@ -1069,6 +1069,7 @@ const RocketChat = {
 		return new Promise(async(resolve, reject) => {
 			try {
 				const result = await this.sdk.post(...args);
+				console.debug('result of api call :', result);
 				return resolve(result);
 			} catch (e) {
 				if (e.data && (e.data.errorType === 'totp-required' || e.data.errorType === 'totp-invalid')) {
