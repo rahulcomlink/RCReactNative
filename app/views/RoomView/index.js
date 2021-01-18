@@ -210,6 +210,7 @@ class RoomView extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		console.debug('component did update method called');
 		const { roomUpdate } = this.state;
 		const { appState, insets } = this.props;
 
@@ -238,6 +239,7 @@ class RoomView extends React.Component {
 			this.setHeader();
 		}
 		this.setReadOnly();
+		this.sendNotification();
 	}
 
 	async componentWillUnmount() {
@@ -702,6 +704,37 @@ class RoomView extends React.Component {
 			Review.pushPositiveEvent();
 		});
 	};
+
+	sendNotification = async() => {
+		try {
+			const membersList = await RocketChat.getRoomMembers(this.rid, true, 0 , 100);
+			const newMembers = membersList.records;
+		
+			newMembers.map((member) => { console.debug('new member = ', member._id) 
+			this.getInfoOfUser(member._id)
+			}
+			);
+		
+		}catch (e) {
+			log(e);
+		}
+	}
+
+	getInfoOfUser =  async(IDUser) => {
+		try {
+			const result = await RocketChat.getUserInfo(IDUser);
+			if (result.success) {
+				console.debug('result of each member :', result)
+			}
+		}
+		catch {
+			//do nothing
+		}
+	}
+
+	sendPushNotificationWithCustomPayload(){
+	
+	}
 
 	getMessages = () => {
 		const { room } = this.state;
