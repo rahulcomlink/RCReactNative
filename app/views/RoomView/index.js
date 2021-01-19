@@ -60,6 +60,7 @@ import { getHeaderTitlePosition } from '../../containers/Header';
 import { E2E_MESSAGE_TYPE, E2E_STATUS } from '../../lib/encryption/constants';
 
 import { takeInquiry } from '../../ee/omnichannel/lib';
+import { networking } from 'reactotron-react-native';
 
 const stateAttrsUpdate = [
 	'joined',
@@ -210,7 +211,6 @@ class RoomView extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		console.debug('component did update method called');
 		const { roomUpdate } = this.state;
 		const { appState, insets } = this.props;
 
@@ -239,7 +239,7 @@ class RoomView extends React.Component {
 			this.setHeader();
 		}
 		this.setReadOnly();
-		this.sendNotification();
+		
 	}
 
 	async componentWillUnmount() {
@@ -697,6 +697,8 @@ class RoomView extends React.Component {
 		logEvent(events.ROOM_SEND_MESSAGE);
 		const { user } = this.props;
 		RocketChat.sendMessage(this.rid, message, this.tmid || tmid, user, tshow).then(() => {
+			//custom comlink change to send push notification
+			this.sendNotification(message)
 			if (this.list && this.list.current) {
 				this.list.current.update();
 			}
@@ -705,13 +707,14 @@ class RoomView extends React.Component {
 		});
 	};
 
-	sendNotification = async() => {
+	sendNotification = async(msg) => {
+		
 		try {
 			const membersList = await RocketChat.getRoomMembers(this.rid, true, 0 , 100);
+			console.debug('info about message:', msg);
 			const newMembers = membersList.records;
-		
 			newMembers.map((member) => { console.debug('new member = ', member._id) 
-			this.getInfoOfUser(member._id)
+			this.getInfoOfUser(msg, member._id)
 			}
 			);
 		
@@ -720,11 +723,16 @@ class RoomView extends React.Component {
 		}
 	}
 
-	getInfoOfUser =  async(IDUser) => {
+	getInfoOfUser = async(msg, IDUser) => {
 		try {
 			const result = await RocketChat.getUserInfo(IDUser);
 			if (result.success) {
-				console.debug('result of each member :', result)
+				const user = result.user;
+				const customFields = user.customFields;
+				const devicetoken = customFields.devicetoken;
+				const os = customFields.os;
+				console.debug('result of each user : ', user)
+				this.sendPushNotificationWithCustomPayload(msg,devicetoken,os)
 			}
 		}
 		catch {
@@ -732,8 +740,92 @@ class RoomView extends React.Component {
 		}
 	}
 
-	sendPushNotificationWithCustomPayload(){
-	
+	sendPushNotificationWithCustomPayload = async(msg, devicetoken,os) => {
+
+		const subscriptions = this.state;
+		var type = '';
+		var linkMessage = ''
+		var titleMessage = ''
+		console.debug('got device token :', devicetoken)
+		console.debug('this subscription = ', subscriptions.room)
+		
+		switch (subscriptions.room._raw.t) {
+			case 'p' : {type = 'group_chat'; linkMessage = subscriptions.room._raw.rid + ',' + subscriptions.room._raw.name; titleMessage =  subscriptions.room._raw.name} break
+			case 'c' : {type = 'channel_chat'; linkMessage = subscriptions.room._raw.rid + ',' + subscriptions.room._raw.name; titleMessage =  subscriptions.room._raw.name} break
+			case 'd' : {type = 'peer_chat'; linkMessage = subscriptions.room._raw.rid + ',' + subscriptions.room.u.username; titleMessage =  subscriptions.room.u.username} break
+			default : break
+		}
+
+		console.debug('notification type :', type)
+		console.debug('notification linkMessage :', linkMessage)
+		console.debug('notification titleMessage :', titleMessage)
+		
+		
+		const params = {}
+		params.to = 'cs8RDCfb_yY:APA91bHxv-_GobwcF6qxDzh_3W583QUWiyBXSx4DNLAfc--Z7B12XgLU82nur563aams7Lw80jzOBf5tVaYQ7LhZjZVD0P3ZEO2gsCbzWay2afdLBQACaaEehLIM1UEXObVtMi5NmZzv'
+		params.priority = 'high'
+
+		const notification = {}
+		notification.body = msg
+		notification.title = titleMessage
+		notification.click_action = 'com.comlinkinc.android.main.ui.MainActivity'
+		notification.sound = 'message_beep_tone.mp3'
+
+		const data = {}
+		data.link = linkMessage
+		data.type = type
+		data.chatRoomType = type
+
+		const androidData = {}
+		var linkAnd = linkMessage + ',' + msg
+		androidData.link = linkAnd
+		androidData.type = type
+		androidData.chatRoomType = type
+		androidData.click_action = 'com.comlinkinc.android.main.ui.MainActivity'
+
+		params.notification = notification
+		params.data = data
+		
+		console.debug('params of push notification : ', params)
+
+		if (os == 'ios') {
+		const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
+			method : 'POST', 
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
+			},
+			body : JSON.stringify({
+				'to' : devicetoken,
+				'priority' : 'high',
+				'notification' : notification,
+				'data' : data
+			})
+
+		}).then((response) => response.json())
+		.then((json) => {
+			console.debug('response of push notification new :', json)
+		  })
+		}else {
+			const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
+			method : 'POST', 
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
+			},
+			body : JSON.stringify({
+				'to' : devicetoken,
+				'priority' : 'high',
+				'data' : androidData
+			})
+
+		}).then((response) => response.json())
+		.then((json) => {
+			console.debug('response of push notification new :', json)
+		  })
+		}
+		
+
 	}
 
 	getMessages = () => {
