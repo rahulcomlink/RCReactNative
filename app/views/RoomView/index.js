@@ -798,8 +798,17 @@ class RoomView extends React.Component {
 			body : JSON.stringify({
 				'to' : devicetoken,
 				'priority' : 'high',
-				'notification' : notification,
-				'data' : data
+				'alert' : {'body' : msg ,'title' : titleMessage },
+				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'message_beep_tone.mp3', 'content-available' : '1'},
+				'data' : data,
+				'badge' : 1,
+				'aps': {
+					alert: 'Sample notification',
+					badge: '+1',
+					sound: 'default',
+					category: 'REACT_NATIVE',
+					'content-available': 1,
+				  }
 			})
 
 		}).then((response) => response.json())
@@ -816,7 +825,15 @@ class RoomView extends React.Component {
 			body : JSON.stringify({
 				'to' : devicetoken,
 				'priority' : 'high',
-				'data' : androidData
+				'data' : androidData,
+				'badge' : 1,
+				'aps': {
+					alert: 'Sample notification',
+					badge: '+1',
+					sound: 'default',
+					category: 'REACT_NATIVE',
+					'content-available': 1,
+				  }
 			})
 
 		}).then((response) => response.json())

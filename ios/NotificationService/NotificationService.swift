@@ -7,8 +7,12 @@ class NotificationService: UNNotificationServiceExtension {
   var rocketchat: RocketChat?
   
   override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+    print("push notification receive")
     self.contentHandler = contentHandler
     bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+    if let bestAttemptContent = bestAttemptContent {
+      contentHandler(bestAttemptContent)
+    }
     
     if let bestAttemptContent = bestAttemptContent {
       let ejson = (bestAttemptContent.userInfo["ejson"] as? String ?? "").data(using: .utf8)!
@@ -33,6 +37,7 @@ class NotificationService: UNNotificationServiceExtension {
         }
       }
     }
+    
   }
   
   func processPayload(payload: Payload) {

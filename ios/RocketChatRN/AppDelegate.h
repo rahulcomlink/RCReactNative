@@ -12,6 +12,7 @@
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 #import "RocketChatRN-Swift.h"
 
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate>
 
 @property (nonatomic, strong) UIWindow *window;

@@ -1,4 +1,7 @@
 import NotificationsIOS, { NotificationAction, NotificationCategory } from 'react-native-notifications';
+import {Notifications} from 'react-native-notifications';
+import messaging from '@react-native-firebase/messaging';
+import { Alert } from 'react-native';
 
 import reduxStore from '../../lib/createStore';
 import I18n from '../../i18n';
@@ -24,12 +27,31 @@ class PushNotification {
 		});
 
 		NotificationsIOS.addEventListener('notificationOpened', (notification, completion) => {
-			const { background } = reduxStore.getState().app;
-			if (background) {
+			console.debug("Notification Received - Foreground", notification.payload);
+			 const { background } = reduxStore.getState().app;
+			 if (background) {
 				this.onNotification(notification);
-			}
+			 }
 			completion();
 		});
+
+		NotificationsIOS.addEventListener('notificationReceivedForeground', (notification, completion) => {
+			console.debug('Notification received in foreground 1: ', notification);
+			completion({ alert: true, sound: true, badge: true });
+		});
+
+		NotificationsIOS.addEventListener('notificationReceivedBackground', (notification, completion) => {
+			console.debug('Notification received in foreground 1: ', notification);
+			completion({ alert: true, sound: true, badge: true });
+		});
+
+		messaging().setBackgroundMessageHandler(async remoteMessage => {
+			console.debug('Message handled in the background!', remoteMessage);
+		  });
+
+		  messaging().onMessage(async remoteMessage => {
+			Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+		  });
 
 		const actions = [];
 		actions.push(new NotificationCategory({
@@ -37,6 +59,8 @@ class PushNotification {
 			actions: [replyAction]
 		}));
 		NotificationsIOS.requestPermissions(actions);
+
+		
 	}
 
 	getDeviceToken() {

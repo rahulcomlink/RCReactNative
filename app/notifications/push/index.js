@@ -3,10 +3,14 @@ import PushNotification from './push';
 import store from '../../lib/createStore';
 import { deepLinkingOpen } from '../../actions/deepLinking';
 import { isFDroidBuild } from '../../constants/environment';
+import messaging from '@react-native-firebase/messaging';
 
 export const onNotification = (notification) => {
+	console.debug('onNotification methoid called :')
 	if (notification) {
+
 		const data = notification.getData();
+		console.debug('data on click on notification : ', data);
 		if (data) {
 			try {
 				const {
