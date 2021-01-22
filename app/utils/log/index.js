@@ -38,10 +38,10 @@ export const logEvent = (eventName, payload) => {
 };
 
 export const setCurrentScreen = (currentScreen) => {
-	if (!isFDroidBuild) {
-		analytics().setCurrentScreen(currentScreen);
-		leaveBreadcrumb(currentScreen, { type: 'navigation' });
-	}
+	// if (!isFDroidBuild) {
+	// 	analytics().setCurrentScreen(currentScreen);
+	// 	leaveBreadcrumb(currentScreen, { type: 'navigation' });
+	// }
 };
 
 export default (e) => {
