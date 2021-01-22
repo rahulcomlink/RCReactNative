@@ -35,7 +35,7 @@ public class MainActivity extends ReactFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704067
         super.onCreate(null);
-        RNBootSplash.init(R.drawable.launch_screen, MainActivity.this);
+        RNBootSplash.init(R.drawable.splash_screen, MainActivity.this);
 
         MMKV.initialize(MainActivity.this);
 

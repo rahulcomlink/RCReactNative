@@ -22,7 +22,7 @@
     </style>
 
     <style name="BootTheme" parent="AppTheme">
-        <item name="android:background">@drawable/launch_screen</item>
+        <item name="android:background">@drawable/splash_screen</item>
         <item name="colorPrimaryDark">@color/splashBackground</item>
         <item name="android:navigationBarColor">@color/splashBackground</item>
     </style>
