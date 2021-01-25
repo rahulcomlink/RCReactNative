@@ -1,5 +1,5 @@
-import React from 'react';
-import { Linking, Dimensions } from 'react-native';
+import React, { useEffect } from 'react';
+import { Linking, Dimensions, Alert } from 'react-native';
 import { AppearanceProvider } from 'react-native-appearance';
 import { Provider } from 'react-redux';
 import { KeyCommandsEmitter } from 'react-native-keycommands';
@@ -37,6 +37,7 @@ import InAppNotification from './containers/InAppNotification';
 import { ActionSheetProvider } from './containers/ActionSheet';
 import debounce from './utils/debounce';
 import { isFDroidBuild } from './constants/environment';
+import messaging from '@react-native-firebase/messaging';
 
 RNScreens.enableScreens();
 
@@ -111,6 +112,7 @@ export default class Root extends React.Component {
 	}
 
 	init = async() => {
+
 		UserPreferences.getMapAsync(THEME_PREFERENCES_KEY).then(this.setTheme);
 		const [notification, deepLinking] = await Promise.all([initializePushNotifications(), Linking.getInitialURL()]);
 		const parsedDeepLinkingURL = parseDeepLinking(deepLinking);
@@ -186,6 +188,8 @@ export default class Root extends React.Component {
 				}
 			});
 	}
+
+	
 
 	render() {
 		const {

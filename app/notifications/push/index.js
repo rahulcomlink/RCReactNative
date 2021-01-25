@@ -6,16 +6,16 @@ import { isFDroidBuild } from '../../constants/environment';
 import messaging from '@react-native-firebase/messaging';
 
 export const onNotification = (notification) => {
-	console.debug('onNotification methoid called :')
+	console.debug('onNotification methoid called :', notification)
 	if (notification) {
 
-		const data = notification.getData();
-		console.debug('data on click on notification : ', data);
-		if (data) {
-			try {
+		// const data = notification.getData();
+		// console.debug('data on click on notification : ', data);
+		// if (data) {
+		// 	try {
 				const {
 					rid, name, sender, type, host, messageType
-				} = EJSON.parse(data.ejson);
+				} = EJSON.parse(notification.ejson);
 
 				const types = {
 					c: 'channel', d: 'direct', p: 'group', l: 'channels'
@@ -32,10 +32,10 @@ export const onNotification = (notification) => {
 					isCall: messageType === 'jitsi_call_started'
 				};
 				store.dispatch(deepLinkingOpen(params));
-			} catch (e) {
-				console.warn(e);
-			}
-		}
+			//} catch (e) {
+			//	console.warn(e);
+			//}
+		//}
 	}
 };
 

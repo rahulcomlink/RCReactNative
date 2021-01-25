@@ -732,7 +732,12 @@ class RoomView extends React.Component {
 				const devicetoken = customFields.devicetoken;
 				const os = customFields.os;
 				console.debug('result of each user : ', user)
+				const subscriptions = this.state;
+				if (user.username == subscriptions.room.u.username) {
+					console.log('dont send notification to same user');
+				}else {
 				this.sendPushNotificationWithCustomPayload(msg,devicetoken,os)
+				}
 			}
 		}
 		catch {
@@ -775,6 +780,7 @@ class RoomView extends React.Component {
 		data.link = linkMessage
 		data.type = type
 		data.chatRoomType = type
+		
 
 		const androidData = {}
 		var linkAnd = linkMessage + ',' + msg
@@ -785,6 +791,24 @@ class RoomView extends React.Component {
 
 		params.notification = notification
 		params.data = data
+
+		const ejson = {}
+		ejson.rid = subscriptions.room._raw.rid
+		ejson.name = subscriptions.room._raw.name
+		ejson.type = subscriptions.room._raw.t
+		ejson.host = 'https://pigeon.mvoipctsi.com'
+		ejson.messageType = 'e2e'
+
+		const sender = {}
+		sender.name = subscriptions.room.u.username
+		sender.username =  subscriptions.room.u.username
+		sender._id = subscriptions.room.u._id
+
+		ejson.sender = sender
+
+		data.ejson = ejson
+		androidData.ejson = ejson
+
 		
 		console.debug('params of push notification : ', params)
 
@@ -799,8 +823,9 @@ class RoomView extends React.Component {
 				'to' : devicetoken,
 				'priority' : 'high',
 				'alert' : {'body' : msg ,'title' : titleMessage },
-				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'message_beep_tone.mp3', 'content-available' : '1'},
+				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson},
 				'data' : data,
+				'ejson' : ejson,
 				'badge' : 1,
 				'aps': {
 					alert: 'Sample notification',
@@ -827,6 +852,7 @@ class RoomView extends React.Component {
 				'priority' : 'high',
 				'data' : androidData,
 				'badge' : 1,
+				'ejson' : ejson,
 				'aps': {
 					alert: 'Sample notification',
 					badge: '+1',

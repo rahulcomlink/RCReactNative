@@ -49,9 +49,34 @@ class PushNotification {
 			console.debug('Message handled in the background!', remoteMessage);
 		  });
 
-		  messaging().onMessage(async remoteMessage => {
+		 messaging().onMessage(async remoteMessage => {
 			Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+			
+			//completion({ alert: true, sound: true, badge: true });
 		  });
+
+		  messaging().onNotificationOpenedApp(remoteMessage => {
+			console.debug(
+			  'Notification caused app to open from background state from background',
+			  remoteMessage,
+			);
+			this.onNotification(remoteMessage.data);
+			//Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+		   // navigation.navigate(remoteMessage.data.type);
+		  });
+
+		  messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+		  );
+		  this.onNotification(remoteMessage.data);
+		  //Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+        }
+      });
 
 		const actions = [];
 		actions.push(new NotificationCategory({
