@@ -50,7 +50,7 @@ class PushNotification {
 		  });
 
 		 messaging().onMessage(async remoteMessage => {
-			Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+			//Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
 			
 			//completion({ alert: true, sound: true, badge: true });
 		  });
@@ -73,7 +73,7 @@ class PushNotification {
             'Notification caused app to open from quit state:',
             remoteMessage.notification,
 		  );
-		  this.onNotification(remoteMessage.data);
+		  this.onNotification(remoteMessage.data);1
 		  //Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
         }
       });
