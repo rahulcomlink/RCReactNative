@@ -276,8 +276,169 @@ class RoomInfoView extends React.Component {
 
 	videoCall = () => {
 		const { room } = this.state;
+		this.sendNotification('Incoming Call');
 		RocketChat.callJitsi(room.rid);
 	}
+
+	sendNotification = async(msg) => {
+		
+		try {
+			const membersList = await RocketChat.getRoomMembers(this.rid, true, 0 , 100);
+			console.debug('info about message:', msg);
+			const newMembers = membersList.records;
+			newMembers.map((member) => { console.debug('new member = ', member._id) 
+			this.getInfoOfUser(msg, member._id)
+			}
+			);
+		
+		}catch (e) {
+			log(e);
+		}
+	}
+
+	getInfoOfUser = async(msg, IDUser) => {
+		try {
+			const result = await RocketChat.getUserInfo(IDUser);
+			if (result.success) {
+				const user = result.user;
+				const customFields = user.customFields;
+				const devicetoken = customFields.devicetoken;
+				const os = customFields.os;
+				console.debug('result of each user : ', user)
+				const subscriptions = this.state;
+				if (user.username == subscriptions.room.u.username) {
+					console.log('dont send notification to same user');
+				}else {
+				this.sendPushNotificationWithCustomPayload(msg,devicetoken,os)
+				}
+			}
+		}
+		catch {
+			//do nothing
+		}
+	}
+
+	sendPushNotificationWithCustomPayload = async(msg, devicetoken,os) => {
+
+		const subscriptions = this.state;
+		var type = '';
+		var linkMessage = ''
+		var titleMessage = ''
+		console.debug('got device token :', devicetoken)
+		console.debug('this subscription = ', subscriptions.room)
+		
+		switch (subscriptions.room._raw.t) {
+			case 'p' : {type = 'group_chat'; linkMessage = subscriptions.room._raw.rid + ',' + subscriptions.room._raw.name; titleMessage =  subscriptions.room._raw.name} break
+			case 'c' : {type = 'channel_chat'; linkMessage = subscriptions.room._raw.rid + ',' + subscriptions.room._raw.name; titleMessage =  subscriptions.room._raw.name} break
+			case 'd' : {type = 'peer_chat'; linkMessage = subscriptions.room._raw.rid + ',' + subscriptions.room.u.username; titleMessage =  subscriptions.room.u.username} break
+			default : break
+		}
+
+		console.debug('notification type :', type)
+		console.debug('notification linkMessage :', linkMessage)
+		console.debug('notification titleMessage :', titleMessage)
+		
+		
+		const params = {}
+		params.to = 'cs8RDCfb_yY:APA91bHxv-_GobwcF6qxDzh_3W583QUWiyBXSx4DNLAfc--Z7B12XgLU82nur563aams7Lw80jzOBf5tVaYQ7LhZjZVD0P3ZEO2gsCbzWay2afdLBQACaaEehLIM1UEXObVtMi5NmZzv'
+		params.priority = 'high'
+
+		const notification = {}
+		notification.body = msg
+		notification.title = titleMessage
+		notification.click_action = 'com.comlinkinc.android.main.ui.MainActivity'
+		notification.sound = 'message_beep_tone.mp3'
+
+		const data = {}
+		data.link = linkMessage
+		data.type = type
+		data.chatRoomType = type
+		
+
+		const androidData = {}
+		var linkAnd = linkMessage + ',' + msg
+		androidData.link = linkAnd
+		androidData.type = type
+		androidData.chatRoomType = type
+		androidData.click_action = 'com.comlinkinc.android.main.ui.MainActivity'
+
+		params.notification = notification
+		params.data = data
+
+		const ejson = {}
+		ejson.rid = subscriptions.room._raw.rid
+		ejson.name = subscriptions.room._raw.name
+		ejson.type = subscriptions.room._raw.t
+		ejson.host = 'https://pigeon.mvoipctsi.com'
+		ejson.messageType = 'jitsi_call_started'
+
+		const sender = {}
+		sender.name = subscriptions.room.u.username
+		sender.username =  subscriptions.room.u.username
+		sender._id = subscriptions.room.u._id
+
+		ejson.sender = sender
+
+		data.ejson = ejson
+		androidData.ejson = ejson
+
+		
+		console.debug('params of push notification : ', params)
+
+		if (os == 'ios') {
+		const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
+			method : 'POST', 
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
+			},
+			body : JSON.stringify({
+				'to' : devicetoken,
+				'priority' : 'high',
+				'alert' : {'body' : msg ,'title' : titleMessage },
+				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'tring_tring_tring.mp3', 'content-available' : '1', 'ejson' : ejson},
+				'data' : data,
+				'ejson' : ejson,
+				'badge' : 1,
+				'aps': {
+					alert: 'Sample notification',
+					badge: '+1',
+					sound: 'default',
+					category: 'REACT_NATIVE',
+					'content-available': 1,
+				  }
+			})
+
+		}).then((response) => response.json())
+		.then((json) => {
+			console.debug('response of push notification new :', json)
+		  })
+		}else {
+			const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
+			method : 'POST', 
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
+			},
+			body : JSON.stringify({
+				'to' : devicetoken,
+				'priority' : 'high',
+				'data' : androidData,
+				'badge' : 1,
+				'ejson' : ejson,
+				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'tring_tring_tring.mp3', 'content-available' : '1', 'ejson' : ejson}
+			})
+
+		}).then((response) => response.json())
+		.then((json) => {
+			console.debug('response of push notification new :', json)
+		  })
+		}
+		
+
+	}
+
+
 
 	renderAvatar = (room, roomUser) => {
 		const { theme } = this.props;
