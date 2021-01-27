@@ -48,8 +48,12 @@ class PushNotification {
           IncomingCall.openAppFromHeadlessMode(payload.uuid);
         } else {
           // Called from background state
-			console.debug("answerCall - backToForeground", "payload.uuid");
-			callJitsi("HiMWGbaP3q9krjy6Svc87hz5pvYENi4erx");
+          console.debug("answerCall - backToForeground", "payload.uuid");
+          console.debug(
+            "answerCall - roomID",
+            remoteMessage?.data?.link?.split(",")[0]
+          );
+          callJitsi(remoteMessage?.data?.link?.split(",")[0]);
           IncomingCall.backToForeground();
         }
       });
