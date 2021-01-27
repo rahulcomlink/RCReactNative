@@ -12883,6 +12883,11 @@ react-native-document-picker@3.5.3:
   resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-3.5.3.tgz#f749d329b8a85a4a599253dafe8c5c1c0602388b"
   integrity sha512-y1H7LKa8+VTtaBo46HNEz62IbRh6E4YMgdKi4+UFp33OTddzk0JAwcDT//vWI6tvB+u4B1AsamTdbI86FYeQAQ==
 
+react-native-draw-overlay@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-draw-overlay/-/react-native-draw-overlay-1.0.1.tgz#718d716c820f36726841a05410c2ea5df96ba2e0"
+  integrity sha512-6hMIhl43+Rh2Tjxqy7BptmGcTshnqSnQSUwkdIEheEgIV+VHtDWGzRinZrPziknzJSsbOcQgRaQ5BUTH0tQlEQ==
+
 react-native-easy-grid@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.2.tgz#f0be33620be1ebe2d2295918eb58b0a27e8272ab"
