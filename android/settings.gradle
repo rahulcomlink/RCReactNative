@@ -1,4 +1,6 @@
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
+include ':react-native-incoming-call'
+project(':react-native-incoming-call').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-incoming-call/android')
 includeUnimodulesProjects()
 
 rootProject.name = 'RocketChatRN'

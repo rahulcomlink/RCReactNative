@@ -853,7 +853,13 @@ class RoomView extends React.Component {
 				'data' : androidData,
 				'badge' : 1,
 				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson}
+				'aps': {
+					alert: 'Sample notification',
+					badge: '+1',
+					sound: 'default',
+					category: 'REACT_NATIVE',
+					'content-available': 1,
+				  }
 			})
 
 		}).then((response) => response.json())
