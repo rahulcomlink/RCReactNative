@@ -4,6 +4,8 @@ import android.app.Application;
 
 import androidx.annotation.Nullable;
 
+import com.comlinkinc.android.pigeon.generated.BasePackageList;
+import com.comlinkinc.android.pigeon.networking.SSLPinningPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -12,15 +14,14 @@ import com.facebook.soloader.SoLoader;
 import com.google.firebase.FirebaseApp;
 import com.nozbe.watermelondb.WatermelonDBPackage;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
+import com.ssg.autostart.AutostartPackage;
+import com.toyberman.drawOverlay.RNDrawOverlayPackage;
 
 import org.unimodules.adapters.react.ModuleRegistryAdapter;
 import org.unimodules.adapters.react.ReactModuleRegistryProvider;
 
 import java.util.Arrays;
 import java.util.List;
-
-import com.comlinkinc.android.pigeon.generated.BasePackageList;
-import com.comlinkinc.android.pigeon.networking.SSLPinningPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -39,6 +40,8 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new WatermelonDBPackage());
       packages.add(new RNCViewPagerPackage());
       packages.add(new SSLPinningPackage());
+//      packages.add(new RNDrawOverlayPackage());
+//      packages.add(new AutostartPackage());
       List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
         new ModuleRegistryAdapter(mModuleRegistryProvider)
       );

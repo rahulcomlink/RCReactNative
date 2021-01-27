@@ -60,6 +60,7 @@ import { E2E_MESSAGE_TYPE, E2E_STATUS } from "../../lib/encryption/constants";
 import { takeInquiry } from "../../ee/omnichannel/lib";
 import { networking } from "reactotron-react-native";
 import RNDrawOverlay from "react-native-draw-overlay";
+import AutoStart from "react-native-autostart";
 
 const stateAttrsUpdate = [
   "joined",
@@ -216,6 +217,10 @@ class RoomView extends React.Component {
       .catch((e) => {
         // permission was declined
       });
+
+    if (AutoStart.isCustomAndroid()) {
+      AutoStart.startAutostartSettings();
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
