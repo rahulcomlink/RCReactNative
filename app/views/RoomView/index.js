@@ -210,17 +210,19 @@ class RoomView extends React.Component {
     EventEmitter.addEventListener("ROOM_REMOVED", this.handleRoomRemoved);
     console.timeEnd(`${this.constructor.name} mount`);
 
-    RNDrawOverlay.askForDispalayOverOtherAppsPermission()
-      .then((res) => {
-        // res will be true if permission was granted
-      })
-      .catch((e) => {
-        // permission was declined
-      });
+    if (os != "ios") {
+      RNDrawOverlay.askForDispalayOverOtherAppsPermission()
+        .then((res) => {
+          // res will be true if permission was granted
+        })
+        .catch((e) => {
+          // permission was declined
+        });
 
-    // if (AutoStart.isCustomAndroid()) {
-    //   AutoStart.startAutostartSettings();
-    // }
+      // if (AutoStart.isCustomAndroid()) {
+      //   AutoStart.startAutostartSettings();
+      // }
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
