@@ -218,9 +218,9 @@ class RoomView extends React.Component {
         // permission was declined
       });
 
-    if (AutoStart.isCustomAndroid()) {
-      AutoStart.startAutostartSettings();
-    }
+    // if (AutoStart.isCustomAndroid()) {
+    //   AutoStart.startAutostartSettings();
+    // }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -904,7 +904,6 @@ class RoomView extends React.Component {
     const notification = {};
     notification.body = msg;
     notification.title = titleMessage;
-    notification.click_action = "com.comlinkinc.android.main.ui.MainActivity";
     notification.sound = "message_beep_tone.mp3";
 
     const data = {};
@@ -917,7 +916,6 @@ class RoomView extends React.Component {
     androidData.link = linkAnd;
     androidData.type = type;
     androidData.chatRoomType = type;
-    androidData.click_action = "com.comlinkinc.android.main.ui.MainActivity";
 
     params.notification = notification;
     params.data = data;
@@ -956,7 +954,6 @@ class RoomView extends React.Component {
           notification: {
             body: msg,
             title: titleMessage,
-            click_action: "com.comlinkinc.android.main.ui.MainActivity",
             sound: "message_beep_tone.mp3",
             "content-available": "1",
             ejson: ejson,
@@ -991,12 +988,12 @@ class RoomView extends React.Component {
           data: androidData,
           badge: 1,
           ejson: ejson,
-          aps: {
-            alert: "Sample notification",
-            badge: "+1",
-            sound: "default",
-            category: "REACT_NATIVE",
-            "content-available": 1,
+          notification: {
+            body: msg,
+            title: titleMessage,
+            sound: "message_beep_tone.mp3",
+            "content-available": "1",
+            ejson: ejson,
           },
         }),
       })

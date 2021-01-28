@@ -549,7 +549,6 @@ class RoomActionsView extends React.Component {
 		const notification = {}
 		notification.body = msg
 		notification.title = titleMessage
-		notification.click_action = 'com.comlinkinc.android.main.ui.MainActivity'
 		notification.sound = 'message_beep_tone.mp3'
 
 		const data = {}
@@ -563,7 +562,6 @@ class RoomActionsView extends React.Component {
 		androidData.link = linkAnd
 		androidData.type = type
 		androidData.chatRoomType = type
-		androidData.click_action = 'com.comlinkinc.android.main.ui.MainActivity'
 
 		params.notification = notification
 		params.data = data
@@ -600,7 +598,7 @@ class RoomActionsView extends React.Component {
 				'to' : devicetoken,
 				'priority' : 'high',
 				'alert' : {'body' : msg ,'title' : titleMessage },
-				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'tring_tring_tring.mp3', 'content-available' : '1', 'ejson' : ejson},
+				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'content-available' : '1', 'ejson' : ejson},
 				'data' : data,
 				'ejson' : ejson,
 				'badge' : 1,
@@ -630,7 +628,7 @@ class RoomActionsView extends React.Component {
 				'data' : androidData,
 				'badge' : 1,
 				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'tring_tring_tring.mp3', 'content-available' : '1', 'ejson' : ejson}
+				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'content-available' : '1', 'ejson' : ejson}
 			})
 
 		}).then((response) => response.json())
