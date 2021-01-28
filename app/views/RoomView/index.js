@@ -210,7 +210,8 @@ class RoomView extends React.Component {
     EventEmitter.addEventListener("ROOM_REMOVED", this.handleRoomRemoved);
     console.timeEnd(`${this.constructor.name} mount`);
 
-    if (os != "ios") {
+	const os = isIOS ? "ios" : "android";
+    if (os == "android") {
       RNDrawOverlay.askForDispalayOverOtherAppsPermission()
         .then((res) => {
           // res will be true if permission was granted
