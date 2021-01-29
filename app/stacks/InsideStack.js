@@ -33,7 +33,7 @@ import MarkdownTableView from '../views/MarkdownTableView';
 import ReadReceiptsView from '../views/ReadReceiptView';
 
 // Profile Stack
-import VideoCallView from "../views/VideoCallView";
+import ProfileView from '../views/ProfileView';
 import UserPreferencesView from '../views/UserPreferencesView';
 import UserNotificationPrefView from '../views/UserNotificationPreferencesView';
 
