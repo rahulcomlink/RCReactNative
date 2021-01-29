@@ -6,6 +6,7 @@ import messaging from "@react-native-firebase/messaging";
 import { DeviceEventEmitter } from "react-native";
 import IncomingCall from "react-native-incoming-call";
 import callJitsi from "../../lib/methods/callJitsi";
+import { isIOS, isTablet } from "../../utils/deviceInfo";
 
 class PushNotification {
   constructor() {
