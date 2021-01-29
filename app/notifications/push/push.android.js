@@ -27,13 +27,18 @@ class PushNotification {
       // Receive remote message
       if (remoteMessage?.notification?.body === "Incoming Call") {
         // Display incoming call activity.
-        IncomingCall.display(
-          "callUUIDv4", // Call UUID v4
-          remoteMessage?.notification?.title, // Username
-          "https://user-images.githubusercontent.com/13730671/105949904-7be50e00-6093-11eb-88cd-f1d8b2147af3.png", // Avatar URL
-          "Incoming Video Call", // Info text
-          20000 // Timeout for end call after 20s
-        );
+        // IncomingCall.display(
+        //   "callUUIDv4", // Call UUID v4
+        //   remoteMessage?.notification?.title, // Username
+        //   "https://user-images.githubusercontent.com/13730671/105949904-7be50e00-6093-11eb-88cd-f1d8b2147af3.png", // Avatar URL
+        //   "Incoming Video Call", // Info text
+        //   20000 // Timeout for end call after 20s
+		// );
+		  Navigation.navigate("RoomView", {
+        rid: remoteMessage?.data?.link?.split(",")[0],
+        name: remoteMessage?.data?.link?.split(",")[1],
+        t: 'd',
+      });
       }
 
       // Listen to headless action events

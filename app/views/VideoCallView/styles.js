@@ -1,0 +1,61 @@
+import { StyleSheet } from "react-native";
+
+export default StyleSheet.create({
+  background: {
+    width: "100%",
+    height: "100%",
+  },
+  logo: {
+    width: 280,
+    height: 280,
+    marginLeft: "15%",
+    marginTop: "10%",
+  },
+  text: {
+    color: "black",
+    marginTop: "-25%",
+    backgroundColor: "white",
+    color: "#3A59FF",
+    borderRadius: 25,
+    textAlign: "center",
+    padding: "2%",
+    fontSize: 22,
+  },
+  signup: {
+    backgroundColor: "white",
+    color: "#3A59FF",
+    width: "75%",
+    borderRadius: 25,
+    textAlign: "center",
+    fontWeight: "bold",
+    marginLeft: "11%",
+    padding: "2%",
+    fontSize: 27,
+    marginTop: "70%",
+  },
+  login: {
+    backgroundColor: "#3A59FF",
+    color: "white",
+    width: "75%",
+    borderRadius: 25,
+    textAlign: "center",
+    fontWeight: "bold",
+    marginLeft: "11%",
+    padding: "2%",
+    fontSize: 27,
+    marginTop: "10%",
+  },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonContainer: {
+    flex: 1,
+    marginRight: "5%",
+    marginLeft: "5%",
+    alignContent: "stretch",
+    justifyContent: "flex-end",
+  },
+});

@@ -33,7 +33,7 @@ import MarkdownTableView from '../views/MarkdownTableView';
 import ReadReceiptsView from '../views/ReadReceiptView';
 
 // Profile Stack
-import ProfileView from '../views/ProfileView';
+import VideoCallView from "../views/VideoCallView";
 import UserPreferencesView from '../views/UserPreferencesView';
 import UserNotificationPrefView from '../views/UserNotificationPreferencesView';
 
@@ -191,29 +191,35 @@ const ProfileStack = createStackNavigator();
 const ProfileStackNavigator = () => {
 	const { theme } = React.useContext(ThemeContext);
 	return (
-		<ProfileStack.Navigator screenOptions={{ ...defaultHeader, ...themedHeader(theme), ...StackAnimation }}>
-			<ProfileStack.Screen
-				name='ProfileView'
-				component={ProfileView}
-				options={ProfileView.navigationOptions}
-			/>
-			<ProfileStack.Screen
-				name='UserPreferencesView'
-				component={UserPreferencesView}
-				options={UserPreferencesView.navigationOptions}
-			/>
-			<ProfileStack.Screen
-				name='UserNotificationPrefView'
-				component={UserNotificationPrefView}
-				options={UserNotificationPrefView.navigationOptions}
-			/>
-			<ProfileStack.Screen
-				name='PickerView'
-				component={PickerView}
-				options={PickerView.navigationOptions}
-			/>
-		</ProfileStack.Navigator>
-	);
+    <ProfileStack.Navigator
+      screenOptions={{
+        ...defaultHeader,
+        ...themedHeader(theme),
+        ...StackAnimation,
+      }}
+    >
+      <ProfileStack.Screen
+        name="VideoCallView"
+        component={VideoCallView}
+        options={VideoCallView.navigationOptions}
+      />
+      <ProfileStack.Screen
+        name="UserPreferencesView"
+        component={UserPreferencesView}
+        options={UserPreferencesView.navigationOptions}
+      />
+      <ProfileStack.Screen
+        name="UserNotificationPrefView"
+        component={UserNotificationPrefView}
+        options={UserNotificationPrefView.navigationOptions}
+      />
+      <ProfileStack.Screen
+        name="PickerView"
+        component={PickerView}
+        options={PickerView.navigationOptions}
+      />
+    </ProfileStack.Navigator>
+  );
 };
 
 // SettingsStackNavigator
