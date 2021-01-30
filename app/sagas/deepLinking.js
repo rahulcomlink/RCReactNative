@@ -57,8 +57,9 @@ const navigate = function* navigate({ params }) {
 				if (params.isCall) {
 					//callJitsi(item.rid);
 					//Custom Comlink changes
-					//console.debug('params of jitsi video call', params);
-					this.incomingVideoCall(item.rid)
+					console.debug('extract name from parameter ', name);
+					console.debug('params of jitsi video call', params);
+					this.incomingVideoCall(item.rid,name)
 				}
 			}
 		} else {
@@ -67,8 +68,8 @@ const navigate = function* navigate({ params }) {
 	}
 };
 
-incomingVideoCall = (rid) => {
-	Navigation.navigate('VideoCallView', {rid:rid});
+incomingVideoCall = (rid, name) => {
+	Navigation.navigate('VideoCallView', {roomId:rid, username : name});
 }
 
 const fallbackNavigation = function* fallbackNavigation() {
