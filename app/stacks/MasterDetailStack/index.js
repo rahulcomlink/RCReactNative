@@ -50,6 +50,7 @@ import E2EEncryptionSecurityView from '../../views/E2EEncryptionSecurityView';
 import AttachmentView from '../../views/AttachmentView';
 import ModalBlockView from '../../views/ModalBlockView';
 import JitsiMeetView from '../../views/JitsiMeetView';
+import VideoCallView from '../../views/VideoCallView';
 import StatusView from '../../views/StatusView';
 import CreateDiscussionView from '../../views/CreateDiscussionView';
 import E2ESaveYourPasswordView from '../../views/E2ESaveYourPasswordView';
@@ -332,6 +333,11 @@ const InsideStackNavigator = React.memo(() => {
 			<InsideStack.Screen
 				name='JitsiMeetView'
 				component={JitsiMeetView}
+				options={{ headerShown: false }}
+			/>
+			<InsideStack.Screen
+				name='VideoCallView'
+				component={VideoCallView}
 				options={{ headerShown: false }}
 			/>
 			<InsideStack.Screen

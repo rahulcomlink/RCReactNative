@@ -64,6 +64,7 @@ import E2EEnterYourPasswordView from '../views/E2EEnterYourPasswordView';
 import AttachmentView from '../views/AttachmentView';
 import ModalBlockView from '../views/ModalBlockView';
 import JitsiMeetView from '../views/JitsiMeetView';
+import VideoCallView from '../views/VideoCallView';
 import StatusView from '../views/StatusView';
 import ShareView from '../views/ShareView';
 import CreateDiscussionView from '../views/CreateDiscussionView';
@@ -403,6 +404,11 @@ const InsideStackNavigator = () => {
 				name='ModalBlockView'
 				component={ModalBlockView}
 				options={ModalBlockView.navigationOptions}
+			/>
+			<InsideStack.Screen
+				name='VideoCallView'
+				component={VideoCallView}
+				options={{ headerShown: false }}
 			/>
 			<InsideStack.Screen
 				name='JitsiMeetView'

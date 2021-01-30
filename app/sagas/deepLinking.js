@@ -16,6 +16,7 @@ import {
 import { localAuthenticate } from '../utils/localAuthentication';
 import { goRoom } from '../utils/goRoom';
 import callJitsi from '../lib/methods/callJitsi';
+import VideoCallView from "../views/VideoCallView";
 
 const roomTypes = {
 	channel: 'c', direct: 'd', group: 'p', channels: 'l'
@@ -38,7 +39,7 @@ const navigate = function* navigate({ params }) {
 		const [type, name] = params.path.split('/');
 		if (type !== 'invite') {
 			const room = yield RocketChat.canOpenRoom(params);
-			if (room) {
+			if (room) {  
 				const isMasterDetail = yield select(state => state.app.isMasterDetail);
 				if (isMasterDetail) {
 					Navigation.navigate('DrawerNavigator');
@@ -54,7 +55,10 @@ const navigate = function* navigate({ params }) {
 				yield goRoom({ item, isMasterDetail });
 
 				if (params.isCall) {
-					callJitsi(item.rid);
+					//callJitsi(item.rid);
+					//Custom Comlink changes
+					//console.debug('params of jitsi video call', params);
+					this.incomingVideoCall(item.rid)
 				}
 			}
 		} else {
@@ -62,6 +66,10 @@ const navigate = function* navigate({ params }) {
 		}
 	}
 };
+
+incomingVideoCall = (rid) => {
+	Navigation.navigate('VideoCallView', {rid:rid});
+}
 
 const fallbackNavigation = function* fallbackNavigation() {
 	const currentRoot = yield select(state => state.app.root);

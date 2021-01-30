@@ -18,6 +18,7 @@ import RegisterView from '../views/RegisterView';
 import LegalView from '../views/LegalView';
 import AuthenticationWebView from '../views/AuthenticationWebView';
 import { ROOT_OUTSIDE } from '../actions/app';
+import VideoCallView from "../views/VideoCallView";
 
 // Outside
 const Outside = createStackNavigator();
@@ -82,6 +83,11 @@ const _OutsideStack = ({ root }) => {
         name="LegalView"
         component={LegalView}
         options={LegalView.navigationOptions}
+      />
+      <Outside.Screen
+        name="VideoCallView"
+        component={VideoCallView}
+        options={VideoCallView.navigationOptions}
       />
     </Outside.Navigator>
   );

@@ -1,35 +1,49 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  ImageBackground,
-  Image,
   TouchableOpacity,
-  Button,
+  StyleSheet,
+  Image,
+  Dimensions,
   Alert,
+  ImageBackground,
+  Button,
 } from "react-native";
 import styles from "./styles";
 import I18n, { LANGUAGES, isRTL } from "../../i18n";
+import callJitsi from '../../lib/methods/callJitsi';
+
+//const { width } = Dimensions.get("window");
 
 class VideoCallView extends React.Component {
   static navigationOptions = () => ({
     title: "Video Call",
   });
 
+  static propTypes = {
+		navigation: PropTypes.object,
+		route: PropTypes.object
+	}
+
   constructor(props) {
     super(props);
+    console.debug('this.props', props);
+    this.rid = props.route.params?.roomId;
     this.state = {};
+    // this.state = {
+    //   modalVisible: false,
+    //   userSelected: [],
+    // };
   }
 
   acceptCallPressed = () => {
-	  Alert.alert("Call Accepted");
-	  callJitsi("Paas room_Id here");
+    this.rid = this.props.route.params?.rid;
+	  callJitsi(this.rid);
   };
 
   rejectCallPressed = () => {
-    Alert.alert("Call Rejected");
+    this.props.navigation.pop()
   };
 
   render() {

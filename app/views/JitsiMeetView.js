@@ -56,7 +56,7 @@ class JitsiMeetView extends React.Component {
 			} else {
 				JitsiMeet.call(url, userInfo);
 			}
-		}, 1000);
+		}, 0);
 	}
 
 	componentWillUnmount() {
@@ -70,14 +70,14 @@ class JitsiMeetView extends React.Component {
 	// Jitsi Update Timeout needs to be called every 10 seconds to make sure
 	// call is not ended and is available to web users.
 	onConferenceJoined = () => {
-		logEvent(events.JM_CONFERENCE_JOIN);
-		RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
-		if (this.jitsiTimeout) {
-			BackgroundTimer.clearInterval(this.jitsiTimeout);
-		}
-		this.jitsiTimeout = BackgroundTimer.setInterval(() => {
-			RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
-		}, 10000);
+		 logEvent(events.JM_CONFERENCE_JOIN);
+		// RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
+		// if (this.jitsiTimeout) {
+		// 	BackgroundTimer.clearInterval(this.jitsiTimeout);
+		// }
+		// this.jitsiTimeout = BackgroundTimer.setInterval(() => {
+		// 	RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
+		// }, 10000);
 	}
 
 	onConferenceTerminated = () => {
