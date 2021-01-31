@@ -628,7 +628,8 @@ class RoomActionsView extends React.Component {
 				'data' : androidData,
 				'badge' : 1,
 				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'soundName' : 'tring_tring_tring.mp3','content-available' : '1', 'ejson' : ejson}
+				//'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'soundName' : 'tring_tring_tring.mp3','content-available' : '1', 'ejson' : ejson}
+				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'soundName' : 'tring_tring_tring.mp3', 'android_channel_id': '500', 'content-available' : '1', 'ejson' : ejson}
 			})
 
 		}).then((response) => response.json())

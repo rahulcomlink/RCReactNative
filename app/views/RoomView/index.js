@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text, View, InteractionManager } from "react-native";
+import { Text, View, InteractionManager, Alert } from "react-native";
 import { connect } from "react-redux";
 
 import { sanitizedRaw } from "@nozbe/watermelondb/RawRecord";
@@ -61,6 +61,9 @@ import { takeInquiry } from "../../ee/omnichannel/lib";
 import { networking } from "reactotron-react-native";
 import RNDrawOverlay from "react-native-draw-overlay";
 import AutoStart from "react-native-autostart";
+// We are importing the native Java module here
+import { NativeModules } from "react-native";
+var NotificationSettings = NativeModules.NotificationSettings;
 
 const stateAttrsUpdate = [
   "joined",
@@ -210,7 +213,7 @@ class RoomView extends React.Component {
     EventEmitter.addEventListener("ROOM_REMOVED", this.handleRoomRemoved);
     console.timeEnd(`${this.constructor.name} mount`);
 
-	const os = isIOS ? "ios" : "android";
+    const os = isIOS ? "ios" : "android";
     if (os == "android") {
       RNDrawOverlay.askForDispalayOverOtherAppsPermission()
         .then((res) => {
@@ -223,8 +226,38 @@ class RoomView extends React.Component {
       // if (AutoStart.isCustomAndroid()) {
       //   AutoStart.startAutostartSettings();
       // }
+
+      // Works on both Android and iOS
+      //   Alert.alert(
+      //     "",
+      //     "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
+      //     [
+      //       {
+      //         text: "Cancel",
+      //         onPress: () => console.log("Cancel Pressed"),
+      //         style: "cancel",
+      //       },
+      //       {
+      //         text: "OK",
+      //         onPress: () => this.openNofiticationSettingsFromJava(),
+      //       },
+      //     ],
+      //     { cancelable: false }
+      //   );
     }
   }
+
+  // async function to call the Java native method
+  openNofiticationSettingsFromJava = async () => {
+    NotificationSettings.nofiticationSettingsMethod(
+      (err) => {
+        console.debug("NOTIFICATION " + err);
+      },
+      (msg) => {
+        console.debug("NOTIFICATION " + msg);
+      }
+    );
+  };
 
   shouldComponentUpdate(nextProps, nextState) {
     const { state } = this;
@@ -960,6 +993,7 @@ class RoomView extends React.Component {
             sound: "message_beep_tone.mp3",
             soundName: "message_beep_tone.mp3",
             "content-available": "1",
+            android_channel_id: "500",
             ejson: ejson,
           },
           data: data,
@@ -996,8 +1030,8 @@ class RoomView extends React.Component {
           notification: {
             body: msg,
             title: titleMessage,
-            sound: "message_beep_tone.mp3",
-            "content-available": "1",
+			sound: "message_beep_tone.mp3",
+			android_channel_id: "500",
             ejson: ejson,
           },
         }),

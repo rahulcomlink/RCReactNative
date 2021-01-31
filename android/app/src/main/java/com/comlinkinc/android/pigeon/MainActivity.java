@@ -1,5 +1,8 @@
 package com.comlinkinc.android.pigeon;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
@@ -90,6 +93,18 @@ public class MainActivity extends ReactFragmentActivity {
           
             // Mark migration complete
             defaultMMKV.encode("alreadyMigrated", true);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel("500", "MainChannel", NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel.setShowBadge(true);
+            notificationChannel.setDescription("Test Notifications");
+            notificationChannel.enableVibration(true);
+            notificationChannel.enableLights(true);
+            notificationChannel.setVibrationPattern(new long[]{400, 200, 400});
+            //notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
         }
     }
 
