@@ -14,6 +14,10 @@ import {
 import styles from "./styles";
 import I18n, { LANGUAGES, isRTL } from "../../i18n";
 import callJitsi from '../../lib/methods/callJitsi';
+const Sound = require('react-native-sound')
+import { Platform } from 'react-native';
+//import Sound from 'react-native-sound';
+
 
 //const { width } = Dimensions.get("window");
 
@@ -25,14 +29,119 @@ class VideoCallView extends React.Component {
   static propTypes = {
 		navigation: PropTypes.object,
 		route: PropTypes.object
-	}
+  }
+  
+  // componentDidMount(){
+
+  //   const mainBundle = Platform.OS === 'ios'
+  // ? encodeURIComponent(Sound.MAIN_BUNDLE)
+  // : Sound.MAIN_BUNDLE;
+
+  // console.debug('mainbundlllee = ',mainBundle);
+
+  // // const notifAlert = new Sound('tring_tring_tring.mp3', mainBundle, error => {
+  // //   if (error) console.debug('error of ring', error);
+  // // });
+
+  // // notifAlert.play();
+
+  //   const sound = new Sound(
+  //     "tring_tring_tring.mp3",
+  //     mainBundle,
+  //     error => {
+  //       if (error) {
+  //         console.debug("failed to load the sound", error);
+  //         //return;
+  //       }else {
+  //         console.debug('sound can play successfully');
+  //       }
+  //       //sound.play(() => sound.release());
+  //     }
+  //   );
+  // // The play dispatcher
+  // sound.play();
+  // }
+
+  // componentDidUpdate(){
+  //   const mainBundle = Platform.OS === 'ios'
+  // ? encodeURIComponent(Sound.MAIN_BUNDLE)
+  // : Sound.MAIN_BUNDLE;
+
+  // console.debug('mainbundlllee = ',mainBundle);
+
+  // // const notifAlert = new Sound('tring_tring_tring.mp3', mainBundle, error => {
+  // //   if (error) console.debug('error of ring', error);
+  // // });
+
+  // // notifAlert.play();
+  // // }
+
+  /*
+  componentDidUpdate(){
+
+    const mainBundle = Platform.OS === 'ios'
+    ? encodeURIComponent(Sound.MAIN_BUNDLE)
+    : Sound.MAIN_BUNDLE;
+
+    const sound = new Sound(
+      'tring_tring_tring.mp3',
+      mainBundle,
+      error => {
+        console.debug('sound can play successfully');
+        if (error) {
+          console.debug("failed to load the sound", error);
+          //return;
+        }else {
+          console.debug('sound can play successfully');
+        }
+        sound.play(() => sound.release());
+      }
+    );
+  // The play dispatcher
+  sound.play();
+  }
+
+*/
+
+  componentDidMount(){
+    this.handlePress();
+    // const mainBundle = Platform.OS === 'ios'
+    // ? encodeURIComponent(Sound.MAIN_BUNDLE)
+    // : Sound.MAIN_BUNDLE;
+    // this.hello = new Sound('tring_tring_tring.mp3', mainBundle, (error) => {
+    //   if (error) {
+    //     console.log('failed to load the sound', error);
+    //     return;
+    //   }
+    // });
+  }
+
+  handlePress = async() => {
+    this.hello.play((success) => {
+      if (!success) {
+        console.log('Sound did not play')
+      }
+    })
+  }
+
+  componentDidUpdate(){
+    this.handlePress.bind(this)
+  }
+
+  componentWillUpdate(){
+    this.handlePress.bind(this)
+  }
+  
+  
+  
 
   constructor(props) {
     super(props);
     console.debug('this.props', props);
     this.rid = props.route.params?.roomId;
     this.name =  props.route.params?.username;
-    this.state = {};
+    this.state = {
+    };
     // this.state = {
     //   modalVisible: false,
     //   userSelected: [],
@@ -49,7 +158,24 @@ class VideoCallView extends React.Component {
     this.props.navigation.pop()
   };
 
+  // componentDidMount(){
+  //   var sound = new Sound('tring_tring_tring.mp3');
+  //   this.sound.play()
+  // }
+
+
   render() {
+
+    const mainBundle = Platform.OS === 'ios'
+    ? encodeURIComponent(Sound.MAIN_BUNDLE)
+    : Sound.MAIN_BUNDLE;
+    this.hello = new Sound('tring_tring_tring.mp3', mainBundle, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+    });
+
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.topBar}>
@@ -81,6 +207,14 @@ class VideoCallView extends React.Component {
               source={require("../../static/images/answer_call.png")}
             />
           </TouchableOpacity>
+
+          {this.handlePress.bind(this)}
+
+          <TouchableOpacity onPress={this.handlePress.bind(this)}>
+                <View>
+                      <Text>Start</Text>
+                </View>
+            </TouchableOpacity>
         </View>
       </View>
     );

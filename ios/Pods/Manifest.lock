@@ -495,9 +495,9 @@ PODS:
     - React
     - SDWebImage (~> 5.0)
     - SDWebImageWebPCoder (~> 0.4.1)
-  - RNFBAnalytics (7.3.1):
+  - RNFBAnalytics (10.5.1):
     - Firebase/Analytics (~> 7.3.0)
-    - React
+    - React-Core
     - RNFBApp
   - RNFBApp (10.4.0):
     - Firebase/CoreOnly (~> 7.3.0)
@@ -529,6 +529,11 @@ PODS:
   - RNRootView (1.0.3):
     - React
   - RNScreens (2.9.0):
+    - React
+  - RNSound (0.11.0):
+    - React
+    - RNSound/Core (= 0.11.0)
+  - RNSound/Core (0.11.0):
     - React
   - RNVectorIcons (7.0.0):
     - React
@@ -660,6 +665,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNRootView (from `../node_modules/rn-root-view`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
@@ -865,6 +871,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-root-view"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   UMAppLoader:
@@ -996,7 +1004,7 @@ SPEC CHECKSUMS:
   RNDateTimePicker: e386ff4ef3300964ed0cad97ce6f206e0effbfdb
   RNDeviceInfo: ed8557a8bd6443cbc0ab5d375e6808a38a279744
   RNFastImage: f40d202ea2367239f71bc7cf11315f4bebab85b4
-  RNFBAnalytics: ca57aea987a6d8b039e9dc69cfa79b225071bd2e
+  RNFBAnalytics: 4e7b4025580fa5574610a9b55e4b3c6ece142976
   RNFBApp: a9af8372c9c2b2135ffa78817fd2d8baf3ee632e
   RNFBCrashlytics: ec6fcb2544c82dd03dc07e1f0e8c249e59b3508e
   RNFBMessaging: 643ec4102ee0d780f928718c2632bb1e90487f04
@@ -1006,6 +1014,7 @@ SPEC CHECKSUMS:
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
   RNRootView: 895a4813dedeaca82db2fa868ca1c333d790e494
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
+  RNSound: da030221e6ac7e8290c6b43f2b5f2133a8e225b0
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
   SDWebImageWebPCoder: 36f8f47bd9879a8aea6044765c1351120fd8e3a8
@@ -1026,6 +1035,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 4b5d11938dab2108c24ab9d89c065e5cd8097b4d
+PODFILE CHECKSUM: 63621d35b9e2a0125d7bff9578845bf65f349d34
 
 COCOAPODS: 1.10.1

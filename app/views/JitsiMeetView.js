@@ -30,6 +30,7 @@ class JitsiMeetView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.rid = props.route.params?.rid;
+		console.debug('room id of jitsi video call', this.rid);
 		this.onConferenceTerminated = this.onConferenceTerminated.bind(this);
 		this.onConferenceJoined = this.onConferenceJoined.bind(this);
 		this.jitsiTimeout = null;
@@ -50,13 +51,16 @@ class JitsiMeetView extends React.Component {
 				avatar
 			};
 			const url = route.params?.url;
+			console.debug('url of jitsi video call', url);
 			const onlyAudio = route.params?.onlyAudio ?? false;
 			if (onlyAudio) {
 				JitsiMeet.audioCall(url, userInfo);
 			} else {
 				JitsiMeet.call(url, userInfo);
 			}
-		}, 0);
+		}, 10000);
+
+		
 	}
 
 	componentWillUnmount() {
@@ -71,13 +75,13 @@ class JitsiMeetView extends React.Component {
 	// call is not ended and is available to web users.
 	onConferenceJoined = () => {
 		 logEvent(events.JM_CONFERENCE_JOIN);
-		// RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
-		// if (this.jitsiTimeout) {
-		// 	BackgroundTimer.clearInterval(this.jitsiTimeout);
-		// }
-		// this.jitsiTimeout = BackgroundTimer.setInterval(() => {
-		// 	RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
-		// }, 10000);
+		RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
+		if (this.jitsiTimeout) {
+			BackgroundTimer.clearInterval(this.jitsiTimeout);
+		}
+		this.jitsiTimeout = BackgroundTimer.setInterval(() => {
+			RocketChat.updateJitsiTimeout(this.rid).catch(e => console.log(e));
+		}, 10000);
 	}
 
 	onConferenceTerminated = () => {

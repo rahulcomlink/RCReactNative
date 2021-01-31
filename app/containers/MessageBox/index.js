@@ -715,7 +715,7 @@ class MessageBox extends Component {
 				'to' : devicetoken,
 				'priority' : 'high',
 				'alert' : {'body' : msg ,'title' : titleMessage },
-				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson},
+				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'message_beep_tone.mp3', 'soundName' : 'message_beep_tone.mp3','content-available' : '1', 'ejson' : ejson},
 				'data' : data,
 				'ejson' : ejson,
 				'badge' : 1,
@@ -745,7 +745,7 @@ class MessageBox extends Component {
 				'data' : androidData,
 				'badge' : 1,
 				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson}
+				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'message_beep_tone.mp3','soundName' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson}
 			})
 
 		}).then((response) => response.json())

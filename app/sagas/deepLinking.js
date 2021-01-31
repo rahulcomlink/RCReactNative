@@ -57,8 +57,6 @@ const navigate = function* navigate({ params }) {
 				if (params.isCall) {
 					//callJitsi(item.rid);
 					//Custom Comlink changes
-					console.debug('extract name from parameter ', name);
-					console.debug('params of jitsi video call', params);
 					this.incomingVideoCall(item.rid,name)
 				}
 			}
