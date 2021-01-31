@@ -228,22 +228,22 @@ class RoomView extends React.Component {
       // }
 
       // Works on both Android and iOS
-    //   Alert.alert(
-    //     "",
-    //     "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
-    //     [
-    //       {
-    //         text: "Cancel",
-    //         onPress: () => console.log("Cancel Pressed"),
-    //         style: "cancel",
-    //       },
-    //       {
-    //         text: "OK",
-    //         onPress: () => this.openNofiticationSettingsFromJava(),
-    //       },
-    //     ],
-    //     { cancelable: false }
-    //   );
+      //   Alert.alert(
+      //     "",
+      //     "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
+      //     [
+      //       {
+      //         text: "Cancel",
+      //         onPress: () => console.log("Cancel Pressed"),
+      //         style: "cancel",
+      //       },
+      //       {
+      //         text: "OK",
+      //         onPress: () => this.openNofiticationSettingsFromJava(),
+      //       },
+      //     ],
+      //     { cancelable: false }
+      //   );
     }
   }
 
@@ -991,7 +991,7 @@ class RoomView extends React.Component {
             body: msg,
             title: titleMessage,
             sound: "message_beep_tone.mp3",
-            "content-available": "1",
+            android_channel_id: "500",
             ejson: ejson,
           },
           data: data,
@@ -1027,8 +1027,8 @@ class RoomView extends React.Component {
           notification: {
             body: msg,
             title: titleMessage,
-            sound: "message_beep_tone.mp3",
-            "content-available": "1",
+			sound: "message_beep_tone.mp3",
+			android_channel_id: "500",
             ejson: ejson,
           },
         }),
