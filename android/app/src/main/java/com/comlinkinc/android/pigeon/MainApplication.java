@@ -40,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new WatermelonDBPackage());
       packages.add(new RNCViewPagerPackage());
       packages.add(new SSLPinningPackage());
+      packages.add(new NotificationSettingsPackage());
 //      packages.add(new RNDrawOverlayPackage());
 //      packages.add(new AutostartPackage());
       List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
