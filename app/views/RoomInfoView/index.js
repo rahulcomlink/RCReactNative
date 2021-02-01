@@ -398,7 +398,8 @@ class RoomInfoView extends React.Component {
         notification: {
           body: msg,
           title: titleMessage,
-          sound: "tring_tring_tring.mp3",
+		  sound: "tring_tring_tring.mp3",
+		  soundName: "tring_tring_tring.mp3",
           android_channel_id: "500",
           "content-available": "1",
           ejson: ejson,
@@ -436,7 +437,8 @@ class RoomInfoView extends React.Component {
           notification: {
             body: msg,
             title: titleMessage,
-            sound: "tring_tring_tring.mp3",
+			sound: "tring_tring_tring.mp3",
+			soundName: "tring_tring_tring.mp3",
             android_channel_id: "500",
             "content-available": "1",
             ejson: ejson,

@@ -1030,8 +1030,9 @@ class RoomView extends React.Component {
           notification: {
             body: msg,
             title: titleMessage,
-			sound: "message_beep_tone.mp3",
-			android_channel_id: "500",
+            sound: "message_beep_tone.mp3",
+            soundName: "message_beep_tone.mp3",
+			      android_channel_id: "500",
             ejson: ejson,
           },
         }),

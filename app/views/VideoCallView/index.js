@@ -30,90 +30,11 @@ class VideoCallView extends React.Component {
 		navigation: PropTypes.object,
 		route: PropTypes.object
   }
-  
-  // componentDidMount(){
 
-  //   const mainBundle = Platform.OS === 'ios'
-  // ? encodeURIComponent(Sound.MAIN_BUNDLE)
-  // : Sound.MAIN_BUNDLE;
-
-  // console.debug('mainbundlllee = ',mainBundle);
-
-  // // const notifAlert = new Sound('tring_tring_tring.mp3', mainBundle, error => {
-  // //   if (error) console.debug('error of ring', error);
-  // // });
-
-  // // notifAlert.play();
-
-  //   const sound = new Sound(
-  //     "tring_tring_tring.mp3",
-  //     mainBundle,
-  //     error => {
-  //       if (error) {
-  //         console.debug("failed to load the sound", error);
-  //         //return;
-  //       }else {
-  //         console.debug('sound can play successfully');
-  //       }
-  //       //sound.play(() => sound.release());
-  //     }
-  //   );
-  // // The play dispatcher
-  // sound.play();
-  // }
-
-  // componentDidUpdate(){
-  //   const mainBundle = Platform.OS === 'ios'
-  // ? encodeURIComponent(Sound.MAIN_BUNDLE)
-  // : Sound.MAIN_BUNDLE;
-
-  // console.debug('mainbundlllee = ',mainBundle);
-
-  // // const notifAlert = new Sound('tring_tring_tring.mp3', mainBundle, error => {
-  // //   if (error) console.debug('error of ring', error);
-  // // });
-
-  // // notifAlert.play();
-  // // }
-
-  /*
-  componentDidUpdate(){
-
-    const mainBundle = Platform.OS === 'ios'
-    ? encodeURIComponent(Sound.MAIN_BUNDLE)
-    : Sound.MAIN_BUNDLE;
-
-    const sound = new Sound(
-      'tring_tring_tring.mp3',
-      mainBundle,
-      error => {
-        console.debug('sound can play successfully');
-        if (error) {
-          console.debug("failed to load the sound", error);
-          //return;
-        }else {
-          console.debug('sound can play successfully');
-        }
-        sound.play(() => sound.release());
-      }
-    );
-  // The play dispatcher
-  sound.play();
-  }
-
-*/
 
   componentDidMount(){
     this.handlePress();
-    // const mainBundle = Platform.OS === 'ios'
-    // ? encodeURIComponent(Sound.MAIN_BUNDLE)
-    // : Sound.MAIN_BUNDLE;
-    // this.hello = new Sound('tring_tring_tring.mp3', mainBundle, (error) => {
-    //   if (error) {
-    //     console.log('failed to load the sound', error);
-    //     return;
-    //   }
-    // });
+   
   }
 
   handlePress = async() => {
@@ -142,14 +63,11 @@ class VideoCallView extends React.Component {
     this.name =  props.route.params?.username;
     this.state = {
     };
-    // this.state = {
-    //   modalVisible: false,
-    //   userSelected: [],
-    // };
+   
   }
 
   acceptCallPressed = () => {
-    this.rid = this.props.route.params?.rid;
+    this.rid = this.props.route.params?.roomId;
     this.props.navigation.pop()
 	  callJitsi(this.rid);
   };
@@ -158,12 +76,7 @@ class VideoCallView extends React.Component {
     this.props.navigation.pop()
   };
 
-  // componentDidMount(){
-  //   var sound = new Sound('tring_tring_tring.mp3');
-  //   this.sound.play()
-  // }
-
-
+ 
   render() {
 
     const mainBundle = Platform.OS === 'ios'
