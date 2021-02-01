@@ -34,7 +34,7 @@ class PushNotification {
             "callUUIDv4", // Call UUID v4
             remoteMessage?.notification?.title, // Username
             "https://user-images.githubusercontent.com/13730671/105949904-7be50e00-6093-11eb-88cd-f1d8b2147af3.png", // Avatar URL
-            remoteMessage?.notification?.body, // Info text
+            "Incoming call", // Info text
             20000 // Timeout for end call after 20s
           );
         }
