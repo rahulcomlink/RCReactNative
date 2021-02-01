@@ -661,7 +661,9 @@ class MessageBox extends Component {
       FileUpload_MaxFileSize
     );
     if (result.success) {
-      this.sendNotification("sent an attachment");
+      const subscriptions = this.state;
+      var msg = subscriptions.room.u.username + " " + "sent an attachment"
+     // this.sendNotification("sent an attachment");
       return true;
     }
     Alert.alert(I18n.t("Error_uploading"), I18n.t(result.error));
@@ -721,7 +723,7 @@ class MessageBox extends Component {
         {
           type = "group_chat";
           linkMessage =
-            subscriptions.room._raw.rid + "," + subscriptions.room._raw.name;
+          subscriptions.room._raw.rid + "," + subscriptions.room._raw.name;
           titleMessage = subscriptions.room._raw.name;
         }
         break;
