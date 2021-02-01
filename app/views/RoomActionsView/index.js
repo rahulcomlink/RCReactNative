@@ -597,8 +597,8 @@ class RoomActionsView extends React.Component {
 			body : JSON.stringify({
 				'to' : devicetoken,
 				'priority' : 'high',
-				'alert' : {'body' : msg ,'title' : titleMessage },
-				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'android_channel_id': '500','content-available' : '1', 'ejson' : ejson},
+				'alert': { 'body': msg, 'title': titleMessage },
+				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'soundName' : 'tring_tring_tring.mp3','android_channel_id': '500','content-available' : '1', 'ejson' : ejson},
 				'data' : data,
 				'ejson' : ejson,
 				'badge' : 1,
@@ -628,7 +628,7 @@ class RoomActionsView extends React.Component {
 				'data' : androidData,
 				'badge' : 1,
 				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'android_channel_id': '500', 'content-available' : '1', 'ejson' : ejson}
+				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'tring_tring_tring.mp3', 'soundName' : 'tring_tring_tring.mp3', 'android_channel_id': '500', 'content-available' : '1', 'ejson' : ejson}
 			})
 
 		}).then((response) => response.json())

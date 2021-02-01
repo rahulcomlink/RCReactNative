@@ -448,8 +448,6 @@ class RoomInfoView extends React.Component {
           console.debug("response of push notification new :", json);
         });
 		}
-		
-
 	}
 
 

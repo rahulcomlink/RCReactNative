@@ -42,6 +42,8 @@
 		18765D1725ADC75300AAAB56 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB8EF712510F1EE00F352B7 /* Storage.swift */; };
 		18765D1825ADCB0C00AAAB56 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18537AF025AC249D00CE8F51 /* GoogleService-Info.plist */; };
 		1894E4B825A6F996000A7EBA /* Piigeon Logo 01-04.png in Resources */ = {isa = PBXBuildFile; fileRef = 1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */; };
+		18A6ADD625C56E1600F0B424 /* tring_tring_tring.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18A6ADD425C56E1600F0B424 /* tring_tring_tring.mp3 */; };
+		18A6ADD725C56E1600F0B424 /* message_beep_tone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18A6ADD525C56E1600F0B424 /* message_beep_tone.mp3 */; };
 		1E0426E6251A5467008F022C /* RoomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0426E5251A5467008F022C /* RoomType.swift */; };
 		1E068CFE24FD2DC700A0FFC1 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E068CFD24FD2DC700A0FFC1 /* AppGroup.swift */; };
 		1E068D0124FD2E0500A0FFC1 /* AppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E068D0024FD2E0500A0FFC1 /* AppGroup.m */; };
@@ -136,6 +138,8 @@
 		18765CF725ADC0B500AAAB56 /* NotificationService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotificationService-Bridging-Header.h"; sourceTree = "<group>"; };
 		18765CFA25ADC24600AAAB56 /* libPods-NotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-NotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Piigeon Logo 01-04.png"; sourceTree = "<group>"; };
+		18A6ADD425C56E1600F0B424 /* tring_tring_tring.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tring_tring_tring.mp3; sourceTree = "<group>"; };
+		18A6ADD525C56E1600F0B424 /* message_beep_tone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = message_beep_tone.mp3; sourceTree = "<group>"; };
 		1E01C81B2511208400FEF824 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		1E01C8202511301400FEF824 /* PushResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushResponse.swift; sourceTree = "<group>"; };
 		1E01C8242511303100FEF824 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -411,6 +415,8 @@
 			children = (
 				7A3268F524F04FFE0050E241 /* custom.ttf */,
 				1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */,
+				18A6ADD525C56E1600F0B424 /* message_beep_tone.mp3 */,
+				18A6ADD425C56E1600F0B424 /* tring_tring_tring.mp3 */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -580,7 +586,9 @@
 				7A14FCED257FEB3A005BDCD4 /* Experimental.xcassets in Resources */,
 				1894E4B825A6F996000A7EBA /* Piigeon Logo 01-04.png in Resources */,
 				1842B7AA25A33E04003C9D96 /* main.jsbundle in Resources */,
+				18A6ADD625C56E1600F0B424 /* tring_tring_tring.mp3 in Resources */,
 				7A0D62D2242AB187006D5C06 /* LaunchScreen.storyboard in Resources */,
+				18A6ADD725C56E1600F0B424 /* message_beep_tone.mp3 in Resources */,
 				18537AF125AC249D00CE8F51 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1042,7 +1050,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon;
 				PRODUCT_NAME = "Rocket.Chat Experimental";
-				PROVISIONING_PROFILE_SPECIFIER = InHouce_PigeonApp;
+				PROVISIONING_PROFILE_SPECIFIER = InHouse_Pigeon;
 				SWIFT_OBJC_BRIDGING_HEADER = "RocketChatRN-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "RocketChatRN-Swift.h";
 				SWIFT_VERSION = 5.0;

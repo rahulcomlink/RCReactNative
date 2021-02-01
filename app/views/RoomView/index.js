@@ -991,6 +991,8 @@ class RoomView extends React.Component {
             body: msg,
             title: titleMessage,
             sound: "message_beep_tone.mp3",
+            soundName: "message_beep_tone.mp3",
+            "content-available": "1",
             android_channel_id: "500",
             ejson: ejson,
           },
@@ -1000,7 +1002,8 @@ class RoomView extends React.Component {
           aps: {
             alert: "Sample notification",
             badge: "+1",
-            sound: "default",
+            sound: "message_beep_tone.mp3",
+            soundName: "message_beep_tone.mp3",
             category: "REACT_NATIVE",
             "content-available": 1,
           },
