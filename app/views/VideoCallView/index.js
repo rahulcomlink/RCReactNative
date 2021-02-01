@@ -131,15 +131,14 @@ class VideoCallView extends React.Component {
       <View style={{ flex: 1 }}>
         <View style={styles.topBar}>
           <Text style={styles.title}>{this.props.route.params?.username}</Text>
-          <Text style={styles.subText}>Pigeon Video Call</Text>
+          <Text style={styles.subText}>Incoming Call</Text>
         </View>
 
-        
         <Image
           style={[styles.image]}
           source={require("../../static/images/logo.png")}
         />
-        
+
         <View style={styles.bottomBar}>
           <TouchableOpacity
             style={[styles.btnActionEnd]}
