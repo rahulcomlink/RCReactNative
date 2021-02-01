@@ -705,53 +705,69 @@ class MessageBox extends Component {
 		console.debug('params of push notification : ', params)
 
 		if (os == 'ios') {
-		const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
-			method : 'POST', 
-			headers : {
-				'Content-Type' : 'application/json',
-				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
-			},
-			body : JSON.stringify({
-				'to' : devicetoken,
-				'priority' : 'high',
-				'alert' : {'body' : msg ,'title' : titleMessage },
-				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson},
-				'data' : data,
-				'ejson' : ejson,
-				'badge' : 1,
-				'aps': {
-					alert: 'Sample notification',
-					badge: '+1',
-					sound: 'default',
-					category: 'REACT_NATIVE',
-					'content-available': 1,
-				  }
-			})
-
-		}).then((response) => response.json())
-		.then((json) => {
-			console.debug('response of push notification new :', json)
-		  })
+		const result = await fetch("https://fcm.googleapis.com/fcm/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si",
+      },
+      body: JSON.stringify({
+        to: devicetoken,
+        priority: "high",
+        alert: { body: msg, title: titleMessage },
+        notification: {
+          body: msg,
+          title: titleMessage,
+          sound: "message_beep_tone.mp3",
+          android_channel_id: "500",
+          "content-available": "1",
+          ejson: ejson,
+        },
+        data: data,
+        ejson: ejson,
+        badge: 1,
+        aps: {
+          alert: "Sample notification",
+          badge: "+1",
+          sound: "default",
+          category: "REACT_NATIVE",
+          "content-available": 1,
+        },
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.debug("response of push notification new :", json);
+      });
 		}else {
-			const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
-			method : 'POST', 
-			headers : {
-				'Content-Type' : 'application/json',
-				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
-			},
-			body : JSON.stringify({
-				'to' : devicetoken,
-				'priority' : 'high',
-				'data' : androidData,
-				'badge' : 1,
-				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage , 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson}
-			})
-
-		}).then((response) => response.json())
-		.then((json) => {
-			console.debug('response of push notification new :', json)
-		  })
+			const result = await fetch("https://fcm.googleapis.com/fcm/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si",
+        },
+        body: JSON.stringify({
+          to: devicetoken,
+          priority: "high",
+          data: androidData,
+          badge: 1,
+          ejson: ejson,
+          notification: {
+            body: msg,
+            title: titleMessage,
+            sound: "message_beep_tone.mp3",
+            android_channel_id: "500",
+            "content-available": "1",
+            ejson: ejson,
+          },
+        }),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          console.debug("response of push notification new :", json);
+        });
 		}
 		
 
