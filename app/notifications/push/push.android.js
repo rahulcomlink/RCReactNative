@@ -7,6 +7,8 @@ import { DeviceEventEmitter } from "react-native";
 import IncomingCall from "react-native-incoming-call";
 import callJitsi from "../../lib/methods/callJitsi";
 import { isIOS, isTablet } from "../../utils/deviceInfo";
+const os = isIOS ? "ios" : "android";
+
 
 class PushNotification {
   constructor() {
@@ -24,48 +26,13 @@ class PushNotification {
 
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       console.debug("Message handled in the background!", remoteMessage);
-
-      const os = isIOS ? "ios" : "android";
-      if (os == "android") {
-        // Receive remote message
-        if (remoteMessage?.notification?.body.includes("Incoming call")) {
-          // Display incoming call activity.
-          IncomingCall.display(
-            "callUUIDv4", // Call UUID v4
-            remoteMessage?.notification?.title, // Username
-            "https://user-images.githubusercontent.com/13730671/105949904-7be50e00-6093-11eb-88cd-f1d8b2147af3.png", // Avatar URL
-            "Incoming call", // Info text
-            20000 // Timeout for end call after 20s
-          );
-        }
-      }
-
-      // Listen to headless action events
-      DeviceEventEmitter.addListener("endCall", (payload) => {
-        // End call action here
-      });
-      DeviceEventEmitter.addListener("answerCall", (payload) => {
-        console.log("answerCall", payload);
-        if (payload.isHeadless) {
-          // Called from killed state
-          console.debug("answerCall - Killed", "payload.uuid");
-          IncomingCall.openAppFromHeadlessMode(payload.uuid);
-        } else {
-          // Called from background state
-          console.debug("answerCall - backToForeground", "payload.uuid");
-          console.debug(
-            "answerCall - roomID",
-            remoteMessage?.data?.link?.split(",")[0]
-          );
-          callJitsi(remoteMessage?.data?.link?.split(",")[0]);
-          IncomingCall.backToForeground();
-        }
-      });
+      this.checkIsVideoCall(remoteMessage);
     });
 
     messaging().onMessage(async (remoteMessage) => {
       //   Alert.alert("A new FCM message arrived!", JSON.stringify(remoteMessage));
       //completion({ alert: true, sound: true, badge: true });
+      this.checkIsVideoCall(remoteMessage);
     });
 
     messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -97,6 +64,44 @@ class PushNotification {
         }
       });
   }
+
+  checkIsVideoCall = (remoteMessage) => {
+    if (os == "android") {
+      // Receive remote message
+      if (remoteMessage?.notification?.body.includes("Incoming call")) {
+        // Display incoming call activity.
+        IncomingCall.display(
+          "callUUIDv4", // Call UUID v4
+          remoteMessage?.notification?.title, // Username
+          "https://user-images.githubusercontent.com/13730671/105949904-7be50e00-6093-11eb-88cd-f1d8b2147af3.png", // Avatar URL
+          "Incoming call", // Info text
+          20000 // Timeout for end call after 20s
+        );
+      }
+    }
+
+    // Listen to headless action events
+    DeviceEventEmitter.addListener("endCall", (payload) => {
+      // End call action here
+    });
+    DeviceEventEmitter.addListener("answerCall", (payload) => {
+      console.log("answerCall", payload);
+      if (payload.isHeadless) {
+        // Called from killed state
+        console.debug("answerCall - Killed", "payload.uuid");
+        IncomingCall.openAppFromHeadlessMode(payload.uuid);
+      } else {
+        // Called from background state
+        console.debug("answerCall - backToForeground", "payload.uuid");
+        console.debug(
+          "answerCall - roomID",
+          remoteMessage?.data?.link?.split(",")[0]
+        );
+        callJitsi(remoteMessage?.data?.link?.split(",")[0]);
+        IncomingCall.backToForeground();
+      }
+    });
+  };
 
   getDeviceToken() {
     return this.deviceToken;
