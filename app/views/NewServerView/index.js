@@ -334,7 +334,7 @@ class NewServerView extends React.Component {
 						onDelete={this.deleteServerHistory}
 						onPressServerHistory={this.onPressServerHistory}
 					/>
-					<Button
+					{/* <Button
 						title={I18n.t('Connect')}
 						type='primary'
 						onPress={this.submit}
@@ -343,10 +343,10 @@ class NewServerView extends React.Component {
 						style={styles.connectButton}
 						theme={theme}
 						testID='new-server-view-button'
-					/>
-					<OrSeparator theme={theme} />
-					<Text style={[styles.description, { color: themes[theme].auxiliaryText }]}>{I18n.t('Onboarding_join_open_description')}</Text>
-					<Button
+					/> */}
+					{/* <OrSeparator theme={theme} /> */}
+					{/* <Text style={[styles.description, { color: themes[theme].auxiliaryText }]}>{I18n.t('Onboarding_join_open_description')}</Text> */}
+					{/* <Button
 						title={I18n.t('Join_our_open_workspace')}
 						type='secondary'
 						backgroundColor={themes[theme].chatComponentBackground}
@@ -355,9 +355,9 @@ class NewServerView extends React.Component {
 						loading={connectingOpen && connecting}
 						theme={theme}
 						testID='new-server-view-open'
-					/>
+					/> */}
 				</FormContainerInner>
-				{this.renderCertificatePicker()}
+				{/* {this.renderCertificatePicker()} */}
 			</FormContainer>
 		);
 	}

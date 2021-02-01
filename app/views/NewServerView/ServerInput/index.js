@@ -43,10 +43,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
   },
   logo: {
-   backgroundColor: "rgba(1,1,1,1)",
+    backgroundColor: "rgba(1,1,1,1)",
     flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
+    resizeMode: "cover",
+    justifyContent: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   backdrop: {
     flex: 1,
@@ -57,6 +59,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     backgroundColor: "black",
     color: "white",
+  },
+  imageStyle: {
+    alignSelf: "center",
+    height: "100%",
+    width: "100%",
+    includeFontPadding: false,
   },
 });
 
@@ -71,62 +79,68 @@ const ServerInput = ({
 }) => {
 	const [focused, setFocused] = useState(false);
   return (
-    <View style={styles.container}>
-      <View style={styles.backgroundContainer}>
-        {/* <Image
-        style={styles.tinyLogo}
-        source={require("/Users/tushar/ReactNative/Pigeon_Code_RN/Chat_Pigeon/Rocket.Chat.ReactNative/android/app/src/main/res/drawable/splash_screen.png")}
-      /> */}
-        <TextInput
-          label="Enter server URL"
-          placeholder="Ex. your-company name"
-          containerStyle={styles.inputContainer}
-          value={text}
-          returnKeyType="send"
-          onChangeText={onChangeText}
-          testID="new-server-view-input"
-          onSubmitEditing={onSubmit}
-          clearButtonMode="while-editing"
-          keyboardType="url"
-          textContentType="URL"
-          theme={theme}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-        />
-        {focused && serversHistory?.length ? (
-          <View
-            style={[
-              styles.serverHistory,
-              {
-                backgroundColor: themes[theme].backgroundColor,
-                borderColor: themes[theme].separatorColor,
-              },
-            ]}
-          >
-            <FlatList
-              data={serversHistory}
-              renderItem={({ item }) => (
-             <Item
-                item={item}
-                  theme={theme}
-                 onPress={() => onPressServerHistory(item)}
-                 onDelete={onDelete}
-                />
-             )} 
-              
-              ItemSeparatorComponent={List.Separator}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
-        ) : null}
-      </View>
-      <View style={styles.overlay}>
-        <Image
-          style={styles.logo}
-          source={require("../../../static/images/splash_screen.png")}
-        />
-      </View>
-    </View>
+    <Image
+      style={styles.imageStyle}
+      resizeMode={"cover"}
+      source={require("../../../static/images/splash_screen.png")}
+    />
+
+    // <View style={styles.container}>
+    //   <View style={styles.backgroundContainer}>
+    //     {/* <Image
+    //     style={styles.tinyLogo}
+    //     source={require("/Users/tushar/ReactNative/Pigeon_Code_RN/Chat_Pigeon/Rocket.Chat.ReactNative/android/app/src/main/res/drawable/splash_screen.png")}
+    //   /> */}
+    //     <TextInput
+    //       label="Enter server URL"
+    //       placeholder="Ex. your-company name"
+    //       containerStyle={styles.inputContainer}
+    //       value={text}
+    //       returnKeyType="send"
+    //       onChangeText={onChangeText}
+    //       testID="new-server-view-input"
+    //       onSubmitEditing={onSubmit}
+    //       clearButtonMode="while-editing"
+    //       keyboardType="url"
+    //       textContentType="URL"
+    //       theme={theme}
+    //       onFocus={() => setFocused(true)}
+    //       onBlur={() => setFocused(false)}
+    //     />
+    //     {focused && serversHistory?.length ? (
+    //       <View
+    //         style={[
+    //           styles.serverHistory,
+    //           {
+    //             backgroundColor: themes[theme].backgroundColor,
+    //             borderColor: themes[theme].separatorColor,
+    //           },
+    //         ]}
+    //       >
+    //         <FlatList
+    //           data={serversHistory}
+    //           renderItem={({ item }) => (
+    //          <Item
+    //             item={item}
+    //               theme={theme}
+    //              onPress={() => onPressServerHistory(item)}
+    //              onDelete={onDelete}
+    //             />
+    //          )}
+
+    //           ItemSeparatorComponent={List.Separator}
+    //           keyExtractor={(item) => item.id}
+    //         />
+    //       </View>
+    //     ) : null}
+    //   </View>
+    //   <View style={styles.overlay}>
+    //     <Image
+    //       style={styles.logo}
+    //       source={require("../../../static/images/splash_screen.png")}
+    //     />
+    //   </View>
+    // </View>
   );
 };
 
