@@ -14,12 +14,30 @@ import {
 import styles from "./styles";
 import I18n, { LANGUAGES, isRTL } from "../../i18n";
 import callJitsi from '../../lib/methods/callJitsi';
-const Sound = require('react-native-sound')
 import { Platform } from 'react-native';
-//import Sound from 'react-native-sound';
+import Sound from 'react-native-sound';
 
 
 //const { width } = Dimensions.get("window");
+
+const mainBundle = Platform.OS === 'ios'
+    ? encodeURIComponent(Sound.MAIN_BUNDLE)
+    : Sound.MAIN_BUNDLE;
+    Sound.setCategory('Playback', true)
+    const sound = new Sound(
+      'tring_tring_tring.mp3',
+      mainBundle,
+      error => {
+        if (error) {
+          //alert(error)
+          console.debug("sound", error);
+          return;
+        }else{
+         // alert('Play Sound')
+          //sound.play(() => sound.release());
+        }
+      }
+    );
 
 class VideoCallView extends React.Component {
   static navigationOptions = () => ({
@@ -31,10 +49,16 @@ class VideoCallView extends React.Component {
 		route: PropTypes.object
   }
 
-
+  
+  
+  
   componentDidMount(){
-    this.handlePress();
-   
+    console.debug('componentDidMount()');
+    this.playSound()
+
+    // setTimeout(function(){
+    //   this.handlePress()
+    // },5000);   
   }
 
   handlePress = async() => {
@@ -45,21 +69,46 @@ class VideoCallView extends React.Component {
     })
   }
 
+  playSound = () => {
+    // const mainBundle = Platform.OS === 'ios'
+    // ? encodeURIComponent(Sound.MAIN_BUNDLE)
+    // : Sound.MAIN_BUNDLE;
+    // Sound.setCategory('Playback', true)
+    // const sound = new Sound(
+    //   'tring_tring_tring.mp3',
+    //   mainBundle,
+    //   error => {
+    //     if (error) {
+    //       //alert(error)
+    //       console.debug("sound", error);
+    //       return;
+    //     }else{
+    //      // alert('Play Sound')
+    //       sound.play(() => sound.release());
+    //     }
+    //   }
+    // );
+     // The play dispatcher
+    sound.play();
+  }
+
   componentDidUpdate(){
-    this.handlePress.bind(this)
+    //this.handlePress.bind(this)
   }
 
   componentWillUpdate(){
-    this.handlePress.bind(this)
+    //this.handlePress.bind(this)
   }
-  
-  
-  
 
+  componentWillUnmount(){
+    sound.stop()
+    //sound.stop(() => sound.release());
+  }
   constructor(props) {
     super(props);
     console.debug('this.props', props);
     this.rid = props.route.params?.roomId;
+    console.debug('getting rid from video view', this.rid);
     this.name =  props.route.params?.username;
     this.state = {
     };
@@ -68,41 +117,32 @@ class VideoCallView extends React.Component {
 
   acceptCallPressed = () => {
     this.rid = this.props.route.params?.roomId;
+    callJitsi(this.rid);
     this.props.navigation.pop()
-	  callJitsi(this.rid);
   };
 
   rejectCallPressed = () => {
     this.props.navigation.pop()
   };
 
- 
   render() {
-
-    const mainBundle = Platform.OS === 'ios'
-    ? encodeURIComponent(Sound.MAIN_BUNDLE)
-    : Sound.MAIN_BUNDLE;
-    this.hello = new Sound('tring_tring_tring.mp3', mainBundle, (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-    });
 
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.topBar}>
           <Text style={styles.title}>{this.props.route.params?.username}</Text>
-          <Text style={styles.subText}>Incoming Video Call</Text>
+          <Text style={styles.subText}>Pigeon Video Call</Text>
         </View>
 
+        
         <Image
           style={[styles.image]}
           source={require("../../static/images/logo.png")}
         />
+        
         <View style={styles.bottomBar}>
           <TouchableOpacity
-            style={[styles.btnActionEnd, styles.shadow]}
+            style={[styles.btnActionEnd]}
             onPress={() => this.rejectCallPressed()}
           >
             <Image
@@ -112,7 +152,7 @@ class VideoCallView extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.btnActionAccept, styles.shadow]}
+            style={[styles.btnActionAccept]}
             onPress={() => this.acceptCallPressed()}
           >
             <Image
@@ -120,14 +160,6 @@ class VideoCallView extends React.Component {
               source={require("../../static/images/answer_call.png")}
             />
           </TouchableOpacity>
-
-          {this.handlePress.bind(this)}
-
-          <TouchableOpacity onPress={this.handlePress.bind(this)}>
-                <View>
-                      <Text>Start</Text>
-                </View>
-            </TouchableOpacity>
         </View>
       </View>
     );
