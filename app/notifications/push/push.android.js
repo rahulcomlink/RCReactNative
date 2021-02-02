@@ -68,7 +68,10 @@ class PushNotification {
   checkIsVideoCall = (remoteMessage) => {
     if (os == "android") {
       // Receive remote message
-      if (remoteMessage?.notification?.body.includes("Incoming call")) {
+      if (
+        remoteMessage?.notification?.body.includes("Incoming audio call") ||
+        remoteMessage?.notification?.body.includes("Incoming video call")
+      ) {
         // Display incoming call activity.
         IncomingCall.display(
           "callUUIDv4", // Call UUID v4

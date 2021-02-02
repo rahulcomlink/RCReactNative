@@ -543,7 +543,7 @@ class RoomActionsView extends React.Component {
         <List.Item
           title="Voice_call"
           onPress={() => {
-            this.sendNotification("Incoming call from ");
+            this.sendNotification("Incoming audio call from ");
             RocketChat.callJitsi(room?.rid, true);
           }}
           testID="room-actions-voice"
@@ -554,7 +554,7 @@ class RoomActionsView extends React.Component {
         <List.Item
           title="Video_call"
           onPress={() => {
-            this.sendNotification("Incoming call from ", false);
+            this.sendNotification("Incoming video call from ", false);
             RocketChat.callJitsi(room?.rid);
           }}
           testID="room-actions-video"
