@@ -201,6 +201,8 @@ class ShareView extends Component {
 			//	console.debug('result.status', result.success)
 				if (result[0].respInfo.status == 200){
 					console.debug('result.status');
+					const subscriptions = this.state;
+					console.debug('subscription of share view ', subscriptions);
 					var msg = subscriptions.room.u.username + " " + "sent an attachment"
 					this.sendNotification(msg);
 				}
@@ -338,7 +340,7 @@ class ShareView extends Component {
 				'to' : devicetoken,
 				'priority' : 'high',
 				'alert' : {'body' : msg ,'title' : titleMessage },
-				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson},
+				'notification' : {'body' : msg ,'title' : titleMessage ,'sound' : 'message_beep_tone.mp3','soundName' : 'message_beep_tone.mp3', 'content-available' : '1','android_channel_id': "500", 'ejson' : ejson},
 				'data' : data,
 				'ejson' : ejson,
 				'badge' : 1,
@@ -368,7 +370,7 @@ class ShareView extends Component {
 				'data' : androidData,
 				'badge' : 1,
 				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage , 'click_action' : 'com.comlinkinc.android.main.ui.MainActivity', 'sound' : 'message_beep_tone.mp3', 'content-available' : '1', 'ejson' : ejson}
+				'notification' : {'body' : msg ,'title' : titleMessage ,  'sound' : 'message_beep_tone.mp3','soundName' : 'message_beep_tone.mp3', 'content-available' : '1','android_channel_id': "500", 'ejson' : ejson}
 			})
 
 		}).then((response) => response.json())
