@@ -26,6 +26,7 @@ class PushNotification {
 			this.deviceToken = deviceToken;
 		});
 
+		
 		NotificationsIOS.addEventListener('notificationOpened', (notification, completion) => {
 			console.debug("Notification Received - Foreground", notification.payload);
 			 const { background } = reduxStore.getState().app;
@@ -34,23 +35,28 @@ class PushNotification {
 			 }
 			completion();
 		});
-
+		
 		NotificationsIOS.addEventListener('notificationReceivedForeground', (notification, completion) => {
 			console.debug('Notification received in foreground 1: ', notification);
 			completion({ alert: true, sound: true, badge: true });
 		});
+
+		
 
 		NotificationsIOS.addEventListener('notificationReceivedBackground', (notification, completion) => {
 			console.debug('Notification received in foreground 1: ', notification);
 			completion({ alert: true, sound: true, badge: true });
 		});
 
+		
+
 		messaging().setBackgroundMessageHandler(async remoteMessage => {
 			console.debug('Message handled in the background!', remoteMessage);
 		  });
 
 		 messaging().onMessage(async remoteMessage => {
-			this.onNotification(remoteMessage.data);
+			 console.debug('messaging().onMessage called');
+			//this.onNotification(remoteMessage.data);
 			//Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
 			
 			//completion({ alert: true, sound: true, badge: true });
@@ -70,7 +76,7 @@ class PushNotification {
       .getInitialNotification()
       .then(remoteMessage => {
         if (remoteMessage) {
-          console.log(
+          console.debug(
             'Notification caused app to open from quit state:',
             remoteMessage.notification,
 		  );
