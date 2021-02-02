@@ -58,7 +58,7 @@ class JitsiMeetView extends React.Component {
 			} else {
 				JitsiMeet.call(url, userInfo);
 			}
-		}, 10000);
+		}, 1000);
 
 		
 	}
