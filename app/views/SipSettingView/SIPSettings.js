@@ -45,8 +45,6 @@ class SIPSettings extends React.Component {
             stunServer : props.route.params?.stunServer,
             stunPort : props.route.params?.stunPort
         }
-
-        console.debug('stun serversss = ',this.state.stunServer);
         this.selIndex = 0
         if(this.state.sipTransport == 'TCP'){
             this.selIndex = 0
@@ -55,10 +53,6 @@ class SIPSettings extends React.Component {
         }else {
             this.selIndex = 2
         }
-      }
-
-      followUser = (navigation) => {
-          console.debug('follow user navigation',navigation)
       }
 
     onSipServerTextChange = (text) => {
@@ -126,10 +120,7 @@ class SIPSettings extends React.Component {
        this.storeData()
     }
 
-
-
     storeData = async () => {
-       
 
         try {
 
@@ -165,8 +156,7 @@ class SIPSettings extends React.Component {
       }
 
       getSIPUserData = async () =>{
-        console.debug('sipServer=',this.state.sipServer);
-        console.debug('sipServer=',this.state.stunServer);
+        
         if(this.state.sipServer == null) {
         try {
             const sipServer = await AsyncStorage.getItem('sipServer') ;
@@ -218,11 +208,7 @@ class SIPSettings extends React.Component {
       }
 
     componentDidMount(){
-        // Get the SIP settings data here and populate
-        //alert('Comeponent Did mount');
-        console.debug('navigation options',this.props);
         this.getSIPUserData();
-       
     }
 
     render(){
@@ -256,7 +242,6 @@ class SIPSettings extends React.Component {
                     }else {
                         this.setState({sipTransport: 'TLS'});
                     }
-                   // this.setState({sipTransport: event.nativeEvent.selectedSegmentIndex == 0 ? 'TCP' : });
                     }}
                 />
 
@@ -325,7 +310,7 @@ class SIPSettings extends React.Component {
                 : null}
 
                 <InputContainer
-                    placeholder = 'url'
+                    placeholder = 'Stun Host'
                     title = 'STUN Server'
                     keyBoardType = 'email-address'
                     textValue = {this.state.stunServer}

@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SIPUserInfo = 'SIPUserData';
 import * as HeaderButton from '../../containers/HeaderButton';
 import { isNil } from 'lodash';
-
+import commonSipSettingFunc from './commonSipSettingFunc';
 
 class getSipSettingsFromAPI extends React.Component {
 
@@ -41,7 +41,6 @@ class getSipSettingsFromAPI extends React.Component {
             stunPort : props.route.params?.stunPort
         }
 
-        console.debug('stun serversss = ',this.state.stunServer);
         this.selIndex = 0
         if(this.state.sipTransport == 'TCP'){
             this.selIndex = 0
@@ -50,10 +49,6 @@ class getSipSettingsFromAPI extends React.Component {
         }else {
             this.selIndex = 2
         }
-      }
-
-      followUser = (navigation) => {
-          console.debug('follow user navigation',navigation)
       }
 
     onSipServerTextChange = (text) => {
@@ -150,6 +145,8 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('turnPassword', this.state.turnPassword);
             await AsyncStorage.setItem('stunServer', this.state.stunServer);
             await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
+
+            commonSipSettingFunc.getSipSettingsAndStart();
           } catch (error) {
             // Error retrieving data
             console.debug('error.message', error.message);
@@ -157,12 +154,10 @@ class getSipSettingsFromAPI extends React.Component {
       }
 
       getSIPUserData = async () =>{
-        console.debug('sipServer=',this.state.sipServer);
-        console.debug('sipServer=',this.state.stunServer);
+    
         if(this.state.sipServer == null) {
         try {
             const sipServer = await AsyncStorage.getItem('sipServer') ;
-            console.debug('sipServerrrrr=',sipServer);
             this.state.sipServer = sipServer;
 
             const sipPort = await AsyncStorage.getItem('sipPort') ;
@@ -195,12 +190,13 @@ class getSipSettingsFromAPI extends React.Component {
 
             const stunServer = await AsyncStorage.getItem('stunServer') ;
             this.state.stunServer = stunServer;
-            console.debug('stunServer=',stunServer);
 
             const stunPort = await AsyncStorage.getItem('stunPort') ;
             this.state.stunPort = stunPort;
 
            this.forceUpdate()
+
+           commonSipSettingFunc.getSipSettingsAndStart();
 
           } catch (error) {
             // Error retrieving data
@@ -210,11 +206,7 @@ class getSipSettingsFromAPI extends React.Component {
       }
 
     componentDidMount(){
-        // Get the SIP settings data here and populate
-        //alert('Comeponent Did mount');
-        console.debug('navigation options',this.props);
         this.getSIPUserData();
-       
     }
 
     render(){

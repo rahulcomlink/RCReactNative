@@ -21,6 +21,8 @@ import call_pound from '../../static/images/call_pound.png';
 import call_star from '../../static/images/call_star.png';
 import calling_dailpad from '../../static/images/calling_dailpad.png';
 import CountUp from 'react-native-countup-component';
+import { min } from 'lodash';
+import commonSipSettingFunc from './commonSipSettingFunc';
 
 /*
 const onSessionConnect = (event) => {
@@ -40,13 +42,18 @@ class CallScreen extends React.Component {
             phoneNumber : '13157244022',
             isSpeakerOn : false,
             isMuteOn : false,
-            keyPressed : ''
+            keyPressed : '',
+            counter: 0,
+            timer: null,
+            callStatusText: 'calling'
         }
 
         eventEmitter.addListener('onSessionConnect', this.getCallStatus);
     }
 
-    
+    componentWillUnmount() {
+        clearInterval(this.state.timer);
+    }
 
      renderSpeakerImage = () => {
         var imgSource = this.state.isSpeakerOn? speakerOn : speakerOff;
@@ -80,7 +87,8 @@ class CallScreen extends React.Component {
     }
 
     makeCall = () => {
-        NativeModules.SIPSDKBridge.makeCall(this.state.phoneNumber)
+        commonSipSettingFunc.callFunc(this.state.phoneNumber);
+       // NativeModules.SIPSDKBridge.makeCall(this.state.phoneNumber)
     }
 
     setSpeaker = () => {
@@ -99,13 +107,40 @@ class CallScreen extends React.Component {
     }
 
     getCallStatus = (event) => {
-        console.debug("getCallStatus", event);
-        console.debug("getCallStatus call status", event.callStatus);
-        if(status == 'ANSWERED'){
-            console.debug("getCallStatus", status);
-            CountUp.renderCountUp()
+        if(event.callStatus == 'ANSWERED'){
+             this.startTimer()
         }
+        if(event.callStatus == 'RINGING'){
+            this.setState({ callStatusText : 'Ringing' });
+        }
+        if(event.callStatus == 'TERMINATED'){
+            //this.endCall()
+            this.setState({ callStatusText : 'Call terminated'});
+            this.startTimer()
+        }
+        if(event.callStatus == 'DECLINED'){
+            this.setState({ callStatusText : 'Call declined'});
+            this.endCall()
+        }
+     }
+
+    //Timer
+    startTimer = () => {
+        let timer = setInterval(this.manageTimer.bind(this), 1000);
+        this.setState({ timer });
     }
+
+    manageTimer = () => {
+        this.setState({
+            counter: this.state.counter + 1
+          });
+
+          var hours = this.state.counter/3600;
+          var minutes = (this.state.counter%3600)/60;
+          var seconds = this.state.counter%60;
+          this.setState({ callStatusText : Math.floor(hours) + ':' +  Math.floor(minutes) + ':'  + Math.floor(seconds) });
+    }
+
 
     render(){
         return(
@@ -125,9 +160,11 @@ class CallScreen extends React.Component {
                 <Text style = {styles.saveButtonText}> Dial Call </Text>
                </TouchableOpacity>
 
+               <View style={{ alignSelf : 'center'}}>
+                    <Text style={{ textAlign: 'center' , fontSize : 18}}>{this.state.callStatusText}</Text>
+               </View>
+
                <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-               
-                
                 <TouchableOpacity style={styles.button1} 
                     onPress = {
                         () =>  this.setMute()

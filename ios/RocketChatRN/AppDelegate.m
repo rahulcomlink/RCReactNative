@@ -94,8 +94,8 @@ static void InitializeFlipper(UIApplication *application) {
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
     }
   
-  SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
-  [object sipRegistration];
+//  SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
+//  [object sipRegistration];
    
 
     return YES;

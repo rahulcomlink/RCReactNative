@@ -52,11 +52,12 @@ import AVFoundation
       _provider.setDelegate(ProviderDelegateTrampoline.instance, queue: DispatchQueue.main)
     }
     
-    func start() {
-        let userName = "919420429240"
-          let password = "62295fc7-10c1-4e91-9"
-          let sipServer = "tclenterprisesip.mvoipctsi.com"
-          let siprealm = "*"
+    func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String ) {
+      print("start of function");
+          let userName = username
+          let password = password
+          let sipServer = sipServer
+          let siprealm = sipRealm
                
               let sipServerHost = CString(from: sipServer as! String)
               let sipUsername = CString(from: userName as! String)
@@ -68,21 +69,20 @@ import AVFoundation
                  
                  var sipTransport: CMSIPTRANSPORT = CM_UDP
                  
-                  if let value = "TCP" as? String {
-                     if value == "tcp" || value == "TCP" {
+                     if transport == "tcp" || transport == "TCP" {
                          sipTransport = CM_TCP
-                     }else if value == "udp" || value == "UDP" {
+                     }else if transport == "udp" || transport == "UDP" {
                          sipTransport = CM_UDP
-                     }else if value == "tls" || value == "TLS" {
+                     }else if transport == "tls" || transport == "TLS" {
                          sipTransport = CM_TLS
                      }
-                 }
-                 
-                 let stunHost = CString(from: "indiaturn.mvoipctsi.com")
-                 let turnHost = CString(from: "")
-                 let turnUsername = CString(from: "")
-                 let turnPassword = CString(from: "")
-                 let turnRealm = CString(from: "")
+                 let stunhostt = stunHost + stunPort
+                 let stunHost = CString(from: stunhostt)
+                 let turnhostt = turnHost + turnPort
+                 let turnHost = CString(from: turnhostt)
+                 let turnUsername = CString(from: turnUsername)
+                 let turnPassword = CString(from: turnPassword)
+                 let turnRealm = CString(from: turnRealm)
                 
                    // Get the absolute path to the ringback file
                  let ringbackPath = Bundle.main.path(forResource: "ring", ofType: "wav")
@@ -99,8 +99,8 @@ import AVFoundation
                            CmInitializeConfiguration(&cmConfig)
                          
                            cmConfig.sip_server_host = sipServerHost.value
-                           cmConfig.sip_local_port =   UInt16(8993)
-                           cmConfig.sip_server_port =  UInt16(8993)
+                            cmConfig.sip_local_port =   UInt16(Int(localPort) ?? 0)
+                            cmConfig.sip_server_port =  UInt16(Int(serverPort) ?? 0)
                            cmConfig.sip_username = sipUsername.value
                            cmConfig.sip_password = sipPassword.value
                            cmConfig.sip_transport = sipTransport
@@ -117,7 +117,7 @@ import AVFoundation
                  var cargs = array.map { $0.flatMap { UnsafePointer<Int8>(strdup($0)) } }
                  command(&cargs)
                  cmConfig.desired_codecs = UnsafeMutablePointer(mutating: cargs)
-                  cmConfig.enable_ice = CM_FALSE
+                  cmConfig.enable_ice = iceEnabled == "true" ? CM_TRUE : CM_FALSE
                         
                 if CmInitialize(&cmConfig) != CM_SUCCESS {
                    
@@ -131,7 +131,7 @@ import AVFoundation
               CmSetCallStateChangeHandler({ handle in
                 SipCallManager.shared.onCallStateChanged(handle: handle)
               })
-              _sipUriTemplate  = "sip:%%s@sipServerHost:8993;transport=tcp"
+              _sipUriTemplate  = "sip:%s@\(sipServerHost):\(serverPort);transport=\(transport)"
               
     }
     
@@ -141,10 +141,12 @@ import AVFoundation
         CmShutdown()
     }
     
+    /*
     func restart(){
         stop()
         start()
     }
+    */
     
     func register(){
         let status = CmRegister()
@@ -181,7 +183,7 @@ import AVFoundation
       }
     }
     
-    func makeCall(outpulse: String){
+    func makeCall(outpulse: String, sipServer:String, sipPort:String, sipTransport:String){
         _currentCallUuid = UUID()
         let handle = CXHandle(type: .phoneNumber, value: outpulse)
         let action = CXStartCallAction(call: _currentCallUuid, handle: handle)
@@ -200,7 +202,7 @@ import AVFoundation
              
 //            let uri = String(format: self._sipUriTemplate, arguments: [self.phoneNumber])
           
-             let uri = "sip:\(outpulse)@tclenterprisesip.mvoipctsi.com:8993;transport=tcp"
+             let uri = "sip:\(outpulse)@\(sipServer):\(sipPort);transport=\(sipTransport)"
             
             print("uri of make call = \(uri)")
              

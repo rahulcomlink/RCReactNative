@@ -70,7 +70,7 @@ import { token } from '@rocket.chat/sdk/lib/settings';
 import Api from '@rocket.chat/sdk/lib/api/api';
 import User from '../../lib/database/model/User';
 import { usesMetricSystem } from 'react-native-localize';
-
+import commonSipSettingFunc from '../SipSettingView/commonSipSettingFunc';
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
 const CHATS_HEADER = 'Chats';
@@ -186,6 +186,8 @@ class RoomsListView extends React.Component {
 		 * it means the user has resumed the app, so selectServer needs to be triggered,
 		 * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
 		 */
+
+		commonSipSettingFunc.getSipSettingsAndStart();
 		
 		if (appState === 'foreground') {
 			this.getSubscriptions();
