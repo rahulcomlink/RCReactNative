@@ -10,3 +10,8 @@
 #import <react-native-simple-crypto/Aes.h>
 #import <react-native-simple-crypto/Rsa.h>
 #import <react-native-simple-crypto/Shared.h>
+#import "React/RCTBridgeModule.h"
+#import "cmcapi.h"
+#import "cdbcapi.h"
+#import "clog.h"
+

@@ -62,6 +62,11 @@ import ShareView from '../../views/ShareView';
 
 import QueueListView from '../../ee/omnichannel/views/QueueListView';
 
+// Sip Settings View
+import SIPSettings from '../../views/SipSettingView/SIPSettings';
+import CallScreen from '../../views/SipSettingView/CallScreen';
+
+
 // ChatsStackNavigator
 const ChatsStack = createStackNavigator();
 const ChatsStackNavigator = React.memo(() => {
@@ -205,9 +210,19 @@ const ModalStackNavigator = React.memo(({ navigation }) => {
 					options={props => ReadReceiptsView.navigationOptions({ ...props, isMasterDetail: true })}
 				/>
 				<ModalStack.Screen
+					name='SIPSettings'
+					component={SIPSettings}
+					options={props => SIPSettings.navigationOptions({ ...props, isMasterDetail: true })}
+				/>
+				<ModalStack.Screen
 					name='SettingsView'
 					component={SettingsView}
 					options={props => SettingsView.navigationOptions({ ...props, isMasterDetail: true })}
+				/>
+				<ModalStack.Screen
+					name='CallScreen'
+					component={CallScreen}
+					options={props => CallScreen.navigationOptions({ ...props, isMasterDetail: true })}
 				/>
 				<ModalStack.Screen
 					name='LanguageView'

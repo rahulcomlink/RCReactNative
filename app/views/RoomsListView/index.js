@@ -6,7 +6,8 @@ import {
 	BackHandler,
 	Text,
 	Keyboard,
-	RefreshControl
+	RefreshControl,
+	NativeModules
 } from 'react-native';
 import { connect } from 'react-redux';
 import isEqual from 'react-fast-compare';
@@ -69,6 +70,7 @@ import { token } from '@rocket.chat/sdk/lib/settings';
 import Api from '@rocket.chat/sdk/lib/api/api';
 import User from '../../lib/database/model/User';
 import { usesMetricSystem } from 'react-native-localize';
+
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
 const CHATS_HEADER = 'Chats';
@@ -211,6 +213,8 @@ class RoomsListView extends React.Component {
 			}
 		});
 		console.timeEnd(`${ this.constructor.name } mount`);
+
+		
 	}
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
@@ -420,6 +424,11 @@ class RoomsListView extends React.Component {
 						iconName='directory'
 						onPress={this.goDirectory}
 						testID='rooms-list-view-directory'
+					/>
+					<HeaderButton.Item
+						iconName='administration'
+						onPress={this.goToSipProvisioning}
+						testID='rooms-list-view-sipSetting'
 					/>
 				</HeaderButton.Container>
 			))
@@ -741,6 +750,15 @@ class RoomsListView extends React.Component {
 			navigation.navigate('DirectoryView');
 		}
 	};
+
+	goToSipProvisioning = () => {
+		const { navigation, isMasterDetail } = this.props;
+		if (isMasterDetail) {
+			navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });
+		} else {
+			navigation.navigate('SipProvisioningStackNavigator');
+		}	
+	}
 
 	goQueue = () => {
 		logEvent(events.RL_GO_QUEUE);

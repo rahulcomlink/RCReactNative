@@ -30,6 +30,7 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 #import <Firebase.h>
+#import <RocketChatRN-Swift.h>
 
 
 static void InitializeFlipper(UIApplication *application) {
@@ -84,7 +85,6 @@ static void InitializeFlipper(UIApplication *application) {
       // NSUserDefaults -> MMKV (Migration)
       NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppGroup"]];
       [mmkv migrateFromUserDefaults:userDefaults];
-
       // Remove our own keys of NSUserDefaults
       for (NSString *key in [userDefaults dictionaryRepresentation].keyEnumerator) {
         [userDefaults removeObjectForKey:key];
@@ -93,6 +93,10 @@ static void InitializeFlipper(UIApplication *application) {
       // Mark migration complete
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
     }
+  
+  SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
+  [object sipRegistration];
+   
 
     return YES;
 }

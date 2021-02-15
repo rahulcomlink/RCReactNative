@@ -188,6 +188,21 @@ class Sidebar extends Component {
 					testID='sidebar-settings'
 					current={this.currentItemKey === 'SettingsStackNavigator'}
 				/>
+				<SidebarItem
+					text={'Sip Settings'}
+					left={<CustomIcon name='administration' size={20} color={themes[theme].titleText} />}
+					onPress={() => this.sidebarNavigate('SipSettingsStackNavigator')}
+					testID='sidebar-sip-settings'
+					current={this.currentItemKey === 'SipSettingsStackNavigator'}
+				/>
+				<SidebarItem
+					text={'Call'}
+					left={<CustomIcon name='administration' size={20} color={themes[theme].titleText} />}
+					onPress={() => this.sidebarNavigate('CallScreenStackNavigator')}
+					testID='sidebar-call'
+					current={this.currentItemKey === 'CallScreenStackNavigator'}
+				/>
+				
 				{this.renderAdmin()}
 			</>
 		);

@@ -71,6 +71,13 @@ import CreateDiscussionView from '../views/CreateDiscussionView';
 
 import QueueListView from '../ee/omnichannel/views/QueueListView';
 
+//Sip Setting Navigator
+import CallScreen from '../views/SipSettingView/CallScreen';
+import SIPSettings from '../views/SipSettingView/SIPSettings';
+import Inputs from '../views/SipSettingView/UserDetails';
+import qrScanner from '../views/SipSettingView/qrScanner';
+import getSipSettingsFromAPI from '../views/SipSettingView/getSipSettingsFromAPI';
+
 // ChatsStackNavigator
 const ChatsStack = createStackNavigator();
 const ChatsStackNavigator = () => {
@@ -183,6 +190,21 @@ const ChatsStackNavigator = () => {
 				component={QueueListView}
 				options={QueueListView.navigationOptions}
 			/>
+			<ChatsStack.Screen
+				name='Inputs'
+				component={Inputs}
+				options={Inputs.navigationOptions}
+			/>
+			<ChatsStack.Screen
+				name='qrScanner'
+				component={qrScanner}
+				options={qrScanner.navigationOptions}
+			/>
+			<ChatsStack.Screen
+				name='getSipSettingsFromAPI'
+				component={getSipSettingsFromAPI}
+				options={getSipSettingsFromAPI.navigationOptions}
+			/> 
 		</ChatsStack.Navigator>
 	);
 };
@@ -263,6 +285,64 @@ const SettingsStackNavigator = () => {
 	);
 };
 
+// SipSettingsStackNavigator
+const SipSettingsStack = createStackNavigator();
+const SipSettingsStackNavigator = () => {
+	const { theme } = React.useContext(ThemeContext);
+
+	return (
+		<SipSettingsStack.Navigator screenOptions={{ ...defaultHeader, ...themedHeader(theme), ...StackAnimation }}>
+			<SipSettingsStack.Screen
+				name='SIPSettings'
+				component={SIPSettings}
+				options={SIPSettings.navigationOptions}
+			/>
+		</SipSettingsStack.Navigator>
+	);
+};
+
+// NewMessageStackNavigator
+const SipProvisioningStack = createStackNavigator();
+const SipProvisioningStackNavigator = () => {
+	const { theme } = React.useContext(ThemeContext);
+
+	return (
+		<SipProvisioningStack.Navigator screenOptions={{ ...defaultHeader, ...themedHeader(theme), ...StackAnimation }}>
+			<SipProvisioningStack.Screen
+				name='Inputs'
+				component={Inputs}
+				options={Inputs.navigationOptions}
+			/>
+			<SipProvisioningStack.Screen
+				name='qrScanner'
+				component={qrScanner}
+				options={qrScanner.navigationOptions}
+			/>
+			<SipProvisioningStack.Screen
+				name='getSipSettingsFromAPI'
+				component={getSipSettingsFromAPI}
+				options={getSipSettingsFromAPI.navigationOptions}
+			/> 
+		</SipProvisioningStack.Navigator>
+	);
+};
+
+// CallScreenStackNavigator
+const CallScreenStack = createStackNavigator();
+const CallScreenStackNavigator = () => {
+	const { theme } = React.useContext(ThemeContext);
+
+	return (
+		<CallScreenStack.Navigator screenOptions={{ ...defaultHeader, ...themedHeader(theme), ...StackAnimation }}>
+			<CallScreenStack.Screen
+				name='CallScreen'
+				component={CallScreen}
+				options={CallScreen.navigationOptions}
+			/>
+		</CallScreenStack.Navigator>
+	);
+};
+
 // AdminPanelStackNavigator
 const AdminPanelStack = createStackNavigator();
 const AdminPanelStackNavigator = () => {
@@ -292,6 +372,8 @@ const DrawerNavigator = () => (
 		<Drawer.Screen name='ProfileStackNavigator' component={ProfileStackNavigator} />
 		<Drawer.Screen name='SettingsStackNavigator' component={SettingsStackNavigator} />
 		<Drawer.Screen name='AdminPanelStackNavigator' component={AdminPanelStackNavigator} />
+		<Drawer.Screen name='SipSettingsStackNavigator' component={SipSettingsStackNavigator} />
+		<Drawer.Screen name='CallScreenStackNavigator' component={CallScreenStackNavigator} />
 	</Drawer.Navigator>
 );
 
@@ -413,6 +495,11 @@ const InsideStackNavigator = () => {
 			<InsideStack.Screen
 				name='JitsiMeetView'
 				component={JitsiMeetView}
+				options={{ headerShown: false }}
+			/>
+			<InsideStack.Screen
+				name='SipProvisioningStackNavigator'
+				component={SipProvisioningStackNavigator}
 				options={{ headerShown: false }}
 			/>
 		</InsideStack.Navigator>

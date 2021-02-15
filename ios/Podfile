@@ -15,6 +15,10 @@ target 'RocketChatRN' do
   pod 'JitsiMeetSDK', :git => 'https://github.com/RocketChat/jitsi-meet-ios-sdk-releases.git'
   pod 'Firebase/Messaging'
   pod 'RNSound', :path => '../node_modules/react-native-sound'
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+   
   all_pods
 end
 
@@ -28,6 +32,10 @@ target 'NotificationService' do
   all_pods
   pod 'Firebase/Messaging'
   pod 'RNSound', :path => '../node_modules/react-native-sound'
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+   
 end
 
 post_install do |installer|
