@@ -20,9 +20,24 @@ import call_9 from '../../static/images/call_9.png';
 import call_pound from '../../static/images/call_pound.png';
 import call_star from '../../static/images/call_star.png';
 import calling_dailpad from '../../static/images/calling_dailpad.png';
+import calling_end from '../../static/images/calling_end.png';
+import dialling_close from '../../static/images/dialling_close.png';
+import contact_avatar from '../../static/images/contact_avatar.png';
 import CountUp from 'react-native-countup-component';
 import { min } from 'lodash';
 import commonSipSettingFunc from './commonSipSettingFunc';
+import call_0_3x from '../../static/images/call_0_1.png';
+import call_1_3x from '../../static/images/call_1_1.png';
+import call_2_3x from '../../static/images/call_2_1.png';
+import call_3_3x from '../../static/images/call_3_1.png';
+import call_4_3x from '../../static/images/call_4_1.png';
+import call_5_3x from '../../static/images/call_5_1.png';
+import call_6_3x from '../../static/images/call_6_1.png';
+import call_7_3x from '../../static/images/call_7_1.png';
+import call_8_3x from '../../static/images/call_8_1.png';
+import call_9_3x from '../../static/images/call_9_1.png';
+import call_pound_3x from '../../static/images/call_pound_d_1.png';
+import call_star_3x from '../../static/images/call_star_d_1.png';
 
 /*
 const onSessionConnect = (event) => {
@@ -35,6 +50,10 @@ const onSessionConnect = (event) => {
 
 class CallScreen extends React.Component {
 
+    static navigationOptions = () => ({
+      
+    });
+
     constructor(props) {
         super(props);
 
@@ -45,7 +64,8 @@ class CallScreen extends React.Component {
             keyPressed : '',
             counter: 0,
             timer: null,
-            callStatusText: 'calling'
+            callStatusText: 'calling',
+            showKeypad: false
         }
 
         eventEmitter.addListener('onSessionConnect', this.getCallStatus);
@@ -83,7 +103,7 @@ class CallScreen extends React.Component {
 
     onKeyPressed = (item) => {
         this.setState({ keyPressed: this.state.keyPressed + item })
-        NativeModules.SIPSDKBridge.keyPressed(item)
+      //  NativeModules.SIPSDKBridge.keyPressed(item)
     }
 
     makeCall = () => {
@@ -114,9 +134,7 @@ class CallScreen extends React.Component {
             this.setState({ callStatusText : 'Ringing' });
         }
         if(event.callStatus == 'TERMINATED'){
-            //this.endCall()
             this.setState({ callStatusText : 'Call terminated'});
-            this.startTimer()
         }
         if(event.callStatus == 'DECLINED'){
             this.setState({ callStatusText : 'Call declined'});
@@ -138,13 +156,24 @@ class CallScreen extends React.Component {
           var hours = this.state.counter/3600;
           var minutes = (this.state.counter%3600)/60;
           var seconds = this.state.counter%60;
-          this.setState({ callStatusText : Math.floor(hours) + ':' +  Math.floor(minutes) + ':'  + Math.floor(seconds) });
+
+          hours = Math.floor(hours)
+          hours = hours > 9 ? hours : '0' + hours;
+
+          minutes = Math.floor(minutes)
+          minutes = minutes > 9 ? minutes : '0' + minutes;
+
+          seconds = Math.floor(seconds)
+          seconds = seconds > 9 ? seconds : '0' + seconds;
+
+          this.setState({ callStatusText : hours + ':' +  minutes + ':'  + seconds });
     }
 
 
     render(){
         return(
-            <View style={{padding: 10}}>
+            <View style={{padding: 10, flex : 1}}>
+                {/*
                 <InputContainer
                     placeholder = 'Dial Number'
                     title = 'Dial Number'
@@ -157,14 +186,95 @@ class CallScreen extends React.Component {
                     onPress = {
                         () => this.makeCall()
                 }>  
-                <Text style = {styles.saveButtonText}> Dial Call </Text>
-               </TouchableOpacity>
+                <Text style = {styles.saveButtonText}> Dial Call </Text> backgroundColor : '#FFFFFF'
+               </TouchableOpacity> 
+               */}
+
+               <Image style = {{width : 70, height : 70, alignSelf : 'center' , margin : 20, marginTop : 50, borderRadius : 70/2, borderWidth: 2, borderColor : 'lightgrey'}} source = {contact_avatar}/>   
+
+               <Text style = {{textAlign : 'center', fontSize : 28, marginBottom : 20}}>{this.state.phoneNumber}</Text>
 
                <View style={{ alignSelf : 'center'}}>
-                    <Text style={{ textAlign: 'center' , fontSize : 18}}>{this.state.callStatusText}</Text>
+                    <Text style={{ textAlign: 'center' , fontSize : 16}}>{this.state.callStatusText}</Text>
+               </View>
+
+               { this.state.showKeypad ?
+               <View>
+               <Text style = {{textAlign : 'center', fontSize : 18, marginTop : 30}}> {this.state.keyPressed} </Text>
+
+               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+
+               <TouchableOpacity style={styles.button2} 
+                        onPress= {()=> this.onKeyPressed('1')} >  
+                        <Image style = {styles.button2} source = {call_1_3x}/>   
+                </TouchableOpacity>
+
+               <TouchableOpacity style={styles.button2}  
+                    onPress= {()=> this.onKeyPressed('2')}>  
+                    <Image style = {styles.button2} source = {call_2_3x}/>   
+               </TouchableOpacity>
+
+               <TouchableOpacity style={styles.button2}  
+               onPress= {()=> this.onKeyPressed('3')}>
+                    <Image style = {styles.button2} source = {call_3_3x}/>  
+                 </TouchableOpacity>
                </View>
 
                <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+               <TouchableOpacity style={styles.button2}  
+                 onPress= {()=> this.onKeyPressed('4')}>
+                    <Image style = {styles.button2} source = {call_4_3x}/>   
+                </TouchableOpacity>
+
+               <TouchableOpacity style={styles.button2}  
+                    onPress= {()=> this.onKeyPressed('5')}>
+                        <Image style = {styles.button2} source = {call_5_3x}/>  
+                 </TouchableOpacity>
+
+
+               <TouchableOpacity style={styles.button2} 
+                    onPress= {()=> this.onKeyPressed('6')}>
+                     <Image style = {styles.button2} source = {call_6_3x}/>  
+                 </TouchableOpacity>
+               </View>
+
+               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+               <TouchableOpacity style={styles.button2}  
+                    onPress= {()=> this.onKeyPressed('7')}>
+                    <Image style = {styles.button2} source = {call_7_3x}/>   
+                </TouchableOpacity>
+
+               <TouchableOpacity style={styles.button2}  
+                    onPress= {()=> this.onKeyPressed('8')}>
+                        <Image style = {styles.button2} source = {call_8_3x}/>  
+                 </TouchableOpacity>
+
+
+               <TouchableOpacity style={styles.button2} 
+                onPress= {()=> this.onKeyPressed('9')}>
+                     <Image style = {styles.button2} source = {call_9_3x}/>  
+                 </TouchableOpacity>
+               </View>
+
+               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+               <TouchableOpacity style={styles.button2}  
+                 onPress= {()=> this.onKeyPressed('*')}>
+                    <Image style = {styles.button2} source = {call_star_3x}/>   
+                </TouchableOpacity>
+
+               <TouchableOpacity style={styles.button2}  
+                    onPress= {()=> this.onKeyPressed('0')}>
+                        <Image style = {styles.button2} source = {call_0_3x}/>  
+                 </TouchableOpacity>
+
+
+               <TouchableOpacity style={styles.button2} 
+                onPress= {()=> this.onKeyPressed('#')}>
+                     <Image style = {styles.button2} source = {call_pound_3x}/>  
+                 </TouchableOpacity>
+               </View>
+               </View> :
+                <View style={{flexDirection: 'row', alignSelf: 'center'}}>
                 <TouchableOpacity style={styles.button1} 
                     onPress = {
                         () =>  this.setMute()
@@ -174,7 +284,7 @@ class CallScreen extends React.Component {
 
                 <TouchableOpacity style={styles.button1} 
                     onPress = {
-                        () =>  this.setSpeaker()
+                        () =>  this.setState({ showKeypad: true })
                       }>  
                     <Image style={styles.button1} source={ calling_dailpad } />
                 </TouchableOpacity>
@@ -185,89 +295,32 @@ class CallScreen extends React.Component {
                       }> 
                 {this.renderSpeakerImage()}
                 </TouchableOpacity>
-                </View>
+                </View>}
 
-
-               <TouchableOpacity style = {styles.saveButton}
+               <View style = {styles.bottom}>
+            
+               <TouchableOpacity style={styles.button1} 
                     onPress = {
-                        () => this.endCall()
-                }>  
-                <Text style = {styles.saveButtonText}> End Call </Text>
-               </TouchableOpacity>
-
-               <Text style = {{textAlign : 'center', fontSize : 25}} > {this.state.keyPressed} </Text>
-
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-
-               <TouchableOpacity style={styles.button1} 
-                        onPress= {()=> this.onKeyPressed('1')} >  
-                        <Image style = {styles.button1} source = {call_1}/>   
+                        () => {this.state.showKeypad ? this.setState({ showKeypad: false }) : null }
+                      }> 
+                   {this.state.showKeypad ? <Image style = {styles.button1} source = {dialling_close}/> : null}
                 </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button1}  
-                    onPress= {()=> this.onKeyPressed('2')}>  
-                    <Image style = {styles.button1} source = {call_2}/>   
-               </TouchableOpacity>
-
-               <TouchableOpacity style={styles.button1}  
-               onPress= {()=> this.onKeyPressed('3')}>
-                    <Image style = {styles.button1} source = {call_3}/>  
-                 </TouchableOpacity>
-               </View>
-
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-               <TouchableOpacity style={styles.button1}  
-                 onPress= {()=> this.onKeyPressed('4')}>
-                    <Image style = {styles.button1} source = {call_4}/>   
+                <TouchableOpacity style={styles.button1} 
+                    onPress = {
+                        () =>  this.endCall()
+                      }>  
+                    <Image style={styles.button1} source={ calling_end } />
                 </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button1}  
-                    onPress= {()=> this.onKeyPressed('5')}>
-                        <Image style = {styles.button1} source = {call_5}/>  
-                 </TouchableOpacity>
-
-
-               <TouchableOpacity style={styles.button1} 
-                    onPress= {()=> this.onKeyPressed('6')}>
-                     <Image style = {styles.button1} source = {call_6}/>  
-                 </TouchableOpacity>
-               </View>
-
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-               <TouchableOpacity style={styles.button1}  
-                    onPress= {()=> this.onKeyPressed('7')}>
-                    <Image style = {styles.button1} source = {call_7}/>   
+                <TouchableOpacity style={styles.button1} 
+                    onPress = {
+                        () =>  console.debug('')
+                      }> 
                 </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button1}  
-                    onPress= {()=> this.onKeyPressed('8')}>
-                        <Image style = {styles.button1} source = {call_8}/>  
-                 </TouchableOpacity>
 
-
-               <TouchableOpacity style={styles.button1} 
-                onPress= {()=> this.onKeyPressed('9')}>
-                     <Image style = {styles.button1} source = {call_9}/>  
-                 </TouchableOpacity>
-               </View>
-
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-               <TouchableOpacity style={styles.button1}  
-                 onPress= {()=> this.onKeyPressed('*')}>
-                    <Image style = {styles.button1} source = {call_star}/>   
-                </TouchableOpacity>
-
-               <TouchableOpacity style={styles.button1}  
-                    onPress= {()=> this.onKeyPressed('0')}>
-                        <Image style = {styles.button1} source = {call_0}/>  
-                 </TouchableOpacity>
-
-
-               <TouchableOpacity style={styles.button1} 
-                onPress= {()=> this.onKeyPressed('#')}>
-                     <Image style = {styles.button1} source = {call_pound}/>  
-                 </TouchableOpacity>
-               </View>
+                </View>
 
             </View>
         );
@@ -328,12 +381,37 @@ const styles = StyleSheet.create({
         height : 70,
         alignSelf : 'center',
         margin: 20,
-        
-      },
+     },
+
+     button2: {
+        width : 40,
+        height : 40,
+        alignSelf : 'center',
+        margin: 30,
+     },
+
+     call_end: {
+        width : 70,
+        height : 70,
+        alignSelf : 'center',
+        margin: 20,
+        bottom : 20
+     },
 
       imagestyle: {
         width : 30,
         height : 30, 
+      },
+
+      bottom: {
+        width: '100%', 
+        height: 70, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 80,
+        flexDirection: 'row',
+        alignSelf : 'center',
       }
 });
 

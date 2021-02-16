@@ -13,7 +13,7 @@ class SIPSDKBridge : NSObject{
   static let shared = SIPSDKBridge()
   private var _sipUriTemplate: String = "sip:%%s@%s:8993;transport=tcp"
   
-  @objc func sipRegistration(_ username: String, _ password: String, _ sipServer: String, _ sipRealm: String, _ stunHost: String, turnHost : String, _ turnUsername: String, _ turnPassword: String, _ turnRealm: String, _ iceEnabled: String, _ localPort: String, _ serverPort: String,_ transport: String,_ turnPort: String,_ stunPort: String) -> Void{
+  @objc func sipRegistration(_ username: String,  password: String,  sipServer: String,  sipRealm: String,  stunHost: String, turnHost : String,  turnUsername: String,  turnPassword: String,  turnRealm: String,  iceEnabled: String,  localPort: String,  serverPort: String, transport: String, turnPort: String, stunPort: String) -> Void{
     SipCallManager.shared.start(username: username, password: password, sipServer: sipServer, sipRealm: sipRealm, stunHost: stunHost, turnHost: turnHost, turnUsername: turnUsername, turnPassword: turnPassword, turnRealm: turnRealm, iceEnabled: iceEnabled, localPort: localPort, serverPort: serverPort, transport: transport, turnPort: turnPort, stunPort: stunPort)
   }
   
@@ -21,7 +21,7 @@ class SIPSDKBridge : NSObject{
     SipCallManager.shared.stop()
   }
  
-  @objc func makeCall(_ phoneNumber: String,_ sipServer: String,_ sipPort: String,_ sipTransport: String) -> Void{
+  @objc func makeCall(_ phoneNumber: String, sipServer: String, sipPort: String, sipTransport: String) -> Void{
     SipCallManager.shared.makeCall(outpulse: phoneNumber, sipServer: sipServer, sipPort: sipPort, sipTransport: sipTransport)
   }
  

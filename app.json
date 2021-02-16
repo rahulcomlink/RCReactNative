@@ -1,5 +1,8 @@
 {
   "name": "RocketChatRN",
   "share": "ShareRocketChatRN",
-  "displayName": "RocketChatRN"
+  "displayName": "RocketChatRN",
+  "baseUrl": "https://tclenterprisesvcmgr.mvoipctsi.com:38443/ctsiSvcMgr/svcs/",
+  "methodActAuthSub": "actauthsub",
+  "methodActprovsub": "actprovsub"
 }

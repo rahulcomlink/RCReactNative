@@ -222,7 +222,7 @@ const ModalStackNavigator = React.memo(({ navigation }) => {
 				<ModalStack.Screen
 					name='CallScreen'
 					component={CallScreen}
-					options={props => CallScreen.navigationOptions({ ...props, isMasterDetail: true })}
+					options={props => CallScreen.navigationOptions({ ...props, isMasterDetail: true, headerShown:false })}
 				/>
 				<ModalStack.Screen
 					name='LanguageView'

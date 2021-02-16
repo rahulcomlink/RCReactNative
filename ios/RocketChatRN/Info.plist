@@ -98,6 +98,11 @@
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
 	</dict>
+  <key>NSAppTransportSecurity</key>
+  <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+  </dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -119,5 +124,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  
 </dict>
 </plist>

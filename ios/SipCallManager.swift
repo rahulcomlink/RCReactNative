@@ -53,7 +53,7 @@ import AVFoundation
     }
     
     func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String ) {
-      print("start of function");
+  
           let userName = username
           let password = password
           let sipServer = sipServer

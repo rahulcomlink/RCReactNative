@@ -27,8 +27,7 @@ class commonSipSettingFunc extends React.Component{
             const turnPassword = await AsyncStorage.getItem('turnPassword') ;
             const stunServer = await AsyncStorage.getItem('stunServer') ;
             const stunPort = await AsyncStorage.getItem('stunPort') ;
-            
-             this.forceUpdate()
+
 
              console.debug('getSipSettingsAndStart 2')
         
@@ -48,7 +47,6 @@ class commonSipSettingFunc extends React.Component{
             const sipPort = await AsyncStorage.getItem('sipPort') ;
             const sipTransport = await AsyncStorage.getItem('sipTransport') ;
 
-             this.forceUpdate()
         
              NativeModules.SIPSDKBridge.makeCall(phoneNumber,sipServer,sipPort,sipTransport);
              

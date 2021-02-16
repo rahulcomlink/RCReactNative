@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SIPUserInfo = 'SIPUserData';
 import * as HeaderButton from '../../containers/HeaderButton';
 import { isNil } from 'lodash';
-
+import commonSipSettingFunc from './commonSipSettingFunc';
 
 class SIPSettings extends React.Component {
 
@@ -149,6 +149,8 @@ class SIPSettings extends React.Component {
             await AsyncStorage.setItem('turnPassword', this.state.turnPassword);
             await AsyncStorage.setItem('stunServer', this.state.stunServer);
             await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
+
+            commonSipSettingFunc.getSipSettingsAndStart();
           } catch (error) {
             // Error retrieving data
             console.debug('error.message', error.message);

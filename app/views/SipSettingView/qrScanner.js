@@ -64,7 +64,9 @@ class qrScanner extends Component {
     provisionUser = (params) => {
 
         var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "text/plain");
+        myHeaders.append("Content-Type", "Application/JSON");
+        // "Content-type" : "Application/JSON"
+        // myHeaders.append("Content-Type", "text/plain");
         /*
         var params = {
            auth_type : 'QRCODE',
@@ -84,15 +86,19 @@ class qrScanner extends Component {
            method: 'POST',
            headers: myHeaders,
            body: jsonString,
-           redirect: 'follow'
+          // redirect: 'follow'
         };
-        
+        var url =  baseurl+methodactprovsub
+        console.debug('url of dt = ',url)
         fetch(baseurl+methodactprovsub, requestOptions)
         .then(response => response.json())
-        .then(result =>
-          this.handleResponse(result)
-        )
+        .then(result => this.handleResponse(result))
         .catch(error => alert(error))
+
+        // fetch(baseurl+methodactprovsub, requestOptions)
+        // .then(response => console.debug('response of qr code',response))
+        // .then(result => this.handleResponse(result))
+        // .catch(error => alert(error))
     }
 ////self.handleResponse(result)
 
@@ -144,18 +150,22 @@ class qrScanner extends Component {
   render() {
     return (
       <QRCodeScanner
-        onRead={this.onSuccess}
-        flashMode={RNCamera.Constants.FlashMode.off}
-        reactivate = {false}
-        style= {{ flex: 1 }}
-        showFrame = {true}
-        scanBarcode={true}
-        hideControls={true}
-        scanBarcode={true}
-        laserColor={'white'}
-        frameColor={'white'}
-        colorForScannerFrame={'white'}
-        cameraStyle={{ height: SCREEN_HEIGHT }}
+      onRead={this.onSuccess}
+      flashMode={RNCamera.Constants.FlashMode.off}
+      reactivate = {false}
+      cameraStyle={{ height: SCREEN_HEIGHT }}
+        // onRead={this.onSuccess}
+        // flashMode={RNCamera.Constants.FlashMode.off}
+        // reactivate = {false}
+        // style= {{ flex: 1 }}
+        // showFrame = {true}
+        // scanBarcode={true}
+        // hideControls={true}
+        // scanBarcode={true}
+        // laserColor={'white'}
+        // frameColor={'white'}
+        // colorForScannerFrame={'white'}
+        // cameraStyle={{ height: SCREEN_HEIGHT }}
      
       /> 
     );

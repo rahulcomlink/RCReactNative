@@ -41,7 +41,7 @@ const mainBundle = Platform.OS === 'ios'
 
 class VideoCallView extends React.Component {
   static navigationOptions = () => ({
-    title: "Video Call",
+    headerShown: false,
   });
 
   static propTypes = {

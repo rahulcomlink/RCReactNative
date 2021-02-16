@@ -337,7 +337,10 @@ const CallScreenStackNavigator = () => {
 			<CallScreenStack.Screen
 				name='CallScreen'
 				component={CallScreen}
-				options={CallScreen.navigationOptions}
+				options={{
+					headerShown:false
+				  }}
+				//options={CallScreen.navigationOptions}
 			/>
 		</CallScreenStack.Navigator>
 	);
