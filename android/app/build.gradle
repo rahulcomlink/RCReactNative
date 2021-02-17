@@ -152,6 +152,7 @@ android {
             missingDimensionStrategy "RNNotifications.reactNativeVersion", "reactNative60" // See note below!
         }
         resValue "string", "rn_config_reader_custom_package", "com.comlinkinc.android.pigeon"
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
 
     signingConfigs {

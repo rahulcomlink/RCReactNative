@@ -80,7 +80,7 @@
     "react-native-autostart": "^1.0.7",
     "react-native-background-timer": "2.2.0",
     "react-native-bootsplash": "2.2.5",
-    "react-native-camera": "^3.42.1",
+    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera.git",
     "react-native-config-reader": "^4.1.1",
     "react-native-console-time-polyfill": "^1.2.1",
     "react-native-countup-component": "^0.0.3",
