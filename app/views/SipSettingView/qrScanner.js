@@ -44,9 +44,9 @@ class qrScanner extends Component {
     
     
     onSuccess = e => {
-      console.debug('this.props.route.params.responseAppID',this.props.route.params.responseAppID)
+     
         this.setState({ authToken: e.data})
-        //alert(e.data)
+      
         var params = {
             auth_type : 'QRCODE',
             app_id : this.props.route.params.responseAppID,
@@ -56,71 +56,74 @@ class qrScanner extends Component {
             sub_dev_token : this.props.route.params.deviceToken,
             sub_activation_token : e.data,
          };
-        //alert(this.state.authToken)
+        
         console.debug('params of qr code', params);
         this.provisionUser(params);
     };
 
     provisionUser = (params) => {
 
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "Application/JSON");
-        // "Content-type" : "Application/JSON"
-        // myHeaders.append("Content-Type", "text/plain");
-        /*
-        var params = {
-           auth_type : 'QRCODE',
-           app_id : this.props.route.params.responseAppID,
-           sub_auth_str : this.props.route.params.UserMobileNumber,
-           sub_dev_model : this.props.route.params.deviceModel,
-           sub_dev_os : this.props.route.params.OSType,
-           sub_dev_token : this.props.route.params.deviceToken,
-           sub_activation_token : this.state.authToken,
-        };
-        */
-  
-        var jsonString = JSON.stringify(params);
-       // alert(jsonString)
-  
-        var requestOptions = {
-           method: 'POST',
-           headers: myHeaders,
-           body: jsonString,
-          // redirect: 'follow'
-        };
-        var url =  baseurl+methodactprovsub
-        console.debug('url of dt = ',url)
-        fetch(baseurl+methodactprovsub, requestOptions)
-        .then(response => response.json())
-        .then(result => this.handleResponse(result))
-        .catch(error => alert(error))
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "text/plain");
+      myHeaders.append("Accept", "text/plain");
 
-        // fetch(baseurl+methodactprovsub, requestOptions)
-        // .then(response => console.debug('response of qr code',response))
-        // .then(result => this.handleResponse(result))
-        // .catch(error => alert(error))
+      /*
+      var params = {
+         auth_type : 'QRCODE',
+         app_id : this.props.route.params.responseAppID,
+         sub_auth_str : this.props.route.params.UserMobileNumber,
+         sub_dev_model : this.props.route.params.deviceModel,
+         sub_dev_os : this.props.route.params.OSType,
+         sub_dev_token : this.props.route.params.deviceToken,
+         sub_activation_token : this.state.authToken,
+      };
+      */
+
+      var jsonString = JSON.stringify(params);
+
+
+      var requestOptions = {
+         method: 'POST',
+         headers: myHeaders,
+         body: jsonString,
+         redirect: 'follow'
+      };
+      
+      fetch(baseurl+methodactprovsub, requestOptions)
+      .then(response => response.json())
+      .then(result => this.handleResponse(result))
+      .catch(error => alert(error))
     }
-////self.handleResponse(result)
-
 
 
     handleResponse = (apiResponse) => {
         if(apiResponse.auth_success === true){
-            //alert("User provisioning completed.")
+            
             var stunServers = apiResponse.app_cfg_data.stun_svrs
             var turnServers = apiResponse.app_cfg_data.turn_svrs
-            this.setState({sipServer : apiResponse.app_cfg_data.sip_svrs[0]});
-            this.setState({sipPort : 8993});
+            var sipserver1 =  apiResponse.app_cfg_data.sip_svrs[0]
+        
+            if(sipserver1.indexOf(':') >= 0){
+              
+                this.setState({sipServer : sipserver1.split(':')[0]});
+                this.setState({sipPort : sipserver1.split(':')[1]});
+               
+            }else {
+              this.setState({sipServer : apiResponse.app_cfg_data.sip_svrs[0]});
+               this.setState({sipPort : 8993});
+            }
+            
+          
             this.setState({sipTransport : 'TCP'});
             this.setState({sipUsername : apiResponse.app_cfg_data.sip_uid});
-            this.setState({sipPassword : ''});
+            this.setState({sipPassword : apiResponse.app_cfg_data.sip_pwd});
             this.setState({iceEnabled : turnServers.length > 0 ? true : false});
-            this.setState({turnServer : turnServers.length > 0 ? turnServers[0] : ''});
-            this.setState({turnPort : 8993});
-            this.setState({turnUsername : ''});
-            this.setState({turnPassword : ''});
-            this.setState({stunServer : stunServers.length > 0 ? stunServers[0] : ''});
-            this.setState({stunPort : 8993});
+            this.setState({turnServer : turnServers.length > 0 ? turnServers[0] : '-'});
+            this.setState({turnPort : 0});
+            this.setState({turnUsername : turnServers.length > 0 ? '-' : '-'});
+            this.setState({turnPassword : turnServers.length > 0 ?  '-' : '-'});
+            this.setState({stunServer : stunServers.length > 0 ? stunServers[0] : '-'});
+            this.setState({stunPort : 0});
             this.GoToSettingPage()
 
             
@@ -154,19 +157,6 @@ class qrScanner extends Component {
       flashMode={RNCamera.Constants.FlashMode.off}
       reactivate = {false}
       cameraStyle={{ height: SCREEN_HEIGHT }}
-        // onRead={this.onSuccess}
-        // flashMode={RNCamera.Constants.FlashMode.off}
-        // reactivate = {false}
-        // style= {{ flex: 1 }}
-        // showFrame = {true}
-        // scanBarcode={true}
-        // hideControls={true}
-        // scanBarcode={true}
-        // laserColor={'white'}
-        // frameColor={'white'}
-        // colorForScannerFrame={'white'}
-        // cameraStyle={{ height: SCREEN_HEIGHT }}
-     
       /> 
     );
   }
@@ -216,4 +206,3 @@ const styles = StyleSheet.create({
 
 export default qrScanner;
 
-//AppRegistry.registerComponent('qrScanner', () => qrScanner);

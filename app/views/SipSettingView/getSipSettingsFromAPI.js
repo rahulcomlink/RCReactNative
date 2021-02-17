@@ -41,6 +41,19 @@ class getSipSettingsFromAPI extends React.Component {
             stunPort : props.route.params?.stunPort
         }
 
+            // console.debug('sipServer===',this.state.sipServer);
+            // console.debug('sipPort=',this.state.sipPort);
+            // console.debug('sipTransport=',this.state.sipTransport);
+            // console.debug('sipUsername=',this.state.sipUsername);
+            // console.debug('sipPassword=',this.state.sipPassword);
+            // console.debug('iceEnabled=',this.state.iceEnabled);
+            // console.debug('turnServer=',this.state.turnServer);
+            // console.debug('turnPort=',this.state.turnPort);
+            // console.debug('turnUsername=',this.state.turnUsername);
+            // console.debug('turnPassword=',this.state.turnPassword);
+            // console.debug('stunServer==',this.state.stunServer);
+            // console.debug('stunPort=',this.state.stunPort);
+
         this.selIndex = 0
         if(this.state.sipTransport == 'TCP'){
             this.selIndex = 0
@@ -50,6 +63,31 @@ class getSipSettingsFromAPI extends React.Component {
             this.selIndex = 2
         }
       }
+
+    setValues = () => {
+
+        this.setState({sipServer : this.props.route.params?.sipServer})
+        this.setState({sipPort : this.props.route.params?.sipPort})
+        this.setState({sipTransport : this.props.route.params?.sipTransport})
+        this.setState({sipUsername : this.props.route.params?.sipUsername})
+        this.setState({sipPassword : this.props.route.params?.sipPassword})
+        this.setState({iceEnabled : this.props.route.params?.iceEnabled})
+        this.setState({turnServer : this.props.route.params?.turnServer})
+        this.setState({turnPort : this.props.route.params?.turnPort})
+        this.setState({turnUsername : this.props.route.params?.turnUsername})
+        this.setState({turnPassword : this.props.route.params?.turnPassword})
+        this.setState({stunServer : this.props.route.params?.stunServer})
+        this.setState({stunPort : this.props.route.params?.stunPort})
+
+        this.selIndex = 0
+        if(this.state.sipTransport == 'TCP'){
+            this.selIndex = 0
+        }else if(this.state.sipTransport == 'UDP'){
+            this.selIndex = 1
+        }else {
+            this.selIndex = 2
+        }
+    }
 
     onSipServerTextChange = (text) => {
         this.setState({sipServer : text});
@@ -155,7 +193,7 @@ class getSipSettingsFromAPI extends React.Component {
 
       getSIPUserData = async () =>{
     
-        if(this.state.sipServer == null) {
+      
         try {
             const sipServer = await AsyncStorage.getItem('sipServer') ;
             this.state.sipServer = sipServer;
@@ -202,14 +240,16 @@ class getSipSettingsFromAPI extends React.Component {
             // Error retrieving data
             console.debug('error.message', error.message);
           }
-        }
+
       }
 
     componentDidMount(){
-        this.getSIPUserData();
+       // this.getSIPUserData();
     }
 
     render(){
+     
+        
         return(
            <ScrollView style = {styles.containerScrollView} >
                 

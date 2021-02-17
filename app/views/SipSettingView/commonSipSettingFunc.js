@@ -1,5 +1,5 @@
 import React from 'react';
-import { NativeModules } from 'react-native';
+import { NativeModules, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class commonSipSettingFunc extends React.Component{
@@ -11,10 +11,9 @@ class commonSipSettingFunc extends React.Component{
        
         try {
 
-            console.debug('getSipSettingsAndStart 1')
-
             NativeModules.SIPSDKBridge.sipStop();
 
+            
             const sipServer = await AsyncStorage.getItem('sipServer') ;
             const sipPort = await AsyncStorage.getItem('sipPort') ;
             const sipTransport = await AsyncStorage.getItem('sipTransport') ;
@@ -28,12 +27,10 @@ class commonSipSettingFunc extends React.Component{
             const stunServer = await AsyncStorage.getItem('stunServer') ;
             const stunPort = await AsyncStorage.getItem('stunPort') ;
 
-
-             console.debug('getSipSettingsAndStart 2')
-        
-             NativeModules.SIPSDKBridge.sipRegistration('*','*','*','*','*','*','*','*','*','*','*','*','*','*','*');
-            // NativeModules.SIPSDKBridge.sipRegistration(sipUsername,sipPassword,sipServer,'*',stunServer,turnServer,turnUsername,turnPassword,'',iceEnabled,sipPort,sipPort,sipTransport,turnPort,stunPort);
-
+            if (sipServer == null){}
+            else{
+            NativeModules.SIPSDKBridge.sipRegistration(sipUsername,sipPassword,sipServer,'*',stunServer,turnServer,turnUsername,turnPassword,'',iceEnabled,sipPort,sipPort,sipTransport,turnPort,stunPort);
+            }
              
           } catch (error) {
             // Error retrieving data
@@ -47,8 +44,12 @@ class commonSipSettingFunc extends React.Component{
             const sipPort = await AsyncStorage.getItem('sipPort') ;
             const sipTransport = await AsyncStorage.getItem('sipTransport') ;
 
-        
-             NativeModules.SIPSDKBridge.makeCall(phoneNumber,sipServer,sipPort,sipTransport);
+            if (sipServer == null){
+                Alert('Please complete Sip Provisioning')
+            }
+            else{
+               NativeModules.SIPSDKBridge.makeCall(phoneNumber,sipServer,sipPort,sipTransport);
+            }
              
           } catch (error) {
             // Error retrieving data

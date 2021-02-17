@@ -76,13 +76,29 @@ import AVFoundation
                      }else if transport == "tls" || transport == "TLS" {
                          sipTransport = CM_TLS
                      }
-                 let stunhostt = stunHost + stunPort
-                 let stunHost = CString(from: stunhostt)
-                 let turnhostt = turnHost + turnPort
-                 let turnHost = CString(from: turnhostt)
-                 let turnUsername = CString(from: turnUsername)
-                 let turnPassword = CString(from: turnPassword)
-                 let turnRealm = CString(from: turnRealm)
+                  let stunhostt = stunHost + (stunPort == "0" ? "" : (":" + stunPort))
+                 var stunHost1 = CString(from: "")
+      if stunHost == "-" {}
+      else {
+        stunHost1 = CString(from: stunhostt)
+      }
+      
+      
+      var turnHost1 = CString(from: "")
+      var turnUsername1 = CString(from: "")
+      var turnPassword1 = CString(from: "")
+      var turnRealm1 = CString(from: "")
+                
+      if turnHost == "-"{
+        
+      }
+      else {
+                  let turnhostt = turnHost + (turnHost == "0" ? "" : (":" + turnPort))
+                  turnHost1 = CString(from: turnhostt)
+                  turnUsername1 = CString(from: turnUsername)
+                  turnPassword1 = CString(from: turnPassword)
+                  turnRealm1 = CString(from: turnRealm)
+      }
                 
                    // Get the absolute path to the ringback file
                  let ringbackPath = Bundle.main.path(forResource: "ring", ofType: "wav")
@@ -90,7 +106,7 @@ import AVFoundation
 
                    defer {
                      CString.release(
-                       stunHost, turnHost, turnUsername, turnPassword, turnRealm,
+                       stunHost1, turnHost1, turnUsername1, turnPassword1, turnRealm1,
                        ringbackAudioFile)
                    }
                  
@@ -105,11 +121,11 @@ import AVFoundation
                            cmConfig.sip_password = sipPassword.value
                            cmConfig.sip_transport = sipTransport
                            cmConfig.sip_realm = sipRealm.value
-                           cmConfig.stun_host = stunHost.value
-                           cmConfig.turn_host = turnHost.value
-                           cmConfig.turn_username = turnUsername.value
-                           cmConfig.turn_password = turnPassword.value
-                           cmConfig.turn_realm = turnRealm.value
+                           cmConfig.stun_host = stunHost1.value
+                           cmConfig.turn_host = turnHost1.value
+                           cmConfig.turn_username = turnUsername1.value
+                           cmConfig.turn_password = turnPassword1.value
+                           cmConfig.turn_realm = turnRealm1.value
                            cmConfig.ringback_audio_file = ringbackAudioFile.value
                            cmConfig.answer_timeout = Int32(60)
 

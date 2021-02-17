@@ -103,12 +103,11 @@ class CallScreen extends React.Component {
 
     onKeyPressed = (item) => {
         this.setState({ keyPressed: this.state.keyPressed + item })
-      //  NativeModules.SIPSDKBridge.keyPressed(item)
+        NativeModules.SIPSDKBridge.keyPressed(item)
     }
 
     makeCall = () => {
         commonSipSettingFunc.callFunc(this.state.phoneNumber);
-       // NativeModules.SIPSDKBridge.makeCall(this.state.phoneNumber)
     }
 
     setSpeaker = () => {
@@ -135,6 +134,7 @@ class CallScreen extends React.Component {
         }
         if(event.callStatus == 'TERMINATED'){
             this.setState({ callStatusText : 'Call terminated'});
+            this.endCall()
         }
         if(event.callStatus == 'DECLINED'){
             this.setState({ callStatusText : 'Call declined'});
@@ -173,7 +173,7 @@ class CallScreen extends React.Component {
     render(){
         return(
             <View style={{padding: 10, flex : 1}}>
-                {/*
+                
                 <InputContainer
                     placeholder = 'Dial Number'
                     title = 'Dial Number'
@@ -186,9 +186,9 @@ class CallScreen extends React.Component {
                     onPress = {
                         () => this.makeCall()
                 }>  
-                <Text style = {styles.saveButtonText}> Dial Call </Text> backgroundColor : '#FFFFFF'
+                <Text style = {styles.saveButtonText}> Dial Call </Text>
                </TouchableOpacity> 
-               */}
+               
 
                <Image style = {{width : 70, height : 70, alignSelf : 'center' , margin : 20, marginTop : 50, borderRadius : 70/2, borderWidth: 2, borderColor : 'lightgrey'}} source = {contact_avatar}/>   
 
