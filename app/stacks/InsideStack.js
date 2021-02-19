@@ -78,6 +78,10 @@ import Inputs from '../views/SipSettingView/UserDetails';
 import qrScanner from '../views/SipSettingView/qrScanner';
 import getSipSettingsFromAPI from '../views/SipSettingView/getSipSettingsFromAPI';
 
+//Keypad
+import KeypadView from '../views/KeypadView/keypadView';
+import SelectCountryCode from '../views/KeypadView/SelectCountryCode';
+
 // ChatsStackNavigator
 const ChatsStack = createStackNavigator();
 const ChatsStackNavigator = () => {
@@ -301,6 +305,35 @@ const SipSettingsStackNavigator = () => {
 	);
 };
 
+//KeypadViewStackNavigator
+const KeypadViewStack = createStackNavigator();
+const KeypadViewStackNavigator = () => {
+	const { theme } = React.useContext(ThemeContext);
+
+	return (
+		<KeypadViewStack.Navigator screenOptions={{ ...defaultHeader, ...themedHeader(theme), ...StackAnimation }}>
+			<KeypadViewStack.Screen
+				name='KeypadView'
+				component={KeypadView}
+				options={KeypadView.navigationOptions}
+			/>
+			<CallScreenStack.Screen
+				name='CallScreen'
+				component={CallScreen}
+				options={{
+					headerShown:false
+				  }}
+			/>
+			<KeypadViewStack.Screen
+				name='SelectCountryCode'
+				component={SelectCountryCode}
+				options={SelectCountryCode.navigationOptions}
+			/>
+		</KeypadViewStack.Navigator>
+	);
+};
+
+
 // NewMessageStackNavigator
 const SipProvisioningStack = createStackNavigator();
 const SipProvisioningStackNavigator = () => {
@@ -377,6 +410,7 @@ const DrawerNavigator = () => (
 		<Drawer.Screen name='AdminPanelStackNavigator' component={AdminPanelStackNavigator} />
 		<Drawer.Screen name='SipSettingsStackNavigator' component={SipSettingsStackNavigator} />
 		<Drawer.Screen name='CallScreenStackNavigator' component={CallScreenStackNavigator} />
+		<Drawer.Screen name='KeypadViewStackNavigator' component={KeypadViewStackNavigator} />
 	</Drawer.Navigator>
 );
 

@@ -202,7 +202,13 @@ class Sidebar extends Component {
 					testID='sidebar-call'
 					current={this.currentItemKey === 'CallScreenStackNavigator'}
 				/>
-				
+				<SidebarItem
+					text={'Keypad'}
+					left={<CustomIcon name='administration' size={20} color={themes[theme].titleText} />}
+					onPress={() => this.sidebarNavigate('KeypadViewStackNavigator')}
+					testID='sidebar-call'
+					current={this.currentItemKey === 'KeypadViewStackNavigator'}
+				/>
 				{this.renderAdmin()}
 			</>
 		);

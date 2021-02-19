@@ -163,42 +163,42 @@ class SIPSettings extends React.Component {
         try {
             const sipServer = await AsyncStorage.getItem('sipServer') ;
             console.debug('sipServerrrrr=',sipServer);
-            this.state.sipServer = sipServer;
+            this.setState({ sipServer: sipServer})
+            
 
             const sipPort = await AsyncStorage.getItem('sipPort') ;
-            this.state.sipPort = sipPort;
+            this.setState({ sipPort: sipPort })
 
             const sipTransport = await AsyncStorage.getItem('sipTransport') ;
-            this.state.sipTransport = sipTransport;
+            this.setState({ sipTransport: sipTransport })
             this.setSegmentedControl()
 
             const sipUsername = await AsyncStorage.getItem('sipUsername') ;
-            this.state.sipUsername = sipUsername;
+            this.setState({ sipUsername: sipUsername })
 
             const sipPassword = await AsyncStorage.getItem('sipPassword') ;
-            this.state.sipPassword = sipPassword;
+            this.setState({ sipPassword: sipPassword })
 
             const iceEnabled = await AsyncStorage.getItem('iceEnabled') ;
-            this.state.iceEnabled = iceEnabled == 'true' ? true : false;
+            this.setState({ iceEnabled: iceEnabled == 'true' ? true : false })
 
             const turnServer = await AsyncStorage.getItem('turnServer') ;
-            this.state.turnServer = turnServer;
+            this.setState({ turnServer: turnServer })
 
             const turnPort = await AsyncStorage.getItem('turnPort') ;
-            this.state.turnPort = turnPort;
+            this.setState({ turnPort: turnPort })
 
             const turnUsername = await AsyncStorage.getItem('turnUsername') ;
-            this.state.turnUsername = turnUsername;
+            this.setState({ turnUsername: turnUsername})
 
             const turnPassword = await AsyncStorage.getItem('turnPassword') ;
-            this.state.turnPassword = turnPassword;
+            this.setState({ turnPassword: turnPassword })
 
             const stunServer = await AsyncStorage.getItem('stunServer') ;
-            this.state.stunServer = stunServer;
-            console.debug('stunServer=',stunServer);
+            this.setState({ stunServer: stunServer })
 
             const stunPort = await AsyncStorage.getItem('stunPort') ;
-            this.state.stunPort = stunPort;
+            this.setState({ stunPort: stunPort })
 
            this.forceUpdate()
 
