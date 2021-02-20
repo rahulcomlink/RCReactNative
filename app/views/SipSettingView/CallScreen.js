@@ -67,7 +67,8 @@ class CallScreen extends React.Component {
             counter: 0,
             timer: null,
             callStatusText: 'calling',
-            showKeypad: false
+            showKeypad: false,
+            name : props.route.params?.name
         }
         eventEmitter.addListener('onSessionConnect', this.getCallStatus);
     }
@@ -180,6 +181,7 @@ class CallScreen extends React.Component {
 
     render(){
         return(
+            
             <View style={{padding: 10, flex : 1, backgroundColor : 'white'}}>
                 
                 {/*
@@ -202,7 +204,7 @@ class CallScreen extends React.Component {
 
                <Image style = {{width : 70, height : 70, alignSelf : 'center' , margin : 20, marginTop : 50, borderRadius : 70/2, borderWidth: 2, borderColor : 'lightgrey'}} source = {contact_avatar}/>   
 
-               <Text style = {{textAlign : 'center', fontSize : 28, marginBottom : 20}}>{this.state.phoneNumber}</Text>
+               <Text style = {{textAlign : 'center', fontSize : 28, marginBottom : 20}}> {this.state.name == null ? this.state.phoneNumber :this.state.name}</Text>
 
                <View style={{ alignSelf : 'center'}}>
                     <Text style={{ textAlign: 'center' , fontSize : 16}}>{this.state.callStatusText}</Text>

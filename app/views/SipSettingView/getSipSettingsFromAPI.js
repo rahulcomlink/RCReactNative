@@ -185,6 +185,7 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
 
             commonSipSettingFunc.getSipSettingsAndStart();
+            this.props.navigation.navigate('PhonebookView');
           } catch (error) {
             // Error retrieving data
             console.debug('error.message', error.message);

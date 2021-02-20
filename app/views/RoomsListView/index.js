@@ -71,6 +71,7 @@ import Api from '@rocket.chat/sdk/lib/api/api';
 import User from '../../lib/database/model/User';
 import { usesMetricSystem } from 'react-native-localize';
 import commonSipSettingFunc from '../SipSettingView/commonSipSettingFunc';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
 const CHATS_HEADER = 'Chats';
@@ -753,13 +754,26 @@ class RoomsListView extends React.Component {
 		}
 	};
 
-	goToSipProvisioning = () => {
+	goToSipProvisioning = async () => {
+
 		const { navigation, isMasterDetail } = this.props;
-		if (isMasterDetail) {
-			navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });
-		} else {
-			navigation.navigate('SipProvisioningStackNavigator');
-		}	
+		const sipServer = await AsyncStorage.getItem('sipServer') ;
+		console.debug('sip serverrr =',sipServer);
+		if (sipServer == null){
+			if (isMasterDetail) {
+				navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });
+			} else {
+				navigation.navigate('SipProvisioningStackNavigator');
+			}	
+		}
+        else{
+			if (isMasterDetail) {
+				navigation.navigate('ModalStackNavigator', { screen: 'PhonebookView' });
+			} else {
+				navigation.navigate('PhonebookStackNavigator');
+			}	
+		} 
+		
 	}
 
 	goQueue = () => {

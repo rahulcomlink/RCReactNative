@@ -386,6 +386,16 @@ const SipProvisioningStackNavigator = () => {
         component={getSipSettingsFromAPI}
         options={getSipSettingsFromAPI.navigationOptions}
       />
+	  <SipProvisioningStack.Screen
+        name="PhonebookView"
+        component={PhonebookView}
+        options={PhonebookView.navigationOptions}
+      />
+	  <SipProvisioningStack.Screen
+        name="KeypadView"
+        component={KeypadView}
+        options={KeypadView.navigationOptions}
+      />
     </SipProvisioningStack.Navigator>
   );
 };
@@ -426,6 +436,18 @@ const PhonebookStackNavigator = () => {
         name="PhonebookView"
         component={PhonebookView}
         options={PhonebookView.navigationOptions}
+      />
+	  <PhonebookStack.Screen
+        name="KeypadView"
+        component={KeypadView}
+        options={KeypadView.navigationOptions}
+      />
+	  <CallScreenStack.Screen
+        name="CallScreen"
+        component={CallScreen}
+        options={{
+          headerShown: false,
+        }}
       />
     </PhonebookStack.Navigator>
   );
@@ -481,18 +503,18 @@ const DrawerNavigator = () => (
       name="SipSettingsStackNavigator"
       component={SipSettingsStackNavigator}
     />
-    <Drawer.Screen
+    {/* <Drawer.Screen
       name="CallScreenStackNavigator"
       component={CallScreenStackNavigator}
-    />
-    <Drawer.Screen
+    /> */}
+    {/* <Drawer.Screen
       name="KeypadViewStackNavigator"
       component={KeypadViewStackNavigator}
-    />
-    <Drawer.Screen
+    /> */}
+    {/* <Drawer.Screen
       name="PhonebookStackNavigator"
       component={PhonebookStackNavigator}
-    />
+    /> */}
   </Drawer.Navigator>
 );
 
@@ -635,6 +657,11 @@ const InsideStackNavigator = () => {
       <InsideStack.Screen
         name="SipProvisioningStackNavigator"
         component={SipProvisioningStackNavigator}
+        options={{ headerShown: false }}
+      />
+	  <InsideStack.Screen
+        name="PhonebookStackNavigator"
+        component={PhonebookStackNavigator}
         options={{ headerShown: false }}
       />
     </InsideStack.Navigator>

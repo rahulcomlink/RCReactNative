@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView, Keyboard, Text, Alert } from "react-native";
+import { View, ScrollView, Keyboard, Text, Alert, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import prompt from "react-native-prompt-android";
 import SHA256 from "js-sha256";
@@ -33,22 +33,38 @@ import SafeAreaView from "../../containers/SafeAreaView";
 import * as Contacts from "expo-contacts";
 import SectionListContacts from "react-native-sectionlist-contacts";
 import SearchBox from "../../containers/SearchBox";
-
+import call_1_3x from '../../static/images/callBtnDialpadIcon.png';
 
 
 
 class PhonebookView extends React.Component {
-  static navigationOptions = ({ navigation, isMasterDetail }) => {
+  // static navigationOptions = ({ navigation, isMasterDetail }) => {
+  //   const options = {
+  //     title: I18n.t("Phonebook"),
+  //   };
+  //   if (!isMasterDetail) {
+  //     options.headerLeft = () => (
+  //       <HeaderButton.Drawer navigation={navigation} />
+  //     );
+  //   }
+  //   return options;
+  // };
+
+   static navigationOptions = ({ navigation }) => {
     const options = {
-      title: I18n.t("Phonebook"),
+      title: "Phonebook",
     };
-    if (!isMasterDetail) {
-      options.headerLeft = () => (
-        <HeaderButton.Drawer navigation={navigation} />
+    
+      options.headerRight = () => (
+        <TouchableOpacity style={phonebookstyle.button2} 
+        onPress= {()=> navigation.navigate('KeypadView')} >  
+        <Image style={phonebookstyle.button2}  source = {call_1_3x}/>   
+        </TouchableOpacity>
       );
-    }
+  
     return options;
   };
+
 
   static propTypes = {
     baseUrl: PropTypes.string,
@@ -73,30 +89,37 @@ class PhonebookView extends React.Component {
     if (status === "granted") {
       const { data } = await Contacts.getContactsAsync({
         fields: [Contacts.Fields.Name],
+        fields: [Contacts.Fields.PhoneNumbers],
       });
 
       if (data.length > 0) {
         for (var i = 0; i < data.length; i++) {
           const contact = data[i];
           if (contact != null && contact.name != null) {
-            this.state.dataArray.push({ name: contact.name });
+            if (contact.phoneNumbers != null && contact.phoneNumbers[0] != null) { 
+            this.state.dataArray.push({
+              name: contact.name,
+              number: contact.phoneNumbers[0].number,
+            });
+          }
           }
         }
       }
+      this.forceUpdate()
     }
   }
 
   componentWillReceiveProps() {
-		this.setState({searchArray:[]})
-	}
+    this.setState({ searchArray: [] });
+  }
 
-	onChangeSearchText = (e) => {
-		let data = []
-		if (e.length === 0) {
-			this.setState({ searchArray: [] });
-		}
-		if (e.length > 3) {
-			this.setState(
+  onChangeSearchText = (e) => {
+    let data = [];
+    if (e.length === 0) {
+      this.setState({ searchArray: [] });
+    }
+    if (e.length > 3) {
+      this.setState(
         {
           searchText: e,
         },
@@ -117,9 +140,9 @@ class PhonebookView extends React.Component {
           }
         }
       );
-		}
-  }
-  
+    }
+  };
+
   render() {
     let resultArray = [];
     const { server, isMasterDetail, theme } = this.props;
@@ -152,7 +175,43 @@ class PhonebookView extends React.Component {
               renderHeader={this._renderHeader}
               SectionListClickCallback={(item, index) => {
                 console.log("---SectionListClickCallback--:", item, index);
-                Alert.alert("" + item.name);
+                //Alert.alert("" + item.name +"\n"+item.number);
+                var no = item.number
+                no  = no.replace('*','')
+                no  = no.replace('#','')
+                no  = no.replace(' ','')
+                no  = no.replace('+','')
+                no  = no.replace('(','')
+                no  = no.replace(')','')
+
+              if( no.indexOf('*') >= 0){
+                no  = no.replace('*','')
+              }
+              if( no.indexOf('#') >= 0){
+                no  = no.replace('#','')
+              }
+              if( no.indexOf(' ') >= 0){
+                no  = no.replace(' ','')
+              }
+              if( no.indexOf('+') >= 0){
+                no  = no.replace('+','')
+              }
+              if( no.indexOf('(') >= 0){
+                no  = no.replace('(','')
+              }
+              if( no.indexOf(')') >= 0){
+                no  = no.replace(')','')
+              }
+              if( no.indexOf('-') >= 0){
+                no  = no.replace('-','')
+              }
+
+                console.debug('item.name = ',no)
+
+                this.props.navigation.push('CallScreen', {
+                  phoneNumber : no,
+                  name : item.name,
+               });
               }}
               otherAlphabet="#"
             />
@@ -163,17 +222,17 @@ class PhonebookView extends React.Component {
   }
 }
 
- _renderHeader = (params) => {
-   console.log("---custom-renderHeader--", params);
-   return (
-     <View>
-       <Text style={styles.headerTitleText}>{params.key}</Text>
-     </View>
-   );
- };
- 
+_renderHeader = (params) => {
+  console.log("---custom-renderHeader--", params);
+  return (
+    <View>
+      <Text style={styles.headerTitleText}>{params.key}</Text>
+    </View>
+  );
+};
+
 const mapStateToProps = (state) => ({
-  user: getUserSelector(state)
+  user: getUserSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -184,3 +243,25 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withTheme(PhonebookView));
+
+
+
+const phonebookstyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  
+  button2: {
+    width : 30,
+    height : 30,
+   // alignSelf : 'center',
+   // overflow: 'hidden',
+    resizeMode : 'center',
+    backgroundColor : '#70E3E3',
+    borderRadius : 30/2,
+    marginRight : 20
+ },
+ 
+});

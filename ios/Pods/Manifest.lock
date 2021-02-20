@@ -17,6 +17,10 @@ PODS:
   - EXConstants (9.1.1):
     - UMConstantsInterface
     - UMCore
+  - EXContacts (8.6.0):
+    - UMCore
+    - UMFileSystemInterface
+    - UMPermissionsInterface
   - EXFileSystem (9.0.1):
     - UMCore
     - UMFileSystemInterface
@@ -382,13 +386,13 @@ PODS:
     - React
   - react-native-blur (0.8.0):
     - React
-  - react-native-camera (3.42.1):
+  - react-native-camera (3.42.2):
     - React-Core
-    - react-native-camera/RCT (= 3.42.1)
-    - react-native-camera/RN (= 3.42.1)
-  - react-native-camera/RCT (3.42.1):
+    - react-native-camera/RCT (= 3.42.2)
+    - react-native-camera/RN (= 3.42.2)
+  - react-native-camera/RCT (3.42.2):
     - React-Core
-  - react-native-camera/RN (3.42.1):
+  - react-native-camera/RN (3.42.2):
     - React-Core
   - react-native-cameraroll (4.0.0):
     - React
@@ -585,6 +589,7 @@ DEPENDENCIES:
   - EXAppleAuthentication (from `../node_modules/expo-apple-authentication/ios`)
   - EXAV (from `../node_modules/expo-av/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXContacts (from `../node_modules/expo-contacts/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXHaptics (from `../node_modules/expo-haptics/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
@@ -745,6 +750,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-av/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXContacts:
+    :path: "../node_modules/expo-contacts/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXHaptics:
@@ -944,6 +951,7 @@ SPEC CHECKSUMS:
   EXAppleAuthentication: 5b3da71bada29e2423d8ea27e5538ef0d75aba62
   EXAV: 86344030966e0da7e00556fbb97269d9ad16071d
   EXConstants: f907b3b6ce16e20d1750f22af1e095e924574bcb
+  EXContacts: dbc32dd1e2798cce1beeced230da989931b47890
   EXFileSystem: 76875135b61708b9afa7e6a89b72a60ba0fdfa20
   EXHaptics: 5428b344a216ca5d9df6ca8f65720b2a1ad9f109
   EXImageLoader: 02ca02c9cd5cc8a97b423207a73a791e0a86bea5
@@ -996,7 +1004,7 @@ SPEC CHECKSUMS:
   react-native-appearance: 0f0e5fc2fcef70e03d48c8fe6b00b9158c2ba8aa
   react-native-background-timer: 1f7d560647b40e6a60b01c452ba29c54bf581fc4
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
-  react-native-camera: 4a63890724d90d8ccf1662fa41c0dc764c6028f4
+  react-native-camera: eb89d59d50a3fc124b067134b688bccbff0ee841
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
   react-native-cookies: d79e5015a5d3a38e08f5cb39c4948532be7e9c2b
   react-native-document-picker: 825552b827012282baf4b7cbf119d3b37a280c90

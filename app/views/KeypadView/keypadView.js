@@ -32,14 +32,14 @@ import { CountrySelection } from 'react-native-country-list';
 class KeypadView extends React.Component {
 
   
-  static navigationOptions = ({ navigation, isMasterDetail }) => ({
-		headerLeft: () => (isMasterDetail ? (
-			<HeaderButton.CloseModal navigation={navigation} testID='keypad-view-close' />
-		) : (
-			<HeaderButton.Drawer navigation={navigation} testID='keypad-view-drawer' />
-		)),
-		 title: ''
-  });
+  // static navigationOptions = ({ navigation, isMasterDetail }) => ({
+	// 	headerLeft: () => (isMasterDetail ? (
+	// 		<HeaderButton.CloseModal navigation={navigation} testID='keypad-view-close' />
+	// 	) : (
+	// 		<HeaderButton.Drawer navigation={navigation} testID='keypad-view-drawer' />
+	// 	)),
+	// 	 title: ''
+  // });
  
     constructor(props){ 
         super(props);

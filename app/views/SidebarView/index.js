@@ -242,7 +242,7 @@ class Sidebar extends Component {
           testID="sidebar-sip-settings"
           current={this.currentItemKey === "SipSettingsStackNavigator"}
         />
-        <SidebarItem
+        {/* <SidebarItem
           text={"Call"}
           left={
             <CustomIcon
@@ -254,8 +254,8 @@ class Sidebar extends Component {
           onPress={() => this.sidebarNavigate("CallScreenStackNavigator")}
           testID="sidebar-call"
           current={this.currentItemKey === "CallScreenStackNavigator"}
-        />
-        <SidebarItem
+        /> */}
+        {/* <SidebarItem
           text={"Keypad"}
           left={
             <CustomIcon
@@ -267,8 +267,8 @@ class Sidebar extends Component {
           onPress={() => this.sidebarNavigate("KeypadViewStackNavigator")}
           testID="sidebar-call"
           current={this.currentItemKey === "KeypadViewStackNavigator"}
-        />
-        <SidebarItem
+        /> */}
+        {/* <SidebarItem
           text="Phonebook"
           left={
             <CustomIcon
@@ -280,7 +280,7 @@ class Sidebar extends Component {
           onPress={() => this.sidebarNavigate("PhonebookStackNavigator")}
           testID="sidebar-phonebook"
           current={this.currentItemKey === "PhonebookStackNavigator"}
-        />
+        /> */}
         {this.renderAdmin()}
       </>
     );
