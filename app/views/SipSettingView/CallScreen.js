@@ -54,11 +54,13 @@ class CallScreen extends React.Component {
       
     });
 
+   
     constructor(props) {
         super(props);
-
+    
+//13157244022
         this.state =  {
-            phoneNumber : '13157244022',
+            phoneNumber : props.route.params?.phoneNumber,
             isSpeakerOn : false,
             isMuteOn : false,
             keyPressed : '',
@@ -67,12 +69,18 @@ class CallScreen extends React.Component {
             callStatusText: 'calling',
             showKeypad: false
         }
-
         eventEmitter.addListener('onSessionConnect', this.getCallStatus);
     }
 
     componentWillUnmount() {
         clearInterval(this.state.timer);
+    }
+
+    componentDidMount(){
+        if(this.state.phoneNumber != null){
+            this.makeCall()
+        }
+       
     }
 
      renderSpeakerImage = () => {
@@ -121,7 +129,7 @@ class CallScreen extends React.Component {
     }
 
     endCall = () => {
-		this.props.navigation.goBack()
+		this.props.navigation.pop()
         NativeModules.SIPSDKBridge.endCall()
     }
 
@@ -172,8 +180,9 @@ class CallScreen extends React.Component {
 
     render(){
         return(
-            <View style={{padding: 10, flex : 1}}>
+            <View style={{padding: 10, flex : 1, backgroundColor : 'white'}}>
                 
+                {/*
                 <InputContainer
                     placeholder = 'Dial Number'
                     title = 'Dial Number'
@@ -189,6 +198,7 @@ class CallScreen extends React.Component {
                 <Text style = {styles.saveButtonText}> Dial Call </Text>
                </TouchableOpacity> 
                
+               */}
 
                <Image style = {{width : 70, height : 70, alignSelf : 'center' , margin : 20, marginTop : 50, borderRadius : 70/2, borderWidth: 2, borderColor : 'lightgrey'}} source = {contact_avatar}/>   
 

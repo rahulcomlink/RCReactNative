@@ -66,6 +66,8 @@ import QueueListView from '../../ee/omnichannel/views/QueueListView';
 import SIPSettings from '../../views/SipSettingView/SIPSettings';
 import CallScreen from '../../views/SipSettingView/CallScreen';
 
+//Keypad View
+import KeypadView from '../../views/KeypadView/keypadView';
 
 // ChatsStackNavigator
 const ChatsStack = createStackNavigator();
@@ -223,6 +225,11 @@ const ModalStackNavigator = React.memo(({ navigation }) => {
 					name='CallScreen'
 					component={CallScreen}
 					options={props => CallScreen.navigationOptions({ ...props, isMasterDetail: true })}
+				/>
+				<ModalStack.Screen
+					name='KeypadView'
+					component={KeypadView}
+					options={props => KeypadView.navigationOptions({ ...props, isMasterDetail: true })}
 				/>
 				<ModalStack.Screen
 					name='LanguageView'

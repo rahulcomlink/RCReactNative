@@ -1,0 +1,25 @@
+{
+  "name": "ReactNativeCountries",
+  "version": "1.0",
+  "summary": "ReactNativeCountries",
+  "description": "ReactNativeCountries",
+  "homepage": "https://github.com/talut/react-native-countries",
+  "license": "MIT",
+  "authors": {
+    "author": "iletisim@taluttasgiran.com.tr"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source": {
+    "git": "https://github.com/talut/react-native-countries.git",
+    "tag": "master"
+  },
+  "source_files": "**/*.{h,m}",
+  "requires_arc": true,
+  "dependencies": {
+    "React": [
+
+    ]
+  }
+}
