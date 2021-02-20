@@ -440,6 +440,7 @@ export default {
   Processing: "Processing...",
   Profile_saved_successfully: "Profile saved successfully!",
   Profile: "Profile",
+  Phonebook: "Phonebook",
   Public_Channel: "Public Channel",
   Public: "Public",
   Push_Notifications: "Push Notifications",

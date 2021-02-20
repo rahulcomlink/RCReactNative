@@ -77,6 +77,7 @@ import SIPSettings from '../views/SipSettingView/SIPSettings';
 import Inputs from '../views/SipSettingView/UserDetails';
 import qrScanner from '../views/SipSettingView/qrScanner';
 import getSipSettingsFromAPI from '../views/SipSettingView/getSipSettingsFromAPI';
+import PhonebookView from '../views/PhonebookView';
 
 // ChatsStackNavigator
 const ChatsStack = createStackNavigator();
@@ -346,6 +347,22 @@ const CallScreenStackNavigator = () => {
 	);
 };
 
+// PhonebookStackNavigator
+const PhonebookStack = createStackNavigator();
+const PhonebookStackNavigator = () => {
+       const { theme } = React.useContext(ThemeContext);
+
+       return (
+         <PhonebookStack.Navigator>
+           <PhonebookStack.Screen
+             name="PhonebookView"
+             component={PhonebookView}
+             options={PhonebookView.navigationOptions}
+           />
+         </PhonebookStack.Navigator>
+       );
+};
+
 // AdminPanelStackNavigator
 const AdminPanelStack = createStackNavigator();
 const AdminPanelStackNavigator = () => {
@@ -365,19 +382,40 @@ const AdminPanelStackNavigator = () => {
 // DrawerNavigator
 const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => (
-	<Drawer.Navigator
-		drawerContent={({ navigation, state }) => <Sidebar navigation={navigation} state={state} />}
-		drawerPosition={I18nManager.isRTL ? 'right' : 'left'}
-		screenOptions={{ swipeEnabled: false }}
-		drawerType='back'
-	>
-		<Drawer.Screen name='ChatsStackNavigator' component={ChatsStackNavigator} />
-		<Drawer.Screen name='ProfileStackNavigator' component={ProfileStackNavigator} />
-		<Drawer.Screen name='SettingsStackNavigator' component={SettingsStackNavigator} />
-		<Drawer.Screen name='AdminPanelStackNavigator' component={AdminPanelStackNavigator} />
-		<Drawer.Screen name='SipSettingsStackNavigator' component={SipSettingsStackNavigator} />
-		<Drawer.Screen name='CallScreenStackNavigator' component={CallScreenStackNavigator} />
-	</Drawer.Navigator>
+  <Drawer.Navigator
+    drawerContent={({ navigation, state }) => (
+      <Sidebar navigation={navigation} state={state} />
+    )}
+    drawerPosition={I18nManager.isRTL ? "right" : "left"}
+    screenOptions={{ swipeEnabled: false }}
+    drawerType="back"
+  >
+    <Drawer.Screen name="ChatsStackNavigator" component={ChatsStackNavigator} />
+    <Drawer.Screen
+      name="ProfileStackNavigator"
+      component={ProfileStackNavigator}
+    />
+    <Drawer.Screen
+      name="SettingsStackNavigator"
+      component={SettingsStackNavigator}
+    />
+    <Drawer.Screen
+      name="AdminPanelStackNavigator"
+      component={AdminPanelStackNavigator}
+    />
+    <Drawer.Screen
+      name="SipSettingsStackNavigator"
+      component={SipSettingsStackNavigator}
+    />
+    <Drawer.Screen
+      name="CallScreenStackNavigator"
+      component={CallScreenStackNavigator}
+    />
+    <Drawer.Screen
+      name="PhonebookStackNavigator"
+      component={PhonebookStackNavigator}
+    />
+  </Drawer.Navigator>
 );
 
 // NewMessageStackNavigator
