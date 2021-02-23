@@ -28,18 +28,25 @@ class Inputs extends Component<{navigation: any}> {
    handleEmail = (text) => {
       this.setState({ email: text })
    }
-f
+
    handleQRTape = () => {
      // this.props.navigation.navigate('SIPSettings');
       console.debug('this.state.responseAppID',this.state.responseAppID)
-      this.props.navigation.navigate('qrScanner', {
+      this.props.navigation.push('qrScanner', {
          deviceModel : this.state.deviceModel,
          OSType : this.state.deviceOS,
          UserMobileNumber : this.state.mobilenumber,
          responseAppID : this.state.responseAppID,
-         deviceToken : this.state.deviceToken
+         deviceToken : this.state.deviceToken,
+         onSelect: this.getCountryCode
       });
    }
+
+   getCountryCode = (item) => {
+      console.debug('get country code',item)
+      this.props.navigation.goBack();
+   }
+
 
    validateEmail = (text) => {
       console.log(text);

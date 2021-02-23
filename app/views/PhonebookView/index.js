@@ -33,9 +33,11 @@ import SafeAreaView from "../../containers/SafeAreaView";
 import * as Contacts from "expo-contacts";
 import SectionListContacts from "react-native-sectionlist-contacts";
 import SearchBox from "../../containers/SearchBox";
-import call_1_3x from '../../static/images/callBtnDialpadIcon.png';
-
-
+import call_1_3x from '../../static/images/dial.png';
+import btn_back from '../../static/images/btn_back.png';
+import { StackActions, NavigationActions } from 'react-navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BackHandler } from 'react-native';
 
 class PhonebookView extends React.Component {
   // static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -54,6 +56,15 @@ class PhonebookView extends React.Component {
     const options = {
       title: "Phonebook",
     };
+
+    options.headerLeft = () => (
+      <TouchableOpacity style= {{width : 40, height : 20, marginLeft : 20}}
+      onPress= {()=> 
+        { navigation.navigate('RoomsListView'); }
+      } >  
+      <Image style= {{width : 10, height : 20 , resizeMode : 'center', }}  source = {btn_back}/>     
+      </TouchableOpacity>
+    );
     
       options.headerRight = () => (
         <TouchableOpacity style={phonebookstyle.button2} 
@@ -76,7 +87,6 @@ class PhonebookView extends React.Component {
 
     //name字段必须,其他可有可无
     let nameData = [];
-
     this.state = {
       dataArray: nameData,
       searchText: "",
@@ -85,6 +95,13 @@ class PhonebookView extends React.Component {
   }
 
   async componentDidMount() {
+
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'PhonebookView' })],
+    });
+    this.props.navigation.dispatch(resetAction)
+
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === "granted") {
       const { data } = await Contacts.getContactsAsync({
@@ -109,10 +126,12 @@ class PhonebookView extends React.Component {
     }
   }
 
+ 
   componentWillReceiveProps() {
     this.setState({ searchArray: [] });
   }
 
+  /*
   onChangeSearchText = (e) => {
     let data = [];
     if (e.length === 0) {
@@ -132,7 +151,11 @@ class PhonebookView extends React.Component {
               if (
                 data.toLowerCase().includes(this.state.searchText.toLowerCase())
               ) {
-                this.state.searchArray.push({ name: data });
+                if(this.state.searchArray.indexOf('data') > 0){
+
+                }else {
+                  this.state.searchArray.push({ name: data });
+                }
               }
             });
           } else {
@@ -142,6 +165,29 @@ class PhonebookView extends React.Component {
       );
     }
   };
+  */
+
+ onChangeSearchText = (e) => {
+    let text = e.toLowerCase()
+    let trucks = this.state.dataArray
+    let filteredName = trucks.filter((item) => {
+      return item.name.toLowerCase().match(text)
+    })
+    if (!text || text === '') {
+      this.setState({
+        searchArray: initial
+      })
+    } else if (!Array.isArray(filteredName) && !filteredName.length) {
+      // set no data flag to true so as to render flatlist conditionally
+      this.setState({
+        searchArray: []
+      })
+    } else if (Array.isArray(filteredName)) {
+      this.setState({
+        searchArray: filteredName
+      })
+    }
+  }
 
   render() {
     let resultArray = [];
@@ -259,8 +305,8 @@ const phonebookstyle = StyleSheet.create({
    // alignSelf : 'center',
    // overflow: 'hidden',
     resizeMode : 'center',
-    backgroundColor : '#70E3E3',
-    borderRadius : 30/2,
+  //  backgroundColor : '#70E3E3',
+  //  borderRadius : 30/2,
     marginRight : 20
  },
  

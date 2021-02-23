@@ -17,6 +17,15 @@ class getSipSettingsFromAPI extends React.Component {
         title: "Sip Settings",
       });
 
+    //   static navigationOptions = ({ navigation, isMasterDetail }) => ({
+	// 	headerLeft: () => (isMasterDetail ? (
+	// 		<HeaderButton.CloseModal navigation={navigation} testID='sip-settings-view-close' />
+	// 	) : (
+	// 		<HeaderButton.Drawer navigation={navigation} testID='sip-settings-view-drawer' />
+	// 	)),
+	// 	 title: 'Sip Settings'
+	// });
+
     static propTypes = {
 		navigation: PropTypes.object,
 		route: PropTypes.object
@@ -185,7 +194,7 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
 
             commonSipSettingFunc.getSipSettingsAndStart();
-            this.props.navigation.navigate('PhonebookView');
+            this.props.navigation.push('PhonebookView');
           } catch (error) {
             // Error retrieving data
             console.debug('error.message', error.message);

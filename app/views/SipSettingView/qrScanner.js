@@ -133,7 +133,7 @@ class qrScanner extends Component {
     }
 
     GoToSettingPage = () => {
-      this.props.navigation.navigate('getSipSettingsFromAPI', {
+      this.props.navigation.push('getSipSettingsFromAPI', {
                             sipServer : this.state.sipServer, 
                             sipPort : this.state.sipPort,
                             sipTransport : this.state.sipTransport,

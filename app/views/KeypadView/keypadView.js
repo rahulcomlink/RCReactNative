@@ -40,6 +40,13 @@ class KeypadView extends React.Component {
 	// 	)),
 	// 	 title: ''
   // });
+
+  static navigationOptions = ({ navigation }) => {
+    const options = {
+      title: "Keypad",
+    };
+    return options;
+  };
  
     constructor(props){ 
         super(props);
@@ -91,15 +98,15 @@ class KeypadView extends React.Component {
            
           
            <View style={{backgroundColor : 'white'}}>
-               <View style={{flexDirection: 'row', height:50 , marginTop : 30, marginBottom : 30, marginRight : 20}}>
+               <View style={{flexDirection: 'row', height:50 , marginTop : 30, marginRight : 20}}>
                <TouchableOpacity style={{ marginLeft : 10, marginRight : 10, height :  50}} 
                         onPress= {()=> this.goToNextScreen()} >  
                         <Text style = {{textAlign : 'center', fontSize : 36, height : 50}}>{this.state.selectedCC} </Text>
                 </TouchableOpacity>
                 <Text style = {{textAlign : 'center', fontSize : 36, height : 50,  marginRight : 20 }}> {this.state.keyPressed} </Text>
                </View>
-
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+              <View >
+               <View style={{flexDirection: 'row', alignSelf: 'center', }}>
 
                <TouchableOpacity style={styles.button2} 
                         onPress= {()=> this.onKeyPressed('1')} >  
@@ -171,6 +178,7 @@ class KeypadView extends React.Component {
                  </TouchableOpacity>
                </View>
                </View>
+               </View>
 
                <View style = {styles.bottom}>
                <TouchableOpacity style={styles.button1} 
@@ -225,15 +233,15 @@ const styles = StyleSheet.create({
       color: '#777'
     },
     button2: {
-      width : 55,
-      height : 55,
+      width : 60,
+      height : 60,
       alignSelf : 'center',
-      margin: 30,
+      margin: 25,
       resizeMode : 'center'
    },
    button1: {
-    width : 80,
-    height : 80,
+    width : 70,
+    height : 70,
     alignSelf : 'center',
     margin: 20,
     resizeMode : 'center'

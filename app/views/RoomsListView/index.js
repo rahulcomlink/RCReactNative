@@ -758,7 +758,6 @@ class RoomsListView extends React.Component {
 
 		const { navigation, isMasterDetail } = this.props;
 		const sipServer = await AsyncStorage.getItem('sipServer') ;
-		console.debug('sip serverrr =',sipServer);
 		if (sipServer == null){
 			if (isMasterDetail) {
 				navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });

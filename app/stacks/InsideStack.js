@@ -11,6 +11,7 @@ import {
   StackAnimation,
 } from "../utils/navigation";
 import Sidebar from "../views/SidebarView";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Chats Stack
 import RoomView from "../views/RoomView";
@@ -389,13 +390,27 @@ const SipProvisioningStackNavigator = () => {
 	  <SipProvisioningStack.Screen
         name="PhonebookView"
         component={PhonebookView}
-        options={PhonebookView.navigationOptions}
+		options={PhonebookView.navigationOptions}
       />
 	  <SipProvisioningStack.Screen
         name="KeypadView"
         component={KeypadView}
         options={KeypadView.navigationOptions}
       />
+	  <SipProvisioningStack.Screen
+        name="SelectCountryCode"
+        component={SelectCountryCode}
+        options={SelectCountryCode.navigationOptions}
+      />
+	   <SipProvisioningStack.Screen
+        name="CallScreen"
+        component={CallScreen}
+        options={{
+          headerShown: false,
+        }}
+        //options={CallScreen.navigationOptions}
+      />
+	  
     </SipProvisioningStack.Navigator>
   );
 };
@@ -421,6 +436,7 @@ const CallScreenStackNavigator = () => {
         }}
         //options={CallScreen.navigationOptions}
       />
+      
     </CallScreenStack.Navigator>
   );
 };
@@ -442,12 +458,17 @@ const PhonebookStackNavigator = () => {
         component={KeypadView}
         options={KeypadView.navigationOptions}
       />
-	  <CallScreenStack.Screen
+	  <PhonebookStack.Screen
         name="CallScreen"
         component={CallScreen}
         options={{
           headerShown: false,
         }}
+      />
+      <PhonebookStack.Screen
+        name="SelectCountryCode"
+        component={SelectCountryCode}
+        options={SelectCountryCode.navigationOptions}
       />
     </PhonebookStack.Navigator>
   );
