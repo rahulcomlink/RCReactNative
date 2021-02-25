@@ -1,6 +1,7 @@
 package com.comlinkinc.android.pigeon;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -41,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new RNCViewPagerPackage());
       packages.add(new SSLPinningPackage());
       packages.add(new NotificationSettingsPackage());
+      packages.add(new SdkPackage());
 //      packages.add(new RNDrawOverlayPackage());
 //      packages.add(new AutostartPackage());
       List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
@@ -73,5 +75,25 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     FirebaseApp.initializeApp(this);
     SoLoader.init(this, /* native exopackage */ false);
+
+    loadLibrary();
+  }
+
+  public static void loadLibrary() {
+    try {
+      System.loadLibrary("ccomsdk-jni-0.99.9-4");
+      Log.d("LIB_LOAD_SUCCESS", "Load library success");
+
+      try {
+//                CallManager.stopDialer();
+//                CallManager.startDialer(getAppContext());
+        Log.d("DILER_start_Application", "DILER_startDialer");
+      } catch (Exception e) {
+        Log.d("DILER_Error_Application", e.getMessage().toString());
+      }
+
+    } catch (UnsatisfiedLinkError e) {
+      Log.d("LIB_LOAD_FAIL", e.getMessage());
+    }
   }
 }

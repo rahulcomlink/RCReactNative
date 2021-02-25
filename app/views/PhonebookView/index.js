@@ -1,6 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView, Keyboard, Text, Alert, TouchableOpacity, Image, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  Keyboard,
+  Text,
+  Alert,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  NativeModules,
+} from "react-native";
 import { connect } from "react-redux";
 import prompt from "react-native-prompt-android";
 import SHA256 from "js-sha256";
@@ -252,7 +262,13 @@ class PhonebookView extends React.Component {
                 no  = no.replace('-','')
               }
 
-                console.debug('item.name = ',no)
+                console.debug('item.name = ', no)
+                
+                NativeModules.Sdk.startDialerMethod((err, name) => {
+                  console.log(err, name);
+                  console.debug(err, name);
+                  Alert(err +" "+ name)
+                });
 
                 this.props.navigation.push('CallScreen', {
                   phoneNumber : no,
