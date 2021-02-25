@@ -52,6 +52,7 @@ class JitsiMeetView extends React.Component {
 			};
 			const url = route.params?.url;
 			console.debug('url of jitsi video call', url);
+			console.debug('userInfo of jitsi video call', userInfo.displayName);
 			const onlyAudio = route.params?.onlyAudio ?? false;
 			if (onlyAudio) {
 				JitsiMeet.audioCall(url, userInfo);
