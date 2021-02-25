@@ -1,9 +1,14 @@
 package com.comlinkinc.android.pigeon;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.comlinkinc.android.pigeon.generated.BasePackageList;
 import com.comlinkinc.android.pigeon.networking.SSLPinningPackage;
@@ -24,9 +29,12 @@ import org.unimodules.adapters.react.ReactModuleRegistryProvider;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
+  private static Context context;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -73,10 +81,15 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    MainApplication.context = getApplicationContext();
     FirebaseApp.initializeApp(this);
     SoLoader.init(this, /* native exopackage */ false);
 
     loadLibrary();
+  }
+
+  public static Context getAppContext() {
+    return MainApplication.context;
   }
 
   public static void loadLibrary() {
@@ -88,6 +101,16 @@ public class MainApplication extends Application implements ReactApplication {
 //                CallManager.stopDialer();
 //                CallManager.startDialer(getAppContext());
         Log.d("DILER_start_Application", "DILER_startDialer");
+
+        if (ContextCompat.checkSelfPermission(MainApplication.getAppContext(), WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+          try {
+            CallManager.copyRingtoneToPhoneStorage(MainApplication.getAppContext());
+          } catch (Exception e) {
+          }
+        } else {
+          Toast.makeText(MainApplication.getAppContext(), "Enable storage aaccess permission", Toast.LENGTH_SHORT).show();
+//          ActivityCompat.requestPermissions(MainApplication.getAppContext(), new String[]{WRITE_EXTERNAL_STORAGE}, 1);
+        }
       } catch (Exception e) {
         Log.d("DILER_Error_Application", e.getMessage().toString());
       }

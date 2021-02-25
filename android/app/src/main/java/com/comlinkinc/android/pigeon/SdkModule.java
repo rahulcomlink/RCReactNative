@@ -26,7 +26,7 @@ public class SdkModule extends ReactContextBaseJavaModule {
         try {
             final Activity activity = getCurrentActivity();
 
-            boolean funCall = CallManager.startDialer(activity);
+            String funCall = CallManager.startDialer(activity);
 
             cb.invoke(null, "Application run on - " + Build.MANUFACTURER +
                     "\n\n is comlink SDK method called -  " + funCall);

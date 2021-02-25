@@ -1,7 +1,14 @@
 package com.comlinkinc.android.pigeon;
 
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.core.content.ContextCompat;
@@ -10,7 +17,16 @@ import com.comlinkinc.communicator.dialer.Call;
 import com.comlinkinc.communicator.dialer.Dialer;
 import com.comlinkinc.communicator.dialer.DialerException;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URLDecoder;
+import java.util.function.Consumer;
 
 public class CallManager {
 
@@ -23,10 +39,10 @@ public class CallManager {
      * SDK Class: Dialer.class
      *******************************************************************************************
      * @param mContext*/
-    public static boolean startDialer(Context mContext) {
+    public static String startDialer(Context mContext) {
         try {
             Dialer.start(getDefaultConfig(mContext));
-            return true;
+            return "Success";
 
 //            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, true);
 //
@@ -37,15 +53,15 @@ public class CallManager {
         } catch (UnsatisfiedLinkError e) {
 //            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return false;
+            return ""+e.getMessage();
         } catch (DialerException e) {
 //            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return false;
+            return ""+e.getMessage();
         } catch (Exception e) {
 //            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return false;
+            return ""+e.getMessage();
         }
     }
 
@@ -123,5 +139,274 @@ public class CallManager {
         dialerConfig.deviceId = "deviceToken";
 
         return dialerConfig;
+    }
+
+    //Sip registration template (Android) -  "sip:" + username + "@" + host + ":" + port;
+    //Make call template                  -  "sip:" + numberToDial + "@" + data.getHost()
+    public static void makeCall(Activity mContext, String sipUri, Contact contact) {
+        try {
+//            writeLogCat();
+            mContext.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showOngoingCallActivity(contact);
+                }
+            });
+
+            boolean isDialerAlreadyStart = Prefs.getSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
+            if (!isDialerAlreadyStart) {
+//                stopDialer();
+                startDialer(MainApplication.getAppContext());
+            }
+
+//            unRegisterDialer();
+            registerDialer();
+            call = Dialer.makeCall(sipUri);
+        } catch (DialerException e) {
+            Log.d("Make_Call_Fail", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void hangup(Context mContext) {
+        if (call != null) {
+            try {
+                call.hangup();
+                call.close();
+                Dialer.unregister();
+            } catch (DialerException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void getIncomingCall(){
+
+    }
+
+    private static Consumer<Call> inboundCall() {
+        Log.d("CALL", "Inbound Call");
+        return null;
+    }
+
+
+    // -- Call Actions -- //
+
+    /**
+     * Answers incoming call
+     */
+    public static void answer() {
+        if (call != null) {
+            try {
+                call.answer();
+            } catch (DialerException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Ends call
+     * If call ended from the other side, disconnects
+     *
+     * @return true whether there's no more calls awaiting
+     */
+    public static void reject() {
+        if (call != null) {
+            try {
+//                if (call.getStatus() == com.comlinkinc.communicator.dialer.Call.Status.RINGING) {
+//                    call.reject();
+//                } else {
+//                    call.hangup();
+//                }
+                call.hangup();
+//                CallActivity.getInstance().finishOngoingCallActivity();
+            } catch (DialerException e) {
+//                CallActivity.getInstance().finishOngoingCallActivity();
+                e.printStackTrace();
+            }
+        }
+
+        stopRingTone();
+        unRegisterDialer();
+//        CallActivity.getInstance().finishOngoingCallActivity();
+
+//        stopDialer();
+    }
+
+    /**
+     * Put call on hold
+     *
+     * @param hold
+     */
+    public static void hold(boolean hold) {
+        if (call != null) {
+            if (hold) {
+                try {
+                    call.hold();
+                } catch (DialerException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    call.releaseHold();
+                } catch (DialerException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Open keypad
+     *
+     * @param c
+     */
+    public static void keypad(char c) {
+        if (call != null) {
+            try {
+                call.sendDTMFTone(c);
+            } catch (DialerException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    /**
+     * Gets the phone number of the contact from the end side of the current call
+     * in the case of a voicemail number, returns "Voicemail"
+     *
+     * @return String - phone number, or voicemail. if not recognized, return null.
+     */
+    public static Contact getDisplayContact(Context context) {
+        String number;
+        // try getting the number of the other side of the call
+        try {
+            number = URLDecoder.decode(call.getRemoteParty().substring(4, call.getRemoteParty().indexOf("@")).toString(), "utf-8").replace("tel:", "");
+        } catch (Exception e) {
+            return Constants.UNKNOWN;
+        }
+        // check if number is a voice mail
+        if (number.contains("voicemail")) return Constants.VOICEMAIL;
+        // get the contact
+        Contact contact = Constants.getContactByPhoneNumber(context, number); // get the contacts with the number
+        if (contact == null) return new Contact(number, number, null); // return a number contact
+        else return contact; // contact is valid, return it
+    }
+
+    /**
+     * Returnes the current state of the call from the Call object (named call)
+     *
+     * @return Call.State
+     */
+    public static com.comlinkinc.communicator.dialer.Call.Status getState() {
+        if (call == null) return call.getStatus().NONE; // if no call, return disconnected
+        return call.getStatus();
+    }
+
+    public static void showOngoingCallActivity(Contact contact) {
+        Intent intent = new Intent(MainApplication.getAppContext(), MainActivity.class);//CallActivity
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("Contact", contact);
+        MainApplication.getAppContext().startActivity(intent);
+
+    }
+
+    public static void playRingtone(Context mContext) {
+        ringtone = MediaPlayer.create(mContext, Settings.System.DEFAULT_RINGTONE_URI);
+        ringtone.start();
+    }
+
+    public static void stopRingTone() {
+        if (ringtone != null) {
+            ringtone.stop();
+        }
+    }
+
+    public static void copyRingtoneToPhoneStorage(Context mContext) {
+        boolean isRingAlreadySaved = Prefs.getSharedPreferenceBoolean(mContext, Prefs.PREFS_CP_RING_TO_PHONE, false);
+        if (!isRingAlreadySaved) {
+            String ringtoneuri = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.comlinkinc.android.pigeon/files";
+            File file1 = new File(ringtoneuri);
+            file1.mkdirs();
+            File newSoundFile = new File(ringtoneuri, "ring.wav");
+
+            Uri mUri = Uri.parse("android.resource://com.comlinkinc.android.pigeon/" + R.raw.ring);
+
+
+            ContentResolver mCr = mContext.getContentResolver();
+            AssetFileDescriptor soundFile;
+            try {
+                soundFile = mCr.openAssetFileDescriptor(mUri, "r");
+            } catch (FileNotFoundException e) {
+                soundFile = null;
+            }
+
+            try {
+                byte[] readData = new byte[1024];
+                FileInputStream fis = soundFile.createInputStream();
+                FileOutputStream fos = new FileOutputStream(newSoundFile);
+                int i = fis.read(readData);
+
+                while (i != -1) {
+                    fos.write(readData, 0, i);
+                    i = fis.read(readData);
+                }
+
+                fos.close();
+            } catch (IOException io) {
+            }
+
+
+            String absPath = newSoundFile.getAbsolutePath();
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_CP_RING_TO_PHONE, true);
+            startDialer(mContext);
+        }
+    }
+
+    protected static void writeLogCat() {
+        try {
+            Process process = Runtime.getRuntime().exec("logcat -d");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder log = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line);
+                log.append("\n");
+            }
+
+            //Convert log to string
+            final String logString = new String(log.toString());
+
+            //Create txt file in SD Card
+            File sdCard = Environment.getExternalStorageDirectory();
+            File dir = new File(sdCard.getAbsolutePath() + File.separator + "EnterpriseVoIP");
+
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String timestamp = String.valueOf(System.currentTimeMillis());
+            Prefs.setSharedPreferenceString(MainApplication.getAppContext(), "timestamp", timestamp);
+            File file = new File(dir, "evoiplogcat" + timestamp + ".txt");
+
+            //To write logcat in text file
+            FileOutputStream fout = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(fout);
+
+            //Writing the string to file
+            osw.write(logString);
+            osw.flush();
+            osw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
