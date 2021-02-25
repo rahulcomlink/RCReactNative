@@ -115,7 +115,7 @@ class getSipSettingsFromAPI extends React.Component {
     }
 
     onTURNHostChanged = (text) => {
-        this.setState({onTURNHostChanged : text})
+        this.setState({turnServer : text})
     }
 
     onTURNPortChanged = (text) => {
@@ -194,7 +194,7 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
 
             commonSipSettingFunc.getSipSettingsAndStart();
-            this.props.navigation.push('PhonebookView');
+            this.props.navigation.pop('PhonebookView');
           } catch (error) {
             // Error retrieving data
             console.debug('error.message', error.message);
