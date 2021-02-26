@@ -946,12 +946,14 @@ class RoomView extends React.Component {
     data.link = linkMessage;
     data.type = type;
     data.chatRoomType = type;
+    data.icon = 'ic_notification'
 
     const androidData = {};
     var linkAnd = linkMessage + "," + msg;
     androidData.link = linkAnd;
     androidData.type = type;
     androidData.chatRoomType = type;
+    androidData.icon = "ic_notification";
 
     params.notification = notification;
     params.data = data;
@@ -994,6 +996,7 @@ class RoomView extends React.Component {
             soundName: "message_beep_tone.mp3",
             "content-available": "1",
             android_channel_id: "500",
+            icon: 'ic_notification',
             ejson: ejson,
           },
           data: data,
@@ -1004,6 +1007,7 @@ class RoomView extends React.Component {
             badge: "+1",
             sound: "message_beep_tone.mp3",
             soundName: "message_beep_tone.mp3",
+            icon: 'ic_notification',
             category: "REACT_NATIVE",
             "content-available": 1,
           },
@@ -1032,7 +1036,8 @@ class RoomView extends React.Component {
             title: titleMessage,
             sound: "message_beep_tone.mp3",
             soundName: "message_beep_tone.mp3",
-			      android_channel_id: "500",
+            android_channel_id: "500",
+            icon: 'ic_notification',
             ejson: ejson,
           },
         }),
