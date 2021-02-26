@@ -44,7 +44,6 @@ class JitsiMeetView extends React.Component {
     const avatarAuthURLFragment = `&rc_token=${token}&rc_uid=${userId}`;
     const avatar = formatUrl(username, baseUrl, 100, avatarAuthURLFragment);
 
-<<<<<<< HEAD
     setTimeout(() => {
       // const userInfo = {
       // 	displayName,
@@ -61,23 +60,6 @@ class JitsiMeetView extends React.Component {
       }
     }, 1000);
   }
-=======
-		setTimeout(() => {
-			const userInfo = {
-				displayName,
-				avatar
-			};
-			const url = route.params?.url;
-			console.debug('url of jitsi video call', url);
-			console.debug('userInfo of jitsi video call', userInfo.displayName);
-			const onlyAudio = route.params?.onlyAudio ?? false;
-			if (onlyAudio) {
-				JitsiMeet.audioCall(url, userInfo);
-			} else {
-				JitsiMeet.call(url, userInfo);
-			}
-		}, 1000);
->>>>>>> d14066c1de3cab9a96a4c4691543750a9976f0f6
 
   componentWillUnmount() {
     logEvent(events.JM_CONFERENCE_TERMINATE);
