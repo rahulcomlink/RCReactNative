@@ -53,7 +53,8 @@ import AVFoundation
     }
     
     func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String ) {
-  
+      
+    
           let userName = username
           let password = password
           let sipServer = sipServer
@@ -84,21 +85,24 @@ import AVFoundation
       }
       
       
-      var turnHost1 = CString(from: "")
-      var turnUsername1 = CString(from: "")
-      var turnPassword1 = CString(from: "")
-      var turnRealm1 = CString(from: "")
+      var turnHost1 = CString(from: turnHost)
+      var turnUsername1 = CString(from: turnUsername)
+      var turnPassword1 = CString(from: turnPassword)
+      var turnRealm1 = CString(from: turnRealm)
                 
       if turnHost == "-"{
         
       }
       else {
-                  let turnhostt = turnHost + (turnHost == "0" ? "" : (":" + turnPort))
+                  let turnhostt = turnHost + (turnPort == "0" ? "" : (":" + turnPort))
                   turnHost1 = CString(from: turnhostt)
                   turnUsername1 = CString(from: turnUsername)
                   turnPassword1 = CString(from: turnPassword)
                   turnRealm1 = CString(from: turnRealm)
       }
+      
+     
+   
                 
                    // Get the absolute path to the ringback file
                  let ringbackPath = Bundle.main.path(forResource: "ring", ofType: "wav")

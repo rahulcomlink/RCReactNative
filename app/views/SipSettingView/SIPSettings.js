@@ -72,7 +72,7 @@ class SIPSettings extends React.Component {
     }
 
     onTURNHostChanged = (text) => {
-        this.setState({onTURNHostChanged : text})
+        this.setState({turnServer : text})
     }
 
     onTURNPortChanged = (text) => {
@@ -256,7 +256,7 @@ class SIPSettings extends React.Component {
                 />
                 
                 <InputContainer
-                    placeholder = 'password'
+                    placeholder = ' password'
                     title = 'SIP Password'
                     keyBoardType = 'email-address'
                     textValue = {this.state.sipPassword}
@@ -302,7 +302,7 @@ class SIPSettings extends React.Component {
                         /> 
 
                         <InputContainer
-                            placeholder = 'Password'
+                            placeholder = ' Password'
                             title = 'TURN Password'
                             keyBoardType = 'email-address'
                             textValue = {this.state.turnPassword}

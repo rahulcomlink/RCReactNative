@@ -50,6 +50,21 @@ class getSipSettingsFromAPI extends React.Component {
             stunPort : props.route.params?.stunPort
         }
 
+        // this.state =  {
+        //     sipServer : 'newxonesip.mvoipctsi.com',
+        //     sipPort : '8993',
+        //     sipTransport : 'TCP',
+        //     sipUsername :'919926054520',
+        //     sipPassword : '5d7d42db4c2f87001a71c413',
+        //     iceEnabled : true,
+        //     turnServer : 'turntaiwan.mvoipctsi.com',
+        //     turnPort : '0',
+        //     turnUsername : 'comlinkxone',
+        //     turnPassword : 'hgskSlGHgwSKfgsdUSDGhs',
+        //     stunServer : 'turntaiwan.mvoipctsi.com',
+        //     stunPort : '0'
+        // }
+
             // console.debug('sipServer===',this.state.sipServer);
             // console.debug('sipPort=',this.state.sipPort);
             // console.debug('sipTransport=',this.state.sipTransport);
@@ -194,7 +209,7 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
 
             commonSipSettingFunc.getSipSettingsAndStart();
-            this.props.navigation.pop('PhonebookView');
+            this.props.navigation.push('PhonebookView');
           } catch (error) {
             // Error retrieving data
             console.debug('error.message', error.message);
@@ -303,7 +318,7 @@ class getSipSettingsFromAPI extends React.Component {
                 />
                 
                 <InputContainer
-                    placeholder = 'password'
+                    placeholder = ' password'
                     title = 'SIP Password'
                     keyBoardType = 'email-address'
                     textValue = {this.state.sipPassword}
@@ -349,7 +364,7 @@ class getSipSettingsFromAPI extends React.Component {
                         /> 
 
                         <InputContainer
-                            placeholder = 'Password'
+                            placeholder = ' Password'
                             title = 'TURN Password'
                             keyBoardType = 'email-address'
                             textValue = {this.state.turnPassword}
