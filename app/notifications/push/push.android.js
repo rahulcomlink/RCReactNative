@@ -26,12 +26,13 @@ class PushNotification {
 
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       console.debug("Message handled in the background!", remoteMessage);
+      completion({ alert: true, sound: true, badge: true });
       this.checkIsVideoCall(remoteMessage);
     });
 
     messaging().onMessage(async (remoteMessage) => {
       //   Alert.alert("A new FCM message arrived!", JSON.stringify(remoteMessage));
-      //completion({ alert: true, sound: true, badge: true });
+      completion({ alert: true, sound: true, badge: true });
       this.checkIsVideoCall(remoteMessage);
     });
 
@@ -42,6 +43,7 @@ class PushNotification {
       );
       console.debug("remoteMessage.data", remoteMessage.data);
       this.onNotification(remoteMessage.data);
+      completion();
       //   Alert.alert("A new FCM message arrived!", JSON.stringify(remoteMessage));
       // navigation.navigate(remoteMessage.data.type);
     });
