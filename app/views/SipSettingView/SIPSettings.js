@@ -9,6 +9,7 @@ const SIPUserInfo = 'SIPUserData';
 import * as HeaderButton from '../../containers/HeaderButton';
 import { isNil } from 'lodash';
 import commonSipSettingFunc from './commonSipSettingFunc';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class SIPSettings extends React.Component {
 
@@ -215,8 +216,8 @@ class SIPSettings extends React.Component {
 
     render(){
         return(
-           <ScrollView style = {styles.containerScrollView} >
-                
+          /* <ScrollView  > */
+          <KeyboardAwareScrollView style={styles.container}>
                 <InputContainer
                     placeholder = 'Sip Server'
                     title = 'SIP Server Host'
@@ -333,15 +334,15 @@ class SIPSettings extends React.Component {
                 }>  
                 <Text style = {styles.saveButtonText}> Save </Text>
             </TouchableOpacity>
-
-            </ScrollView>
+            </KeyboardAwareScrollView>
+           
         )
     }
 }
 
 const styles = StyleSheet.create({
     container  : {
-        backgroundColor : 'white',
+        backgroundColor : 'lightgrey',
     },
 
     containerScrollView  : {

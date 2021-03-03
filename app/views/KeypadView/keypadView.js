@@ -63,7 +63,7 @@ class KeypadView extends React.Component {
   
 
     call = () => {
-      if(this.state.keyPressed == null){
+      if(this.state.keyPressed == ''){
 
       }else {
         var cc =  this.state.selectedCC.replace('+','')
@@ -91,10 +91,12 @@ class KeypadView extends React.Component {
       this.setState({ selectedCC: '+' + cc.selected.callingCode})
     }
 
+   
 
+    
     render() {
         return (
-         <View style={{padding: 10, flex : 1, backgroundColor : 'white'}}>
+         <View style={{ flex : 1, backgroundColor : 'white'}}>
            
           
            <View style={{backgroundColor : 'white'}}>
@@ -192,17 +194,18 @@ class KeypadView extends React.Component {
                       }>  
                     <Image style={styles.button1} source={ calling_start } />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button1} 
+                <TouchableOpacity style={ { width : 70, height : 70, alignSelf : 'center', margin: 20, justifyContent : 'center' }} 
                     onPress = {
                         () => this.removeChar()
                       }>  
-                    <Image style={styles.button1}  source={ call_back }  />
+                    <Image style={{width : 30, height : 30, alignSelf : 'center', resizeMode : 'contain', marginLeft : 10}}  source={ call_back }  />
                 </TouchableOpacity>
-               </View>
+              </View>
                
          </View>
         );
       }
+      
 }
 export default KeypadView;
 
@@ -236,15 +239,19 @@ const styles = StyleSheet.create({
       width : 60,
       height : 60,
       alignSelf : 'center',
-      margin: 25,
-      resizeMode : 'center'
+      margin: 30,
    },
+   button3: {
+    width : 60,
+    height : 60,
+    alignSelf : 'center',
+ },
    button1: {
     width : 70,
     height : 70,
     alignSelf : 'center',
     margin: 20,
-    resizeMode : 'center'
+    justifyContent : 'center'
  },
  bottom: {
   width: '100%', 

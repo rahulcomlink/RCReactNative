@@ -62,7 +62,7 @@ class PhonebookView extends React.Component {
       onPress= {()=> 
         { navigation.navigate('RoomsListView'); }
       } >  
-      <Image style= {{width : 10, height : 20 , resizeMode : 'center', }}  source = {btn_back}/>     
+      <Image style= {{width : 10, height : 20 , resizeMode : 'contain', }}  source = {btn_back}/>     
       </TouchableOpacity>
     );
     
@@ -304,7 +304,7 @@ const phonebookstyle = StyleSheet.create({
     height : 30,
    // alignSelf : 'center',
    // overflow: 'hidden',
-    resizeMode : 'center',
+    resizeMode : 'contain',
   //  backgroundColor : '#70E3E3',
   //  borderRadius : 30/2,
     marginRight : 20
