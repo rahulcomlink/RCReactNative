@@ -677,6 +677,9 @@ class RoomActionsView extends React.Component {
     androidData.link = linkAnd;
     androidData.type = type;
     androidData.chatRoomType = type;
+     androidData.sound = "tring_tring_tring.mp3";
+    androidData.soundName = "tring_tring_tring.mp3";
+    androidData.playSound = true
 
     params.notification = notification;
     params.data = data;
@@ -718,7 +721,7 @@ class RoomActionsView extends React.Component {
             title: titleMessage,
             sound: "tring_tring_tring.mp3",
             soundName: "tring_tring_tring.mp3",
-            android_channel_id: "500",
+            android_channel_id: "600",
             "content-available": "1",
             ejson: ejson,
           },
@@ -757,7 +760,8 @@ class RoomActionsView extends React.Component {
             title: titleMessage,
             sound: "tring_tring_tring.mp3",
             soundName: "tring_tring_tring.mp3",
-            android_channel_id: "500",
+            playSound: true,
+            android_channel_id: "600",
             "content-available": "1",
             ejson: ejson,
           },
