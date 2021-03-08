@@ -30,7 +30,7 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 #import <Firebase.h>
-
+#import <assert.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -92,8 +92,8 @@ static void InitializeFlipper(UIApplication *application) {
 
       // Mark migration complete
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
-    }
-
+}
+  
     return YES;
 }
 

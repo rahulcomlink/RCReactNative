@@ -4,6 +4,7 @@ import store from '../../lib/createStore';
 import { deepLinkingOpen } from '../../actions/deepLinking';
 import { isFDroidBuild } from '../../constants/environment';
 import messaging from '@react-native-firebase/messaging';
+import { isIOS, isTablet } from '../../utils/deviceInfo';
 
 export const onNotification = (notification) => {
 	console.debug('onNotification methoid called :', notification)
