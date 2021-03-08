@@ -31,7 +31,6 @@ class PushNotification {
 
     messaging().onMessage(async (remoteMessage) => {
       //   Alert.alert("A new FCM message arrived!", JSON.stringify(remoteMessage));
-      //completion({ alert: true, sound: true, badge: true });
       this.checkIsVideoCall(remoteMessage);
     });
 
