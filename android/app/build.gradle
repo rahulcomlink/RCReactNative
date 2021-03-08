@@ -144,8 +144,8 @@ android {
         applicationId "com.comlinkinc.android.pigeon"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.2.0"
+        versionCode 3
+        versionName "1.3.0"
         vectorDrawables.useSupportLibrary = true
         if (!isFoss) {
             manifestPlaceholders = [BugsnagAPIKey: BugsnagAPIKey as String]
