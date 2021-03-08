@@ -57,12 +57,113 @@ public class CallManager {
         } catch (DialerException e) {
 //            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return ""+e.getMessage();
+            return "" + e.getMessage();
         } catch (Exception e) {
 //            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return ""+e.getMessage();
+            return "" + e.getMessage();
         }
+    }
+
+
+    /********************************************************************************************
+     * SDK Class: Dialer.class
+     *******************************************************************************************
+     * @param mContext*/
+    public static String startDialerNew(Context mContext, String sipUsername,
+                                        String sipPassword,
+                                        String sipServer,
+                                        String realm,
+                                        String stunServer,
+                                        String turnServer,
+                                        String turnUsername,
+                                        String turnPassword,
+                                        String turnRealm,
+                                        String iceEnabled,
+                                        int sipLocalPort,
+                                        int sipServerPort,
+                                        String sipTransport,
+                                        String turnPort,
+                                        String stunPort) {
+        try {
+            Dialer.start(getDefaultConfigNew(mContext, sipUsername,
+                    sipPassword,
+                    sipServer,
+                    realm,
+                    stunServer,
+                    turnServer,
+                    turnUsername,
+                    turnPassword,
+                    turnRealm,
+                    iceEnabled,
+                    sipLocalPort,
+                    sipServerPort,
+                    sipTransport,
+                    turnPort,
+                    stunPort));
+            return "Success";
+        } catch (UnsatisfiedLinkError e) {
+//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
+            Log.d("DILER_Error_Callmanager", e.getMessage().toString());
+            return "" + e.getMessage();
+        } catch (DialerException e) {
+//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
+            Log.d("DILER_Error_Callmanager", e.getMessage().toString());
+            return "" + e.getMessage();
+        } catch (Exception e) {
+//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
+            Log.d("DILER_Error_Callmanager", e.getMessage().toString());
+            return "" + e.getMessage();
+        }
+    }
+
+    public static Dialer.Configuration getDefaultConfigNew(Context mContext, String sipUsername,
+                                                           String sipPassword,
+                                                           String sipServer,
+                                                           String realm,
+                                                           String stunServer,
+                                                           String turnServer,
+                                                           String turnUsername,
+                                                           String turnPassword,
+                                                           String turnRealm,
+                                                           String iceEnabled,
+                                                           int sipLocalPort,
+                                                           int sipServerPort,
+                                                           String sipTransport,
+                                                           String turnPort,
+                                                           String stunPort) {
+        String[] codecs = new String[5];
+        codecs[0] = "G729/8000/1";
+        codecs[1] = "opus/48000/2";
+        codecs[2] = "opus/24000/2";
+        codecs[3] = "PCMU/8000/1";
+        codecs[4] = "PCMA/8000/1";
+
+        File[] sdCards = ContextCompat.getExternalFilesDirs(mContext, "");
+        String filePath = sdCards[0].listFiles()[0].getAbsolutePath();
+//        String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
+
+        Dialer.Configuration dialerConfig = new Dialer.Configuration();
+        dialerConfig.sipServerHost = sipServer;
+        dialerConfig.sipServerPort = sipServerPort;
+        dialerConfig.sipLocalPort = sipLocalPort;
+        dialerConfig.sipTransport = getTransport(sipTransport);
+        dialerConfig.sipUsername = sipUsername;
+        dialerConfig.sipPassword = sipPassword;
+        dialerConfig.sipRealm = "*";
+        dialerConfig.turnHost = turnServer;
+        dialerConfig.turnUsername = turnUsername;
+        dialerConfig.turnPassword = turnPassword;
+        dialerConfig.turnRealm = "*";
+        dialerConfig.stunHost = stunServer;
+        dialerConfig.enableICE = true;
+        dialerConfig.enableSRTP = false;
+        dialerConfig.answerTimeout = 10;
+        dialerConfig.ringbackAudioFile = filePath;
+        dialerConfig.desiredCodecs = codecs;
+        dialerConfig.deviceId = "deviceToken";
+
+        return dialerConfig;
     }
 
     private static int getTransport(String sipTransport) {
@@ -119,12 +220,12 @@ public class CallManager {
 //        String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
 
         Dialer.Configuration dialerConfig = new Dialer.Configuration();
-        dialerConfig.sipServerHost = "209.15.246.144";
+        dialerConfig.sipServerHost = "newxonesip.mvoipctsi.com";
         dialerConfig.sipServerPort = 8993;
         dialerConfig.sipLocalPort = 8993;
         dialerConfig.sipTransport = 1;
-        dialerConfig.sipUsername = "TCS48503643336";
-        dialerConfig.sipPassword = "500500";
+        dialerConfig.sipUsername = "919926054520";
+        dialerConfig.sipPassword = "5d7d42db4c2f87001a71c413";
         dialerConfig.sipRealm = "*";
         dialerConfig.turnHost = "turntaiwan.mvoipctsi.com";
         dialerConfig.turnUsername = "comlinkxone";
@@ -253,6 +354,27 @@ public class CallManager {
             } else {
                 try {
                     call.releaseHold();
+                } catch (DialerException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Mute/Unmute call
+     */
+    public static void muteUnmuteCall(boolean hold) {
+        if (call != null) {
+            if (call.isMicrophoneMuted()) {
+                try {
+                    call.unmuteMicrophone();
+                } catch (DialerException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    call.muteMicrophone();
                 } catch (DialerException e) {
                     e.printStackTrace();
                 }
