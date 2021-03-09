@@ -275,6 +275,7 @@ public class CallManager {
                 call.hangup();
 //                call.close();
                 Dialer.unregister();
+                call = null;
             } catch (DialerException e) {
                 e.printStackTrace();
             } catch (Exception e) {

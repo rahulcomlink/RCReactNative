@@ -10,7 +10,6 @@ import {
   Image,
   Button,
   NativeEventEmitter,
-  DeviceEventEmitter,
 } from "react-native";
 import InputContainer from "./InputContainer.js";
 import speakerOn from "../../static/images/speakerOn.png";
