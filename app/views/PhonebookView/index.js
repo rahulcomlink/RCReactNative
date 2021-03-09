@@ -263,12 +263,6 @@ class PhonebookView extends React.Component {
               }
 
                 console.debug('item.name = ', no)
-                
-                NativeModules.Sdk.startDialerMethod((err, name) => {
-                  console.log(err, name);
-                  console.debug(err, name);
-                });
-
                 this.props.navigation.push('CallScreen', {
                   phoneNumber : no,
                   name : item.name,

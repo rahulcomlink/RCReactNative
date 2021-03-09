@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.media.AudioManager;
 import android.os.Build;
 
+import com.comlinkinc.communicator.dialer.Call;
 import com.comlinkinc.communicator.dialer.Dialer;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -68,10 +69,10 @@ public class SdkModule extends ReactContextBaseJavaModule {
 
     // Key Press
     @ReactMethod
-    public void keyPressed(char str) {
+    public void keyPressed(String str) {
         try {
             final Activity activity = getCurrentActivity();
-            CallManager.keypad(str);
+            CallManager.keypad(str.charAt(0));
         } catch (Exception e) {
 
         }
@@ -84,7 +85,10 @@ public class SdkModule extends ReactContextBaseJavaModule {
         try {
             final Activity activity = getCurrentActivity();
 
-            mAudioManager = (AudioManager) activity.getApplicationContext().getSystemService(AUDIO_SERVICE);
+            if (mAudioManager == null){
+                mAudioManager = (AudioManager) activity.getApplicationContext().getSystemService(AUDIO_SERVICE);
+            }
+
             if (setSpecker) {
                 mAudioManager.setSpeakerphoneOn(false);
             } else {
@@ -153,7 +157,13 @@ public class SdkModule extends ReactContextBaseJavaModule {
     public void makeCall(String sipUri) {
         try {
             final Activity activity = getCurrentActivity();
-            Dialer.makeCall(sipUri);
+            Dialer.register();
+            CallManager.call = Dialer.makeCall(sipUri);
+
+            if (mAudioManager == null){
+                mAudioManager = (AudioManager) activity.getApplicationContext().getSystemService(AUDIO_SERVICE);
+            }
+            mAudioManager.setMode(AudioManager.MODE_IN_CALL);
         } catch (Exception e) {
 
         }

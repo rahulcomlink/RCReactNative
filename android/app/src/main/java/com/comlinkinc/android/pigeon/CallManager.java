@@ -230,11 +230,11 @@ public class CallManager {
         dialerConfig.turnHost = "turntaiwan.mvoipctsi.com";
         dialerConfig.turnUsername = "comlinkxone";
         dialerConfig.turnPassword = "hgskSlGHgwSKfgsdUSDGhs";
-        dialerConfig.turnRealm = "*";
+        dialerConfig.turnRealm = "";
         dialerConfig.stunHost = "turntaiwan.mvoipctsi.com";
         dialerConfig.enableICE = true;
         dialerConfig.enableSRTP = false;
-        dialerConfig.answerTimeout = 10;
+        dialerConfig.answerTimeout = 60;
         dialerConfig.ringbackAudioFile = filePath;
         dialerConfig.desiredCodecs = codecs;
         dialerConfig.deviceId = "deviceToken";
