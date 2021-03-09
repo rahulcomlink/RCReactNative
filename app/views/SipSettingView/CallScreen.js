@@ -10,6 +10,7 @@ import {
   Image,
   Button,
   NativeEventEmitter,
+  DeviceEventEmitter,
 } from "react-native";
 import InputContainer from "./InputContainer.js";
 import speakerOn from "../../static/images/speakerOn.png";
@@ -77,7 +78,12 @@ class CallScreen extends React.Component {
       showKeypad: false,
       name: props.route.params?.name,
     };
-    eventEmitter.addListener("onSessionConnect", this.getCallStatus);
+
+    if (os == "android") {
+      
+    } else {
+      eventEmitter.addListener("onSessionConnect", this.getCallStatus);
+    }
   }
 
   componentWillUnmount() {
@@ -92,8 +98,8 @@ class CallScreen extends React.Component {
 
   renderSpeakerImage = () => {
     var imgSource = this.state.isSpeakerOn ? speakerOn : speakerOff;
-      if (os == "android") {
-        NativeModules.Sdk.setOnSpeker(this.state.isSpeakerOn);
+    if (os == "android") {
+      NativeModules.Sdk.setOnSpeker(this.state.isSpeakerOn);
     } else {
       NativeModules.SIPSDKBridge.setSpeakerOn(this.state.isSpeakerOn);
     }
@@ -102,11 +108,11 @@ class CallScreen extends React.Component {
 
   renderMuteImage = () => {
     var imgSource = this.state.isMuteOn ? muteOn : muteOff;
-      if (os == "android") {
-          NativeModules.Sdk.muteUnmuteCall(this.state.isMuteOn);
-      } else {
-        NativeModules.SIPSDKBridge.setMuteOn(this.state.isMuteOn);
-      }
+    if (os == "android") {
+      NativeModules.Sdk.muteUnmuteCall(this.state.isMuteOn);
+    } else {
+      NativeModules.SIPSDKBridge.setMuteOn(this.state.isMuteOn);
+    }
     return <Image style={styles.button1} source={imgSource} />;
   };
 
@@ -116,11 +122,11 @@ class CallScreen extends React.Component {
 
   onKeyPressed = (item) => {
     this.setState({ keyPressed: this.state.keyPressed + item });
-      if (os == "android") {
-          NativeModules.Sdk.keyPressed(item);
-      } else {
-        NativeModules.SIPSDKBridge.keyPressed(item);
-      }
+    if (os == "android") {
+      NativeModules.Sdk.keyPressed(item);
+    } else {
+      NativeModules.SIPSDKBridge.keyPressed(item);
+    }
   };
 
   makeCall = () => {
@@ -139,11 +145,11 @@ class CallScreen extends React.Component {
 
   endCall = () => {
     this.props.navigation.pop();
-      if (os == "android") {
-          NativeModules.Sdk.endCall();
-      } else {
-        NativeModules.SIPSDKBridge.endCall();
-      }
+    if (os == "android") {
+      NativeModules.Sdk.endCall();
+    } else {
+      NativeModules.SIPSDKBridge.endCall();
+    }
   };
 
   getCallStatus = (event) => {

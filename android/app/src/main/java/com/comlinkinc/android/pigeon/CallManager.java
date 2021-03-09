@@ -42,24 +42,23 @@ public class CallManager {
     public static String startDialer(Context mContext) {
         try {
             Dialer.start(getDefaultConfig(mContext));
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, true);
             return "Success";
-
-//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, true);
 //
 //            Dialer.setInboundCallHandler(CallActivity::onInboundCall);
 //            Dialer.setCallTerminatedHandler(CallActivity::onCallTerminated);
 //            Dialer.setCallDeclinedHandler(CallActivity::onCallDeclined);
 //            Dialer.setCallAnsweredHandler(CallActivity::onCallAnswered);
         } catch (UnsatisfiedLinkError e) {
-//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
             return ""+e.getMessage();
         } catch (DialerException e) {
-//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
             return "" + e.getMessage();
         } catch (Exception e) {
-//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
             return "" + e.getMessage();
         }
@@ -274,7 +273,7 @@ public class CallManager {
         if (call != null) {
             try {
                 call.hangup();
-                call.close();
+//                call.close();
                 Dialer.unregister();
             } catch (DialerException e) {
                 e.printStackTrace();

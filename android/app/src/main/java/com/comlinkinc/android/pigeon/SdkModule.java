@@ -157,6 +157,13 @@ public class SdkModule extends ReactContextBaseJavaModule {
     public void makeCall(String sipUri) {
         try {
             final Activity activity = getCurrentActivity();
+
+            boolean isDialerAlreadyStart = Prefs.getSharedPreferenceBoolean(activity, Prefs.PREFS_DIALER_SUCCESS, false);
+            if (!isDialerAlreadyStart) {
+//                stopDialer();
+                CallManager.startDialer(activity);
+            }
+
             Dialer.register();
             CallManager.call = Dialer.makeCall(sipUri);
 

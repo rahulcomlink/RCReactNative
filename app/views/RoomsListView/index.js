@@ -226,7 +226,7 @@ class RoomsListView extends React.Component {
     NativeModules.Sdk.startDialerMethod((err, name) => {
       console.log(err, name);
       console.debug(err, name);
-      Alert.alert("Test", err + " " + name);
+      // Alert.alert("SDK load status", err + " " + name);
     });
   }
 
