@@ -99,9 +99,10 @@ class KeypadView extends React.Component {
               <View
                 style={{
                   flexDirection: "row",
-                  height: 50,
+                  height: "auto",
                   marginTop: 30,
                   marginRight: 20,
+                  width: "80%",
                 }}
               >
                 <TouchableOpacity
@@ -118,8 +119,9 @@ class KeypadView extends React.Component {
                   style={{
                     textAlign: "center",
                     fontSize: 36,
-                    height: 50,
+                    height: "auto",
                     marginRight: 20,
+                    flexDirection: "row",
                   }}
                 >
                   {" "}
