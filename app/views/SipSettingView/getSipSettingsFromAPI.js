@@ -202,11 +202,11 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('sipPassword', this.state.sipPassword);
             await AsyncStorage.setItem('iceEnabled', this.state.iceEnabled == true ? 'true' : 'false');
             await AsyncStorage.setItem('turnServer', this.state.turnServer);
-            await AsyncStorage.setItem('turnPort', this.state.turnPort + '');
+            await AsyncStorage.setItem('turnPort', "");
             await AsyncStorage.setItem('turnUsername', this.state.turnUsername);
             await AsyncStorage.setItem('turnPassword', this.state.turnPassword);
             await AsyncStorage.setItem('stunServer', this.state.stunServer);
-            await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
+            await AsyncStorage.setItem('stunPort', "");
 
             commonSipSettingFunc.getSipSettingsAndStart();
             this.props.navigation.push('PhonebookView');
@@ -239,22 +239,40 @@ class getSipSettingsFromAPI extends React.Component {
             const iceEnabled = await AsyncStorage.getItem('iceEnabled') ;
             this.state.iceEnabled = iceEnabled == 'true' ? true : false;
 
-            const turnServer = await AsyncStorage.getItem('turnServer') ;
+            const turnServer = await AsyncStorage.getItem('turnServer');
+            if (turnServer == "-") {
+              turnServer = "";
+            }
             this.state.turnServer = turnServer;
 
-            const turnPort = await AsyncStorage.getItem('turnPort') ;
+            const turnPort = await AsyncStorage.getItem('turnPort');
+            if (turnPort == "-") {
+              turnPort = "";
+            }
             this.state.turnPort = turnPort;
 
-            const turnUsername = await AsyncStorage.getItem('turnUsername') ;
+            const turnUsername = await AsyncStorage.getItem('turnUsername');
+            if (turnUsername == "-") {
+              turnUsername = "";
+            }
             this.state.turnUsername = turnUsername;
 
-            const turnPassword = await AsyncStorage.getItem('turnPassword') ;
+            const turnPassword = await AsyncStorage.getItem('turnPassword');
+            if (turnPassword == "-") {
+              turnPassword = "";
+            }
             this.state.turnPassword = turnPassword;
 
-            const stunServer = await AsyncStorage.getItem('stunServer') ;
+            const stunServer = await AsyncStorage.getItem('stunServer');
+            if (stunServer == "-") {
+              stunServer = "";
+            }
             this.state.stunServer = stunServer;
 
-            const stunPort = await AsyncStorage.getItem('stunPort') ;
+            const stunPort = await AsyncStorage.getItem('stunPort');
+            if (stunPort == "-") {
+              stunPort = "";
+            }
             this.state.stunPort = stunPort;
 
            this.forceUpdate()
@@ -347,13 +365,13 @@ class getSipSettingsFromAPI extends React.Component {
                             onTextChange = {this.onTURNHostChanged}
                         />
 
-                        <InputContainer
+                        {/* <InputContainer
                             placeholder = 'Port'
                             title = 'TURN Port'
                             keyBoardType = 'number-pad'
                             textValue = {this.state.turnPort + ''}
                             onTextChange = {this.onTURNPortChanged}
-                        />
+                        /> */}
 
                         <InputContainer
                             placeholder = 'Username'
@@ -381,13 +399,13 @@ class getSipSettingsFromAPI extends React.Component {
                     onTextChange = {this.onStunServerChanged}
                 />
 
-                <InputContainer
+                {/* <InputContainer
                     placeholder = 'Port'
                     title = 'STUN Port'
                     keyBoardType = 'number-pad'
                     textValue = {this.state.stunPort + ''}
                     onTextChange = {this.onStunPortChanged}
-                />
+                /> */}
 
                 <TouchableOpacity style = {styles.saveButton}
                     onPress = {
