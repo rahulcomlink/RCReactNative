@@ -90,9 +90,9 @@ public class SdkModule extends ReactContextBaseJavaModule {
             }
 
             if (setSpecker) {
-                mAudioManager.setSpeakerphoneOn(false);
-            } else {
                 mAudioManager.setSpeakerphoneOn(true);
+            } else {
+                mAudioManager.setSpeakerphoneOn(false);
             }
 
         } catch (Exception e) {
