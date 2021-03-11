@@ -94,113 +94,152 @@ class KeypadView extends React.Component {
 
     render() {
         return (
-         <View style={{padding: 10, flex : 1, backgroundColor : 'white'}}>
-           
-          
-           <View style={{backgroundColor : 'white'}}>
-               <View style={{flexDirection: 'row', height:50 , marginTop : 30, marginRight : 20}}>
-               <TouchableOpacity style={{ marginLeft : 10, marginRight : 10, height :  50}} 
-                        onPress= {()=> this.goToNextScreen()} >  
-                        <Text style = {{textAlign : 'center', fontSize : 36, height : 50}}>{this.state.selectedCC} </Text>
+          <View style={{ padding: 10, flex: 1, backgroundColor: "white" }}>
+            <View style={{ backgroundColor: "white" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  height: 50,
+                  marginTop: 30,
+                  marginRight: 20,
+                }}
+              >
+                <TouchableOpacity
+                  style={{ marginLeft: 10, marginRight: 10, height: 50 }}
+                  onPress={() => this.goToNextScreen()}
+                >
+                  <Text
+                    style={{ textAlign: "center", fontSize: 36, height: 50 }}
+                  >
+                    {this.state.selectedCC}{" "}
+                  </Text>
                 </TouchableOpacity>
-                <Text style = {{textAlign : 'center', fontSize : 36, height : 50,  marginRight : 20 }}> {this.state.keyPressed} </Text>
-               </View>
-              <View >
-               <View style={{flexDirection: 'row', alignSelf: 'center', }}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 36,
+                    height: 50,
+                    marginRight: 20,
+                  }}
+                >
+                  {" "}
+                  {this.state.keyPressed}{" "}
+                </Text>
+              </View>
+              <View>
+                <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("1")}
+                  >
+                    <Image style={styles.buttonicon} source={call_1_3x} />
+                  </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button2} 
-                        onPress= {()=> this.onKeyPressed('1')} >  
-                        <Image style = {styles.button2} source = {call_1_3x}/>   
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("2")}
+                  >
+                    <Image style={styles.buttonicon} source={call_2_3x} />
+                  </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button2}  
-                    onPress= {()=> this.onKeyPressed('2')}>  
-                    <Image style = {styles.button2} source = {call_2_3x}/>   
-               </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("3")}
+                  >
+                    <Image style={styles.buttonicon} source={call_3_3x} />
+                  </TouchableOpacity>
+                </View>
 
-               <TouchableOpacity style={styles.button2}  
-               onPress= {()=> this.onKeyPressed('3')}>
-                    <Image style = {styles.button2} source = {call_3_3x}/>  
-                 </TouchableOpacity>
-               </View>
+                <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("4")}
+                  >
+                    <Image style={styles.buttonicon} source={call_4_3x} />
+                  </TouchableOpacity>
 
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-               <TouchableOpacity style={styles.button2}  
-                 onPress= {()=> this.onKeyPressed('4')}>
-                    <Image style = {styles.button2} source = {call_4_3x}/>   
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("5")}
+                  >
+                    <Image style={styles.buttonicon} source={call_5_3x} />
+                  </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button2}  
-                    onPress= {()=> this.onKeyPressed('5')}>
-                        <Image style = {styles.button2} source = {call_5_3x}/>  
-                 </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("6")}
+                  >
+                    <Image style={styles.buttonicon} source={call_6_3x} />
+                  </TouchableOpacity>
+                </View>
 
+                <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("7")}
+                  >
+                    <Image style={styles.buttonicon} source={call_7_3x} />
+                  </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button2} 
-                    onPress= {()=> this.onKeyPressed('6')}>
-                     <Image style = {styles.button2} source = {call_6_3x}/>  
-                 </TouchableOpacity>
-               </View>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("8")}
+                  >
+                    <Image style={styles.buttonicon} source={call_8_3x} />
+                  </TouchableOpacity>
 
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-               <TouchableOpacity style={styles.button2}  
-                    onPress= {()=> this.onKeyPressed('7')}>
-                    <Image style = {styles.button2} source = {call_7_3x}/>   
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("9")}
+                  >
+                    <Image style={styles.buttonicon} source={call_9_3x} />
+                  </TouchableOpacity>
+                </View>
 
-               <TouchableOpacity style={styles.button2}  
-                    onPress= {()=> this.onKeyPressed('8')}>
-                        <Image style = {styles.button2} source = {call_8_3x}/>  
-                 </TouchableOpacity>
+                <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("*")}
+                  >
+                    <Image style={styles.buttonicon} source={call_star_3x} />
+                  </TouchableOpacity>
 
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("0")}
+                  >
+                    <Image style={styles.buttonicon} source={call_0_3x} />
+                  </TouchableOpacity>
 
-               <TouchableOpacity style={styles.button2} 
-                onPress= {()=> this.onKeyPressed('9')}>
-                     <Image style = {styles.button2} source = {call_9_3x}/>  
-                 </TouchableOpacity>
-               </View>
+                  <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => this.onKeyPressed("#")}
+                  >
+                    <Image style={styles.buttonicon} source={call_pound_3x} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
 
-               <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-               <TouchableOpacity style={styles.button2}  
-                 onPress= {()=> this.onKeyPressed('*')}>
-                    <Image style = {styles.button2} source = {call_star_3x}/>   
-                </TouchableOpacity>
-
-               <TouchableOpacity style={styles.button2}  
-                    onPress= {()=> this.onKeyPressed('0')}>
-                        <Image style = {styles.button2} source = {call_0_3x}/>  
-                 </TouchableOpacity>
-
-
-               <TouchableOpacity style={styles.button2} 
-                onPress= {()=> this.onKeyPressed('#')}>
-                     <Image style = {styles.button2} source = {call_pound_3x}/>  
-                 </TouchableOpacity>
-               </View>
-               </View>
-               </View>
-
-               <View style = {styles.bottom}>
-               <TouchableOpacity style={styles.button1} 
-                    onPress = {
-                        () => console.debug('')
-                      }>  
-                </TouchableOpacity>
-               <TouchableOpacity style={styles.button1} 
-                    onPress = {
-                        () => this.call()
-                      }>  
-                    <Image style={styles.button1} source={ calling_start } />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button1} 
-                    onPress = {
-                        () => this.removeChar()
-                      }>  
-                    <Image style={styles.button1}  source={ call_back }  />
-                </TouchableOpacity>
-               </View>
-               
-         </View>
+            <View style={styles.bottom}>
+              <TouchableOpacity
+                style={styles.button1}
+                onPress={() => console.debug("")}
+              ></TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button1}
+                onPress={() => this.call()}
+              >
+                <Image style={styles.button1} source={calling_start} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button1}
+                onPress={() => this.removeChar()}
+              >
+                <Image style={styles.button1} source={call_back} />
+              </TouchableOpacity>
+            </View>
+          </View>
         );
       }
 }
@@ -208,54 +247,69 @@ export default KeypadView;
 
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
-    },
-    instructions: {
-      fontSize: 12,
-      textAlign: 'center',
-      color: '#888',
-      marginBottom: 5,
-    },
-    data: {
-      padding: 15,
-      marginTop: 10,
-      backgroundColor: '#ddd',
-      borderColor: '#888',
-      borderWidth: 1 / PixelRatio.get(),
-      color: '#777'
-    },
-    button2: {
-      width : 60,
-      height : 60,
-      alignSelf : 'center',
-      margin: 25,
-      resizeMode : 'center'
-   },
-   button1: {
-    width : 70,
-    height : 70,
-    alignSelf : 'center',
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10,
+  },
+  instructions: {
+    fontSize: 12,
+    textAlign: "center",
+    color: "#888",
+    marginBottom: 5,
+  },
+  data: {
+    padding: 15,
+    marginTop: 10,
+    backgroundColor: "#ddd",
+    borderColor: "#888",
+    borderWidth: 1 / PixelRatio.get(),
+    color: "#777",
+  },
+  button2: {
+    width: 60,
+    height: 60,
+    alignSelf: "center",
+    margin: 25,
+    resizeMode: "center",
+  },
+  buttonicon: {
+    width: 60,
+    height: 60,
+    alignSelf: "center",
+    resizeMode: "center",
+  },
+  button1: {
+    width: 70,
+    height: 70,
+    alignSelf: "center",
     margin: 20,
-    resizeMode : 'center'
- },
- bottom: {
-  width: '100%', 
-  height: 80, 
-  justifyContent: 'center', 
-  alignItems: 'center',
-  position: 'absolute',
-  bottom: 80,
-  flexDirection: 'row',
-  alignSelf : 'center',
-  backgroundColor : 'white'
-}
-
-  });
+    resizeMode: "center",
+  },
+  bottom: {
+    width: "100%",
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 80,
+    flexDirection: "row",
+    alignSelf: "center",
+    backgroundColor: "white",
+  },
+  buttonStyle: {
+    alignItems: "center",
+    backgroundColor: "#F92660",
+    width: 150,
+    height: 50,
+    marginTop: 20,
+    marginBottom: 10,
+    marginRight: 15,
+    padding: 5,
+  },
+});
