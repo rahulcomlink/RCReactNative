@@ -28,17 +28,17 @@ import calling_start from '../../static/images/calling_start.png';
 import call_back from '../../static/images/call_back.png';
 
 import { CountrySelection } from 'react-native-country-list';
+  import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 class KeypadView extends React.Component {
-
-  
   // static navigationOptions = ({ navigation, isMasterDetail }) => ({
-	// 	headerLeft: () => (isMasterDetail ? (
-	// 		<HeaderButton.CloseModal navigation={navigation} testID='keypad-view-close' />
-	// 	) : (
-	// 		<HeaderButton.Drawer navigation={navigation} testID='keypad-view-drawer' />
-	// 	)),
-	// 	 title: ''
+  // 	headerLeft: () => (isMasterDetail ? (
+  // 		<HeaderButton.CloseModal navigation={navigation} testID='keypad-view-close' />
+  // 	) : (
+  // 		<HeaderButton.Drawer navigation={navigation} testID='keypad-view-drawer' />
+  // 	)),
+  // 	 title: ''
   // });
 
   static navigationOptions = ({ navigation }) => {
@@ -47,204 +47,209 @@ class KeypadView extends React.Component {
     };
     return options;
   };
- 
-    constructor(props){ 
-        super(props);
-       
-        this.state = {
-          keyPressed : '',
-          selectedCC : '+1'
-        };
-    }
 
-    onKeyPressed = (item) => {
-      this.setState({ keyPressed: this.state.keyPressed + item })
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      keyPressed: "",
+      selectedCC: "+91",
+    };
   }
-  
 
-    call = () => {
-      if(this.state.keyPressed == null){
+  componentDidMount() {
+    this.getSavedCC();
+  }
 
-      }else {
-        var cc =  this.state.selectedCC.replace('+','')
-        var key =  this.state.keyPressed
-        key  = key.replace('*','')
-        key  = key.replace('#','')
-        this.props.navigation.push('CallScreen', {
-          phoneNumber : cc + key,
-       });
-      }
+  onKeyPressed = (item) => {
+    this.setState({ keyPressed: this.state.keyPressed + item });
+  };
+
+  call = () => {
+    if (this.state.keyPressed == null) {
+    } else {
+      var cc = this.state.selectedCC.replace("+", "");
+      var key = this.state.keyPressed;
+      key = key.replace("*", "");
+      key = key.replace("#", "");
+      this.props.navigation.push("CallScreen", {
+        phoneNumber: cc + key,
+      });
     }
+  };
 
-    removeChar = () => {
-      if(this.state.keyPressed != null){
-        this.setState({ keyPressed: this.state.keyPressed.slice(0,-1)})
-      }
+  removeChar = () => {
+    if (this.state.keyPressed != null) {
+      this.setState({ keyPressed: this.state.keyPressed.slice(0, -1) });
     }
+  };
 
-    goToNextScreen = () => {
-      this.props.navigation.push("SelectCountryCode", { onSelect: this.getCountryCode });
-    }
+  goToNextScreen = () => {
+    this.props.navigation.push("SelectCountryCode", {
+      onSelect: this.getCountryCode,
+    });
+  };
 
-    getCountryCode = (cc) => {
-      console.debug('cc = ',cc.selected.callingCode);
-      this.setState({ selectedCC: '+' + cc.selected.callingCode})
-    }
+  getCountryCode = (cc) => {
+    console.debug("cc = ", cc.selected.callingCode);
+    // this.setState({ selectedCC: "+" + cc.selected.callingCode });
+    this.getSavedCC();
+  };
 
+  getSavedCC = async () => {
+    const ccd = await AsyncStorage.getItem("lastSelectedCountryCode");
+    this.setState({ selectedCC: "+" + ccd });
+    console.debug("CODE_COUNTRY_KEYPAD", ccd);
+  };
 
-    render() {
-        return (
-          <View style={{ padding: 10, flex: 1, backgroundColor: "white" }}>
-            <View style={{ backgroundColor: "white" }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  height: "auto",
-                  marginTop: 30,
-                  marginRight: 10,
-                  width: "100%",
-                }}
+  render() {
+    return (
+      <View style={{ padding: 10, flex: 1, backgroundColor: "white" }}>
+        <View style={{ backgroundColor: "white" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              height: "auto",
+              marginTop: 30,
+              marginRight: 10,
+              width: "100%",
+            }}
+          >
+            <TouchableOpacity
+              style={{ marginLeft: 10, marginRight: 0, height: 50 }}
+              onPress={() => this.goToNextScreen()}
+            >
+              <Text style={{ textAlign: "center", fontSize: 36, height: 50 }}>
+                {this.state.selectedCC}{" "}
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                textAlign: "center",
+                width: "65%",
+                fontSize: 36,
+                height: "auto",
+                marginRight: 20,
+                flexDirection: "row",
+              }}
+            >
+              {" "}
+              {this.state.keyPressed}{" "}
+            </Text>
+          </View>
+          <View>
+            <View style={{ flexDirection: "row", alignSelf: "center" }}>
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("1")}
               >
-                <TouchableOpacity
-                  style={{ marginLeft: 10, marginRight: 0, height: 50 }}
-                  onPress={() => this.goToNextScreen()}
-                >
-                  <Text
-                    style={{ textAlign: "center", fontSize: 36, height: 50 }}
-                  >
-                    {this.state.selectedCC}{" "}
-                  </Text>
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    width: "65%",
-                    fontSize: 36,
-                    height: "auto",
-                    marginRight: 20,
-                    flexDirection: "row",
-                  }}
-                >
-                  {" "}
-                  {this.state.keyPressed}{" "}
-                </Text>
-              </View>
-              <View>
-                <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("1")}
-                  >
-                    <Image style={styles.buttonicon} source={call_1_3x} />
-                  </TouchableOpacity>
+                <Image style={styles.buttonicon} source={call_1_3x} />
+              </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("2")}
-                  >
-                    <Image style={styles.buttonicon} source={call_2_3x} />
-                  </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("2")}
+              >
+                <Image style={styles.buttonicon} source={call_2_3x} />
+              </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("3")}
-                  >
-                    <Image style={styles.buttonicon} source={call_3_3x} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("4")}
-                  >
-                    <Image style={styles.buttonicon} source={call_4_3x} />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("5")}
-                  >
-                    <Image style={styles.buttonicon} source={call_5_3x} />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("6")}
-                  >
-                    <Image style={styles.buttonicon} source={call_6_3x} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("7")}
-                  >
-                    <Image style={styles.buttonicon} source={call_7_3x} />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("8")}
-                  >
-                    <Image style={styles.buttonicon} source={call_8_3x} />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("9")}
-                  >
-                    <Image style={styles.buttonicon} source={call_9_3x} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("*")}
-                  >
-                    <Image style={styles.buttonicon} source={call_star_3x} />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("0")}
-                  >
-                    <Image style={styles.buttonicon} source={call_0_3x} />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => this.onKeyPressed("#")}
-                  >
-                    <Image style={styles.buttonicon} source={call_pound_3x} />
-                  </TouchableOpacity>
-                </View>
-              </View>
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("3")}
+              >
+                <Image style={styles.buttonicon} source={call_3_3x} />
+              </TouchableOpacity>
             </View>
 
-            <View style={styles.bottom}>
+            <View style={{ flexDirection: "row", alignSelf: "center" }}>
               <TouchableOpacity
-                style={styles.button1}
-                onPress={() => console.debug("")}
-              ></TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button1}
-                onPress={() => this.call()}
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("4")}
               >
-                <Image style={styles.button1} source={calling_start} />
+                <Image style={styles.buttonicon} source={call_4_3x} />
               </TouchableOpacity>
+
               <TouchableOpacity
-                style={styles.button1}
-                onPress={() => this.removeChar()}
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("5")}
               >
-                <Image style={styles.button1} source={call_back} />
+                <Image style={styles.buttonicon} source={call_5_3x} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("6")}
+              >
+                <Image style={styles.buttonicon} source={call_6_3x} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ flexDirection: "row", alignSelf: "center" }}>
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("7")}
+              >
+                <Image style={styles.buttonicon} source={call_7_3x} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("8")}
+              >
+                <Image style={styles.buttonicon} source={call_8_3x} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("9")}
+              >
+                <Image style={styles.buttonicon} source={call_9_3x} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ flexDirection: "row", alignSelf: "center" }}>
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("*")}
+              >
+                <Image style={styles.buttonicon} source={call_star_3x} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("0")}
+              >
+                <Image style={styles.buttonicon} source={call_0_3x} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button2}
+                onPress={() => this.onKeyPressed("#")}
+              >
+                <Image style={styles.buttonicon} source={call_pound_3x} />
               </TouchableOpacity>
             </View>
           </View>
-        );
-      }
+        </View>
+
+        <View style={styles.bottom}>
+          <TouchableOpacity
+            style={styles.button1}
+            onPress={() => console.debug("")}
+          ></TouchableOpacity>
+          <TouchableOpacity style={styles.button1} onPress={() => this.call()}>
+            <Image style={styles.button1} source={calling_start} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button1}
+            onPress={() => this.removeChar()}
+          >
+            <Image style={styles.button1} source={call_back} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 }
 export default KeypadView;
 
