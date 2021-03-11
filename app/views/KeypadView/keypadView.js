@@ -101,12 +101,12 @@ class KeypadView extends React.Component {
                   flexDirection: "row",
                   height: "auto",
                   marginTop: 30,
-                  marginRight: 20,
-                  width: "80%",
+                  marginRight: 10,
+                  width: "100%",
                 }}
               >
                 <TouchableOpacity
-                  style={{ marginLeft: 10, marginRight: 10, height: 50 }}
+                  style={{ marginLeft: 10, marginRight: 0, height: 50 }}
                   onPress={() => this.goToNextScreen()}
                 >
                   <Text
@@ -118,6 +118,7 @@ class KeypadView extends React.Component {
                 <Text
                   style={{
                     textAlign: "center",
+                    width: "65%",
                     fontSize: 36,
                     height: "auto",
                     marginRight: 20,
