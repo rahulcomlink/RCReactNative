@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Pigeon</string>
     <string name="share_extension_name">Pigeon</string>
+
+    <!--Call State-->
+    <string name="status_call_none">None</string>
+    <string name="status_call_disconnected">TERMINATED</string>
+    <string name="status_call_incoming">Is Calling</string>
+    <string name="status_call_active">Call in progress</string>
+    <string name="status_call_dialing">Dialing…</string>
+    <string name="status_call_answered">ANSWERED</string>
+    <string name="status_call_holding">Call On Hold</string>
+    <string name="status_call_ringing">RINGING</string>
+    <string name="status_call_busy">DECLINED</string>
 </resources>

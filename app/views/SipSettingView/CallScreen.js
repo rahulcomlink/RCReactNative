@@ -10,6 +10,7 @@ import {
   Image,
   Button,
   NativeEventEmitter,
+  DeviceEventEmitter,
 } from "react-native";
 import InputContainer from "./InputContainer.js";
 import speakerOn from "../../static/images/speakerOn.png";
@@ -50,6 +51,7 @@ import call_star_3x from "../../static/images/call_star_d_1.png";
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
 
+
 /*
 const onSessionConnect = (event) => {
     console.debug("onSessionConnect", event);
@@ -79,7 +81,7 @@ class CallScreen extends React.Component {
     };
 
     if (os == "android") {
-      
+      DeviceEventEmitter.addListener("onSessionConnect", this.getCallStatusAndroid);
     } else {
       eventEmitter.addListener("onSessionConnect", this.getCallStatus);
     }
@@ -148,6 +150,23 @@ class CallScreen extends React.Component {
       NativeModules.Sdk.endCall();
     } else {
       NativeModules.SIPSDKBridge.endCall();
+    }
+  };
+
+  getCallStatusAndroid = (event) => {
+    if (event == "ANSWERED") {
+      this.startTimer();
+    }
+    if (event == "RINGING") {
+      this.setState({ callStatusText: "Ringing" });
+    }
+    if (event == "TERMINATED") {
+      this.setState({ callStatusText: "Call terminated" });
+      this.endCall();
+    }
+    if (event == "DECLINED") {
+      this.setState({ callStatusText: "Call declined" });
+      this.endCall();
     }
   };
 

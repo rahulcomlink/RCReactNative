@@ -12,6 +12,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
 import static android.content.Context.AUDIO_SERVICE;
+import static com.comlinkinc.android.pigeon.CallManager.mCallStatusHandler;
 
 public class SdkModule extends ReactContextBaseJavaModule {
 
@@ -165,6 +166,11 @@ public class SdkModule extends ReactContextBaseJavaModule {
             }
 
             Dialer.register();
+
+            if (mCallStatusHandler != null) {
+                mCallStatusHandler.sendEmptyMessage(1);//TIME_START
+            }
+
             CallManager.call = Dialer.makeCall(sipUri);
 
             if (mAudioManager == null){

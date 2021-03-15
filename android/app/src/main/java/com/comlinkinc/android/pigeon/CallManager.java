@@ -1,5 +1,6 @@
 package com.comlinkinc.android.pigeon;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -8,14 +9,17 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 
 import com.comlinkinc.communicator.dialer.Call;
 import com.comlinkinc.communicator.dialer.Dialer;
 import com.comlinkinc.communicator.dialer.DialerException;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,11 +32,27 @@ import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
 import java.util.function.Consumer;
 
+import static com.comlinkinc.communicator.dialer.Call.Status.DECLINED;
+import static com.comlinkinc.communicator.dialer.Call.Status.RINGING;
+import static com.comlinkinc.communicator.dialer.Call.Status.TERMINATED;
+import static com.incomingcall.IncomingCallModule.reactContext;
+import static com.wix.reactnativeuilib.keyboardinput.AppContextHolder.getCurrentActivity;
+
 public class CallManager {
 
     // Variables
     public static Call call;
     public static MediaPlayer ringtone;
+    // Call State
+    private static com.comlinkinc.communicator.dialer.Call.Status mState;
+    private static String mStateText;
+
+    // Handler variables
+    private static final int TIME_START = 1;
+    private static final int TIME_STOP = 0;
+    private static final int TIME_UPDATE = 2;
+    private static final int REFRESH_RATE = 100;
+    static Handler mCallStatusHandler = null;
 
 
     /********************************************************************************************
@@ -43,6 +63,8 @@ public class CallManager {
         try {
             Dialer.start(getDefaultConfig(mContext));
             Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, true);
+
+            mCallStatusHandler = new CallStatusHandler();
             return "Success";
 //
 //            Dialer.setInboundCallHandler(CallActivity::onInboundCall);
@@ -282,6 +304,8 @@ public class CallManager {
                 e.printStackTrace();
             }
         }
+
+        mCallStatusHandler.sendEmptyMessage(TIME_STOP);
     }
 
     private void getIncomingCall(){
@@ -531,4 +555,66 @@ public class CallManager {
             e.printStackTrace();
         }
     }
+
+
+    @SuppressLint("HandlerLeak")
+    public static class CallStatusHandler extends Handler {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TIME_START:
+                    mCallStatusHandler.sendEmptyMessage(TIME_UPDATE); // Starts the time ui updates
+                    break;
+                case TIME_STOP:
+                    mCallStatusHandler.removeMessages(TIME_UPDATE); // No more updates
+                    break;
+                case TIME_UPDATE:
+                    if (call != null) {
+                        updateCallStatus(call.getStatus());
+                    }
+                    mCallStatusHandler.sendEmptyMessageDelayed(TIME_UPDATE, REFRESH_RATE); // Text view updates every milisecond (REFRESH RATE)
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Updates the ui given the call state
+     *
+     * @param state the current call state
+     */
+    private static void updateCallStatus(Call.Status state) {
+        @StringRes int statusTextRes;
+        switch (state) {
+            case NONE:
+                statusTextRes = R.string.status_call_none;
+                break;
+            case TRYING:
+                statusTextRes = R.string.status_call_dialing;
+                break;
+            case RINGING:
+                statusTextRes = R.string.status_call_ringing;
+                break;
+            case ANSWERED:
+                statusTextRes = R.string.status_call_answered;
+                break;
+            case TERMINATED:
+                statusTextRes = R.string.status_call_disconnected;
+                break;
+            case DECLINED:
+                statusTextRes = R.string.status_call_busy;
+                break;
+            default:
+                statusTextRes = R.string.status_call_active;
+                break;
+        }
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onSessionConnect", getCurrentActivity().getResources().getString(statusTextRes));
+//        txtCallStatus.setText(statusTextRes);
+    }
+
 }
