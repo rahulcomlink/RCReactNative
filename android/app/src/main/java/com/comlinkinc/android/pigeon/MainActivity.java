@@ -2,23 +2,22 @@ package com.comlinkinc.android.pigeon;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.os.Build;
-import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Bundle;
 
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.ReactRootView;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactFragmentActivity;
-
-import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
-import com.zoontek.rnbootsplash.RNBootSplash;
-import com.tencent.mmkv.MMKV;
+import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.google.gson.Gson;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+import com.tencent.mmkv.MMKV;
+import com.zoontek.rnbootsplash.RNBootSplash;
 
 class ThemePreferences {
   String currentTheme;
@@ -105,6 +104,17 @@ public class MainActivity extends ReactFragmentActivity {
             //notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificationChannel);
+        }
+
+        String []permissions = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.RECORD_AUDIO"};
+
+        if (Utilities.checkPermissionsGranted(MainActivity.this, permissions)) {
+            try {
+                CallManager.copyRingtoneToPhoneStorage(MainApplication.getAppContext());
+            } catch (Exception e) {
+            }
+        }else{
+            Utilities.askForPermissions(MainActivity.this, permissions);
         }
     }
 

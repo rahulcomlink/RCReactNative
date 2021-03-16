@@ -48,6 +48,8 @@ import btn_back from '../../static/images/btn_back.png';
 import { StackActions, NavigationActions } from 'react-navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BackHandler } from 'react-native';
+import { isIOS, isTablet } from "../../utils/deviceInfo";
+const os = isIOS ? "ios" : "android";
 
 class PhonebookView extends React.Component {
   // static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -134,6 +136,10 @@ class PhonebookView extends React.Component {
       }
       this.forceUpdate()
     }
+
+    if (os == "android") {
+      NativeModules.Sdk.askStorageAndMicPermission();
+    } 
   }
 
  

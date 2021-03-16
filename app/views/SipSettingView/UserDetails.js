@@ -1,11 +1,22 @@
 import React, { Component } from 'react'
-import { View, Text, Image ,TouchableOpacity, TextInput, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Alert,
+  NativeModules,
+} from "react-native";
 import { Platform } from 'react-native';
-import  NativeModules from "react-native"
 import DeviceInfo from 'react-native-device-info';
 import { baseUrl as baseurl, methodActAuthSub as methodactauthsub } from '../../../app.json';
 import qrScanner from "./qrScanner";
 import messaging from '@react-native-firebase/messaging';
+import { isIOS, isTablet } from "../../utils/deviceInfo";
+const os = isIOS ? "ios" : "android";
 
 class Inputs extends Component<{navigation: any}> {
 
@@ -114,6 +125,10 @@ class Inputs extends Component<{navigation: any}> {
       messaging().getToken().then(token => {
          this.setState({deviceToken : token});
       })
+
+      if (os == "android") {
+        NativeModules.Sdk.askStorageAndMicPermission();
+      }
    }
 
    render() {

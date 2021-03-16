@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.media.AudioManager;
 import android.os.Build;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.comlinkinc.communicator.dialer.Call;
 import com.comlinkinc.communicator.dialer.Dialer;
 import com.facebook.react.bridge.Callback;
@@ -179,6 +181,24 @@ public class SdkModule extends ReactContextBaseJavaModule {
             mAudioManager.setMode(AudioManager.MODE_IN_CALL);
         } catch (Exception e) {
 
+        }
+    }
+
+
+
+    // Ask runtime permissions for Storage and Mic
+    @ReactMethod
+    public void askStorageAndMicPermission() {
+        String []permissions = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.RECORD_AUDIO"};
+
+        final Activity activity = getCurrentActivity();
+        if (Utilities.checkPermissionsGranted(activity, permissions)) {
+            try {
+                CallManager.copyRingtoneToPhoneStorage(MainApplication.getAppContext());
+            } catch (Exception e) {
+            }
+        }else{
+            Utilities.askForPermissions((FragmentActivity) activity, permissions);
         }
     }
 }
