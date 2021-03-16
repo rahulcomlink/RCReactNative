@@ -51,8 +51,14 @@ public class CallManager {
     private static final int TIME_START = 1;
     private static final int TIME_STOP = 0;
     private static final int TIME_UPDATE = 2;
-    private static final int REFRESH_RATE = 100;
+    private static final int REFRESH_RATE = 1000;
     static Handler mCallStatusHandler = null;
+
+    public static boolean ringing = false;
+    public static boolean answered = false;
+    public static boolean terminated = false;
+    public static boolean declined = false;
+
 
 
     /********************************************************************************************
@@ -597,23 +603,45 @@ public class CallManager {
                 break;
             case RINGING:
                 statusTextRes = R.string.status_call_ringing;
+                if (!ringing){
+                    ringing = true;
+                    reactContext
+                            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("onSessionConnect", getCurrentActivity().getResources().getString(statusTextRes));
+                }
                 break;
             case ANSWERED:
                 statusTextRes = R.string.status_call_answered;
+                if (!answered){
+                    answered = true;
+                    reactContext
+                            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("onSessionConnect", getCurrentActivity().getResources().getString(statusTextRes));
+                }
                 break;
             case TERMINATED:
                 statusTextRes = R.string.status_call_disconnected;
+                if (!terminated){
+                    terminated = true;
+                    reactContext
+                            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("onSessionConnect", getCurrentActivity().getResources().getString(statusTextRes));
+                }
                 break;
             case DECLINED:
                 statusTextRes = R.string.status_call_busy;
+                if (!declined){
+                    declined = true;
+                    reactContext
+                            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("onSessionConnect", getCurrentActivity().getResources().getString(statusTextRes));
+                }
                 break;
             default:
                 statusTextRes = R.string.status_call_active;
                 break;
         }
-        reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("onSessionConnect", getCurrentActivity().getResources().getString(statusTextRes));
+
 //        txtCallStatus.setText(statusTextRes);
     }
 

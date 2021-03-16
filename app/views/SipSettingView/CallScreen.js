@@ -156,17 +156,18 @@ class CallScreen extends React.Component {
   getCallStatusAndroid = (event) => {
     if (event == "ANSWERED") {
       this.startTimer();
+      // this.setState({ callStatusText: "Connected" });
     }
     if (event == "RINGING") {
       this.setState({ callStatusText: "Ringing" });
     }
     if (event == "TERMINATED") {
-      this.setState({ callStatusText: "Call terminated" });
-      this.endCall();
+      this.setState({ callStatusText: "Terminated" });
+      // this.endCall();
     }
     if (event == "DECLINED") {
-      this.setState({ callStatusText: "Call declined" });
-      this.endCall();
+      this.setState({ callStatusText: "Declined" });
+      // this.endCall();
     }
   };
 

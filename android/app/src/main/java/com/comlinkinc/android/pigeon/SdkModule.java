@@ -169,7 +169,15 @@ public class SdkModule extends ReactContextBaseJavaModule {
 
             Dialer.register();
 
+            CallManager.ringing = false;
+            CallManager.answered = false;
+            CallManager.terminated = false;
+            CallManager.declined = false;
+
             if (mCallStatusHandler != null) {
+                mCallStatusHandler.sendEmptyMessage(1);//TIME_START
+            }else{
+                mCallStatusHandler = new CallManager.CallStatusHandler();
                 mCallStatusHandler.sendEmptyMessage(1);//TIME_START
             }
 

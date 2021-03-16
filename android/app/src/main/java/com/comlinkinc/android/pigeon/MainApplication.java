@@ -108,7 +108,7 @@ public class MainApplication extends Application implements ReactApplication {
           } catch (Exception e) {
           }
         } else {
-          Toast.makeText(MainApplication.getAppContext(), "Enable storage access permission", Toast.LENGTH_SHORT).show();
+//          Toast.makeText(MainApplication.getAppContext(), "Enable storage access permission", Toast.LENGTH_SHORT).show();
 //          ActivityCompat.requestPermissions(MainApplication.getAppContext(), new String[]{WRITE_EXTERNAL_STORAGE}, 1);
         }
       } catch (Exception e) {
