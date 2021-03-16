@@ -98,7 +98,11 @@ class KeypadView extends React.Component {
 
   getSavedCC = async () => {
     const ccd = await AsyncStorage.getItem("lastSelectedCountryCode");
-    this.setState({ selectedCC: "+" + ccd });
+    if (ccd == null || ccd == "null") {
+      this.setState({ selectedCC: "+" + "91" });
+    } else {
+       this.setState({ selectedCC: "+" + ccd });
+    }
     console.debug("CODE_COUNTRY_KEYPAD", ccd);
   };
 
