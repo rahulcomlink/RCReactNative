@@ -64,7 +64,17 @@ public class SdkModule extends ReactContextBaseJavaModule {
     public void muteUnmuteCall(boolean flag) {
         try {
             final Activity activity = getCurrentActivity();
-            CallManager.muteUnmuteCall(flag);
+
+            if (mAudioManager == null){
+                mAudioManager = (AudioManager) activity.getApplicationContext().getSystemService(AUDIO_SERVICE);
+            }
+
+            if (flag) {
+                mAudioManager.setMicrophoneMute(true);
+            } else {
+                mAudioManager.setMicrophoneMute(false);
+                mAudioManager.setMode(AudioManager.MODE_IN_CALL);
+            }
         } catch (Exception e) {
 
         }
@@ -94,8 +104,10 @@ public class SdkModule extends ReactContextBaseJavaModule {
 
             if (setSpecker) {
                 mAudioManager.setSpeakerphoneOn(true);
+                mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
             } else {
                 mAudioManager.setSpeakerphoneOn(false);
+                mAudioManager.setMode(AudioManager.MODE_IN_CALL);
             }
 
         } catch (Exception e) {
