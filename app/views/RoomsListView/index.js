@@ -7,7 +7,9 @@ import {
 	Text,
 	Keyboard,
 	RefreshControl,
-	NativeModules
+	NativeModules,
+	NativeEventEmitter,
+	Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import isEqual from 'react-fast-compare';
@@ -73,6 +75,7 @@ import { usesMetricSystem } from 'react-native-localize';
 import commonSipSettingFunc from '../SipSettingView/commonSipSettingFunc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
 const CHATS_HEADER = 'Chats';
 const UNREAD_HEADER = 'Unread';
@@ -113,6 +116,7 @@ const getItemLayout = (data, index) => ({
 	index
 });
 const keyExtractor = item => item.rid;
+
 
 class RoomsListView extends React.Component {
 	static propTypes = {
@@ -160,6 +164,7 @@ class RoomsListView extends React.Component {
 		console.time(`${ this.constructor.name } init`);
 		console.time(`${ this.constructor.name } mount`);
 
+		
 		this.gotSubscriptions = false;
 		this.animated = false;
 		this.count = 0;
@@ -171,10 +176,14 @@ class RoomsListView extends React.Component {
 			chats: [],
 			item: {}
 		};
+		//eventEmitter1.addListener('VoipCall', this.getCallStatus);
+		console.log("constructor");
 		this.setHeader();
 	}
 
 	componentDidMount() {
+		console.log("componentDidMount");
+		
 		const {
 			navigation, closeServerDropdown, appState
 		} = this.props;
@@ -187,13 +196,13 @@ class RoomsListView extends React.Component {
 		 * it means the user has resumed the app, so selectServer needs to be triggered,
 		 * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
 		 */
-
+		
 		commonSipSettingFunc.getSipSettingsAndStart();
 		
 		if (appState === 'foreground') {
 			this.getSubscriptions();
 		}
-
+		
 		if (isTablet) {
 			EventEmitter.addEventListener(KEY_COMMAND, this.handleCommands);
 		}
@@ -217,7 +226,6 @@ class RoomsListView extends React.Component {
 		});
 		console.timeEnd(`${ this.constructor.name } mount`);
 
-		
 	}
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
@@ -295,6 +303,31 @@ class RoomsListView extends React.Component {
 		return false;
 	}
 
+	getCallStatus = (event) => {
+		
+
+		Alert.alert(
+			    "",
+			    "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
+			    [
+			      {
+			        text: "Cancel",
+			        onPress: () => console.log("Cancel Pressed"),
+			        style: "cancel",
+			      },
+			      {
+			        text: "OK",
+			        onPress: () => console.log("Cancel Pressed"),
+			      },
+			    ],
+			    { cancelable: false }
+			  );
+
+		console.debug("getCallStatus 1",event);
+		console.log("getCallStatus 1",event);
+        
+     }
+
 	componentDidUpdate(prevProps) {
 		const {
 			sortBy,
@@ -335,39 +368,36 @@ class RoomsListView extends React.Component {
 			this.setHeader();
 		}
 
+		var eventEmitter1 = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
+		eventEmitter1.addListener('VoipCall', this.getCallStatus);
+
+
 		// custom comlink changes to save device token on server
 		const os1 = isIOS ? 'ios' : 'android'
-		//useEffect(() => {
-			// Get the device token
+		
 			messaging()
 			  .getToken()
 			  .then(token => {
-				console.debug('get device token : ',token);
+
 						console.debug(token);
 						const params =  {}
 						const customFields = {}
 						customFields.devicetoken = token
 						customFields.os = os1
-						console.debug('chat params :', params)
-						console.debug('chat customFields :', customFields)
-						
+		
 						try {
 						  RocketChat.saveUserProfile(params, customFields)
 			  			}catch(e) {
 							console.debug('rocket.chat save user profile exception : ', e)
 						}
-				//return saveTokenToDatabase(token);
+
 			  });
 			  
-			// If using other push notification providers (ie Amazon SNS, etc)
-			// you may need to get the APNs token instead for iOS:
-			// if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
-		
 			// Listen to whether the token changes
 			return messaging().onTokenRefresh(token => {
-			  //saveTokenToDatabase(token);
 			});
-		 // }, []);
+
+			
 	}
 
 	componentWillUnmount() {
@@ -437,6 +467,7 @@ class RoomsListView extends React.Component {
 			))
 		};
 	}
+
 
 	setHeader = () => {
 		const { navigation } = this.props;
@@ -767,7 +798,7 @@ class RoomsListView extends React.Component {
 		}
         else{
 			if (isMasterDetail) {
-				navigation.navigate('ModalStackNavigator', { screen: 'PhonebookView' });
+				navigation.navigate('ModalStackNavigator', { screen: 'VoIPIncomingCall' });
 			} else {
 				navigation.navigate('PhonebookStackNavigator');
 			}	

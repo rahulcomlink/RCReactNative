@@ -1,10 +1,12 @@
 import NotificationsIOS, { NotificationAction, NotificationCategory } from 'react-native-notifications';
 import {Notifications} from 'react-native-notifications';
 import messaging from '@react-native-firebase/messaging';
-import { Alert } from 'react-native';
-
+import { Alert , NativeEventEmitter, NativeModules} from 'react-native';
 import reduxStore from '../../lib/createStore';
 import I18n from '../../i18n';
+import Navigation from '../../lib/Navigation';
+import CallScreen from '../../views/SipSettingView/CallScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const replyAction = new NotificationAction({
 	activationMode: 'background',
@@ -16,15 +18,23 @@ const replyAction = new NotificationAction({
 	identifier: 'REPLY_ACTION'
 });
 
+const eventEmitter = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
+
 class PushNotification {
 	constructor() {
 		this.onRegister = null;
 		this.onNotification = null;
 		this.deviceToken = null;
+	
+		eventEmitter.addListener('VoipCall', this.getVoIPCall);
 
 		NotificationsIOS.addEventListener('remoteNotificationsRegistered', (deviceToken) => {
 			this.deviceToken = deviceToken;
 		});
+
+		// window.addEventListener('VoipCall', (event) => {
+		// 	this.getVoIPCall;
+		// });
 
 		
 		NotificationsIOS.addEventListener('notificationOpened', (notification, completion) => {
@@ -92,6 +102,13 @@ class PushNotification {
 		}));
 		NotificationsIOS.requestPermissions(actions);
 
+		// --- NOTE: You still need to subscribe / handle the rest events as usuall.
+        // --- This is just a helper whcih cache and propagate early fired events if and only if for
+        // --- "the native events which DID fire BEFORE js bridge is initialed",
+        // --- it does NOT mean this will have events each time when the app reopened.
+
+
+
 		
 	}
 
@@ -101,6 +118,21 @@ class PushNotification {
 
 	setBadgeCount = (count = 0) => {
 		NotificationsIOS.setBadgesCount(count);
+	}
+
+	getVoIPCall = (event) => {
+		Alert('getVoIPCall called')
+		Navigation.navigate('CallScreen', { phoneNumber : event.phoneNumber, isVoIPCall : true});
+	}
+
+	saveVoIPToken = async(token) => {
+		try {
+			console.debug('tokennnn = ',token)
+			await AsyncStorage.setItem('VoIPToken', token);
+		}catch (error) {
+			// Error retrieving data
+			console.debug('error.message', error.message);
+		  }
 	}
 
 	async configure(params) {

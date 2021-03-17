@@ -87,6 +87,9 @@ import PhonebookView from "../views/PhonebookView";
 import KeypadView from "../views/KeypadView/keypadView";
 import SelectCountryCode from "../views/KeypadView/SelectCountryCode";
 
+//VoIP Call Screen
+import VoIPIncomingCall from "../views/VoIPIncomingCall";
+
 // ChatsStackNavigator
 const ChatsStack = createStackNavigator();
 const ChatsStackNavigator = () => {
@@ -448,6 +451,7 @@ const PhonebookStackNavigator = () => {
 
   return (
     <PhonebookStack.Navigator>
+      
       <PhonebookStack.Screen
         name="PhonebookView"
         component={PhonebookView}
@@ -470,6 +474,14 @@ const PhonebookStackNavigator = () => {
         component={SelectCountryCode}
         options={SelectCountryCode.navigationOptions}
       />
+      <PhonebookStack.Screen
+        name="VoIPIncomingCall"
+        component={VoIPIncomingCall}
+        options={{
+          headerShown: false,
+        }}
+      />
+      
     </PhonebookStack.Navigator>
   );
 };
@@ -685,6 +697,12 @@ const InsideStackNavigator = () => {
         component={PhonebookStackNavigator}
         options={{ headerShown: false }}
       />
+      <InsideStack.Screen
+        name="CallScreen"
+        component={CallScreen}
+        options={{ headerShown: false }}
+      />
+    
     </InsideStack.Navigator>
   );
 };

@@ -36,6 +36,7 @@ class getSipSettingsFromAPI extends React.Component {
     constructor(props) {
         super(props);
     
+        /*
         this.state =  {
             sipServer : props.route.params?.sipServer,
             sipPort : props.route.params?.sipPort,
@@ -50,21 +51,22 @@ class getSipSettingsFromAPI extends React.Component {
             stunServer : props.route.params?.stunServer,
             stunPort : props.route.params?.stunPort
         }
+        */
 
-        // this.state =  {
-        //     sipServer : 'newxonesip.mvoipctsi.com',
-        //     sipPort : '8993',
-        //     sipTransport : 'TCP',
-        //     sipUsername :'919926054520',
-        //     sipPassword : '5d7d42db4c2f87001a71c413',
-        //     iceEnabled : true,
-        //     turnServer : 'turntaiwan.mvoipctsi.com',
-        //     turnPort : '0',
-        //     turnUsername : 'comlinkxone',
-        //     turnPassword : 'hgskSlGHgwSKfgsdUSDGhs',
-        //     stunServer : 'turntaiwan.mvoipctsi.com',
-        //     stunPort : '0'
-        // }
+        this.state =  {
+            sipServer : 'newxonesip.mvoipctsi.com',
+            sipPort : '8993',
+            sipTransport : 'TCP',
+            sipUsername :'919420429240',
+            sipPassword : '5d7d424b4c2f87001a71c411',
+            iceEnabled : true,
+            turnServer : 'turntaiwan.mvoipctsi.com',
+            turnPort : '0',
+            turnUsername : 'comlinkxone',
+            turnPassword : 'hgskSlGHgwSKfgsdUSDGhs',
+            stunServer : 'turntaiwan.mvoipctsi.com',
+            stunPort : '0'
+        }
 
             // console.debug('sipServer===',this.state.sipServer);
             // console.debug('sipPort=',this.state.sipPort);
@@ -203,11 +205,11 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('sipPassword', this.state.sipPassword);
             await AsyncStorage.setItem('iceEnabled', this.state.iceEnabled == true ? 'true' : 'false');
             await AsyncStorage.setItem('turnServer', this.state.turnServer);
-            await AsyncStorage.setItem('turnPort', this.state.turnPort + '');
+            await AsyncStorage.setItem('turnPort', '0');
             await AsyncStorage.setItem('turnUsername', this.state.turnUsername);
             await AsyncStorage.setItem('turnPassword', this.state.turnPassword);
             await AsyncStorage.setItem('stunServer', this.state.stunServer);
-            await AsyncStorage.setItem('stunPort', this.state.stunPort + '');
+            await AsyncStorage.setItem('stunPort', '0');
 
             commonSipSettingFunc.getSipSettingsAndStart();
             this.props.navigation.push('PhonebookView');
@@ -349,14 +351,6 @@ class getSipSettingsFromAPI extends React.Component {
                         />
 
                         <InputContainer
-                            placeholder = 'Port'
-                            title = 'TURN Port'
-                            keyBoardType = 'number-pad'
-                            textValue = {this.state.turnPort + ''}
-                            onTextChange = {this.onTURNPortChanged}
-                        />
-
-                        <InputContainer
                             placeholder = 'Username'
                             title = 'TURN Username'
                             keyBoardType = 'email-address'
@@ -382,13 +376,6 @@ class getSipSettingsFromAPI extends React.Component {
                     onTextChange = {this.onStunServerChanged}
                 />
 
-                <InputContainer
-                    placeholder = 'Port'
-                    title = 'STUN Port'
-                    keyBoardType = 'number-pad'
-                    textValue = {this.state.stunPort + ''}
-                    onTextChange = {this.onStunPortChanged}
-                />
 
                 <TouchableOpacity style = {styles.saveButton}
                     onPress = {

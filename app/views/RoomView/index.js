@@ -62,7 +62,7 @@ import { networking } from "reactotron-react-native";
 import RNDrawOverlay from "react-native-draw-overlay";
 import AutoStart from "react-native-autostart";
 // We are importing the native Java module here
-import { NativeModules } from "react-native";
+import { NativeModules, NativeEventEmitter} from "react-native";
 var NotificationSettings = NativeModules.NotificationSettings;
 
 const stateAttrsUpdate = [
@@ -98,6 +98,8 @@ const roomAttrsUpdate = [
   "visitor",
   "joinCodeRequired",
 ];
+
+const eventEmitter2 = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
 
 class RoomView extends React.Component {
   static propTypes = {
@@ -190,6 +192,7 @@ class RoomView extends React.Component {
   }
 
   componentDidMount() {
+    eventEmitter2.addListener('VoipCall', this.getCallStatus);
     this.mounted = true;
     this.offset = 0;
     this.didMountInteraction = InteractionManager.runAfterInteractions(() => {
@@ -285,6 +288,30 @@ class RoomView extends React.Component {
       (key) => !isEqual(nextState.roomUpdate[key], roomUpdate[key])
     );
   }
+
+  getCallStatus = (event) => {
+		Alert.alert(
+      "",
+      "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => console.log("Cancel Pressed"),
+        },
+      ],
+      { cancelable: false }
+    );
+
+		console.debug("getCallStatus 1",event);
+		console.log("getCallStatus 1",event);
+        
+     }
+
 
   componentDidUpdate(prevProps, prevState) {
     const { roomUpdate } = this.state;

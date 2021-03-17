@@ -68,7 +68,8 @@ class CallScreen extends React.Component {
             timer: null,
             callStatusText: 'calling',
             showKeypad: false,
-            name : props.route.params?.name
+            name : props.route.params?.name,
+            isVoIPCall : props.route.params?.isVoIPCall
         }
         eventEmitter.addListener('onSessionConnect', this.getCallStatus);
     }
@@ -78,10 +79,13 @@ class CallScreen extends React.Component {
     }
 
     componentDidMount(){
-        if(this.state.phoneNumber != null){
-            this.makeCall()
-        }
-       
+        if(!this.state.isVoIPCall){
+             if(this.state.phoneNumber != null){
+                this.makeCall()
+            }
+         }else {
+             this.startTimer()
+         }
     }
 
      renderSpeakerImage = () => {
@@ -135,6 +139,7 @@ class CallScreen extends React.Component {
     }
 
     getCallStatus = (event) => {
+        console.debug("getCallStatus",event);
         if(event.callStatus == 'ANSWERED'){
              this.startTimer()
         }
@@ -310,9 +315,8 @@ class CallScreen extends React.Component {
                 </View>}
 
                <View style = {styles.bottom}>
-            
                <TouchableOpacity style={styles.button1} 
-                    onPress = {
+                 onPress = {
                         () => {this.state.showKeypad ? this.setState({ showKeypad: false }) : null }
                       }> 
                    {this.state.showKeypad ? <Image style = {styles.button1} source = {dialling_close}/> : null}
@@ -330,8 +334,6 @@ class CallScreen extends React.Component {
                         () =>  console.debug('')
                       }> 
                 </TouchableOpacity>
-
-
                 </View>
 
             </View>

@@ -11,9 +11,9 @@
 #import <React/RCTBridgeDelegate.h>
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
 #import "RocketChatRN-Swift.h"
+#import <PushKit/PushKit.h>
 
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, PKPushRegistryDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UMModuleRegistryAdapter *moduleRegistryAdapter;

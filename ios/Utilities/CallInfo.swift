@@ -30,6 +30,12 @@ struct CallInfo {
     var p: UnsafePointer<Int8>? = nil
     return CmCallGetContact(handle, &p) == CM_SUCCESS ? String(cString: p!) : nil
   }
+  
+  /// Remote party CLID, if available. In SIP terms, the CLID is the user portion of the SIP URI.
+  var remoteClid: String? {
+    var p: UnsafePointer<Int8>? = nil
+    return CmCallGetRemotePartyCLID(handle, &p) == CM_SUCCESS ? String(cString: p!) : nil
+  }
 
   /// Number of seconds since the epoch representing the time when the call
   /// started, if available. If unavalable this property will be equal to 0.

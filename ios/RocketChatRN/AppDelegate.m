@@ -32,6 +32,9 @@
 #import <Firebase.h>
 #import <RocketChatRN-Swift.h>
 
+#import <PushKit/PushKit.h>
+//#import "RNVoipPushNotificationManager.h"
+
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -70,6 +73,8 @@ static void InitializeFlipper(UIApplication *application) {
     [RNNotifications startMonitorNotifications];
     [ReplyNotification configure];
   
+    [self voipRegistration];
+  
     // AppGroup MMKV
     NSString *groupDir = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppGroup"]].path;
     [MMKV initializeMMKV:nil groupDir:groupDir logLevel:MMKVLogNone];
@@ -94,13 +99,17 @@ static void InitializeFlipper(UIApplication *application) {
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
     }
   
-//  SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
-//  [object sipRegistration];
-   
 
     return YES;
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+  NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
+  [dic setValue:@"12345" forKey:@"phoneNumber"];
+  ModuleWithEmitter * object = [[ModuleWithEmitter alloc]init];
+  [object sendEventWithName:@"testCall" body:dic];
+ // [ModuleWithEmitter.emitter sendEventWithName:@"VoipCall" body:dic];
+}
 - (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
 {
   NSArray<id<RCTBridgeModule>> *extraModules = [_moduleRegistryAdapter extraModulesForBridge:bridge];
@@ -147,5 +156,63 @@ static void InitializeFlipper(UIApplication *application) {
   return [RCTLinkingManager application:application
                    continueUserActivity:userActivity
                      restorationHandler:restorationHandler];
+}
+
+// Register for VoIP notifications
+- (void) voipRegistration {
+  dispatch_queue_t mainQueue = dispatch_get_main_queue();
+  // Create a push registry object
+  PKPushRegistry * voipRegistry = [[PKPushRegistry alloc] initWithQueue: mainQueue];
+  // Set the registry's delegate to self
+  voipRegistry.delegate = self;
+  // Set the push type to VoIP
+  voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+}
+
+// --- Handle updated push credentials
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type {
+  // Register VoIP push token (a property of PKPushCredentials) with server
+  NSLog(@"voip token = %@",credentials.token);
+    SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
+    [object getVOIPTokenWithVoipToken:credentials];
+    
+  
+
+ // [RNVoipPushNotificationManager didUpdatePushCredentials:credentials forType:(NSString *)type];
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didInvalidatePushTokenForType:(PKPushType)type
+{
+  // --- The system calls this method when a previously provided push token is no longer valid for use. No action is necessary on your part to reregister the push type. Instead, use this method to notify your server not to send push notifications using the matching push token.
+}
+
+// --- Handle incoming pushes
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type withCompletionHandler:(void (^)(void))completion {
+  NSLog(@"push payload comes %@",payload);
+
+  // --- NOTE: apple forced us to invoke callkit ASAP when we receive voip push
+  // --- see: react-native-callkeep
+
+  // --- Retrieve information from your voip push payload
+  NSString *uuid = payload.dictionaryPayload[@"uuid"];
+  NSString *callerName = [NSString stringWithFormat:@"%@ (Connecting...)", payload.dictionaryPayload[@"callerName"]];
+  NSString *handle = payload.dictionaryPayload[@"handle"];
+  NSString *url = payload.dictionaryPayload[@"url"];
+
+  // --- this is optional, only required if you want to call `completion()` on the js side
+  //[RNVoipPushNotificationManager addCompletionHandler:uuid completionHandler:completion];
+
+  // --- Process the received push
+ // [RNVoipPushNotificationManager didReceiveIncomingPushWithPayload:payload forType:(NSString *)type];
+
+  // --- You should make sure to report to callkit BEFORE execute `completion()`
+  
+  SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
+  [object sendVoIPPhoneNumberWithPayload:payload];
+  
+//  [RNCallKeep reportNewIncomingCall:uuid handle:handle handleType:@"generic" hasVideo:false localizedCallerName:callerName fromPushKit: YES payload:nil];
+  
+  // --- You don't need to call it if you stored `completion()` and will call it on the js side.
+  completion();
 }
 @end

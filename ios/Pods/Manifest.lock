@@ -555,6 +555,8 @@ PODS:
     - React
   - RNVectorIcons (7.0.0):
     - React
+  - RNVoipPushNotification (3.1.0):
+    - React-Core
   - SDWebImage (5.10.2):
     - SDWebImage/Core (= 5.10.2)
   - SDWebImage/Core (5.10.2)
@@ -690,6 +692,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSound (from `../node_modules/react-native-sound`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - RNVoipPushNotification (from `../node_modules/react-native-voip-push-notification`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
@@ -908,6 +911,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-sound"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  RNVoipPushNotification:
+    :path: "../node_modules/react-native-voip-push-notification"
   UMAppLoader:
     :path: "../node_modules/unimodules-app-loader/ios"
   UMBarCodeScannerInterface:
@@ -1054,6 +1059,7 @@ SPEC CHECKSUMS:
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
   RNSound: da030221e6ac7e8290c6b43f2b5f2133a8e225b0
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
+  RNVoipPushNotification: d076a99d761f91cf6042172ec8390b6e4360f9b2
   SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
   SDWebImageWebPCoder: 36f8f47bd9879a8aea6044765c1351120fd8e3a8
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38

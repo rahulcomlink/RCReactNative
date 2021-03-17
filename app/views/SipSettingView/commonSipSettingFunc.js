@@ -26,10 +26,11 @@ class commonSipSettingFunc extends React.Component{
             const turnPassword = await AsyncStorage.getItem('turnPassword') ;
             const stunServer = await AsyncStorage.getItem('stunServer') ;
             const stunPort = await AsyncStorage.getItem('stunPort') ;
+            //const VoIPToken = await AsyncStorage.getItem('VoIPToken') ;
 
             if (sipServer == null){}
             else{
-            NativeModules.SIPSDKBridge.sipRegistration(sipUsername,sipPassword,sipServer,'*',stunServer,turnServer,turnUsername,turnPassword,'',iceEnabled,sipPort,sipPort,sipTransport,turnPort,stunPort);
+            NativeModules.SIPSDKBridge.sipRegistration(sipUsername,sipPassword,sipServer,'*',stunServer,turnServer,turnUsername,turnPassword,'',iceEnabled,sipPort,sipPort,sipTransport,'0','0','');
             }
              
           } catch (error) {
