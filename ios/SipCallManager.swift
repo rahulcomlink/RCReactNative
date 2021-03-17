@@ -68,7 +68,7 @@ class SipCallManager {
       _provider.setDelegate(ProviderDelegateTrampoline.instance, queue: DispatchQueue.main)
     }
     
-  func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String, VoIPToken : String ) {
+  func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String) {
       
         print("turn port = \(turnPort)")
         print("stun port = \(stunPort)")

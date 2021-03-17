@@ -1,6 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView, Keyboard, Text, Alert, TouchableOpacity, Image, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  Keyboard,
+  Text,
+  Alert,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  NativeModules,
+} from "react-native";
 import { connect } from "react-redux";
 import prompt from "react-native-prompt-android";
 import SHA256 from "js-sha256";
@@ -38,6 +48,8 @@ import btn_back from '../../static/images/btn_back.png';
 import { StackActions, NavigationActions } from 'react-navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BackHandler } from 'react-native';
+import { isIOS, isTablet } from "../../utils/deviceInfo";
+const os = isIOS ? "ios" : "android";
 
 class PhonebookView extends React.Component {
   // static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -124,6 +136,10 @@ class PhonebookView extends React.Component {
       }
       this.forceUpdate()
     }
+
+    if (os == "android") {
+      NativeModules.Sdk.askStorageAndMicPermission();
+    } 
   }
 
  
@@ -252,8 +268,7 @@ class PhonebookView extends React.Component {
                 no  = no.replace('-','')
               }
 
-                console.debug('item.name = ',no)
-
+                console.debug('item.name = ', no)
                 this.props.navigation.push('CallScreen', {
                   phoneNumber : no,
                   name : item.name,

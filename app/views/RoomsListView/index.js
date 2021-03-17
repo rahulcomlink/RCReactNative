@@ -369,7 +369,7 @@ class RoomsListView extends React.Component {
 		}
 
 		var eventEmitter1 = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
-		eventEmitter1.addListener('VoipCall', this.getCallStatus);
+		eventEmitter1.addListener('testCall', this.getCallStatus);
 
 
 		// custom comlink changes to save device token on server

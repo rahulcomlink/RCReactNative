@@ -10,7 +10,9 @@ import  {
     PixelRatio,
     TouchableOpacity,
     Image
-  } from 'react-native';
+} from 'react-native';
+  import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 class SelectCountryCode extends React.Component {
 
@@ -26,10 +28,17 @@ class SelectCountryCode extends React.Component {
     });
 
     onCountrySelection = (item) => {
-        this.setState({ selected: this.state.item})
+      this.setState({ selected: this.state.item })
+            // this.saveCC();
+      AsyncStorage.setItem("lastSelectedCountryCode", item.callingCode);
         this.props.navigation.goBack();
-        this.props.route.params.onSelect({ selected: item });
+      this.props.route.params.onSelect({ selected: item });
     }
+  
+  saveCC = async () => {
+    console.debug("CODE_COUNTRY_POPUP", item.callingCode);
+    await AsyncStorage.setItem("lastSelectedCountryCode", item.callingCode);
+  }
 
     render(){
        return (

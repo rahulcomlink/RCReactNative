@@ -99,7 +99,7 @@ const roomAttrsUpdate = [
   "joinCodeRequired",
 ];
 
-const eventEmitter2 = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
+
 
 class RoomView extends React.Component {
   static propTypes = {
@@ -192,7 +192,7 @@ class RoomView extends React.Component {
   }
 
   componentDidMount() {
-    eventEmitter2.addListener('VoipCall', this.getCallStatus);
+   
     this.mounted = true;
     this.offset = 0;
     this.didMountInteraction = InteractionManager.runAfterInteractions(() => {

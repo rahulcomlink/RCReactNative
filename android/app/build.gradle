@@ -310,6 +310,17 @@ dependencies {
 
     implementation project(':react-native-draw-overlay')
     implementation project(':react-native-autostart')
+
+    implementation files('libs/ccomsdk-0.99.9-4.jar')
+
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Room
+    implementation "androidx.room:room-runtime:2.1.0"
+    annotationProcessor "androidx.room:room-compiler:2.1.0"
+    testImplementation "androidx.room:room-testing:2.1.0"
+
 }
 
 // Run this once to be able to run the application with BUCK
