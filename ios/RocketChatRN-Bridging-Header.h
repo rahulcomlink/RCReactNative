@@ -14,4 +14,7 @@
 #import "cmcapi.h"
 #import "cdbcapi.h"
 #import "clog.h"
+#import <React/RCTBridgeModule.h>
+#import <React/RCTBridge.h>
+#import <React/RCTEventDispatcher.h>
 

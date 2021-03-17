@@ -176,7 +176,7 @@ class RoomsListView extends React.Component {
 			chats: [],
 			item: {}
 		};
-		//eventEmitter1.addListener('VoipCall', this.getCallStatus);
+	
 		console.log("constructor");
 		this.setHeader();
 	}
@@ -368,8 +368,6 @@ class RoomsListView extends React.Component {
 			this.setHeader();
 		}
 
-		var eventEmitter1 = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
-		eventEmitter1.addListener('testCall', this.getCallStatus);
 
 
 		// custom comlink changes to save device token on server

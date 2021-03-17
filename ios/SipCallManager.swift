@@ -734,9 +734,7 @@ class SipCallManager {
 //    }
 //
 //
-    DispatchQueue.main.async {
-      ModuleWithEmitter.emitter.sendEvent(withName: "testCall", body: ["phoneNumber" :"self.phoneNumber"])
-    }
+    
     do {
       // At this point we know we have a call that we can answer.
       try self.answerCall(uuid: action.callUUID)
@@ -746,7 +744,7 @@ class SipCallManager {
         self.isConnecting = false;
       }
       
-      ModuleWithEmitter.emitter.sendEvent(withName: "testCall", body: ["phoneNumber" :"self.phoneNumber"])
+     
       startCallTimer()
       
     } catch {

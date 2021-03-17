@@ -44,7 +44,6 @@ class SIPSDKBridge : NSObject{
   }
   
   @objc func sendVoIPPhoneNumber(payload : PKPushPayload){
-    ModuleWithEmitter.emitter.sendEvent(withName: "testCall", body: ["phoneNumber" :"self.phoneNumber"])
     SipCallManager.shared.getPayload(payload: payload)
   }
   

@@ -103,13 +103,7 @@ static void InitializeFlipper(UIApplication *application) {
     return YES;
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-  NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
-  [dic setValue:@"12345" forKey:@"phoneNumber"];
-  ModuleWithEmitter * object = [[ModuleWithEmitter alloc]init];
-  [object sendEventWithName:@"testCall" body:dic];
- // [ModuleWithEmitter.emitter sendEventWithName:@"VoipCall" body:dic];
-}
+
 - (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
 {
   NSArray<id<RCTBridgeModule>> *extraModules = [_moduleRegistryAdapter extraModulesForBridge:bridge];

@@ -58,7 +58,7 @@ const onSessionConnect = (event) => {
     console.debug("event call status", event.callStatus);
 };
 */
-const eventEmitter = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
+const eventEmitterIOS = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
 //eventEmitter.addListener('onSessionConnect', onSessionConnect);
 
 class CallScreen extends React.Component {
@@ -80,10 +80,10 @@ class CallScreen extends React.Component {
       name: props.route.params?.name,
     };
 
-    if (os == "android") {
-      DeviceEventEmitter.addListener("onSessionConnect", this.getCallStatusAndroid);
+     if (os == "android") {
+       DeviceEventEmitter.addListener("onSessionConnect", this.getCallStatusAndroid);
     } else {
-      eventEmitter.addListener("onSessionConnect", this.getCallStatus);
+        eventEmitterIOS.addListener("onSessionConnect", this.getCallStatus);
     }
   }
 
@@ -92,6 +92,7 @@ class CallScreen extends React.Component {
   }
 
   componentDidMount() {
+      
     if (this.state.phoneNumber != null) {
       this.makeCall();
     }
@@ -180,11 +181,13 @@ class CallScreen extends React.Component {
     }
     if (event.callStatus == "TERMINATED") {
       this.setState({ callStatusText: "Call terminated" });
-      this.endCall();
+      this.props.navigation.pop();
+     // this.endCall();
     }
     if (event.callStatus == "DECLINED") {
       this.setState({ callStatusText: "Call declined" });
-      this.endCall();
+      this.props.navigation.pop();
+     // this.endCall();
     }
   };
 
