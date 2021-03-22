@@ -3,6 +3,7 @@ package com.comlinkinc.android.pigeon;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.nozbe.watermelondb.WatermelonDBPackage;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import com.ssg.autostart.AutostartPackage;
@@ -84,6 +86,18 @@ public class MainApplication extends Application implements ReactApplication {
     MainApplication.context = getApplicationContext();
     FirebaseApp.initializeApp(this);
     SoLoader.init(this, /* native exopackage */ false);
+
+    FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+      if (!TextUtils.isEmpty(token)) {
+        Log.d("TAG", "retrieve token successful : " + token);
+      } else{
+        Log.w("TAG", "token should not be null...");
+      }
+    }).addOnFailureListener(e -> {
+      //handle e
+    }).addOnCanceledListener(() -> {
+      //handle cancel
+    }).addOnCompleteListener(task -> Log.v("TAG", "This is the token : " + task.getResult()));
 
     loadLibrary();
   }

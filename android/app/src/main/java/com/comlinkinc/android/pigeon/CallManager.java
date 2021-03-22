@@ -2,6 +2,7 @@ package com.comlinkinc.android.pigeon;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -32,6 +34,8 @@ import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
 import java.util.function.Consumer;
 
+import static com.comlinkinc.android.pigeon.SdkModule.callAswered;
+import static com.comlinkinc.android.pigeon.SdkModule.callTerminateDecline;
 import static com.comlinkinc.communicator.dialer.Call.Status.DECLINED;
 import static com.comlinkinc.communicator.dialer.Call.Status.RINGING;
 import static com.comlinkinc.communicator.dialer.Call.Status.TERMINATED;
@@ -71,12 +75,13 @@ public class CallManager {
             Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, true);
 
             mCallStatusHandler = new CallStatusHandler();
-            return "Success";
+
 //
-//            Dialer.setInboundCallHandler(CallActivity::onInboundCall);
-//            Dialer.setCallTerminatedHandler(CallActivity::onCallTerminated);
-//            Dialer.setCallDeclinedHandler(CallActivity::onCallDeclined);
-//            Dialer.setCallAnsweredHandler(CallActivity::onCallAnswered);
+            Dialer.setInboundCallHandler(CallManager::onInboundCall);
+            Dialer.setCallTerminatedHandler(CallManager::onCallTerminated);
+            Dialer.setCallDeclinedHandler(CallManager::onCallDeclined);
+            Dialer.setCallAnsweredHandler(CallManager::onCallAnswered);
+            return "Success";
         } catch (UnsatisfiedLinkError e) {
             Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
             Log.d("DILER_Error_Callmanager", e.getMessage().toString());
@@ -644,5 +649,55 @@ public class CallManager {
 
 //        txtCallStatus.setText(statusTextRes);
     }
+
+
+    public static boolean onInboundCall(Call callx) {
+        // Do something with the call and return either true or false to indicate whether
+        // to continue processing the call or not.
+        Log.d("onInboundCall", "onInboundCall "+ callx);
+        new Handler(Looper.getMainLooper()).post(() -> {
+            call = callx;
+            playRingtone(MainApplication.getAppContext());
+//            boolean isAppInBackground = Prefs.getSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, false);
+            boolean isAppInBackground = false;
+
+            if (Constants.getDeviceName().toString().toLowerCase().contains("vivo")) {
+                KeyguardManager myKM = (KeyguardManager) MainApplication.getAppContext().getSystemService(Context.KEYGUARD_SERVICE);
+                boolean isPhoneLocked = myKM.inKeyguardRestrictedInputMode();
+                if (isPhoneLocked) {
+//                    createNotification(dataPayload);TODO: Need to change
+                } else {
+//                    CallManager.showOngoingCallActivity(true);TODO: Need to change
+                }
+            } else {
+                if (isAppInBackground) {
+//                    createNotification(dataPayload);TODO: Need to change
+                } else {
+//                    CallManager.showOngoingCallActivity(true); TODO: Need to change
+                }
+            }
+        });
+        return true;
+    }
+
+    public static void onCallTerminated(Call call) {
+        call = call;
+        callTerminateDecline();
+        Log.d("onCallTerminated", "onCallTerminated "+ call);
+    }
+
+    public static void onCallDeclined(Call call) {
+        call = call;
+        callTerminateDecline();
+        Log.d("onCallDeclined", "onCallDeclined "+ call);
+    }
+
+    public static void onCallAnswered(Call call) {
+        call = call;
+        Log.d("onCallAnswered", "onCallAnswered "+ call);
+        stopRingTone();
+        callAswered();
+    }
+
 
 }

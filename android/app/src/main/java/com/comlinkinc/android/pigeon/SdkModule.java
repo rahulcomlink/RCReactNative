@@ -3,6 +3,8 @@ package com.comlinkinc.android.pigeon;
 import android.app.Activity;
 import android.media.AudioManager;
 import android.os.Build;
+import android.util.Log;
+import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -15,11 +17,11 @@ import com.facebook.react.bridge.ReactMethod;
 
 import static android.content.Context.AUDIO_SERVICE;
 import static com.comlinkinc.android.pigeon.CallManager.mCallStatusHandler;
+import static com.comlinkinc.android.pigeon.CallManager.stopRingTone;
 
 public class SdkModule extends ReactContextBaseJavaModule {
 
     AudioManager mAudioManager;
-
 
     //constructor
     public SdkModule(ReactApplicationContext reactContext) {
@@ -203,6 +205,37 @@ public class SdkModule extends ReactContextBaseJavaModule {
 
         }
     }
+
+
+
+    public static void callAswered() {
+        MainActivity.instance.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("CALL_ANSWERED", "callAswered");
+//                mStatusText.setVisibility(View.INVISIBLE);
+//                mTimeText.setVisibility(View.VISIBLE);
+//                if (mCallTimeHandler != null) {
+//                    mCallTimeHandler.sendEmptyMessage(TIME_START);
+//                }
+            }
+        });
+    }
+
+    public static void callTerminateDecline() {
+        MainActivity.instance.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("CALL_TERMINATED", "callTerminateDecline");
+                stopRingTone();
+                CallManager.reject();
+//                if (mCallTimeHandler != null) {
+//                    mCallTimeHandler.sendEmptyMessage(TIME_STOP);
+//                }
+            }
+        });
+    }
+
 
 
 
