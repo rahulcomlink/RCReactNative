@@ -77,10 +77,10 @@ public class CallManager {
             mCallStatusHandler = new CallStatusHandler();
 
 //
-            Dialer.setInboundCallHandler(CallManager::onInboundCall);
-            Dialer.setCallTerminatedHandler(CallManager::onCallTerminated);
-            Dialer.setCallDeclinedHandler(CallManager::onCallDeclined);
-            Dialer.setCallAnsweredHandler(CallManager::onCallAnswered);
+//            Dialer.setInboundCallHandler(CallManager::onInboundCall);
+//            Dialer.setCallTerminatedHandler(CallManager::onCallTerminated);
+//            Dialer.setCallDeclinedHandler(CallManager::onCallDeclined);
+//            Dialer.setCallAnsweredHandler(CallManager::onCallAnswered);
             return "Success";
         } catch (UnsatisfiedLinkError e) {
             Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
@@ -249,15 +249,15 @@ public class CallManager {
 
         File[] sdCards = ContextCompat.getExternalFilesDirs(mContext, "");
         String filePath = sdCards[0].listFiles()[0].getAbsolutePath();
-//        String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
+        String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
 
         Dialer.Configuration dialerConfig = new Dialer.Configuration();
         dialerConfig.sipServerHost = "newxonesip.mvoipctsi.com";
         dialerConfig.sipServerPort = 8993;
         dialerConfig.sipLocalPort = 8993;
         dialerConfig.sipTransport = 1;
-        dialerConfig.sipUsername = "919926054520";
-        dialerConfig.sipPassword = "5d7d42db4c2f87001a71c413";
+        dialerConfig.sipUsername = "919011355859";
+        dialerConfig.sipPassword = "5ddcff69f37aab001cdb67ad";
         dialerConfig.sipRealm = "*";
         dialerConfig.turnHost = "turntaiwan.mvoipctsi.com";
         dialerConfig.turnUsername = "comlinkxone";
@@ -269,7 +269,7 @@ public class CallManager {
         dialerConfig.answerTimeout = 60;
         dialerConfig.ringbackAudioFile = filePath;
         dialerConfig.desiredCodecs = codecs;
-        dialerConfig.deviceId = "deviceToken";
+        dialerConfig.deviceId = deviceToken;
 
         return dialerConfig;
     }

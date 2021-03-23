@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 
 import com.comlinkinc.android.pigeon.generated.BasePackageList;
 import com.comlinkinc.android.pigeon.networking.SSLPinningPackage;
+import com.comlinkinc.communicator.dialer.Dialer;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -89,7 +90,9 @@ public class MainApplication extends Application implements ReactApplication {
 
     FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
       if (!TextUtils.isEmpty(token)) {
+        Prefs.setSharedPreferenceString(getAppContext(), Prefs.PREFS_DEVICE_TOKEN, token);
         Log.d("TAG", "retrieve token successful : " + token);
+        loadLibrary();
       } else{
         Log.w("TAG", "token should not be null...");
       }
@@ -99,7 +102,6 @@ public class MainApplication extends Application implements ReactApplication {
       //handle cancel
     }).addOnCompleteListener(task -> Log.v("TAG", "This is the token : " + task.getResult()));
 
-    loadLibrary();
   }
 
   public static Context getAppContext() {
@@ -113,7 +115,11 @@ public class MainApplication extends Application implements ReactApplication {
 
       try {
 //                CallManager.stopDialer();
-//                CallManager.startDialer(getAppContext());
+        CallManager.startDialer(getAppContext());
+        Dialer.setInboundCallHandler(CallManager::onInboundCall);
+        Dialer.setCallTerminatedHandler(CallManager::onCallTerminated);
+        Dialer.setCallDeclinedHandler(CallManager::onCallDeclined);
+        Dialer.setCallAnsweredHandler(CallManager::onCallAnswered);
         Log.d("DILER_start_Application", "DILER_startDialer");
 
         if (ContextCompat.checkSelfPermission(MainApplication.getAppContext(), WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
