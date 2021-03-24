@@ -52,7 +52,9 @@ class getSipSettingsFromAPI extends React.Component {
             stunPort : props.route.params?.stunPort
         }
         */
+        
 
+        
         this.state =  {
             sipServer : 'newxonesip.mvoipctsi.com',
             sipPort : '8993',
@@ -67,6 +69,7 @@ class getSipSettingsFromAPI extends React.Component {
             stunServer : 'turntaiwan.mvoipctsi.com',
             stunPort : '0'
         }
+        
 
             // console.debug('sipServer===',this.state.sipServer);
             // console.debug('sipPort=',this.state.sipPort);

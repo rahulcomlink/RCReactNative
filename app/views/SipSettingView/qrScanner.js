@@ -97,40 +97,62 @@ class qrScanner extends Component {
 
 
     handleResponse = (apiResponse) => {
-        if(apiResponse.auth_success === true){
-            
-            var stunServers = apiResponse.app_cfg_data.stun_svrs
-            var turnServers = apiResponse.app_cfg_data.turn_svrs
+      if(apiResponse.auth_success === true){
+          
+
+        console.debug("apiResponse",apiResponse);
+        //Alert.alert(apiResponse);
+          var sipserver1 = ''
+          var stunServers = apiResponse.app_cfg_data.stun_svrs
+          var turnServers = apiResponse.app_cfg_data.turn_svrs
+          if(apiResponse.app_cfg_data.sip_svrs){
+            if(apiResponse.app_cfg_data.sip_svrs.length > 0 ){
             var sipserver1 =  apiResponse.app_cfg_data.sip_svrs[0]
-        
-            if(sipserver1.indexOf(':') >= 0){
-              
-                this.setState({sipServer : sipserver1.split(':')[0]});
-                this.setState({sipPort : sipserver1.split(':')[1]});
-               
+            }
+          }
+          
+
+
+      
+          if(sipserver1.indexOf(':') >= 0){
+            
+              this.setState({sipServer : sipserver1.split(':')[0]});
+              this.setState({sipPort : sipserver1.split(':')[1]});
+             
+          }else {
+            if(apiResponse.app_cfg_data.sip_svrs){
+              if(apiResponse.app_cfg_data.sip_svrs.length > 0 ){
+                this.setState({sipServer : apiResponse.app_cfg_data.sip_svrs[0]});
+                this.setState({sipPort : 8993});
+              }else {
+                this.setState({sipServer : ''});
+                this.setState({sipPort : 8993});
+              }
             }else {
-              this.setState({sipServer : apiResponse.app_cfg_data.sip_svrs[0]});
-               this.setState({sipPort : 8993});
+              this.setState({sipServer : ''});
+                this.setState({sipPort : 8993});
             }
             
+          }
           
-            this.setState({sipTransport : 'TCP'});
-            this.setState({sipUsername : apiResponse.app_cfg_data.sip_uid});
-            this.setState({sipPassword : apiResponse.app_cfg_data.sip_pwd});
-            this.setState({iceEnabled : turnServers.length > 0 ? true : false});
-            this.setState({turnServer : turnServers.length > 0 ? turnServers[0] : '-'});
-            this.setState({turnPort : 0});
-            this.setState({turnUsername : turnServers.length > 0 ? '-' : '-'});
-            this.setState({turnPassword : turnServers.length > 0 ?  '-' : '-'});
-            this.setState({stunServer : stunServers.length > 0 ? stunServers[0] : '-'});
-            this.setState({stunPort : 0});
-            this.GoToSettingPage()
+        
+          this.setState({sipTransport : 'TCP'});
+          this.setState({sipUsername : apiResponse.app_cfg_data.sip_uid});
+          this.setState({sipPassword : apiResponse.app_cfg_data.sip_pwd});
+          this.setState({iceEnabled : turnServers.length > 0 ? true : false});
+          this.setState({turnServer : turnServers.length > 0 ? turnServers[0] : '-'});
+          this.setState({turnPort : 0});
+          this.setState({turnUsername : turnServers.length > 0 ? '-' : '-'});
+          this.setState({turnPassword : turnServers.length > 0 ?  '-' : '-'});
+          this.setState({stunServer : stunServers.length > 0 ? stunServers[0] : '-'});
+          this.setState({stunPort : 0});
+          this.GoToSettingPage()
 
-            
-        }else{
-            alert("User provisioning fail, Please try again")
-        }
-    }
+          
+      }else{
+          alert("User provisioning fail, Please try again")
+      }
+  }
 
     GoToSettingPage = () => {
       this.props.navigation.push('getSipSettingsFromAPI', {

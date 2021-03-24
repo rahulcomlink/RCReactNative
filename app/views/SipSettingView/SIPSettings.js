@@ -49,6 +49,7 @@ class SIPSettings extends React.Component {
         }
         */
 
+        
        this.state =  {
         sipServer : 'newxonesip.mvoipctsi.com',
         sipPort : '8993',
@@ -63,6 +64,7 @@ class SIPSettings extends React.Component {
         stunServer : 'turntaiwan.mvoipctsi.com',
         stunPort : '0'
     }
+    
     
         this.selIndex = 0
         if(this.state.sipTransport == 'TCP'){
