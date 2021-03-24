@@ -39,8 +39,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final long END_CALL_MILLIS = 1500;
     private static final String CHANNEL_ID = "notification";
     private static final int NOTIFICATION_ID = 42069;
-    public static final String ACTION_ANSWER = "ANSWER";
-    public static final String ACTION_HANGUP = "HANGUP";
     public static Map<String, String> dataPayload = null;
 
     @Override
@@ -69,8 +67,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sipIncomingCall(Map<String, String> data) {
         try {
-//            CallManager.stopDialer();
-//            CallManager.startDialer(KulfiApplication.getAppContext());
+            CallManager.stopDialer();
+            CallManager.startDialer(MainApplication.getAppContext());
 //            CallManager.unRegisterDialer();
 
             new Handler(Looper.getMainLooper()).post(() -> {
@@ -129,92 +127,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
-
-
-    // -- Notification -- //
-    private void createNotification(Map<String, String> data) {
-
-        new Handler(Looper.getMainLooper()).post(() -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Contact callerContact = CallManager.getDisplayContact(this);
-                String callerName = callerContact.getName();
-
-                if (callerName.equalsIgnoreCase("Unknown")) {
-                    String urlCaller = data.get("url");
-                    callerName = urlCaller.substring(20, urlCaller.indexOf("?"));//comple string  url=url://incomingcall/919834545791
-                }
-//
-//                Intent touchNotification = new Intent(this, OngoingCallActivity.class);
-////            touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-//                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, touchNotification, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//                // Answer Button Intent
-//                Intent answerIntent = new Intent(this, NotificationActionReceiver.class);
-//                answerIntent.setAction(ACTION_ANSWER);
-//                answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-//                PendingIntent answerPendingIntent = PendingIntent.getBroadcast(this, 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//
-//                // Hangup Button Intent
-//                Intent hangupIntent = new Intent(this, NotificationActionReceiver.class);
-//                hangupIntent.setAction(ACTION_HANGUP);
-//                hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-//                PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(this, 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-                Uri soundUri = Uri.parse("android.resource://" + MainApplication.getAppContext().getPackageName() + "/" + R.raw.incoming_call);
-
-                mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.exo_notification_small_icon)
-                        .setContentTitle(callerName)
-                        .setContentText("Incoming Call")
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                        .setContentIntent(pendingIntent)
-                        .setOngoing(true)
-                        .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
-                        .setLights(Color.RED, 1000, 300)
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setCategory(NotificationCompat.CATEGORY_CALL)
-                        .setSound(null)
-                        .setOnlyAlertOnce(false)
-                        .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
-//                        .setFullScreenIntent(pendingIntent, true)
-                        .setChannelId("CALLS1")
-                        .setAutoCancel(true);
-
-                // Adding the action buttons
-//                mBuilder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
-//                mBuilder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
-
-                NotificationManager notificationManager = (NotificationManager) MainApplication.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                Notification note = mBuilder.build();
-//            note.defaults = Notification.PRIORITY_HIGH;
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationChannel channel = new NotificationChannel("CALLS1", "CALLS", NotificationManager.IMPORTANCE_HIGH);
-
-                    AudioAttributes attributes = new AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                            .build();
-
-                    channel.setDescription("Notification");
-                    channel.setShowBadge(true);
-                    channel.setImportance(NotificationManager.IMPORTANCE_HIGH);
-                    channel.enableLights(true);
-                    channel.setLightColor(Color.RED);
-                    channel.enableVibration(true);
-                    channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                    channel.setSound(null, attributes);
-                    channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-
-                    assert(notificationManager != null);
-                    notificationManager.createNotificationChannel(channel);
-                }
-                notificationManager.notify(NOTIFICATION_ID, note);
-
-            }
-        });
-
-
     }
 
     /**

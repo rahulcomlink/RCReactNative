@@ -3,21 +3,31 @@ package com.comlinkinc.android.pigeon;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.StringRes;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.comlinkinc.android.pigeon.fcm.NotificationActionReceiver;
 import com.comlinkinc.communicator.dialer.Call;
 import com.comlinkinc.communicator.dialer.Dialer;
 import com.comlinkinc.communicator.dialer.DialerException;
@@ -32,10 +42,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
+import java.util.Map;
 import java.util.function.Consumer;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+import static android.content.Context.POWER_SERVICE;
 import static com.comlinkinc.android.pigeon.SdkModule.callAswered;
 import static com.comlinkinc.android.pigeon.SdkModule.callTerminateDecline;
+import static com.comlinkinc.android.pigeon.fcm.MyFirebaseMessagingService.dataPayload;
 import static com.comlinkinc.communicator.dialer.Call.Status.DECLINED;
 import static com.comlinkinc.communicator.dialer.Call.Status.RINGING;
 import static com.comlinkinc.communicator.dialer.Call.Status.TERMINATED;
@@ -63,6 +77,14 @@ public class CallManager {
     public static boolean terminated = false;
     public static boolean declined = false;
 
+
+    // Notification
+    static NotificationCompat.Builder mBuilder;
+    NotificationManager mNotificationManager;
+    private static final String CHANNEL_ID = "notification";
+    private static final int NOTIFICATION_ID = 42069;
+    public static final String ACTION_ANSWER = "ANSWER";
+    public static final String ACTION_HANGUP = "HANGUP";
 
 
     /********************************************************************************************
@@ -466,7 +488,7 @@ public class CallManager {
     }
 
     public static void showOngoingCallActivity(Contact contact) {
-        Intent intent = new Intent(MainApplication.getAppContext(), MainActivity.class);//CallActivity
+        Intent intent = new Intent(MainApplication.getAppContext(), IncomingCallActivity.class);//CallActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("Contact", contact);
@@ -661,19 +683,30 @@ public class CallManager {
 //            boolean isAppInBackground = Prefs.getSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, false);
             boolean isAppInBackground = false;
 
+            String number = "Unknown";
+            Contact contact = null;
+
+            try {
+                number = URLDecoder.decode(call.getRemoteParty().substring(4, call.getRemoteParty().indexOf("@")).toString(), "utf-8").replace("tel:", "");
+                contact = new Contact(number,number,null);
+            } catch (Exception e) {
+                contact =  new Contact("Unknown", "", null);
+            }
+
+
             if (Constants.getDeviceName().toString().toLowerCase().contains("vivo")) {
                 KeyguardManager myKM = (KeyguardManager) MainApplication.getAppContext().getSystemService(Context.KEYGUARD_SERVICE);
                 boolean isPhoneLocked = myKM.inKeyguardRestrictedInputMode();
                 if (isPhoneLocked) {
-//                    createNotification(dataPayload);TODO: Need to change
+                    createNotification(dataPayload);
                 } else {
-//                    CallManager.showOngoingCallActivity(true);TODO: Need to change
+                    CallManager.showOngoingCallActivity(contact);
                 }
             } else {
                 if (isAppInBackground) {
-//                    createNotification(dataPayload);TODO: Need to change
+                    createNotification(dataPayload);
                 } else {
-//                    CallManager.showOngoingCallActivity(true); TODO: Need to change
+                    CallManager.showOngoingCallActivity(contact);
                 }
             }
         });
@@ -699,5 +732,102 @@ public class CallManager {
         callAswered();
     }
 
+
+    // -- Notification -- //
+    private static void createNotification(Map<String, String> data) {
+
+        new Handler(Looper.getMainLooper()).post(() -> {
+            // Logic to turn on the screen
+            PowerManager powerManager = (PowerManager) MainApplication.getAppContext().getSystemService(POWER_SERVICE);
+
+            if (!powerManager.isInteractive()) { // if screen is not already on, turn it on (get wake_lock for 10 seconds)
+                PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "app:WAKELOCK_INCALL");
+                wl.acquire(10000);
+                PowerManager.WakeLock wl_cpu = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "app:WAKELOCK_INCALL");
+                wl_cpu.acquire(10000);
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Contact callerContact = CallManager.getDisplayContact(MainApplication.getAppContext());
+                String callerName = callerContact.getName();
+
+                if (callerName.equalsIgnoreCase("Unknown")) {
+                    if (data != null) {
+                        String urlCaller = data.get("url");
+                        callerName = urlCaller.substring(20, urlCaller.indexOf("?"));//comple string  url=url://incomingcall/919834545791
+                    }
+                }
+
+                Intent touchNotification = new Intent(MainApplication.getAppContext(), IncomingCallActivity.class);
+//            touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                PendingIntent pendingIntent = PendingIntent.getActivity(MainApplication.getAppContext(), 0, touchNotification, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                // Answer Button Intent
+                Intent answerIntent = new Intent(MainApplication.getAppContext(), NotificationActionReceiver.class);
+                answerIntent.setAction(ACTION_ANSWER);
+                answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+                PendingIntent answerPendingIntent = PendingIntent.getBroadcast(MainApplication.getAppContext(), 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                // Hangup Button Intent
+                Intent hangupIntent = new Intent(MainApplication.getAppContext(), NotificationActionReceiver.class);
+                hangupIntent.setAction(ACTION_HANGUP);
+                hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+                PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(MainApplication.getAppContext(), 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                Uri soundUri = Uri.parse("android.resource://" + MainApplication.getAppContext().getPackageName() + "/" + R.raw.incoming_call);
+
+                mBuilder = new NotificationCompat.Builder(MainApplication.getAppContext(), CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_notification)
+                        .setContentTitle(callerName)
+                        .setContentText("Incoming Call")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setContentIntent(pendingIntent)
+                        .setOngoing(true)
+                        .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
+                        .setLights(Color.RED, 1000, 300)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setCategory(NotificationCompat.CATEGORY_CALL)
+                        .setSound(null)
+                        .setOnlyAlertOnce(false)
+                        .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
+                        .setFullScreenIntent(pendingIntent, true)
+                        .setChannelId("CALLS1")
+                        .setAutoCancel(true);
+
+                // Adding the action buttons
+                mBuilder.addAction(R.drawable.app_static_images_answer_call, "Answer", answerPendingIntent);
+                mBuilder.addAction(R.drawable.app_static_images_call_end, "Reject", hangupPendingIntent);
+
+                NotificationManager notificationManager = (NotificationManager) MainApplication.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification note = mBuilder.build();
+//            note.defaults = Notification.PRIORITY_HIGH;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationChannel channel = new NotificationChannel("CALLS1", "CALLS", NotificationManager.IMPORTANCE_HIGH);
+
+                    AudioAttributes attributes = new AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                            .build();
+
+                    channel.setDescription("Notification");
+                    channel.setShowBadge(true);
+                    channel.setImportance(NotificationManager.IMPORTANCE_HIGH);
+                    channel.enableLights(true);
+                    channel.setLightColor(Color.RED);
+                    channel.enableVibration(true);
+                    channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                    channel.setSound(null, attributes);
+                    channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+                    assert (notificationManager != null);
+                    notificationManager.createNotificationChannel(channel);
+                }
+                notificationManager.notify(NOTIFICATION_ID, note);
+
+            }
+        });
+
+
+    }
 
 }
