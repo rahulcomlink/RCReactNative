@@ -74,7 +74,7 @@ import User from '../../lib/database/model/User';
 import { usesMetricSystem } from 'react-native-localize';
 import commonSipSettingFunc from '../SipSettingView/commonSipSettingFunc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Navigation from '../../lib/Navigation';
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
 const CHATS_HEADER = 'Chats';
@@ -117,6 +117,7 @@ const getItemLayout = (data, index) => ({
 });
 const keyExtractor = item => item.rid;
 
+const eventEmitterIOS = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
 
 class RoomsListView extends React.Component {
 	static propTypes = {
@@ -179,6 +180,7 @@ class RoomsListView extends React.Component {
 	
 		console.log("constructor");
 		this.setHeader();
+		eventEmitterIOS.addListener("getInboundCall", this.getCallStatus);
 	}
 
 	componentDidMount() {
@@ -304,27 +306,12 @@ class RoomsListView extends React.Component {
 	}
 
 	getCallStatus = (event) => {
-		
-
-		Alert.alert(
-			    "",
-			    "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
-			    [
-			      {
-			        text: "Cancel",
-			        onPress: () => console.log("Cancel Pressed"),
-			        style: "cancel",
-			      },
-			      {
-			        text: "OK",
-			        onPress: () => console.log("Cancel Pressed"),
-			      },
-			    ],
-			    { cancelable: false }
-			  );
-
-		console.debug("getCallStatus 1",event);
-		console.log("getCallStatus 1",event);
+		const { navigation, isMasterDetail } = this.props;
+		if (isMasterDetail) {
+			navigation.navigate('CallScreen', {phoneNumber : event.phoneNumber, isVoipCall : true});
+		} else {
+			navigation.navigate('CallScreen', {phoneNumber : event.phoneNumber, isVoipCall : true});
+		}	
         
      }
 

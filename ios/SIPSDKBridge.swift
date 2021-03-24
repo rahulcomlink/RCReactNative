@@ -36,7 +36,7 @@ class SIPSDKBridge : NSObject{
   }
   
   @objc func setMuteOn(_ on: Bool) -> Void{
-    //SipCallManager.shared.toggleMicrophone(on: on)
+    SipCallManager.shared.toggleMicrophone(on: on)
   }
   
   @objc func keyPressed(_ key: String) -> Void{
@@ -44,6 +44,7 @@ class SIPSDKBridge : NSObject{
   }
   
   @objc func sendVoIPPhoneNumber(payload : PKPushPayload){
+    Logger.attachSDKLogger()
     SipCallManager.shared.getPayload(payload: payload)
   }
   

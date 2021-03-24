@@ -366,6 +366,11 @@ const InsideStackNavigator = React.memo(() => {
 				name='ShareView'
 				component={ShareView}
 			/>
+			<InsideStack.Screen
+				name='CallScreen'
+				component={CallScreen}
+				options={{ headerShown: false }}
+			/>
 		</InsideStack.Navigator>
 	);
 });

@@ -200,7 +200,7 @@ static void InitializeFlipper(UIApplication *application) {
  // [RNVoipPushNotificationManager didReceiveIncomingPushWithPayload:payload forType:(NSString *)type];
 
   // --- You should make sure to report to callkit BEFORE execute `completion()`
-  
+  [self redirectLogToDocuments];
   SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
   [object sendVoIPPhoneNumberWithPayload:payload];
   
@@ -208,5 +208,14 @@ static void InitializeFlipper(UIApplication *application) {
   
   // --- You don't need to call it if you stored `completion()` and will call it on the js side.
   completion();
+}
+
+-(void)redirectLogToDocuments
+{
+    NSArray *allPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [allPaths objectAtIndex:0];
+    NSString *pathForLog = [documentsDirectory stringByAppendingPathComponent:@"yourFile.txt"];
+    
+    freopen([pathForLog cStringUsingEncoding:NSASCIIStringEncoding],"a",stderr);
 }
 @end

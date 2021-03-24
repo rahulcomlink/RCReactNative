@@ -52,7 +52,7 @@ struct Logger {
     static func writeLogs(string : String){
     
         let fm = FileManager.default
-        let log = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
+        let log = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("sipLogs.txt")
         if let handle = try? FileHandle(forWritingTo: log) {
             handle.seekToEndOfFile()
             handle.write(string.data(using: .utf8)!)
@@ -64,7 +64,7 @@ struct Logger {
     
     static func clearAllLogs(){
         let fm = FileManager.default
-        let log = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
+        let log = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("sipLogs.txt")
         let text = ""
         try? text.write(to: log, atomically: true, encoding: .utf8)
     }
