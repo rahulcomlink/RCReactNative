@@ -33,6 +33,8 @@ class SortPreferences {
 
 public class MainActivity extends ReactFragmentActivity {
 
+    public static MainActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704067
@@ -40,6 +42,8 @@ public class MainActivity extends ReactFragmentActivity {
         RNBootSplash.init(R.drawable.splash_screen, MainActivity.this);
 
         MMKV.initialize(MainActivity.this);
+
+        instance = MainActivity.this;
 
         // Start the MMKV container
         MMKV defaultMMKV = MMKV.defaultMMKV();

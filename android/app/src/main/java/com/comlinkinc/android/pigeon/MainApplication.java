@@ -3,6 +3,7 @@ package com.comlinkinc.android.pigeon;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,12 +13,14 @@ import androidx.core.content.ContextCompat;
 
 import com.comlinkinc.android.pigeon.generated.BasePackageList;
 import com.comlinkinc.android.pigeon.networking.SSLPinningPackage;
+import com.comlinkinc.communicator.dialer.Dialer;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.nozbe.watermelondb.WatermelonDBPackage;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import com.ssg.autostart.AutostartPackage;
@@ -85,7 +88,20 @@ public class MainApplication extends Application implements ReactApplication {
     FirebaseApp.initializeApp(this);
     SoLoader.init(this, /* native exopackage */ false);
 
-    loadLibrary();
+    FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+      if (!TextUtils.isEmpty(token)) {
+        Prefs.setSharedPreferenceString(getAppContext(), Prefs.PREFS_DEVICE_TOKEN, token);
+        Log.d("TAG", "retrieve token successful : " + token);
+        loadLibrary();
+      } else{
+        Log.w("TAG", "token should not be null...");
+      }
+    }).addOnFailureListener(e -> {
+      //handle e
+    }).addOnCanceledListener(() -> {
+      //handle cancel
+    }).addOnCompleteListener(task -> Log.v("TAG", "This is the token : " + task.getResult()));
+
   }
 
   public static Context getAppContext() {
@@ -99,7 +115,11 @@ public class MainApplication extends Application implements ReactApplication {
 
       try {
 //                CallManager.stopDialer();
-//                CallManager.startDialer(getAppContext());
+        CallManager.startDialer(getAppContext());
+        Dialer.setInboundCallHandler(CallManager::onInboundCall);
+        Dialer.setCallTerminatedHandler(CallManager::onCallTerminated);
+        Dialer.setCallDeclinedHandler(CallManager::onCallDeclined);
+        Dialer.setCallAnsweredHandler(CallManager::onCallAnswered);
         Log.d("DILER_start_Application", "DILER_startDialer");
 
         if (ContextCompat.checkSelfPermission(MainApplication.getAppContext(), WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
