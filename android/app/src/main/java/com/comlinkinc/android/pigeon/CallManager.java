@@ -795,8 +795,8 @@ public class CallManager {
                         .setAutoCancel(true);
 
                 // Adding the action buttons
-                mBuilder.addAction(R.drawable.app_static_images_answer_call, "Answer", answerPendingIntent);
-                mBuilder.addAction(R.drawable.app_static_images_call_end, "Reject", hangupPendingIntent);
+                mBuilder.addAction(R.drawable.ic_call_end_black_24dp, "Answer", answerPendingIntent);
+                mBuilder.addAction(R.drawable.ic_call_black_24dp, "Reject", hangupPendingIntent);
 
                 NotificationManager notificationManager = (NotificationManager) MainApplication.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 Notification note = mBuilder.build();

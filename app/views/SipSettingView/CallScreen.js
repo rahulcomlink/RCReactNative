@@ -78,6 +78,7 @@ class CallScreen extends React.Component {
       callStatusText: "calling",
       showKeypad: false,
       name: props.route.params?.name,
+      isVoipCall: props.route.params?.isVoipCall,
     };
 
      if (os == "android") {
@@ -92,9 +93,13 @@ class CallScreen extends React.Component {
   }
 
   componentDidMount() {
-      
-    if (this.state.phoneNumber != null) {
-      this.makeCall();
+     if (this.state.isVoipCall == true){
+      this.startTimer();
+    }
+    else {
+       if (this.state.phoneNumber != null) {
+         this.make
+       }Call();
     }
   }
 
