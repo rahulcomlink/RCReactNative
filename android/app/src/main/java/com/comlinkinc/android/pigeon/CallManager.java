@@ -99,10 +99,10 @@ public class CallManager {
             mCallStatusHandler = new CallStatusHandler();
 
 //
-//            Dialer.setInboundCallHandler(CallManager::onInboundCall);
-//            Dialer.setCallTerminatedHandler(CallManager::onCallTerminated);
-//            Dialer.setCallDeclinedHandler(CallManager::onCallDeclined);
-//            Dialer.setCallAnsweredHandler(CallManager::onCallAnswered);
+            Dialer.setInboundCallHandler(CallManager::onInboundCall);
+            Dialer.setCallTerminatedHandler(CallManager::onCallTerminated);
+            Dialer.setCallDeclinedHandler(CallManager::onCallDeclined);
+            Dialer.setCallAnsweredHandler(CallManager::onCallAnswered);
             return "Success";
         } catch (UnsatisfiedLinkError e) {
             Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
@@ -715,13 +715,15 @@ public class CallManager {
 
     public static void onCallTerminated(Call call) {
         call = call;
-        callTerminateDecline();
+//        callTerminateDecline();
+        stopRingTone();
+        CallManager.reject();
         Log.d("onCallTerminated", "onCallTerminated "+ call);
     }
 
     public static void onCallDeclined(Call call) {
         call = call;
-        callTerminateDecline();
+//        callTerminateDecline();
         Log.d("onCallDeclined", "onCallDeclined "+ call);
     }
 

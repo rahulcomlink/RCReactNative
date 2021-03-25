@@ -21,7 +21,7 @@ import static com.comlinkinc.android.pigeon.CallManager.stopRingTone;
 
 public class SdkModule extends ReactContextBaseJavaModule {
 
-    AudioManager mAudioManager;
+    public static AudioManager mAudioManager;
 
     //constructor
     public SdkModule(ReactApplicationContext reactContext) {

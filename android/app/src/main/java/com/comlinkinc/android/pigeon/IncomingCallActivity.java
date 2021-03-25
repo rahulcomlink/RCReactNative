@@ -1,5 +1,6 @@
 package com.comlinkinc.android.pigeon;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -67,6 +68,18 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             reactContext
                     .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                     .emit("CallAnswered", phoneNumber);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (SdkModule.mAudioManager == null){
+                        SdkModule.mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+                    }
+
+                    SdkModule.mAudioManager.setMicrophoneMute(false);
+                    SdkModule.mAudioManager.setSpeakerphoneOn(false);
+                    SdkModule.mAudioManager.setMode(AudioManager.MODE_IN_CALL);
+                }
+            });
             finish();
 
         }
