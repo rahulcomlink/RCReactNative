@@ -716,6 +716,10 @@ public class CallManager {
     public static void onCallTerminated(Call call) {
         call = call;
 //        callTerminateDecline();
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onSessionConnect", getCurrentActivity().getResources().getString(R.string.status_call_disconnected));
+
         stopRingTone();
         CallManager.reject();
         Log.d("onCallTerminated", "onCallTerminated "+ call);
@@ -724,6 +728,11 @@ public class CallManager {
     public static void onCallDeclined(Call call) {
         call = call;
 //        callTerminateDecline();
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onSessionConnect", getCurrentActivity().getResources().getString(R.string.status_call_disconnected));
+        stopRingTone();
+        CallManager.reject();
         Log.d("onCallDeclined", "onCallDeclined "+ call);
     }
 

@@ -169,11 +169,13 @@ class CallScreen extends React.Component {
     }
     if (event == "TERMINATED") {
       this.setState({ callStatusText: "Terminated" });
-      // this.endCall();
+      this.endCall();
+      this.props.navigation.pop();
     }
     if (event == "DECLINED") {
       this.setState({ callStatusText: "Declined" });
-      // this.endCall();
+      this.endCall();
+      this.props.navigation.pop();
     }
   };
 
@@ -187,12 +189,12 @@ class CallScreen extends React.Component {
     if (event.callStatus == "TERMINATED") {
       this.setState({ callStatusText: "Call terminated" });
       this.props.navigation.pop();
-     // this.endCall();
+     this.endCall();
     }
     if (event.callStatus == "DECLINED") {
       this.setState({ callStatusText: "Call declined" });
       this.props.navigation.pop();
-     // this.endCall();
+     this.endCall();
     }
   };
 
