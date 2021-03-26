@@ -167,7 +167,8 @@ class qrScanner extends Component {
                             turnUsername : this.state.turnUsername,
                             turnPassword : this.state.turnPassword,
                             stunServer : this.state.stunServer,
-                            stunPort : this.state.stunPort
+                            stunPort : this.state.stunPort,
+                            fromQRPage : true
      });
     }
 

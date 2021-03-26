@@ -13,11 +13,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 class getSipSettingsFromAPI extends React.Component {
 
-    
     static navigationOptions = () => ({
         title: "Sip Settings",
-      });
+    });
 
+   
     //   static navigationOptions = ({ navigation, isMasterDetail }) => ({
 	// 	headerLeft: () => (isMasterDetail ? (
 	// 		<HeaderButton.CloseModal navigation={navigation} testID='sip-settings-view-close' />
@@ -36,7 +36,7 @@ class getSipSettingsFromAPI extends React.Component {
     constructor(props) {
         super(props);
     
-        /*
+        
         this.state =  {
             sipServer : props.route.params?.sipServer,
             sipPort : props.route.params?.sipPort,
@@ -51,10 +51,10 @@ class getSipSettingsFromAPI extends React.Component {
             stunServer : props.route.params?.stunServer,
             stunPort : props.route.params?.stunPort
         }
-        */
+        
         
 
-        
+        /*
         this.state =  {
             sipServer : 'newxonesip.mvoipctsi.com',
             sipPort : '8993',
@@ -67,9 +67,10 @@ class getSipSettingsFromAPI extends React.Component {
             turnUsername : 'comlinkxone',
             turnPassword : 'hgskSlGHgwSKfgsdUSDGhs',
             stunServer : 'turntaiwan.mvoipctsi.com',
-            stunPort : '0'
+            stunPort : '0',
+            fromQRPage : this.props.route.params?.fromQRPage
         }
-        
+        */
 
             // console.debug('sipServer===',this.state.sipServer);
             // console.debug('sipPort=',this.state.sipPort);
@@ -92,6 +93,10 @@ class getSipSettingsFromAPI extends React.Component {
         }else {
             this.selIndex = 2
         }
+
+        // if(this.state.fromQRPage == true){
+        //     props.navigation.setOptions({ title: "Sip Settings" });
+        //  }
       }
 
     setValues = () => {
