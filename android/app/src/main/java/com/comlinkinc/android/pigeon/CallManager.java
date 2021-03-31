@@ -49,11 +49,11 @@ import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 import static android.content.Context.POWER_SERVICE;
 import static com.comlinkinc.android.pigeon.SdkModule.callAswered;
 import static com.comlinkinc.android.pigeon.SdkModule.callTerminateDecline;
+import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 import static com.comlinkinc.android.pigeon.fcm.MyFirebaseMessagingService.dataPayload;
 import static com.comlinkinc.communicator.dialer.Call.Status.DECLINED;
 import static com.comlinkinc.communicator.dialer.Call.Status.RINGING;
 import static com.comlinkinc.communicator.dialer.Call.Status.TERMINATED;
-import static com.incomingcall.IncomingCallModule.reactContext;
 import static com.wix.reactnativeuilib.keyboardinput.AppContextHolder.getCurrentActivity;
 
 public class CallManager {

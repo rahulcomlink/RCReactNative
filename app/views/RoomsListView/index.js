@@ -426,6 +426,11 @@ class RoomsListView extends React.Component {
         isVoipCall: true,
       });
     }
+
+     if (os == "android") {
+       DeviceEventEmitter.removeListener("CallAnswered");
+     } else {
+     }
   };
 
   getHeader = () => {

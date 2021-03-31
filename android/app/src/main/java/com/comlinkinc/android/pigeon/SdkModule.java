@@ -22,10 +22,12 @@ import static com.comlinkinc.android.pigeon.CallManager.stopRingTone;
 public class SdkModule extends ReactContextBaseJavaModule {
 
     public static AudioManager mAudioManager;
+    public static ReactApplicationContext reactContext;
 
     //constructor
-    public SdkModule(ReactApplicationContext reactContext) {
-        super(reactContext);
+    public SdkModule(ReactApplicationContext rContext) {
+        super(rContext);
+        this.reactContext = rContext;
     }
 
     //Mandatory function getName that specifies the module name
