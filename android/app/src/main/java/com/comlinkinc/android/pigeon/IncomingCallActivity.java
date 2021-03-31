@@ -25,7 +25,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
     private ImageView btn_end_call;
     private ImageView btn_accept_call;
     Contact contact;
-    String phoneNumber = "";
+    public static String phoneNumber = "";
     boolean isVoipCall = true;
     private Context mContext;
 
@@ -51,8 +51,8 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             contact = (Contact) getIntent().getSerializableExtra("Contact");
         }
 
-        phoneNumber = "" + contact.getPhoneNumbers().get(0).replace(":", "");
         if (contact != null){
+            phoneNumber = "" + contact.getPhoneNumbers().get(0).replace(":", "");
             txt_user_number.setText(phoneNumber);
 //            txt_user_name.setText(""+contact.getName());
             txt_user_name.setText("Incoming Call...");

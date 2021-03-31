@@ -50,6 +50,8 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
         super.onCreate(null);
         RNBootSplash.init(R.drawable.splash_screen, MainActivity.this);
 
+        startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+
         MMKV.initialize(MainActivity.this);
 
         instance = MainActivity.this;
@@ -169,12 +171,16 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
     public void onResume() {
         super.onResume();
         getReactInstanceManager().addReactInstanceEventListener(this);
+        MainApplication lk = new MainApplication();
+        lk.appInForeground();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getReactInstanceManager().removeReactInstanceEventListener(this);
+        MainApplication lk = new MainApplication();
+        lk.appInBackground();
     }
 
     @Override

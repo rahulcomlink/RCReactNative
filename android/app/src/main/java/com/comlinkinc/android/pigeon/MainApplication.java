@@ -10,6 +10,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.comlinkinc.android.pigeon.generated.BasePackageList;
 import com.comlinkinc.android.pigeon.networking.SSLPinningPackage;
@@ -34,7 +37,7 @@ import java.util.List;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends Application implements ReactApplication, LifecycleObserver {
 
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
   private static Context context;
@@ -138,5 +141,17 @@ public class MainApplication extends Application implements ReactApplication {
     } catch (UnsatisfiedLinkError e) {
       Log.d("LIB_LOAD_FAIL", e.getMessage());
     }
+  }
+
+
+
+  @OnLifecycleEvent(Lifecycle.Event.ON_START)
+  public void appInForeground() { // app moved to foreground
+    Prefs.setSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, false);
+  }
+
+  @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+  public void appInBackground() { // app moved to background
+    Prefs.setSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, true);
   }
 }

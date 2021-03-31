@@ -680,8 +680,7 @@ public class CallManager {
         new Handler(Looper.getMainLooper()).post(() -> {
             call = callx;
             playRingtone(MainApplication.getAppContext());
-//            boolean isAppInBackground = Prefs.getSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, false);
-            boolean isAppInBackground = false;
+            boolean isAppInBackground = Prefs.getSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, false);
 
             String number = "Unknown";
             Contact contact = null;
