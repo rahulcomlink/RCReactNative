@@ -45,6 +45,8 @@ class SipCallManager {
     var phoneNumber = ""
     var remotePartyName = ""
     var remotePartyClid = ""
+    var isInboundCall = false
+    var incomingUUID : UUID?
     
     typealias ActionCompletion = (Error?) -> Void
     private var _actionCompletion: SingleFireCallback<Error>?
@@ -53,6 +55,7 @@ class SipCallManager {
     private var _waitingForInboundCall = BlockingBarrier<Bool>(withInitalValue: false)
     private var _makeCallInProgress = BlockingBarrier<Bool>(withInitalValue: false)
     private var _audioSessionReady = BlockingBarrier<Bool>(withInitalValue: false)
+    private let _logger = Logger(componentName: "SipCallManager")
     
     private init() {
       let localizedName = NSLocalizedString("Pigeon", comment: "Pigeon")
@@ -70,6 +73,9 @@ class SipCallManager {
     
   func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String) {
       
+    NSLog("start called")
+    NSLog("turn port = %@", turnPort)
+    NSLog("username = %@", username)
         print("turn port = \(turnPort)")
         print("stun port = \(stunPort)")
     print("username = \(username)")
@@ -126,7 +132,10 @@ class SipCallManager {
       var turnRealm1 = CString(from: turnRealm)
                 
       if turnHost == "-"{
-        
+        turnHost1 = CString(from: "")
+        turnUsername1 = CString(from: "")
+        turnPassword1 = CString(from: "")
+        turnRealm1 = CString(from: "")
       }
       else {
                   let turnhostt = turnHost + (turnPort == "0" ? "" : (":" + turnPort))
@@ -188,6 +197,20 @@ class SipCallManager {
                 SipCallManager.shared.onCallStateChanged(handle: handle)
               })
               _sipUriTemplate  = "sip:%s@\(sipServerHost):\(serverPort);transport=\(transport)"
+    
+    if(isInboundCall == true){
+      self._dispatchQueue.async {
+        do {
+          // Start waiting for a call here. Note that the following call doesn't block.
+          // Once the call arrives, the underlying layers will invoke onInboundCallArrived
+          // which will trip the blocking barrier.
+          self._waitingForInboundCall.setAndNotify(newValue: true)
+          try self.waitForCall(with: self.incomingUUID!)
+        } catch {
+         
+        }
+      }
+    }
            
     }
     
@@ -205,16 +228,20 @@ class SipCallManager {
     */
     
     func register(){
+      NSLog("register called")
       print("register called")
         let status = CmRegister()
         
         if status != CM_SUCCESS {
-         
+          NSLog("register failed")
+        }else {
+          NSLog("register success")
         }
     }
     
     func reset(){
-        endCallKitCall()
+       //endCallKitCall()
+        onRemoteCallTerminated(uuid: _currentCallUuid)
         onHold = false
         isMuted = false
         isSpeakerOn = false
@@ -222,7 +249,7 @@ class SipCallManager {
         isConnecting = false
         _callTimer?.invalidate()
         _callTimer = nil
-        phoneNumber = ""
+      //  phoneNumber = ""
         callStatus = CMCS_NONE
         callHandle = nil
         remotePartyClid = ""
@@ -284,6 +311,7 @@ class SipCallManager {
     
     func muteMicrophone(){
       if callHandle != nil {
+      print("muteMicrophone")
       let status = CmCallMuteMicrophone(callHandle)
       if status != CM_SUCCESS {
        
@@ -297,6 +325,7 @@ class SipCallManager {
 
     func unmuteMicrophone(){
       if callHandle != nil {
+        print("unmuteMicrophone")
         let status = CmCallUnmuteMicrophone(callHandle)
         if status != CM_SUCCESS {
           
@@ -387,17 +416,20 @@ class SipCallManager {
     
    
     func toggleSpeakerOnOff(on : Bool){
+      print("toggleSpeakerOnOff \(on)")
       let audioSession = AVAudioSession.sharedInstance()
       if on {
         do {
             try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
                 isSpeakerOn = true
+          print("toggleSpeakerOnOff \(on)")
             } catch let error as NSError {
                 print("audioSession error: \(error.localizedDescription)")
             }
       }else {
         do {
             try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.none)
+          print("toggleSpeakerOnOff \(on)")
             isSpeakerOn = false
             
         } catch let error as NSError {
@@ -407,13 +439,13 @@ class SipCallManager {
     }
     
     func toggleMicrophone(on: Bool){
-      /*
+      
       if on{
         self.muteMicrophone()
       }else{
         self.unmuteMicrophone()
       }
-      */
+      
     }
     func sendDTMFTone(tone: String){
        let status = CmCallSendDTMFTone(callHandle, Int8(tone.utf8.first!))
@@ -469,6 +501,7 @@ class SipCallManager {
     
     func onCallStateChanged(handle: CMCALLHANDLE?) {
      
+      self.callHandle = handle
       var status: CMCALLSTATUS = CMCS_NONE
       if CmCallGetStatus(handle, &status) != CM_SUCCESS {
         return
@@ -551,6 +584,7 @@ class SipCallManager {
         if let phoneNo : String = substring.replacingOccurrences(of: "?proxy=newxonesip.mvoipctsi.com&sound=ring.wav", with: "") as? String{
            print("phoneNo = \(phoneNo)")
           onPushArrived(payload: payload, phoneNumber: phoneNo)
+          self.phoneNumber = phoneNo
         }
     }
   }
@@ -563,6 +597,8 @@ class SipCallManager {
         let descriptor = try InboundCallDescriptor(payload)
         // Save this information for later
         _inboundCallDescriptor = descriptor
+        
+        
         
         // If we're currently in the middle of a call setup then we abort the call that is
         // currently being set up. The inbound call taks priority. Of course, if we have an
@@ -582,7 +618,7 @@ class SipCallManager {
         _suppressPublishedPropertyReset = true
         self.phoneNumber = phoneNumber
         let uuid = UUID()
-       
+        _currentCallUuid = uuid
         
         let update = CXCallUpdate()
         update.localizedCallerName = descriptor.localizedDisplayName
@@ -592,21 +628,29 @@ class SipCallManager {
         update.supportsUngrouping = false
         update.supportsHolding = false
       
-        _provider.reportNewIncomingCall(with: uuid, update: update) { error in
+        _provider.reportNewIncomingCall(with: uuid, update: update) { [self] error in
+          _currentCallUuid = uuid
           if let error = error {
             
           } else {
-            self._dispatchQueue.async {
-              do {
-                // Start waiting for a call here. Note that the following call doesn't block.
-                // Once the call arrives, the underlying layers will invoke onInboundCallArrived
-                // which will trip the blocking barrier.
-                self._waitingForInboundCall.setAndNotify(newValue: true)
-                try self.waitForCall(with: uuid)
-              } catch {
-               
+            self.isInboundCall = true
+            self.incomingUUID = uuid
+            
+            let state = UIApplication.shared.applicationState
+            if state == .active ||  state == .background {
+              self._dispatchQueue.async {
+                do {
+                  // Start waiting for a call here. Note that the following call doesn't block.
+                  // Once the call arrives, the underlying layers will invoke onInboundCallArrived
+                  // which will trip the blocking barrier.
+                  self._waitingForInboundCall.setAndNotify(newValue: true)
+                  try self.waitForCall(with: uuid)
+                } catch {
+                 
+                }
               }
             }
+            
           }
         }
       } catch {
@@ -674,11 +718,14 @@ class SipCallManager {
   func waitForCall(with uuid: UUID) throws {
     _pendingCallUUIDQueue.push(uuid)
     print("wait for call called")
+    NSLog("wait for call called")
     register()
   }
   
   /// Handles the answer-call action. Invoked via the provider delegate trampoline.
   fileprivate func handleAnswerCallAction(_ action: CXAnswerCallAction) {
+    NSLog("handleAnswerCallAction called")
+    _logger.write("_handleAnswerCallActionAsync called", type: .default)
     print("handleAnswerCallAction called")
    // precondition(_currentCallUuid == SipCallManager.kNullUUID)
     
@@ -701,6 +748,7 @@ class SipCallManager {
   
   fileprivate func _handleAnswerCallActionAsync(_ action: CXAnswerCallAction) {
     // Enable published property reset
+    NSLog("_handleAnswerCallActionAsync called")
       print("_handleAnswerCallActionAsync called")
     _suppressPublishedPropertyReset = false
 
@@ -711,7 +759,7 @@ class SipCallManager {
 //      action.fail()
 //      return
 //    }
-    
+    _logger.write("_handleAnswerCallActionAsync called", type: .default)
     // Kludge alert! This is possibly related to: http://www.openradar.appspot.com/28774388.
     // The problem is that CallKit does not activate the audio session and we time out
     // below. The solution seems to be to configure the audio session ourselvees.
@@ -735,8 +783,11 @@ class SipCallManager {
 //
 //
     
+    
     do {
       // At this point we know we have a call that we can answer.
+//
+      _currentCallUuid = action.callUUID
       try self.answerCall(uuid: action.callUUID)
       
       DispatchQueue.main.async {
@@ -744,23 +795,32 @@ class SipCallManager {
         self.isConnecting = false;
       }
       
-     
+      
       startCallTimer()
       
     } catch {
+      NSLog("_handleAnswerCallActionAsync called %@",error.localizedDescription)
+      _logger.write("error.desc = \(error.localizedDescription)", type: .default)
+      _logger.writeError(error)
       dropCurrentCall()
     }
+    
     
   }
   
   func answerCall(uuid: UUID) throws {
     print("answer call")
+    NSLog("answerCall called ")
+    NSLog("%@", uuid.debugDescription )
+    if((_callMap[uuid]) != nil){
     let status = CmCallAnswer(_callMap[uuid]!)
-    
+    NSLog("status called %@",status.rawValue);
     if status != CM_SUCCESS {
       throw DialerSubsystemFailure(details: DialerErrorDetails(status, "Failed to answer"))
     }else {
-      
+      print("phone nymvet = \(self.phoneNumber)")
+      ModuleWithEmitter.emitter.sendEvent(withName: "getInboundCall", body: ["phoneNumber" : self.phoneNumber])
+    }
     }
   }
   
@@ -788,19 +848,24 @@ class SipCallManager {
   func dropCall(uuid: UUID) {
     // If this is a pending call then we don't yet have a handle for it. Therefore,
     // we just bail here.
+    NSLog("dropCall")
     print("handleEndCallAction called 3")
-    if _pendingCallUUIDQueue.remove(uuid) {
-      return
-    }
-    
+
     if let handle = _callMap[uuid] {
-    _callMap[uuid] = nil
+   
     
-      if handle != nil {
+    //  if handle != nil {
+        NSLog("CmCallHangup")
         CmCallHangup(handle)
         CmUnregister()
-      }
+      _callMap[uuid] = nil
+      //}
     }
+    
+        if _pendingCallUUIDQueue.remove(uuid) {
+          return
+        }
+        
   }
 }
 
@@ -840,12 +905,17 @@ extension SipCallManager {
     }
     
     func endCallKitCall(){
-      if _currentCallUuid != SipCallManager.kNullUUID {
+     // if _currentCallUuid != SipCallManager.kNullUUID {
+      NSLog("endCallKitCall")
+      print("endCallKitCall = \(_currentCallUuid)")
+      
         let action = CXEndCallAction(call: _currentCallUuid)
         _controller.requestTransaction(with: action) { (error) in
-            print("error = \(String(describing: error))")
+          NSLog("endCallKitCall 1s")
+          print("endCallKitCall 1s")
+            print("error  end call = \(String(describing: error))")
         }
-      }
+     // }
     }
   
   // Invoked by the dialer whenever a call is terminated by the remote end.
@@ -853,10 +923,8 @@ extension SipCallManager {
     // If a make-call action is currently in progress we'll terminate it here.
     // Whatever is waiting for this value to change will have to handle the dropped
     // call. Otherwise, the call is already in progress and we'll have to tear it down.
-    if uuid == _currentCallUuid && _makeCallInProgress.isEqualTo(true) {
-      _makeCallInProgress.setAndNotify(newValue: false)
-      return
-    }
+   // if uuid == _currentCallUuid && _makeCallInProgress.isEqualTo(true) {
+     
     
     // Otherwise, attempt to tear down the call via CallKit.
     let action = CXEndCallAction(call: uuid)
@@ -865,6 +933,11 @@ extension SipCallManager {
       if let error = error {
       }
     }
+    
+    if uuid == _currentCallUuid {
+    _makeCallInProgress.setAndNotify(newValue: false)
+    return
+  }
   }
   
     

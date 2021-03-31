@@ -324,6 +324,7 @@ const SipSettingsStackNavigator = () => {
         component={SIPSettings}
         options={SIPSettings.navigationOptions}
       />
+      
     </SipSettingsStack.Navigator>
   );
 };
@@ -702,6 +703,13 @@ const InsideStackNavigator = () => {
         component={CallScreen}
         options={{ headerShown: false }}
       />
+      <InsideStack.Screen
+        name="CallScreenStackNavigator"
+        component={CallScreenStackNavigator}
+        options={{ headerShown: false }}
+      />
+
+
     
     </InsideStack.Navigator>
   );

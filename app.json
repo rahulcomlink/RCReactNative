@@ -2,7 +2,8 @@
   "name": "RocketChatRN",
   "share": "ShareRocketChatRN",
   "displayName": "RocketChatRN",
-  "baseUrl": "https://tclenterprisesvcmgr.mvoipctsi.com:38443/ctsiSvcMgr/svcs/",
+  
+  "baseUrl": "https://sandbox.mvoipctsi.com:37443/svcs/",
   "methodActAuthSub": "actauthsub",
   "methodActprovsub": "actprovsub"
 }

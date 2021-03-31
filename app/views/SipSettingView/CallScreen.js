@@ -11,6 +11,7 @@ import {
   Button,
   NativeEventEmitter,
   DeviceEventEmitter,
+  Alert
 } from "react-native";
 import InputContainer from "./InputContainer.js";
 import speakerOn from "../../static/images/speakerOn.png";
@@ -78,7 +79,7 @@ class CallScreen extends React.Component {
       callStatusText: "calling",
       showKeypad: false,
       name: props.route.params?.name,
-      isVoipCall: props.route.params?.isVoipCall,
+      isVoipCall: props.route.params?.isVoipCall
     };
 
      if (os == "android") {
@@ -93,14 +94,14 @@ class CallScreen extends React.Component {
   }
 
   componentDidMount() {
-     if (this.state.isVoipCall == true){
+    if (this.state.isVoipCall == true){
       this.startTimer();
     }
     else {
-       if (this.state.phoneNumber != null) {
-         this.make
-       }Call();
+    if (this.state.phoneNumber != null) {
+      this.makeCall();
     }
+  }
   }
 
   renderSpeakerImage = () => {
@@ -423,7 +424,6 @@ class CallScreen extends React.Component {
         </View>
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({
