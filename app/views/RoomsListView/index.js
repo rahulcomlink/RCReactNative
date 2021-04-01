@@ -1,327 +1,319 @@
-import React, { useState, useEffect }  from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import {
-	View,
-	FlatList,
-	BackHandler,
-	Text,
-	Keyboard,
-	RefreshControl,
-	NativeModules,
-	NativeEventEmitter,
-	DeviceEventEmitter,
-	Alert
-} from 'react-native';
-import { connect } from 'react-redux';
-import isEqual from 'react-fast-compare';
-import Orientation from 'react-native-orientation-locker';
-import { Q } from '@nozbe/watermelondb';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
+  View,
+  FlatList,
+  BackHandler,
+  Text,
+  Keyboard,
+  RefreshControl,
+  NativeModules,
+  NativeEventEmitter,
+  DeviceEventEmitter,
+  Alert,
+} from "react-native";
+import { connect } from "react-redux";
+import isEqual from "react-fast-compare";
+import Orientation from "react-native-orientation-locker";
+import { Q } from "@nozbe/watermelondb";
+import { withSafeAreaInsets } from "react-native-safe-area-context";
 
-import database from '../../lib/database';
-import RocketChat from '../../lib/rocketchat';
-import RoomItem, { ROW_HEIGHT } from '../../presentation/RoomItem';
-import styles from './styles';
-import log, { logEvent, events } from '../../utils/log';
-import I18n from '../../i18n';
-import SortDropdown from './SortDropdown';
-import ServerDropdown from './ServerDropdown';
+import database from "../../lib/database";
+import RocketChat from "../../lib/rocketchat";
+import RoomItem, { ROW_HEIGHT } from "../../presentation/RoomItem";
+import styles from "./styles";
+import log, { logEvent, events } from "../../utils/log";
+import I18n from "../../i18n";
+import SortDropdown from "./SortDropdown";
+import ServerDropdown from "./ServerDropdown";
 import {
-	toggleSortDropdown as toggleSortDropdownAction,
-	openSearchHeader as openSearchHeaderAction,
-	closeSearchHeader as closeSearchHeaderAction,
-	roomsRequest as roomsRequestAction,
-	closeServerDropdown as closeServerDropdownAction
-} from '../../actions/rooms';
-import { appStart as appStartAction, ROOT_BACKGROUND } from '../../actions/app';
-import debounce from '../../utils/debounce';
-import RoomsListHeaderView from './Header';
-import * as HeaderButton from '../../containers/HeaderButton';
-import StatusBar from '../../containers/StatusBar';
-import ActivityIndicator from '../../containers/ActivityIndicator';
-import ListHeader from './ListHeader';
-import { selectServerRequest as selectServerRequestAction } from '../../actions/server';
-import { animateNextTransition } from '../../utils/layoutAnimation';
-import { withTheme } from '../../theme';
-import { themes } from '../../constants/colors';
-import EventEmitter from '../../utils/events';
-import {
-	KEY_COMMAND,
-	handleCommandShowPreferences,
-	handleCommandSearching,
-	handleCommandSelectRoom,
-	handleCommandPreviousRoom,
-	handleCommandNextRoom,
-	handleCommandShowNewMessage,
-	handleCommandAddNewServer
-} from '../../commands';
-import { MAX_SIDEBAR_WIDTH } from '../../constants/tablet';
-import { getUserSelector } from '../../selectors/login';
-import { goRoom } from '../../utils/goRoom';
-import SafeAreaView from '../../containers/SafeAreaView';
-import Header, { getHeaderTitlePosition } from '../../containers/Header';
-import { withDimensions } from '../../dimensions';
-import { showErrorAlert, showConfirmationAlert } from '../../utils/info';
-import { E2E_BANNER_TYPE } from '../../lib/encryption/constants';
-
-import { getInquiryQueueSelector } from '../../ee/omnichannel/selectors/inquiry';
-import { changeLivechatStatus, isOmnichannelStatusAvailable } from '../../ee/omnichannel/lib';
-import firebaseToken  from '../../NotificationHandling/firebaseToken';
-import messaging from '@react-native-firebase/messaging';
-import { token } from '@rocket.chat/sdk/lib/settings';
-import Api from '@rocket.chat/sdk/lib/api/api';
-import User from '../../lib/database/model/User';
-import { usesMetricSystem } from 'react-native-localize';
-import commonSipSettingFunc from '../SipSettingView/commonSipSettingFunc';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+  toggleSortDropdown as toggleSortDropdownAction,
+  openSearchHeader as openSearchHeaderAction,
+  closeSearchHeader as closeSearchHeaderAction,
+  roomsRequest as roomsRequestAction,
+  closeServerDropdown as closeServerDropdownAction,
+} from "../../actions/rooms";
+import { appStart as appStartAction, ROOT_BACKGROUND } from "../../actions/app";
+import debounce from "../../utils/debounce";
 import { isIOS, isTablet } from "../../utils/deviceInfo";
+import RoomsListHeaderView from "./Header";
+import * as HeaderButton from "../../containers/HeaderButton";
+import StatusBar from "../../containers/StatusBar";
+import ActivityIndicator from "../../containers/ActivityIndicator";
+import ListHeader from "./ListHeader";
+import { selectServerRequest as selectServerRequestAction } from "../../actions/server";
+import { animateNextTransition } from "../../utils/layoutAnimation";
+import { withTheme } from "../../theme";
+import { themes } from "../../constants/colors";
+import EventEmitter from "../../utils/events";
+import {
+  KEY_COMMAND,
+  handleCommandShowPreferences,
+  handleCommandSearching,
+  handleCommandSelectRoom,
+  handleCommandPreviousRoom,
+  handleCommandNextRoom,
+  handleCommandShowNewMessage,
+  handleCommandAddNewServer,
+} from "../../commands";
+import { MAX_SIDEBAR_WIDTH } from "../../constants/tablet";
+import { getUserSelector } from "../../selectors/login";
+import { goRoom } from "../../utils/goRoom";
+import SafeAreaView from "../../containers/SafeAreaView";
+import Header, { getHeaderTitlePosition } from "../../containers/Header";
+import { withDimensions } from "../../dimensions";
+import { showErrorAlert, showConfirmationAlert } from "../../utils/info";
+import { E2E_BANNER_TYPE } from "../../lib/encryption/constants";
+
+import { getInquiryQueueSelector } from "../../ee/omnichannel/selectors/inquiry";
+import {
+  changeLivechatStatus,
+  isOmnichannelStatusAvailable,
+} from "../../ee/omnichannel/lib";
+import firebaseToken from "../../NotificationHandling/firebaseToken";
+import messaging from "@react-native-firebase/messaging";
+import { token } from "@rocket.chat/sdk/lib/settings";
+import Api from "@rocket.chat/sdk/lib/api/api";
+import User from "../../lib/database/model/User";
+import { usesMetricSystem } from "react-native-localize";
+import commonSipSettingFunc from "../SipSettingView/commonSipSettingFunc";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Navigation from "../../lib/Navigation";
 const os = isIOS ? "ios" : "android";
-import Navigation from '../../lib/Navigation';
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
-const CHATS_HEADER = 'Chats';
-const UNREAD_HEADER = 'Unread';
-const FAVORITES_HEADER = 'Favorites';
-const DISCUSSIONS_HEADER = 'Discussions';
-const CHANNELS_HEADER = 'Channels';
-const DM_HEADER = 'Direct_Messages';
-const GROUPS_HEADER = 'Private_Groups';
-const OMNICHANNEL_HEADER = 'Open_Livechats';
+const CHATS_HEADER = "Chats";
+const UNREAD_HEADER = "Unread";
+const FAVORITES_HEADER = "Favorites";
+const DISCUSSIONS_HEADER = "Discussions";
+const CHANNELS_HEADER = "Channels";
+const DM_HEADER = "Direct_Messages";
+const GROUPS_HEADER = "Private_Groups";
+const OMNICHANNEL_HEADER = "Open_Livechats";
 const QUERY_SIZE = 20;
 
-const filterIsUnread = s => (s.unread > 0 || s.tunread?.length > 0 || s.alert) && !s.hideUnreadStatus;
-const filterIsFavorite = s => s.f;
-const filterIsOmnichannel = s => s.t === 'l';
+const filterIsUnread = (s) =>
+  (s.unread > 0 || s.tunread?.length > 0 || s.alert) && !s.hideUnreadStatus;
+const filterIsFavorite = (s) => s.f;
+const filterIsOmnichannel = (s) => s.t === "l";
 
 const shouldUpdateProps = [
-	'searchText',
-	'loadingServer',
-	'showServerDropdown',
-	'showSortDropdown',
-	'sortBy',
-	'groupByType',
-	'showFavorites',
-	'showUnread',
-	'useRealName',
-	'StoreLastMessage',
-	'appState',
-	'theme',
-	'isMasterDetail',
-	'refreshing',
-	'queueSize',
-	'inquiryEnabled',
-	'encryptionBanner'
+  "searchText",
+  "loadingServer",
+  "showServerDropdown",
+  "showSortDropdown",
+  "sortBy",
+  "groupByType",
+  "showFavorites",
+  "showUnread",
+  "useRealName",
+  "StoreLastMessage",
+  "appState",
+  "theme",
+  "isMasterDetail",
+  "refreshing",
+  "queueSize",
+  "inquiryEnabled",
+  "encryptionBanner",
 ];
 const getItemLayout = (data, index) => ({
-	length: ROW_HEIGHT,
-	offset: ROW_HEIGHT * index,
-	index
+  length: ROW_HEIGHT,
+  offset: ROW_HEIGHT * index,
+  index,
 });
-const keyExtractor = item => item.rid;
+const keyExtractor = (item) => item.rid;
 
 const eventEmitterIOS = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
 
 class RoomsListView extends React.Component {
-	static propTypes = {
-		navigation: PropTypes.object,
-		user: PropTypes.shape({
-			id: PropTypes.string,
-			username: PropTypes.string,
-			token: PropTypes.string,
-			statusLivechat: PropTypes.string,
-			roles: PropTypes.object
-		}),
-		server: PropTypes.string,
-		searchText: PropTypes.string,
-		loadingServer: PropTypes.bool,
-		//showServerDropdown: PropTypes.bool,
-		showServerDropdown: false,
-		showSortDropdown: PropTypes.bool,
-		sortBy: PropTypes.string,
-		groupByType: PropTypes.bool,
-		showFavorites: PropTypes.bool,
-		showUnread: PropTypes.bool,
-		refreshing: PropTypes.bool,
-		StoreLastMessage: PropTypes.bool,
-		appState: PropTypes.string,
-		theme: PropTypes.string,
-		toggleSortDropdown: PropTypes.func,
-		openSearchHeader: PropTypes.func,
-		closeSearchHeader: PropTypes.func,
-		appStart: PropTypes.func,
-		roomsRequest: PropTypes.func,
-		closeServerDropdown: PropTypes.func,
-		useRealName: PropTypes.bool,
-		connected: PropTypes.bool,
-		isMasterDetail: PropTypes.bool,
-		rooms: PropTypes.array,
-		width: PropTypes.number,
-		insets: PropTypes.object,
-		queueSize: PropTypes.number,
-		inquiryEnabled: PropTypes.bool,
-		encryptionBanner: PropTypes.string
-	};
-
-	constructor(props) {
-		super(props);
-		console.time(`${ this.constructor.name } init`);
-		console.time(`${ this.constructor.name } mount`);
-
-		
-		this.gotSubscriptions = false;
-		this.animated = false;
-		this.count = 0;
-		this.state = {
-			searching: false,
-			search: [],
-			loading: true,
-			chatsUpdate: [],
-			chats: [],
-			item: {}
-		};
-	
-		console.log("constructor");
-		this.setHeader();
-       
-       if (os == "android") {
-      DeviceEventEmitter.addListener("CallAnswered", this.getAnsweredCall);
-    } else {
-           eventEmitterIOS.addListener("getInboundCall", this.getCallStatus);
-    }
-	}
-
-	componentDidMount() {
-		console.log("componentDidMount");
-		
-		const {
-			navigation, closeServerDropdown, appState
-		} = this.props;
-
-		/**
-		 * - When didMount is triggered and appState is foreground,
-		 * it means the user is logging in and selectServer has ran, so we can getSubscriptions
-		 *
-		 * - When didMount is triggered and appState is background,
-		 * it means the user has resumed the app, so selectServer needs to be triggered,
-		 * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
-		 */
-		
-		commonSipSettingFunc.getSipSettingsAndStart();
-		
-		if (appState === 'foreground') {
-			this.getSubscriptions();
-		}
-		
-		if (isTablet) {
-			EventEmitter.addEventListener(KEY_COMMAND, this.handleCommands);
-		}
-		this.unsubscribeFocus = navigation.addListener('focus', () => {
-			Orientation.unlockAllOrientations();
-			this.animated = true;
-			// Check if there were changes while not focused (it's set on sCU)
-			if (this.shouldUpdate) {
-				this.forceUpdate();
-				this.shouldUpdate = false;
-			}
-			this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-		});
-		this.unsubscribeBlur = navigation.addListener('blur', () => {
-			this.animated = false;
-			closeServerDropdown();
-			this.cancelSearch();
-			if (this.backHandler && this.backHandler.remove) {
-				this.backHandler.remove();
-			}
-		});
-		console.timeEnd(`${ this.constructor.name } mount`);
-
-	}
-
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		const { loadingServer, searchText, server } = this.props;
-
-		if (nextProps.server && loadingServer !== nextProps.loadingServer) {
-			if (nextProps.loadingServer) {
-				this.setState({ loading: true });
-			} else {
-				this.getSubscriptions();
-			}
-		}
-		if (server && server !== nextProps.server) {
-			this.gotSubscriptions = false;
-		}
-		if (searchText !== nextProps.searchText) {
-			this.search(nextProps.searchText);
-		}
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
-		const { chatsUpdate, searching, item } = this.state;
-		// eslint-disable-next-line react/destructuring-assignment
-		const propsUpdated = shouldUpdateProps.some(key => nextProps[key] !== this.props[key]);
-		if (propsUpdated) {
-			return true;
-		}
-
-		// Compare changes only once
-		const chatsNotEqual = !isEqual(nextState.chatsUpdate, chatsUpdate);
-
-		// If they aren't equal, set to update if focused
-		if (chatsNotEqual) {
-			this.shouldUpdate = true;
-		}
-
-		if (nextState.searching !== searching) {
-			return true;
-		}
-
-		if (nextState.item?.rid !== item?.rid) {
-			return true;
-		}
-
-		// Abort if it's not focused
-		if (!nextProps.navigation.isFocused()) {
-			return false;
-		}
-
-		const {
-			loading,
-			search
-		} = this.state;
-		const { rooms, width, insets } = this.props;
-		if (nextState.loading !== loading) {
-			return true;
-		}
-		if (nextProps.width !== width) {
-			return true;
-		}
-		if (!isEqual(nextState.search, search)) {
-			return true;
-		}
-		if (!isEqual(nextProps.rooms, rooms)) {
-			return true;
-		}
-		if (!isEqual(nextProps.insets, insets)) {
-			return true;
-		}
-		// If it's focused and there are changes, update
-		if (chatsNotEqual) {
-			this.shouldUpdate = false;
-			return true;
-		}
-		return false;
-	}
-
-	getCallStatus = (event) => {
-		const { navigation, isMasterDetail } = this.props;
-		if (isMasterDetail) {
-			navigation.navigate('CallScreen', {phoneNumber : event.phoneNumber, isVoipCall : true});
-		} else {
-			navigation.navigate('CallScreen', {phoneNumber : event.phoneNumber, isVoipCall : true});
-		}	
+  static propTypes = {
+    navigation: PropTypes.object,
+    user: PropTypes.shape({
+      id: PropTypes.string,
+      username: PropTypes.string,
+      token: PropTypes.string,
+      statusLivechat: PropTypes.string,
+      roles: PropTypes.object,
+    }),
+    server: PropTypes.string,
+    searchText: PropTypes.string,
+    loadingServer: PropTypes.bool,
+    //showServerDropdown: PropTypes.bool,
+    showServerDropdown: false,
+    showSortDropdown: PropTypes.bool,
+    sortBy: PropTypes.string,
+    groupByType: PropTypes.bool,
+    showFavorites: PropTypes.bool,
+    showUnread: PropTypes.bool,
+    refreshing: PropTypes.bool,
+    StoreLastMessage: PropTypes.bool,
+    appState: PropTypes.string,
+    theme: PropTypes.string,
+    toggleSortDropdown: PropTypes.func,
+    openSearchHeader: PropTypes.func,
+    closeSearchHeader: PropTypes.func,
+    appStart: PropTypes.func,
+    roomsRequest: PropTypes.func,
+    closeServerDropdown: PropTypes.func,
+    useRealName: PropTypes.bool,
+    connected: PropTypes.bool,
+    isMasterDetail: PropTypes.bool,
+    rooms: PropTypes.array,
+    width: PropTypes.number,
+    insets: PropTypes.object,
+    queueSize: PropTypes.number,
+    inquiryEnabled: PropTypes.bool,
+    encryptionBanner: PropTypes.string,
   };
 
-   getAnsweredCall = (event) => {
+  constructor(props) {
+    super(props);
+    console.time(`${this.constructor.name} init`);
+    console.time(`${this.constructor.name} mount`);
+
+    this.gotSubscriptions = false;
+    this.animated = false;
+    this.count = 0;
+    this.state = {
+      searching: false,
+      search: [],
+      loading: true,
+      chatsUpdate: [],
+      chats: [],
+      item: {},
+    };
+
+    console.log("constructor");
+    this.setHeader();
+     if (os == "android") {
+       DeviceEventEmitter.addListener("CallAnswered", this.getAnsweredCall);
+     } else {
+       eventEmitterIOS.addListener("getInboundCall", this.getCallStatus);
+     }
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount");
+
+    const { navigation, closeServerDropdown, appState } = this.props;
+
+    /**
+     * - When didMount is triggered and appState is foreground,
+     * it means the user is logging in and selectServer has ran, so we can getSubscriptions
+     *
+     * - When didMount is triggered and appState is background,
+     * it means the user has resumed the app, so selectServer needs to be triggered,
+     * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
+     */
+
+    commonSipSettingFunc.getSipSettingsAndStart();
+
+    if (appState === "foreground") {
+      this.getSubscriptions();
+    }
+
+    if (isTablet) {
+      EventEmitter.addEventListener(KEY_COMMAND, this.handleCommands);
+    }
+    this.unsubscribeFocus = navigation.addListener("focus", () => {
+      Orientation.unlockAllOrientations();
+      this.animated = true;
+      // Check if there were changes while not focused (it's set on sCU)
+      if (this.shouldUpdate) {
+        this.forceUpdate();
+        this.shouldUpdate = false;
+      }
+      this.backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        this.handleBackPress
+      );
+    });
+    this.unsubscribeBlur = navigation.addListener("blur", () => {
+      this.animated = false;
+      closeServerDropdown();
+      this.cancelSearch();
+      if (this.backHandler && this.backHandler.remove) {
+        this.backHandler.remove();
+      }
+    });
+    console.timeEnd(`${this.constructor.name} mount`);
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { loadingServer, searchText, server } = this.props;
+
+    if (nextProps.server && loadingServer !== nextProps.loadingServer) {
+      if (nextProps.loadingServer) {
+        this.setState({ loading: true });
+      } else {
+        this.getSubscriptions();
+      }
+    }
+    if (server && server !== nextProps.server) {
+      this.gotSubscriptions = false;
+    }
+    if (searchText !== nextProps.searchText) {
+      this.search(nextProps.searchText);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { chatsUpdate, searching, item } = this.state;
+    // eslint-disable-next-line react/destructuring-assignment
+    const propsUpdated = shouldUpdateProps.some(
+      (key) => nextProps[key] !== this.props[key]
+    );
+    if (propsUpdated) {
+      return true;
+    }
+
+    // Compare changes only once
+    const chatsNotEqual = !isEqual(nextState.chatsUpdate, chatsUpdate);
+
+    // If they aren't equal, set to update if focused
+    if (chatsNotEqual) {
+      this.shouldUpdate = true;
+    }
+
+    if (nextState.searching !== searching) {
+      return true;
+    }
+
+    if (nextState.item?.rid !== item?.rid) {
+      return true;
+    }
+
+    // Abort if it's not focused
+    if (!nextProps.navigation.isFocused()) {
+      return false;
+    }
+
+    const { loading, search } = this.state;
+    const { rooms, width, insets } = this.props;
+    if (nextState.loading !== loading) {
+      return true;
+    }
+    if (nextProps.width !== width) {
+      return true;
+    }
+    if (!isEqual(nextState.search, search)) {
+      return true;
+    }
+    if (!isEqual(nextProps.rooms, rooms)) {
+      return true;
+    }
+    if (!isEqual(nextProps.insets, insets)) {
+      return true;
+    }
+    // If it's focused and there are changes, update
+    if (chatsNotEqual) {
+      this.shouldUpdate = false;
+      return true;
+    }
+    return false;
+  }
+
+  getAnsweredCall = (event) => {
     const { navigation, isMasterDetail } = this.props;
     if (isMasterDetail) {
       navigation.navigate("CallScreen", {
@@ -334,6 +326,106 @@ class RoomsListView extends React.Component {
         isVoipCall: true,
       });
     }
+  }
+
+  getCallStatus = (event) => {
+    const { navigation, isMasterDetail } = this.props;
+    if (isMasterDetail) {
+      navigation.navigate("CallScreen", {
+        phoneNumber: event.phoneNumber,
+        isVoipCall: true,
+      });
+    } else {
+      navigation.navigate("CallScreen", {
+        phoneNumber: event.phoneNumber,
+        isVoipCall: true,
+      });
+    }
+  };
+
+  componentDidUpdate(prevProps) {
+    const {
+      sortBy,
+      groupByType,
+      showFavorites,
+      showUnread,
+      appState,
+      connected,
+      roomsRequest,
+      rooms,
+      isMasterDetail,
+      insets,
+    } = this.props;
+    const { item } = this.state;
+
+    if (
+      !(
+        prevProps.sortBy === sortBy &&
+        prevProps.groupByType === groupByType &&
+        prevProps.showFavorites === showFavorites &&
+        prevProps.showUnread === showUnread
+      )
+    ) {
+      this.getSubscriptions();
+    } else if (
+      appState === "foreground" &&
+      appState !== prevProps.appState &&
+      connected
+    ) {
+      roomsRequest();
+    }
+    // Update current item in case of another action triggers an update on rooms reducer
+    if (
+      isMasterDetail &&
+      item?.rid !== rooms[0] &&
+      !isEqual(rooms, prevProps.rooms)
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ item: { rid: rooms[0] } });
+    }
+    if (
+      insets.left !== prevProps.insets.left ||
+      insets.right !== prevProps.insets.right
+    ) {
+      this.setHeader();
+    }
+
+    // custom comlink changes to save device token on server
+    const os1 = isIOS ? "ios" : "android";
+
+    messaging()
+      .getToken()
+      .then((token) => {
+        console.debug(token);
+        const params = {};
+        const customFields = {};
+        customFields.devicetoken = token;
+        customFields.os = os1;
+
+        try {
+          RocketChat.saveUserProfile(params, customFields);
+        } catch (e) {
+          console.debug("rocket.chat save user profile exception : ", e);
+        }
+      });
+
+    // Listen to whether the token changes
+    return messaging().onTokenRefresh((token) => {});
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeQuery();
+    if (this.unsubscribeFocus) {
+      this.unsubscribeFocus();
+    }
+    if (this.unsubscribeBlur) {
+      this.unsubscribeBlur();
+    }
+    if (isTablet) {
+      EventEmitter.removeListener(KEY_COMMAND, this.handleCommands);
+    }
+    console.countReset(`${this.constructor.name}.render calls`);
+  }
 
   getHeader = () => {
     const { searching } = this.state;
@@ -1081,38 +1173,42 @@ class RoomsListView extends React.Component {
   };
 }
 
-const mapStateToProps = state => ({
-	user: getUserSelector(state),
-	isMasterDetail: state.app.isMasterDetail,
-	server: state.server.server,
-	connected: state.server.connected,
-	searchText: state.rooms.searchText,
-	loadingServer: state.server.loading,
-//	showServerDropdown: state.rooms.showServerDropdown,
-	showServerDropdown: false,
-	showSortDropdown: state.rooms.showSortDropdown,
-	refreshing: state.rooms.refreshing,
-	sortBy: state.sortPreferences.sortBy,
-	groupByType: state.sortPreferences.groupByType,
-	showFavorites: state.sortPreferences.showFavorites,
-	showUnread: state.sortPreferences.showUnread,
-	useRealName: state.settings.UI_Use_Real_Name,
-	appState: state.app.ready && state.app.foreground ? 'foreground' : 'background',
-	StoreLastMessage: state.settings.Store_Last_Message,
-	rooms: state.room.rooms,
-	queueSize: getInquiryQueueSelector(state).length,
-	inquiryEnabled: state.inquiry.enabled,
-	encryptionBanner: state.encryption.banner
+const mapStateToProps = (state) => ({
+  user: getUserSelector(state),
+  isMasterDetail: state.app.isMasterDetail,
+  server: state.server.server,
+  connected: state.server.connected,
+  searchText: state.rooms.searchText,
+  loadingServer: state.server.loading,
+  //	showServerDropdown: state.rooms.showServerDropdown,
+  showServerDropdown: false,
+  showSortDropdown: state.rooms.showSortDropdown,
+  refreshing: state.rooms.refreshing,
+  sortBy: state.sortPreferences.sortBy,
+  groupByType: state.sortPreferences.groupByType,
+  showFavorites: state.sortPreferences.showFavorites,
+  showUnread: state.sortPreferences.showUnread,
+  useRealName: state.settings.UI_Use_Real_Name,
+  appState:
+    state.app.ready && state.app.foreground ? "foreground" : "background",
+  StoreLastMessage: state.settings.Store_Last_Message,
+  rooms: state.room.rooms,
+  queueSize: getInquiryQueueSelector(state).length,
+  inquiryEnabled: state.inquiry.enabled,
+  encryptionBanner: state.encryption.banner,
 });
 
-const mapDispatchToProps = dispatch => ({
-	toggleSortDropdown: () => dispatch(toggleSortDropdownAction()),
-	openSearchHeader: () => dispatch(openSearchHeaderAction()),
-	closeSearchHeader: () => dispatch(closeSearchHeaderAction()),
-	appStart: params => dispatch(appStartAction(params)),
-	roomsRequest: params => dispatch(roomsRequestAction(params)),
-	selectServerRequest: server => dispatch(selectServerRequestAction(server)),
-	closeServerDropdown: () => dispatch(closeServerDropdownAction())
+const mapDispatchToProps = (dispatch) => ({
+  toggleSortDropdown: () => dispatch(toggleSortDropdownAction()),
+  openSearchHeader: () => dispatch(openSearchHeaderAction()),
+  closeSearchHeader: () => dispatch(closeSearchHeaderAction()),
+  appStart: (params) => dispatch(appStartAction(params)),
+  roomsRequest: (params) => dispatch(roomsRequestAction(params)),
+  selectServerRequest: (server) => dispatch(selectServerRequestAction(server)),
+  closeServerDropdown: () => dispatch(closeServerDropdownAction()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withDimensions(withTheme(withSafeAreaInsets(RoomsListView))));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withDimensions(withTheme(withSafeAreaInsets(RoomsListView))));
