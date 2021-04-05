@@ -56,10 +56,10 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
 
         instance = MainActivity.this;
 
-        if (getIntent() != null && getIntent().getExtras() != null){
-            isIncomingCall = getIntent().getExtras().getBoolean("incoming_call");
-            phoneNumber = getIntent().getExtras().getString("phoneNumber");
-        }
+//        if (getIntent() != null && getIntent().getExtras() != null){
+//            isIncomingCall = getIntent().getExtras().getBoolean("incoming_call");
+//            phoneNumber = getIntent().getExtras().getString("phoneNumber");
+//        }
 
 
         // Start the MMKV container
@@ -196,7 +196,7 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
                                 .emit("CallAnswered", phoneNumber);
                     }
                 }
-            }, 1500);
+            }, 1000);
         }
     }
 }

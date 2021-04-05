@@ -274,19 +274,19 @@ public class CallManager {
         String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
 
         Dialer.Configuration dialerConfig = new Dialer.Configuration();
-        dialerConfig.sipServerHost = "newxonesip.mvoipctsi.com";
+        dialerConfig.sipServerHost = "testsipcc.mvoipctsi.com";
         dialerConfig.sipServerPort = 8993;
         dialerConfig.sipLocalPort = 8993;
         dialerConfig.sipTransport = 1;
-        dialerConfig.sipUsername = "919011355859";
-        dialerConfig.sipPassword = "5ddcff69f37aab001cdb67ad";
+        dialerConfig.sipUsername = "919926054520";
+        dialerConfig.sipPassword = "ab477857-ca19-46fa-9";
         dialerConfig.sipRealm = "*";
-        dialerConfig.turnHost = "turntaiwan.mvoipctsi.com";
-        dialerConfig.turnUsername = "comlinkxone";
-        dialerConfig.turnPassword = "hgskSlGHgwSKfgsdUSDGhs";
+        dialerConfig.turnHost = "";
+        dialerConfig.turnUsername = "";
+        dialerConfig.turnPassword = "";
         dialerConfig.turnRealm = "";
-        dialerConfig.stunHost = "turntaiwan.mvoipctsi.com";
-        dialerConfig.enableICE = true;
+        dialerConfig.stunHost = "indiaturn.mvoipctsi.com";
+        dialerConfig.enableICE = false;
         dialerConfig.enableSRTP = false;
         dialerConfig.answerTimeout = 60;
         dialerConfig.ringbackAudioFile = filePath;
@@ -775,6 +775,7 @@ public class CallManager {
                 // Answer Button Intent
                 Intent answerIntent = new Intent(MainApplication.getAppContext(), NotificationActionReceiver.class);
                 answerIntent.setAction(ACTION_ANSWER);
+                answerIntent.putExtra("callerName", callerName);
                 answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
                 PendingIntent answerPendingIntent = PendingIntent.getBroadcast(MainApplication.getAppContext(), 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
