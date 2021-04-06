@@ -48,12 +48,8 @@ import java.util.function.Consumer;
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 import static android.content.Context.POWER_SERVICE;
 import static com.comlinkinc.android.pigeon.SdkModule.callAswered;
-import static com.comlinkinc.android.pigeon.SdkModule.callTerminateDecline;
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 import static com.comlinkinc.android.pigeon.fcm.MyFirebaseMessagingService.dataPayload;
-import static com.comlinkinc.communicator.dialer.Call.Status.DECLINED;
-import static com.comlinkinc.communicator.dialer.Call.Status.RINGING;
-import static com.comlinkinc.communicator.dialer.Call.Status.TERMINATED;
 import static com.wix.reactnativeuilib.keyboardinput.AppContextHolder.getCurrentActivity;
 
 public class CallManager {
@@ -124,7 +120,7 @@ public class CallManager {
      * SDK Class: Dialer.class
      *******************************************************************************************
      * @param mContext*/
-    public static String startDialerNew(Context mContext, String sipUsername,
+    public static void startDialerNew(Context mContext, String sipUsername,
                                         String sipPassword,
                                         String sipServer,
                                         String realm,
@@ -133,42 +129,32 @@ public class CallManager {
                                         String turnUsername,
                                         String turnPassword,
                                         String turnRealm,
-                                        String iceEnabled,
+                                        boolean iceEnabled,
                                         int sipLocalPort,
                                         int sipServerPort,
                                         String sipTransport,
                                         String turnPort,
                                         String stunPort) {
-        try {
-            Dialer.start(getDefaultConfigNew(mContext, sipUsername,
-                    sipPassword,
-                    sipServer,
-                    realm,
-                    stunServer,
-                    turnServer,
-                    turnUsername,
-                    turnPassword,
-                    turnRealm,
-                    iceEnabled,
-                    sipLocalPort,
-                    sipServerPort,
-                    sipTransport,
-                    turnPort,
-                    stunPort));
-            return "Success";
-        } catch (UnsatisfiedLinkError e) {
-//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
-            Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return "" + e.getMessage();
-        } catch (DialerException e) {
-//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
-            Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return "" + e.getMessage();
-        } catch (Exception e) {
-//            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_DIALER_SUCCESS, false);
-            Log.d("DILER_Error_Callmanager", e.getMessage().toString());
-            return "" + e.getMessage();
-        }
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_SERVER_HOST, sipServer);
+        Prefs.setSharedPreferenceInt(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_SERVER_PORT, sipServerPort);
+        Prefs.setSharedPreferenceInt(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_LOCAL_PORT, sipLocalPort);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_TRANSPORT, sipTransport);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_USERNAME, sipUsername);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_PASSWORD, sipPassword);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_REALM, realm);
+
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_TURN_SERVER, turnServer);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_TURN_USERNAME, turnUsername);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_TURN_PASSWORD, turnPassword);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_SIP_TURN_REALM, turnRealm);
+
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_STUN_SERVER, stunServer);
+        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_SIP_ACCOUNT_ICE_ENABLE, iceEnabled);
+
+        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_SIP_ACCOUNT_SRTP_ENABLE, false);
+        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_MISC_ANS_TIMEIOUT, "60");
+
+        startDialer(MainApplication.getAppContext());
     }
 
     public static Dialer.Configuration getDefaultConfigNew(Context mContext, String sipUsername,
@@ -195,7 +181,7 @@ public class CallManager {
 
         File[] sdCards = ContextCompat.getExternalFilesDirs(mContext, "");
         String filePath = sdCards[0].listFiles()[0].getAbsolutePath();
-//        String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
+        String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
 
         Dialer.Configuration dialerConfig = new Dialer.Configuration();
         dialerConfig.sipServerHost = sipServer;
@@ -215,7 +201,7 @@ public class CallManager {
         dialerConfig.answerTimeout = 10;
         dialerConfig.ringbackAudioFile = filePath;
         dialerConfig.desiredCodecs = codecs;
-        dialerConfig.deviceId = "deviceToken";
+        dialerConfig.deviceId = deviceToken;
 
         return dialerConfig;
     }
@@ -274,21 +260,21 @@ public class CallManager {
         String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
 
         Dialer.Configuration dialerConfig = new Dialer.Configuration();
-        dialerConfig.sipServerHost = "testsipcc.mvoipctsi.com";
-        dialerConfig.sipServerPort = 8993;
-        dialerConfig.sipLocalPort = 8993;
-        dialerConfig.sipTransport = 1;
-        dialerConfig.sipUsername = "919926054520";
-        dialerConfig.sipPassword = "ab477857-ca19-46fa-9";
-        dialerConfig.sipRealm = "*";
-        dialerConfig.turnHost = "";
-        dialerConfig.turnUsername = "";
-        dialerConfig.turnPassword = "";
-        dialerConfig.turnRealm = "";
-        dialerConfig.stunHost = "indiaturn.mvoipctsi.com";
-        dialerConfig.enableICE = false;
-        dialerConfig.enableSRTP = false;
-        dialerConfig.answerTimeout = 60;
+        dialerConfig.sipServerHost = Constants.getServerHost(mContext);
+        dialerConfig.sipServerPort = Constants.getServerPort(mContext);
+        dialerConfig.sipLocalPort = Constants.getLocalPort(mContext);
+        dialerConfig.sipTransport = getTransport(Constants.getSIPTransport(mContext));
+        dialerConfig.sipUsername = Constants.getSIPUsername(mContext);
+        dialerConfig.sipPassword = Constants.getSIPPassword(mContext);
+        dialerConfig.sipRealm = Constants.getSIPRealm(mContext).replace("-","");
+        dialerConfig.turnHost = Constants.getTURNHost(mContext).replace("-","");
+        dialerConfig.turnUsername = Constants.getTUTNUsername(mContext).replace("-","");
+        dialerConfig.turnPassword = Constants.getTURNPassword(mContext).replace("-","");
+        dialerConfig.turnRealm = Constants.getTURNRealm(mContext).replace("-","");
+        dialerConfig.stunHost = Constants.getSTUNHost(mContext).replaceAll(":","");
+        dialerConfig.enableICE = Constants.getIsICEEnabled(mContext);
+        dialerConfig.enableSRTP = Constants.getIsSRTPEnabled(mContext);
+        dialerConfig.answerTimeout = Long.parseLong(Constants.getMiscTimeout(mContext));
         dialerConfig.ringbackAudioFile = filePath;
         dialerConfig.desiredCodecs = codecs;
         dialerConfig.deviceId = deviceToken;

@@ -138,23 +138,23 @@ public class SdkModule extends ReactContextBaseJavaModule {
                             String stunPort) {
         try {
             final Activity activity = getCurrentActivity();
-//            CallManager.startDialerNew(activity, sipUsername,
-//                    sipPassword,
-//                    sipServer,
-//                    realm,
-//                    stunServer,
-//                    turnServer,
-//                    turnUsername,
-//                    turnPassword,
-//                    turnRealm,
-//                    iceEnabled,
-//                    Integer.parseInt(sipLocalPort),
-//                    Integer.parseInt(sipServerPort),
-//                    sipTransport,
-//                    turnPort,
-//                    stunPort);
+            CallManager.startDialerNew(activity, sipUsername,
+                    sipPassword,
+                    sipServer,
+                    realm,
+                    stunServer,
+                    turnServer,
+                    turnUsername,
+                    turnPassword,
+                    turnRealm,
+                    Boolean.parseBoolean(iceEnabled),
+                    Integer.parseInt(sipLocalPort),
+                    Integer.parseInt(sipServerPort),
+                    sipTransport,
+                    turnPort,
+                    stunPort);
 
-            CallManager.startDialer(activity);
+//            CallManager.startDialer(activity);
         } catch (Exception e) {
 
         }
