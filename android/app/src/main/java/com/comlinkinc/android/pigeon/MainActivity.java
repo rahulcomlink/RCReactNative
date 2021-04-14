@@ -23,6 +23,7 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import com.tencent.mmkv.MMKV;
 import com.zoontek.rnbootsplash.RNBootSplash;
 
+import static com.comlinkinc.android.pigeon.MainApplication.reactApplicationContext;
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 
 class ThemePreferences {
@@ -56,10 +57,10 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
 
         instance = MainActivity.this;
 
-//        if (getIntent() != null && getIntent().getExtras() != null){
-//            isIncomingCall = getIntent().getExtras().getBoolean("incoming_call");
-//            phoneNumber = getIntent().getExtras().getString("phoneNumber");
-//        }
+        if (getIntent() != null && getIntent().getExtras() != null){
+            isIncomingCall = getIntent().getExtras().getBoolean("incoming_call");
+            phoneNumber = getIntent().getExtras().getString("phoneNumber");
+        }
 
 
         // Start the MMKV container
@@ -191,12 +192,14 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
                 public void run() {
                     if (!called) {
                         called = true;
+//                        CallManager.stopRingTone();
+//                        CallManager.answer();
                         context
                                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("CallAnswered", phoneNumber);
                     }
                 }
-            }, 1000);
+            }, 1500);
         }
     }
 }

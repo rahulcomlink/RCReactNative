@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import static com.comlinkinc.android.pigeon.MainApplication.reactApplicationContext;
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 
 public class IncomingCallActivity extends AppCompatActivity implements View.OnClickListener {
@@ -78,10 +79,18 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
                 finish();
             } else {
+//                if (reactApplicationContext.hasActiveCatalystInstance()) {
                 reactContext
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("CallAnswered", phoneNumber);
-                finish();
+                            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("CallAnswered", phoneNumber);
+                    finish();
+//                } else {
+//                    Intent intent = new Intent(mContext, MainActivity.class);
+//                    intent.putExtra("incoming_call", true);
+//                    intent.putExtra("phoneNumber", phoneNumber);
+//                    startActivity(intent);
+//                    finish();
+//                }
             }
 
             runOnUiThread(new Runnable() {

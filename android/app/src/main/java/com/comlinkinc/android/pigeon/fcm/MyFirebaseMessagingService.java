@@ -22,6 +22,7 @@ import com.comlinkinc.android.pigeon.CallManager;
 import com.comlinkinc.android.pigeon.Contact;
 import com.comlinkinc.android.pigeon.MainActivity;
 import com.comlinkinc.android.pigeon.MainApplication;
+import com.comlinkinc.android.pigeon.Prefs;
 import com.comlinkinc.android.pigeon.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -67,8 +68,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sipIncomingCall(Map<String, String> data) {
         try {
-            CallManager.stopDialer();
-            CallManager.startDialer(MainApplication.getAppContext());
+
+//            boolean isDialerAlreadyStart = Prefs.getSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_DIALER_SUCCESS, false);
+//            if (!isDialerAlreadyStart) {
+                CallManager.stopDialer();
+                CallManager.startDialer(MainApplication.getAppContext());
+//            }
 //            CallManager.unRegisterDialer();
 
             new Handler(Looper.getMainLooper()).post(() -> {

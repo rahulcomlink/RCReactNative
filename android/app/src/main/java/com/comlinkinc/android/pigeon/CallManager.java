@@ -81,6 +81,7 @@ public class CallManager {
     private static final int NOTIFICATION_ID = 42069;
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";
+    public static Contact contactFromPayload = null;
 
 
     /********************************************************************************************
@@ -259,22 +260,42 @@ public class CallManager {
         String filePath = sdCards[0].listFiles()[0].getAbsolutePath();
         String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
 
+//        Dialer.Configuration dialerConfig = new Dialer.Configuration();
+//        dialerConfig.sipServerHost = Constants.getServerHost(mContext);
+//        dialerConfig.sipServerPort = Constants.getServerPort(mContext);
+//        dialerConfig.sipLocalPort = Constants.getLocalPort(mContext);
+//        dialerConfig.sipTransport = getTransport(Constants.getSIPTransport(mContext));
+//        dialerConfig.sipUsername = Constants.getSIPUsername(mContext);
+//        dialerConfig.sipPassword = Constants.getSIPPassword(mContext);
+//        dialerConfig.sipRealm = Constants.getSIPRealm(mContext).replace("-","");
+//        dialerConfig.turnHost = Constants.getTURNHost(mContext).replace("-","");
+//        dialerConfig.turnUsername = Constants.getTUTNUsername(mContext).replace("-","");
+//        dialerConfig.turnPassword = Constants.getTURNPassword(mContext).replace("-","");
+//        dialerConfig.turnRealm = Constants.getTURNRealm(mContext).replace("-","");
+//        dialerConfig.stunHost = Constants.getSTUNHost(mContext).replaceAll(":","");
+//        dialerConfig.enableICE = Constants.getIsICEEnabled(mContext);
+//        dialerConfig.enableSRTP = Constants.getIsSRTPEnabled(mContext);
+//        dialerConfig.answerTimeout = Long.parseLong(Constants.getMiscTimeout(mContext));
+//        dialerConfig.ringbackAudioFile = filePath;
+//        dialerConfig.desiredCodecs = codecs;
+//        dialerConfig.deviceId = deviceToken;
+
         Dialer.Configuration dialerConfig = new Dialer.Configuration();
-        dialerConfig.sipServerHost = Constants.getServerHost(mContext);
-        dialerConfig.sipServerPort = Constants.getServerPort(mContext);
-        dialerConfig.sipLocalPort = Constants.getLocalPort(mContext);
-        dialerConfig.sipTransport = getTransport(Constants.getSIPTransport(mContext));
-        dialerConfig.sipUsername = Constants.getSIPUsername(mContext);
-        dialerConfig.sipPassword = Constants.getSIPPassword(mContext);
-        dialerConfig.sipRealm = Constants.getSIPRealm(mContext).replace("-","");
-        dialerConfig.turnHost = Constants.getTURNHost(mContext).replace("-","");
-        dialerConfig.turnUsername = Constants.getTUTNUsername(mContext).replace("-","");
-        dialerConfig.turnPassword = Constants.getTURNPassword(mContext).replace("-","");
-        dialerConfig.turnRealm = Constants.getTURNRealm(mContext).replace("-","");
-        dialerConfig.stunHost = Constants.getSTUNHost(mContext).replaceAll(":","");
-        dialerConfig.enableICE = Constants.getIsICEEnabled(mContext);
-        dialerConfig.enableSRTP = Constants.getIsSRTPEnabled(mContext);
-        dialerConfig.answerTimeout = Long.parseLong(Constants.getMiscTimeout(mContext));
+        dialerConfig.sipServerHost = "newxonesip.mvoipctsi.com";
+        dialerConfig.sipServerPort = 8993;
+        dialerConfig.sipLocalPort = 8993;
+        dialerConfig.sipTransport = 1;
+        dialerConfig.sipUsername = "919011355859";
+        dialerConfig.sipPassword = "5ddcff69f37aab001cdb67ad";
+        dialerConfig.sipRealm = "*";
+        dialerConfig.turnHost = "turntaiwan.mvoipctsi.com";
+        dialerConfig.turnUsername = "comlinkxone";
+        dialerConfig.turnPassword = "hgskSlGHgwSKfgsdUSDGhs";
+        dialerConfig.turnRealm = "";
+        dialerConfig.stunHost = "turntaiwan.mvoipctsi.com";
+        dialerConfig.enableICE = false;
+        dialerConfig.enableSRTP = false;
+        dialerConfig.answerTimeout = 60;
         dialerConfig.ringbackAudioFile = filePath;
         dialerConfig.desiredCodecs = codecs;
         dialerConfig.deviceId = deviceToken;
@@ -669,13 +690,12 @@ public class CallManager {
             boolean isAppInBackground = Prefs.getSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, false);
 
             String number = "Unknown";
-            Contact contact = null;
 
             try {
                 number = URLDecoder.decode(call.getRemoteParty().substring(4, call.getRemoteParty().indexOf("@")).toString(), "utf-8").replace("tel:", "");
-                contact = new Contact(number,number,null);
+                contactFromPayload = new Contact(number,number,null);
             } catch (Exception e) {
-                contact =  new Contact("Unknown", "", null);
+                contactFromPayload =  new Contact("Unknown", "", null);
             }
 
 
@@ -685,13 +705,13 @@ public class CallManager {
                 if (isPhoneLocked) {
                     createNotification(dataPayload);
                 } else {
-                    CallManager.showOngoingCallActivity(contact);
+                    CallManager.showOngoingCallActivity(contactFromPayload);
                 }
             } else {
                 if (isAppInBackground) {
                     createNotification(dataPayload);
                 } else {
-                    CallManager.showOngoingCallActivity(contact);
+                    CallManager.showOngoingCallActivity(contactFromPayload);
                 }
             }
         });
@@ -745,12 +765,12 @@ public class CallManager {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Contact callerContact = CallManager.getDisplayContact(MainApplication.getAppContext());
-                String callerName = callerContact.getName();
+                String callerName = callerContact.getName().replace(":","");
 
                 if (callerName.equalsIgnoreCase("Unknown")) {
                     if (data != null) {
                         String urlCaller = data.get("url");
-                        callerName = urlCaller.substring(20, urlCaller.indexOf("?"));//comple string  url=url://incomingcall/919834545791
+                        callerName = urlCaller.substring(20, urlCaller.indexOf("?")).replaceAll(":","");//comple string  url=url://incomingcall/919834545791
                     }
                 }
 

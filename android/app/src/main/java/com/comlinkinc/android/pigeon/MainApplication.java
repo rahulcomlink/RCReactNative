@@ -21,6 +21,7 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.soloader.SoLoader;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -41,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication, Li
 
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
   private static Context context;
+  public static ReactApplicationContext reactApplicationContext;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -88,8 +90,11 @@ public class MainApplication extends Application implements ReactApplication, Li
   public void onCreate() {
     super.onCreate();
     MainApplication.context = getApplicationContext();
+    getApplicationContext();
     FirebaseApp.initializeApp(this);
     SoLoader.init(this, /* native exopackage */ false);
+
+    reactApplicationContext = new ReactApplicationContext(getAppContext());
 
     FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
       if (!TextUtils.isEmpty(token)) {
