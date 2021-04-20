@@ -3,7 +3,7 @@
   "share": "ShareRocketChatRN",
   "displayName": "RocketChatRN",
   
-  "baseUrl": "https://sandbox.mvoipctsi.com:37443/svcs/",
+  "baseUrl": "https://testsipcc.mvoipctsi.com:7483/ctsiSvcMgr/svcs/",
   "methodActAuthSub": "actauthsub",
   "methodActprovsub": "actprovsub"
 }

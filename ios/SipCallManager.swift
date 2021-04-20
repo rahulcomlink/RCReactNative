@@ -118,9 +118,15 @@ class SipCallManager {
                      }else if transport == "tls" || transport == "TLS" {
                          sipTransport = CM_TLS
                      }
-                  let stunhostt = stunHost + (stunPort == "0" ? "" : (":" + stunPort))
+    var stunPort1 = ""
+    if stunPort == "-" {
+      stunPort1 = ""
+    }
+                  let stunhostt = stunHost + (stunPort1 == "0" ? "" : (":" + stunPort1))
                  var stunHost1 = CString(from: "")
-      if stunHost == "-" {}
+      if stunHost == "-" {
+        stunHost1 = CString(from: "")
+      }
       else {
         stunHost1 = CString(from: stunhostt)
       }
@@ -130,7 +136,36 @@ class SipCallManager {
       var turnUsername1 = CString(from: turnUsername)
       var turnPassword1 = CString(from: turnPassword)
       var turnRealm1 = CString(from: turnRealm)
-                
+    
+    if turnHost == "-"{
+      turnHost1 = CString(from: "")
+    }
+    else {
+      let turnhostt = turnHost + (turnPort == "0" ? "" : (":" + turnPort))
+      turnHost1 = CString(from: turnhostt)
+    }
+    
+    if turnUsername == "-"{
+      turnUsername1 = CString(from: "")
+    }
+    else {
+      turnUsername1 = CString(from: turnUsername)
+    }
+    
+    if turnPassword == "-"{
+      turnPassword1 = CString(from: "")
+    }
+    else {
+      turnPassword1 = CString(from: turnPassword)
+    }
+    
+    if turnRealm == "-"{
+      turnRealm1 = CString(from: "")
+    }
+    else {
+      turnRealm1 = CString(from: turnRealm)
+    }
+              /*
       if turnHost == "-"{
         turnHost1 = CString(from: "")
         turnUsername1 = CString(from: "")
@@ -145,7 +180,7 @@ class SipCallManager {
                   turnRealm1 = CString(from: turnRealm)
       }
       
-     
+     */
    
                 
                    // Get the absolute path to the ringback file
@@ -176,7 +211,11 @@ class SipCallManager {
                            cmConfig.turn_realm = turnRealm1.value
                            cmConfig.ringback_audio_file = ringbackAudioFile.value
                            cmConfig.answer_timeout = Int32(60)
-//                           cmConfig.device_id = CString(from: "98ef9dff186b1fb5cc122549dd3be7606514a7850673b4ae8780ce171d8b13ff").value
+    if let voipToken = UserDefaults.standard.value(forKey: "voipToken") as? String {
+      print("voip token from UD = \(voipToken)")
+      cmConfig.device_id = CString(from: voipToken).value
+    }
+                           
 
                  let array: [String?] = ["G729/8000/1", "opus/48000/2", "opus/24000/2","PCMU/8000/1","PCMA/8000/1", nil]
                  var cargs = array.map { $0.flatMap { UnsafePointer<Int8>(strdup($0)) } }
@@ -578,6 +617,7 @@ class SipCallManager {
   }
   
   func processPayload(payload: PKPushPayload, userInfo : NSDictionary){
+    /*
     if let url : String = userInfo.value(forKey: "url") as? String{
         let substring = url.replacingOccurrences(of: "xone://incomingcall/", with: "")
         
@@ -587,6 +627,9 @@ class SipCallManager {
           self.phoneNumber = phoneNo
         }
     }
+    */
+    print("psyload = \(payload)")
+    onPushArrived(payload: payload, phoneNumber: "")
   }
     
   func onPushArrived(payload: PKPushPayload, phoneNumber : String) {
@@ -597,7 +640,7 @@ class SipCallManager {
         let descriptor = try InboundCallDescriptor(payload)
         // Save this information for later
         _inboundCallDescriptor = descriptor
-        
+        self.phoneNumber = descriptor.clid
         
         
         // If we're currently in the middle of a call setup then we abort the call that is
@@ -623,7 +666,7 @@ class SipCallManager {
         let update = CXCallUpdate()
         update.localizedCallerName = descriptor.localizedDisplayName
         update.hasVideo = descriptor.hasVideo
-        update.remoteHandle = CXHandle(type: .phoneNumber, value: phoneNumber)
+        update.remoteHandle = CXHandle(type: .phoneNumber, value: descriptor.clid)
         update.supportsGrouping = false
         update.supportsUngrouping = false
         update.supportsHolding = false

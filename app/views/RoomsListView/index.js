@@ -181,11 +181,11 @@ class RoomsListView extends React.Component {
 		console.log("constructor");
 		this.setHeader();
 		eventEmitterIOS.addListener("getInboundCall", this.getCallStatus);
+		NativeModules.SIPSDKBridge.callbackMethod((err,r) => console.debug('voip token from native',r));
 	}
 
 	componentDidMount() {
-		console.log("componentDidMount");
-		
+
 		const {
 			navigation, closeServerDropdown, appState
 		} = this.props;
