@@ -97,7 +97,7 @@ class Inputs extends Component<{navigation: any}> {
 
          var params = {
             auth_type : 'QRCODE',
-            cmsid : 'SWIPES01',
+            cmsid : 'CTSIPIGEON',
             sub_auth_str : this.state.mobilenumber,
             sub_dev_model : DeviceInfo.getModel() ,
             sub_dev_os : Platform.OS.toUpperCase(),
