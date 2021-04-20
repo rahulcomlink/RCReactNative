@@ -169,6 +169,9 @@ public class Prefs {
     public final static String IS_CALL_IN_PROGRESS = "Is_call_in_progress";
 
 
+    public final static String PREFS_IS_APP_IN_BACKGRUND = "prefs_app_in_bg";
+
+
     /**
      * Set a string shared preference
      *

@@ -1,63 +1,82 @@
 {
   "project_info": {
-    "project_number": "859896515024",
-    "firebase_url": "https://xone-1c9ae.firebaseio.com",
-    "project_id": "xone-1c9ae",
-    "storage_bucket": "xone-1c9ae.appspot.com"
+    "project_number": "182958383254",
+    "firebase_url": "https://pigeon-ios-app.firebaseio.com",
+    "project_id": "pigeon-ios-app",
+    "storage_bucket": "pigeon-ios-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:859896515024:android:f0f346f3968e4e061991d5",
+        "mobilesdk_app_id": "1:182958383254:android:b77fef626dd49e3d2062b7",
         "android_client_info": {
-          "package_name": "net.connexionone.android.xone"
+          "package_name": "com.comlinkinc.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "859896515024-02mhpssq9shre1o20anlj71ncckgtedm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "net.connexionone.android.xone",
-            "certificate_hash": "66e0be5b241fffd3d045e5680c5bc4aea35efaed"
-          }
-        },
-        {
-          "client_id": "859896515024-v18hlr87nd62q91ltsis9f1iittnr171.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "net.connexionone.android.xone",
-            "certificate_hash": "39d51e3541676e896b2778237dfec18da54e2ecc"
-          }
-        },
-        {
-          "client_id": "859896515024-65lnvhsql4rkg23dvc09jcup7k71rcvq.apps.googleusercontent.com",
+          "client_id": "182958383254-68u7ghp994rqm7dqn8726dgkj6l7fr2l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCVwkyLgayOJtz9cuFuF_csyDXqmMw89Kw"
+          "current_key": "AIzaSyDdj5c69XkEHS5VCVkyohSOXk0-es4YtW8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "859896515024-65lnvhsql4rkg23dvc09jcup7k71rcvq.apps.googleusercontent.com",
+              "client_id": "182958383254-68u7ghp994rqm7dqn8726dgkj6l7fr2l.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "859896515024-7klmb6n2uco8vd39sr3u976dt2l3kjoa.apps.googleusercontent.com",
+              "client_id": "182958383254-1app2jo7jtn73mkckhndk4otb7sccacj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "net.connexionone.XONE"
+                "bundle_id": "com.comlinkinc.pigeon"
               }
             }
           ]
         }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182958383254:android:7f81296f39f21a4e2062b7",
+        "android_client_info": {
+          "package_name": "com.comlinkinc.android.pigeon"
+        }
       },
-      "admob_app_id": "ca-app-pub-1699418735078469~9247915633"
+      "oauth_client": [
+        {
+          "client_id": "182958383254-68u7ghp994rqm7dqn8726dgkj6l7fr2l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdj5c69XkEHS5VCVkyohSOXk0-es4YtW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182958383254-68u7ghp994rqm7dqn8726dgkj6l7fr2l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "182958383254-1app2jo7jtn73mkckhndk4otb7sccacj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.comlinkinc.pigeon"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

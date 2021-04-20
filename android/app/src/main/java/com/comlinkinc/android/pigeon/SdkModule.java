@@ -21,11 +21,13 @@ import static com.comlinkinc.android.pigeon.CallManager.stopRingTone;
 
 public class SdkModule extends ReactContextBaseJavaModule {
 
-    AudioManager mAudioManager;
+    public static AudioManager mAudioManager;
+    public static ReactApplicationContext reactContext;
 
     //constructor
-    public SdkModule(ReactApplicationContext reactContext) {
-        super(reactContext);
+    public SdkModule(ReactApplicationContext rContext) {
+        super(rContext);
+        this.reactContext = rContext;
     }
 
     //Mandatory function getName that specifies the module name
@@ -136,23 +138,23 @@ public class SdkModule extends ReactContextBaseJavaModule {
                             String stunPort) {
         try {
             final Activity activity = getCurrentActivity();
-//            CallManager.startDialerNew(activity, sipUsername,
-//                    sipPassword,
-//                    sipServer,
-//                    realm,
-//                    stunServer,
-//                    turnServer,
-//                    turnUsername,
-//                    turnPassword,
-//                    turnRealm,
-//                    iceEnabled,
-//                    Integer.parseInt(sipLocalPort),
-//                    Integer.parseInt(sipServerPort),
-//                    sipTransport,
-//                    turnPort,
-//                    stunPort);
+            CallManager.startDialerNew(activity, sipUsername,
+                    sipPassword,
+                    sipServer,
+                    realm,
+                    stunServer,
+                    turnServer,
+                    turnUsername,
+                    turnPassword,
+                    turnRealm,
+                    Boolean.parseBoolean(iceEnabled),
+                    Integer.parseInt(sipLocalPort),
+                    Integer.parseInt(sipServerPort),
+                    sipTransport,
+                    turnPort,
+                    stunPort);
 
-            CallManager.startDialer(activity);
+//            CallManager.startDialer(activity);
         } catch (Exception e) {
 
         }

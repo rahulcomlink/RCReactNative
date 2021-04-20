@@ -8,16 +8,23 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactFragmentActivity;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.google.gson.Gson;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import com.tencent.mmkv.MMKV;
 import com.zoontek.rnbootsplash.RNBootSplash;
+
+import static com.comlinkinc.android.pigeon.MainApplication.reactApplicationContext;
+import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 
 class ThemePreferences {
   String currentTheme;
@@ -31,9 +38,12 @@ class SortPreferences {
   Boolean showUnread;
 }
 
-public class MainActivity extends ReactFragmentActivity {
+public class MainActivity extends ReactFragmentActivity implements ReactInstanceManager.ReactInstanceEventListener {
 
     public static MainActivity instance;
+    boolean isIncomingCall = false;
+    String phoneNumber = "";
+    boolean called = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +51,17 @@ public class MainActivity extends ReactFragmentActivity {
         super.onCreate(null);
         RNBootSplash.init(R.drawable.splash_screen, MainActivity.this);
 
+        startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+
         MMKV.initialize(MainActivity.this);
 
         instance = MainActivity.this;
+
+        if (getIntent() != null && getIntent().getExtras() != null){
+            isIncomingCall = getIntent().getExtras().getBoolean("incoming_call");
+            phoneNumber = getIntent().getExtras().getString("phoneNumber");
+        }
+
 
         // Start the MMKV container
         MMKV defaultMMKV = MMKV.defaultMMKV();
@@ -148,6 +166,41 @@ public class MainActivity extends ReactFragmentActivity {
         Intent intent = new Intent("onConfigurationChanged");
         intent.putExtra("newConfig", newConfig);
         this.sendBroadcast(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getReactInstanceManager().addReactInstanceEventListener(this);
+        MainApplication lk = new MainApplication();
+        lk.appInForeground();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getReactInstanceManager().removeReactInstanceEventListener(this);
+        MainApplication lk = new MainApplication();
+        lk.appInBackground();
+    }
+
+    @Override
+    public void onReactContextInitialized(ReactContext context) {
+        if (isIncomingCall && context != null){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!called) {
+                        called = true;
+//                        CallManager.stopRingTone();
+//                        CallManager.answer();
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("CallAnswered", phoneNumber);
+                    }
+                }
+            }, 1500);
+        }
     }
 }
 

@@ -82,10 +82,10 @@ class CallScreen extends React.Component {
       isVoipCall: props.route.params?.isVoipCall
     };
 
-     if (os == "android") {
-       DeviceEventEmitter.addListener("onSessionConnect", this.getCallStatusAndroid);
+    if (os == "android") {
+      DeviceEventEmitter.addListener("onSessionConnect", this.getCallStatusAndroid);
     } else {
-        eventEmitterIOS.addListener("onSessionConnect", this.getCallStatus);
+      eventEmitterIOS.addListener("onSessionConnect", this.getCallStatus);
     }
   }
 
@@ -94,15 +94,14 @@ class CallScreen extends React.Component {
   }
 
   componentDidMount() {
-   
-    if (this.state.isVoipCall == true){
+    if (this.state.isVoipCall == true) {
       this.startTimer();
     }
     else {
-    if (this.state.phoneNumber != null) {
-      this.makeCall();
+      if (this.state.phoneNumber != null) {
+        this.makeCall();
+      }
     }
-  }
   }
 
   renderSpeakerImage = () => {
@@ -171,11 +170,13 @@ class CallScreen extends React.Component {
     }
     if (event == "TERMINATED") {
       this.setState({ callStatusText: "Terminated" });
-      // this.endCall();
+      this.endCall();
+      this.props.navigation.pop();
     }
     if (event == "DECLINED") {
       this.setState({ callStatusText: "Declined" });
-      // this.endCall();
+      this.endCall();
+      this.props.navigation.pop();
     }
   };
 
@@ -189,10 +190,12 @@ class CallScreen extends React.Component {
     if (event.callStatus == "TERMINATED") {
       this.setState({ callStatusText: "Call terminated" });
       this.props.navigation.pop();
+      this.endCall();
     }
     if (event.callStatus == "DECLINED") {
       this.setState({ callStatusText: "Call declined" });
       this.props.navigation.pop();
+      this.endCall();
     }
   };
 
@@ -369,29 +372,29 @@ class CallScreen extends React.Component {
             </View>
           </View>
         ) : (
-          <View style={{ flexDirection: "row", alignSelf: "center" }}>
-            <TouchableOpacity
-              style={styles.button1}
-              onPress={() => this.setMute()}
-            >
-              {this.renderMuteImage()}
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row", alignSelf: "center" }}>
+              <TouchableOpacity
+                style={styles.button1}
+                onPress={() => this.setMute()}
+              >
+                {this.renderMuteImage()}
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.button1}
-              onPress={() => this.setState({ showKeypad: true })}
-            >
-              <Image style={styles.button1} source={calling_dailpad} />
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button1}
+                onPress={() => this.setState({ showKeypad: true })}
+              >
+                <Image style={styles.button1} source={calling_dailpad} />
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.button1}
-              onPress={() => this.setSpeaker()}
-            >
-              {this.renderSpeakerImage()}
-            </TouchableOpacity>
-          </View>
-        )}
+              <TouchableOpacity
+                style={styles.button1}
+                onPress={() => this.setSpeaker()}
+              >
+                {this.renderSpeakerImage()}
+              </TouchableOpacity>
+            </View>
+          )}
 
         <View style={styles.bottom}>
           <TouchableOpacity
