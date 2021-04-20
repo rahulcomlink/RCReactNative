@@ -94,6 +94,9 @@ class Inputs extends Component<{navigation: any}> {
          this.state.deviceModel =  DeviceInfo.getModel()
          this.state.deviceOS =  Platform.OS.toUpperCase()
 
+         if (os == "android") {
+            vt = this.state.deviceToken
+         }
 
          var params = {
             auth_type : 'QRCODE',
@@ -135,19 +138,20 @@ class Inputs extends Component<{navigation: any}> {
    }
 
    componentDidMount(){
-      /*messaging().getToken().then(token => {
+      if (os == "android") {
+      messaging().getToken().then(token => {
          this.setState({deviceToken : token});
-      })*/
-
+      })
+   }
+   else {
       NativeModules.SIPSDKBridge.callbackMethod((err,voipToken) => {
-         // alert(voipToken)
-         // console.debug('error',err)
          vt = voipToken.voiptoken
        console.debug('voip token from native',voipToken);
          this.setState({deviceToken : voipToken.voiptoken});
          this.state.deviceToken =  voipToken.voiptoken
 
-   });
+      });
+   }
       
 
       if (os == "android") {
