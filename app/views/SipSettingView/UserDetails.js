@@ -84,9 +84,6 @@ class Inputs extends Component<{navigation: any}> {
          var myHeaders = new Headers();
          myHeaders.append("Content-Type", "text/plain");
 
-         console.debug('DeviceInfo.getModel()',DeviceInfo.getModel())
-         console.debug('Platform.OS.toUpperCase()',Platform.OS.toUpperCase())
-
          // Keep the device and OS related info in stae for further usage
          this.setState({ deviceModel: DeviceInfo.getModel() })
          this.setState({ deviceOS: Platform.OS.toUpperCase() })
