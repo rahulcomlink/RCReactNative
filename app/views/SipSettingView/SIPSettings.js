@@ -12,9 +12,10 @@ import commonSipSettingFunc from './commonSipSettingFunc';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useIsFocused } from '@react-navigation/native';
 
+var isPageOpen = 0
 class SIPSettings extends React.Component {
 
-
+    
     static navigationOptions = ({ navigation, isMasterDetail }) => ({
 		headerLeft: () => (isMasterDetail ? (
 			<HeaderButton.CloseModal navigation={navigation} testID='sip-settings-view-close' />
@@ -178,6 +179,7 @@ class SIPSettings extends React.Component {
             await AsyncStorage.setItem('stunServer', this.state.stunServer);
             await AsyncStorage.setItem('stunPort', "0");
 
+            alert('Sip Settings saved successfully.');
             commonSipSettingFunc.getSipSettingsAndStart();
           } catch (error) {
             // Error retrieving data
@@ -252,13 +254,20 @@ class SIPSettings extends React.Component {
             // Error retrieving data
             console.debug('error.message', error.message);
           }
+        
+        console.debug('this.state.sipServer=',this.state.sipServer);
         if(this.state.sipServer == null){
+        
         const { navigation, isMasterDetail } = this.props;
+        if(isPageOpen == 1){
+            navigation.goBack();
+        }
         if (isMasterDetail) {
             navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });
         } else {
             navigation.navigate('SipProvisioningStackNavigator');
-        }	
+        }
+       isPageOpen = 1;
     }
 
        // }
@@ -472,8 +481,9 @@ const styles = StyleSheet.create({
         alignSelf : 'center',
         marginVertical : 30,
         backgroundColor : 'blue',
-        width : 100,
-        height : 30,
+        width : 150,
+        height : 40,
+        borderRadius: 10
     },
 
     saveButtonText:{

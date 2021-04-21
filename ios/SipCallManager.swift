@@ -210,11 +210,13 @@ class SipCallManager {
                            cmConfig.turn_password = turnPassword1.value
                            cmConfig.turn_realm = turnRealm1.value
                            cmConfig.ringback_audio_file = ringbackAudioFile.value
-                           cmConfig.answer_timeout = Int32(60)
+    
+    /*cmConfig.answer_timeout = Int32(60)
     if let voipToken = UserDefaults.standard.value(forKey: "voipToken") as? String {
       print("voip token from UD = \(voipToken)")
       cmConfig.device_id = CString(from: voipToken).value
     }
+    */
                            
 
                  let array: [String?] = ["G729/8000/1", "opus/48000/2", "opus/24000/2","PCMU/8000/1","PCMA/8000/1", nil]

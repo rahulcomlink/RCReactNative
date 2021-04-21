@@ -225,6 +225,7 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('stunServer', this.state.stunServer);
             await AsyncStorage.setItem('stunPort', "0");
 
+            alert('Sip Settings saved successfully.');
             commonSipSettingFunc.getSipSettingsAndStart();
             this.props.navigation.push('PhonebookView');
           } catch (error) {
