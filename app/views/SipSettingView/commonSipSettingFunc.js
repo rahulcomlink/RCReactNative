@@ -9,11 +9,12 @@ class commonSipSettingFunc extends React.Component {
     super(props);
   }
   getSipSettingsAndStart = async () => {
+    console.debug('getSipSettingsAndStart')
     try {
       if (os == "android") {
         NativeModules.Sdk.stopDialer();
       } else {
-        NativeModules.SIPSDKBridge.sipStop();
+       // NativeModules.SIPSDKBridge.sipStop();
       }
 
       const sipServer = await AsyncStorage.getItem("sipServer");

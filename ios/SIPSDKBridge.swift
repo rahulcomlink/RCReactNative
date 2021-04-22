@@ -33,10 +33,24 @@ class SIPSDKBridge : NSObject{
   }
   
   @objc func sipRegistration(_ username: String,  password: String,  sipServer: String,  sipRealm: String,  stunHost: String, turnHost : String,  turnUsername: String,  turnPassword: String,  turnRealm: String,  iceEnabled: String,  localPort: String,  serverPort: String, transport: String, turnPort: String, stunPort: String) -> Void{
+    
+    UserDefaults.standard.setValue(username, forKey: "username")
+    UserDefaults.standard.setValue(password, forKey: "password")
+    UserDefaults.standard.setValue(sipServer, forKey: "sipServer")
+    UserDefaults.standard.setValue(stunHost, forKey: "stunHost")
+    UserDefaults.standard.setValue(turnHost, forKey: "turnHost")
+    UserDefaults.standard.setValue(turnUsername, forKey: "turnUsername")
+    UserDefaults.standard.setValue(turnPassword, forKey: "turnPassword")
+    UserDefaults.standard.setValue(iceEnabled, forKey: "iceEnabled")
+    UserDefaults.standard.setValue(localPort, forKey: "localPort")
+    UserDefaults.standard.setValue(serverPort, forKey: "serverPort")
+    UserDefaults.standard.setValue(transport, forKey: "transport")
+   
     SipCallManager.shared.start(username: username, password: password, sipServer: sipServer, sipRealm: sipRealm, stunHost: stunHost, turnHost: turnHost, turnUsername: turnUsername, turnPassword: turnPassword, turnRealm: turnRealm, iceEnabled: iceEnabled, localPort: localPort, serverPort: serverPort, transport: transport, turnPort: turnPort, stunPort: stunPort)
   }
   
   @objc func sipStop() -> Void{
+    NSLog("sipStop")
     SipCallManager.shared.stop()
   }
  
@@ -72,6 +86,10 @@ class SIPSDKBridge : NSObject{
     }
     print("voippToken = \(voippToken)")
     UserDefaults.standard.setValue(voippToken, forKey: "voipToken")
+  }
+  
+  @objc func startSipSetting(){
+    SipCallManager.shared.startSipSettings()
   }
  
 }

@@ -73,6 +73,9 @@ static void InitializeFlipper(UIApplication *application) {
     [RNNotifications startMonitorNotifications];
     [ReplyNotification configure];
   
+  SIPSDKBridge * obj = [[SIPSDKBridge alloc]init];
+  [obj startSipSetting];
+    
     [self voipRegistration];
   
     // AppGroup MMKV
