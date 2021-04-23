@@ -481,9 +481,8 @@ const styles = StyleSheet.create({
         alignSelf : 'center',
         marginVertical : 30,
         backgroundColor : 'blue',
-        width : 150,
-        height : 40,
-        borderRadius: 10
+        width : 100,
+        height : 30,
     },
 
     saveButtonText:{

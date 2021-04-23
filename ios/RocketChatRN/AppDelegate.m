@@ -73,8 +73,10 @@ static void InitializeFlipper(UIApplication *application) {
     [RNNotifications startMonitorNotifications];
     [ReplyNotification configure];
   
+  
   SIPSDKBridge * obj = [[SIPSDKBridge alloc]init];
   [obj startSipSetting];
+  [obj getMicrophonePermission];
     
     [self voipRegistration];
   

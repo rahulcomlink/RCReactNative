@@ -367,6 +367,8 @@ class SipCallManager {
       print("startSipSettings called")
       NSLog("startSipSettings called")
       
+      
+      
       let sipServerHost = CString(from: sipServer as! String)
       let sipUsername = CString(from: username as! String)
       let sipPassword = CString(from: password as! String)
@@ -464,8 +466,7 @@ turnRealm1 = CString(from: turnRealm)
                    cmConfig.turn_password = turnPassword1.value
                    cmConfig.turn_realm = turnRealm1.value
                    cmConfig.ringback_audio_file = ringbackAudioFile.value
-
-cmConfig.answer_timeout = Int32(60)
+                    cmConfig.answer_timeout = Int32(60)
 /*
 if let voipToken = UserDefaults.standard.value(forKey: "voipToken") as? String {
 print("voip token from UD = \(voipToken)")
@@ -497,6 +498,156 @@ cmConfig.device_id = CString(from: voipToken).value
       
     }
   }
+  
+  
+  /*func startSipSettings(){
+    NSLog("startSipSettings")
+      let sipServer = "testsipcc.mvoipctsi.com"
+      let username = "919926054520"
+      let password = "3544e561-be0a-4fba-b"
+      let stunHost = "indiaturn.mvoipctsi.com"
+      let turnHost = "indiaturn.mvoipctsi.com"
+      let turnUsername = ""
+      let turnPassword = ""
+      let iceEnabled = "true"
+      let localPort = "8993"
+      let serverPort = "8993"
+      let transport = "tcp"
+      
+      print("startSipSettings called")
+      NSLog("startSipSettings called")
+      
+      
+      
+      let sipServerHost = CString(from: sipServer as! String)
+      let sipUsername = CString(from: username as! String)
+      let sipPassword = CString(from: password as! String)
+      let sipRealm = CString(from: "*" as! String)
+
+         
+         defer { CString.release(sipUsername, sipPassword, sipRealm) }
+         
+         var sipTransport: CMSIPTRANSPORT = CM_UDP
+         
+             if transport == "tcp" || transport == "TCP" {
+                 sipTransport = CM_TCP
+             }else if transport == "udp" || transport == "UDP" {
+                 sipTransport = CM_UDP
+             }else if transport == "tls" || transport == "TLS" {
+                 sipTransport = CM_TLS
+             }
+let stunPort = "-"
+let turnPort = "-"
+let turnRealm = ""
+var stunPort1 = ""
+if stunPort == "-" {
+stunPort1 = ""
+}
+          let stunhostt = stunHost + (stunPort1 == "0" ? "" : (":" + stunPort1))
+         var stunHost1 = CString(from: "")
+if stunHost == "-" {
+stunHost1 = CString(from: "")
+}
+else {
+stunHost1 = CString(from: stunhostt)
+}
+
+
+var turnHost1 = CString(from: turnHost)
+var turnUsername1 = CString(from: turnUsername)
+var turnPassword1 = CString(from: turnPassword)
+var turnRealm1 = CString(from: "")
+
+if turnHost == "-"{
+turnHost1 = CString(from: "")
+}
+else {
+let turnhostt = turnHost + (turnPort == "0" ? "" : (":" + turnPort))
+turnHost1 = CString(from: turnhostt)
+}
+
+if turnUsername == "-"{
+turnUsername1 = CString(from: "")
+}
+else {
+turnUsername1 = CString(from: turnUsername)
+}
+
+if turnPassword == "-"{
+turnPassword1 = CString(from: "")
+}
+else {
+turnPassword1 = CString(from: turnPassword)
+}
+
+if turnRealm == "-"{
+turnRealm1 = CString(from: "")
+}
+else {
+turnRealm1 = CString(from: turnRealm)
+}
+  
+
+        
+           // Get the absolute path to the ringback file
+         let ringbackPath = Bundle.main.path(forResource: "ring", ofType: "wav")
+         let ringbackAudioFile = CString(from: ringbackPath!)
+
+           defer {
+             CString.release(
+               stunHost1, turnHost1, turnUsername1, turnPassword1, turnRealm1,
+               ringbackAudioFile)
+           }
+         
+       var cmConfig = CMCONFIGURATION()
+                 
+                   CmInitializeConfiguration(&cmConfig)
+                 
+                   cmConfig.sip_server_host = sipServerHost.value
+                    cmConfig.sip_local_port =   UInt16(Int(localPort) ?? 0)
+                    cmConfig.sip_server_port =  UInt16(Int(serverPort) ?? 0)
+                   cmConfig.sip_username = sipUsername.value
+                   cmConfig.sip_password = sipPassword.value
+                   cmConfig.sip_transport = sipTransport
+                   cmConfig.sip_realm = sipRealm.value
+                   cmConfig.stun_host = stunHost1.value
+                   cmConfig.turn_host = turnHost1.value
+                   cmConfig.turn_username = turnUsername1.value
+                   cmConfig.turn_password = turnPassword1.value
+                   cmConfig.turn_realm = turnRealm1.value
+                   cmConfig.ringback_audio_file = ringbackAudioFile.value
+                    cmConfig.answer_timeout = Int32(60)
+/*
+if let voipToken = UserDefaults.standard.value(forKey: "voipToken") as? String {
+print("voip token from UD = \(voipToken)")
+cmConfig.device_id = CString(from: voipToken).value
+}
+*/
+                   
+
+         let array: [String?] = ["G729/8000/1", "opus/48000/2", "opus/24000/2","PCMU/8000/1","PCMA/8000/1", nil]
+         var cargs = array.map { $0.flatMap { UnsafePointer<Int8>(strdup($0)) } }
+         command(&cargs)
+         cmConfig.desired_codecs = UnsafeMutablePointer(mutating: cargs)
+          cmConfig.enable_ice = iceEnabled == "true" ? CM_TRUE : CM_FALSE
+                
+        if CmInitialize(&cmConfig) != CM_SUCCESS {
+           
+           DialerSubsystemFailure(
+             details: DialerErrorDetails(CM_SUBSYSTEM_FAILURE, "Initialization failure"))
+         }else{
+           
+         }
+     // Set up callbacks
+     CmSetInboundCallHandler({ handle in SipCallManager.shared.onInboundCall(handle: handle) })
+      CmSetCallStateChangeHandler({ handle in
+        SipCallManager.shared.onCallStateChanged(handle: handle)
+      })
+      _sipUriTemplate  = "sip:%s@\(sipServerHost):\(serverPort);transport=\(transport)"
+
+      
+    
+  }*/
     
     private func startCallTimer() {
       NSLog("startCallTimer")

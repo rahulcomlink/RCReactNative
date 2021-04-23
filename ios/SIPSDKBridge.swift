@@ -8,6 +8,7 @@
 
 import Foundation
 import PushKit
+import AVFoundation
 
 @objc(SIPSDKBridge)
 class SIPSDKBridge : NSObject{
@@ -90,6 +91,30 @@ class SIPSDKBridge : NSObject{
   
   @objc func startSipSetting(){
     SipCallManager.shared.startSipSettings()
+  }
+  
+  @objc func getMicrophonePermission(){
+    var permissionCheck:Bool = false
+
+    switch AVAudioSession.sharedInstance().recordPermission {
+
+            case AVAudioSession.RecordPermission.granted:
+                permissionCheck = true
+
+            case AVAudioSession.RecordPermission.denied:
+                permissionCheck = false
+            case AVAudioSession.RecordPermission.undetermined:
+                AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
+                    if granted {
+                        permissionCheck = true
+                    } else {
+                        permissionCheck = false
+                    }
+                })
+            default:
+                break
+            }
+    print("permissionCheck = \(permissionCheck)")
   }
  
 }
