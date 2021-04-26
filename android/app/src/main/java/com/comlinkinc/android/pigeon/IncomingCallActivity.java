@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import static com.comlinkinc.android.pigeon.MainApplication.reactApplicationContext;
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
+import static com.reactnativerestart.RestartModule.getReactInstanceManager;
 
 public class IncomingCallActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -73,10 +76,27 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             Log.d("phoneNumber", phoneNumber + "");
 
             if (reactContext == null) {
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra("incoming_call", true);
-                intent.putExtra("phoneNumber", phoneNumber);
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, MainActivity.class);
+//                intent.putExtra("incoming_call", true);
+//                intent.putExtra("phoneNumber", phoneNumber);
+//                startActivity(intent);
+//                finish();
+//
+//                if(!reactApplicationContext.hasActiveCatalystInstance()) {
+//                    return;
+//                }
+                ReactInstanceManager reactInstanceManager = getReactInstanceManager();
+                reactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
+                    @Override
+                    public void onReactContextInitialized(ReactContext context) {
+                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("CallAnswered", phoneNumber);
+                        reactInstanceManager.removeReactInstanceEventListener(this);
+                    }
+                });
+//                reactApplicationContext
+//                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+//                        .emit("CallAnswered", phoneNumber);
                 finish();
             } else {
 //                if (reactApplicationContext.hasActiveCatalystInstance()) {
@@ -84,13 +104,6 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
                             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                             .emit("CallAnswered", phoneNumber);
                     finish();
-//                } else {
-//                    Intent intent = new Intent(mContext, MainActivity.class);
-//                    intent.putExtra("incoming_call", true);
-//                    intent.putExtra("phoneNumber", phoneNumber);
-//                    startActivity(intent);
-//                    finish();
-//                }
             }
 
             runOnUiThread(new Runnable() {

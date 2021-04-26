@@ -28,8 +28,8 @@ public class NotificationActionReceiver extends BroadcastReceiver {
 
         if (action.equals(IncomingCallActivity.ACTION_ANSWER)) {
             // If the user pressed "Answer" from the notification
-            CallManager.stopRingTone();
-            CallManager.answer();
+//            CallManager.stopRingTone();
+//            CallManager.answer();
             Log.d("phoneNumber", contactFromPayload.getName() + "");
 
             List<String> numbers = new ArrayList<>();
