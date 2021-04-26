@@ -248,7 +248,7 @@ class KeypadView extends React.Component {
             style={styles.button1}
             onPress={() => this.removeChar()}
           >
-            <Image style={{ width: 35,height: 35, alignSelf: "center", resizeMode: "contain",}} source={call_back} />
+            <Image style={{ width: 35,height: 35, alignSelf: "center", resizeMode: "contain",margin : 35}} source={call_back} />
           </TouchableOpacity>
         </View>
       </View>
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
   button2: {
     width: 60,
     height: 60,
-    margin: 25,
+    margin: 15,
     resizeMode: "contain",
   },
   buttonicon: {
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     alignSelf: "center",
-    margin: 20,
+    margin: 10,
     resizeMode: "contain",
   },
   bottom: {

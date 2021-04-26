@@ -7,6 +7,7 @@ import I18n from '../../i18n';
 import Navigation from '../../lib/Navigation';
 import CallScreen from '../../views/SipSettingView/CallScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import VoipPushNotification from 'react-native-voip-push-notification';
 
 const replyAction = new NotificationAction({
 	activationMode: 'background',
@@ -31,6 +32,12 @@ class PushNotification {
 		NotificationsIOS.addEventListener('remoteNotificationsRegistered', (deviceToken) => {
 			this.deviceToken = deviceToken;
 		});
+
+		VoipPushNotification.addEventListener('register', (token) => {
+			// --- send token to your apn provider server
+			console.debug('token token',token);
+			this.saveVoIPToken(token);
+        });
 
 		// window.addEventListener('VoipCall', (event) => {
 		// 	this.getVoIPCall;
@@ -107,7 +114,7 @@ class PushNotification {
         // --- "the native events which DID fire BEFORE js bridge is initialed",
         // --- it does NOT mean this will have events each time when the app reopened.
 
-
+		VoipPushNotification.registerVoipToken();
 
 		
 	}

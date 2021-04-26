@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import { View, Text, Image, ScrollView, Switch ,TouchableOpacity, TextInput, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, Image, ScrollView, Switch ,TouchableOpacity, TextInput, StyleSheet, KeyboardAvoidingView , Alert} from 'react-native';
 import InputContainer from './InputContainer.js';
 import SegmentedControl from '@react-native-community/segmented-control';
 import { block } from 'react-native-reanimated';
@@ -10,10 +10,12 @@ import * as HeaderButton from '../../containers/HeaderButton';
 import { isNil } from 'lodash';
 import commonSipSettingFunc from './commonSipSettingFunc';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useIsFocused } from '@react-navigation/native';
 
+var isPageOpen = 0
 class SIPSettings extends React.Component {
 
-
+    
     static navigationOptions = ({ navigation, isMasterDetail }) => ({
 		headerLeft: () => (isMasterDetail ? (
 			<HeaderButton.CloseModal navigation={navigation} testID='sip-settings-view-close' />
@@ -48,8 +50,9 @@ class SIPSettings extends React.Component {
             stunPort : props.route.params?.stunPort
         }
         
+        
 
-        /*
+       { /*
        this.state =  {
         sipServer : 'newxonesip.mvoipctsi.com',
         sipPort : '8993',
@@ -64,7 +67,8 @@ class SIPSettings extends React.Component {
         stunServer : 'turntaiwan.mvoipctsi.com',
         stunPort : '0'
     }
-    */
+*/}
+    
     
         this.selIndex = 0
         if(this.state.sipTransport == 'TCP'){
@@ -74,6 +78,10 @@ class SIPSettings extends React.Component {
         }else {
             this.selIndex = 2
         }
+
+       
+        
+          
       }
 
     onSipServerTextChange = (text) => {
@@ -171,6 +179,7 @@ class SIPSettings extends React.Component {
             await AsyncStorage.setItem('stunServer', this.state.stunServer);
             await AsyncStorage.setItem('stunPort', "0");
 
+            alert('Sip Settings saved successfully.');
             commonSipSettingFunc.getSipSettingsAndStart();
           } catch (error) {
             // Error retrieving data
@@ -180,7 +189,7 @@ class SIPSettings extends React.Component {
 
       getSIPUserData = async () =>{
         
-        if(this.state.sipServer == null) {
+       // if(this.state.sipServer == null) {
         try {
             const sipServer = await AsyncStorage.getItem('sipServer') ;
             console.debug('sipServerrrrr=',sipServer);
@@ -204,39 +213,39 @@ class SIPSettings extends React.Component {
             this.setState({ iceEnabled: iceEnabled == 'true' ? true : false })
 
             const turnServer = await AsyncStorage.getItem('turnServer');
-            if (turnServer == "-") { 
-                turnServer = ""
-            }
+            // if (turnServer == "-") { 
+            //     turnServer = ""
+            // }
             this.setState({ turnServer: turnServer });
 
             const turnPort = await AsyncStorage.getItem('turnPort');
-            if (turnPort == "-") {
-              turnPort = "";
-            }
+            // if (turnPort == "-") {
+            //   turnPort = "";
+            // }
             this.setState({ turnPort: turnPort })
 
             const turnUsername = await AsyncStorage.getItem('turnUsername');
-             if (turnUsername == "-") {
-               turnUsername = "";
-             }
+            //  if (turnUsername == "-") {
+            //    turnUsername = "";
+            //  }
             this.setState({ turnUsername: turnUsername})
 
             const turnPassword = await AsyncStorage.getItem('turnPassword');
-             if (turnPassword == "-") {
-               turnPassword = "";
-             }
+            //  if (turnPassword == "-") {
+            //    turnPassword = "";
+            //  }
             this.setState({ turnPassword: turnPassword })
 
             const stunServer = await AsyncStorage.getItem('stunServer');
-             if (stunServer == "-") {
-               stunServer = "";
-             }
+            //  if (stunServer == "-") {
+            //    stunServer = "";
+            //  }
             this.setState({ stunServer: stunServer })
 
             const stunPort = await AsyncStorage.getItem('stunPort');
-             if (stunPort == "-") {
-               stunPort = "";
-             }
+            //  if (stunPort == "-") {
+            //    stunPort = "";
+            //  }
             this.setState({ stunPort: stunPort })
 
            this.forceUpdate()
@@ -245,12 +254,75 @@ class SIPSettings extends React.Component {
             // Error retrieving data
             console.debug('error.message', error.message);
           }
+        
+        console.debug('this.state.sipServer=',this.state.sipServer);
+        if(this.state.sipServer == null){
+        
+        const { navigation, isMasterDetail } = this.props;
+        if(isPageOpen == 1){
+            navigation.goBack();
         }
+        if (isMasterDetail) {
+            navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });
+        } else {
+            navigation.navigate('SipProvisioningStackNavigator');
+        }
+       isPageOpen = 1;
+    }
+
+       // }
       }
 
-    componentDidMount(){
+      componentWillMount(){
         this.getSIPUserData();
-    }
+        
+      }
+
+      componentDidMount(){
+        this.getSIPUserData();
+       
+       const { navigation, isMasterDetail } = this.props;
+       willFocus = navigation.addListener(
+           'focus',
+           () => {
+             this.getSIPUserData();
+           }
+         );
+      }
+
+
+      
+
+    /*componentDidMount(){
+       
+        this.getSIPUserData();
+
+        if(this.state.sipServer == '') {
+            //   Alert.alert('Please fill sip settings');
+            const { navigation, isMasterDetail } = this.props;
+               Alert.alert(
+                   "Alert Title",
+                   "My Alert Msg",
+                   [
+                     {
+                       text: "ok",
+                       onPress: () => {
+                           if (isMasterDetail) {
+                               navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });
+                           } else {
+                               navigation.navigate('SipProvisioningStackNavigator');
+                           }	
+                       }
+                     },
+                     {
+                       text: "Cancel",
+                       onPress: () => console.log("Cancel Pressed"),
+                       style: "cancel"
+                     }
+                   ]
+                 );
+           }
+    }*/
 
     render(){
         return(

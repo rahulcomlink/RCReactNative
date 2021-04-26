@@ -17,6 +17,7 @@ import qrScanner from "./qrScanner";
 import messaging from '@react-native-firebase/messaging';
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
+var vt = ''
 
 class Inputs extends Component<{navigation: any}> {
 
@@ -39,6 +40,9 @@ class Inputs extends Component<{navigation: any}> {
    handleEmail = (text) => {
       this.setState({ email: text })
    }
+
+  
+
 
    handleQRTape = () => {
      // this.props.navigation.navigate('SIPSettings');
@@ -84,15 +88,24 @@ class Inputs extends Component<{navigation: any}> {
          this.setState({ deviceModel: DeviceInfo.getModel() })
          this.setState({ deviceOS: Platform.OS.toUpperCase() })
 
+         this.state.deviceModel =  DeviceInfo.getModel()
+         this.state.deviceOS =  Platform.OS.toUpperCase()
+
+         if (os == "android") {
+            vt = this.state.deviceToken
+         }
+
          var params = {
             auth_type : 'QRCODE',
-            cmsid : 'SWIPES01',
+            cmsid : 'CTSIPIGEON',
             sub_auth_str : this.state.mobilenumber,
-            sub_dev_model : this.state.deviceModel,
-            sub_dev_os : this.state.deviceOS,
-            sub_dev_token : this.state.deviceToken,
+            sub_dev_model : DeviceInfo.getModel() ,
+            sub_dev_os : Platform.OS.toUpperCase(),
+            sub_dev_token : vt,
             sub_email : this.state.email
          };
+
+         console.debug('params of api call',params);
    
          var jsonString = JSON.stringify(params);
    
@@ -102,13 +115,13 @@ class Inputs extends Component<{navigation: any}> {
             body: jsonString,
             redirect: 'follow'
          };
-         
+        
          fetch(baseurl+methodactauthsub, requestOptions)
          .then(response => response.json())
          .then(result => this.setAppID(result))
          .catch(error => alert(error)
          );
-         
+     
       }else{
          alert('Please enter a valid Email address')
       }
@@ -122,14 +135,28 @@ class Inputs extends Component<{navigation: any}> {
    }
 
    componentDidMount(){
+      if (os == "android") {
       messaging().getToken().then(token => {
          this.setState({deviceToken : token});
       })
+   }
+   else {
+      NativeModules.SIPSDKBridge.callbackMethod((err,voipToken) => {
+         vt = voipToken.voiptoken
+       console.debug('voip token from native',voipToken);
+         this.setState({deviceToken : voipToken.voiptoken});
+         this.state.deviceToken =  voipToken.voiptoken
+
+      });
+   }
+      
 
       if (os == "android") {
         NativeModules.Sdk.askStorageAndMicPermission();
       }
    }
+
+   
 
    render() {
       return (

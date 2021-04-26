@@ -103,13 +103,17 @@ class qrScanner extends Component {
         console.debug("apiResponse",apiResponse);
         //Alert.alert(apiResponse);
           var sipserver1 = ''
+          var sipServers =  apiResponse.app_cfg_data.sip_svrs
           var stunServers = apiResponse.app_cfg_data.stun_svrs
           var turnServers = apiResponse.app_cfg_data.turn_svrs
-          if(apiResponse.app_cfg_data.sip_svrs){
+          
+         // if(apiResponse.app_cfg_data.sip_svrs){
             if(apiResponse.app_cfg_data.sip_svrs.length > 0 ){
             var sipserver1 =  apiResponse.app_cfg_data.sip_svrs[0]
+            }else {
+              var sipserver1 =  'sandbox.mvoipctsi.com'
             }
-          }
+         // }
           
 
 
@@ -125,17 +129,16 @@ class qrScanner extends Component {
                 this.setState({sipServer : apiResponse.app_cfg_data.sip_svrs[0]});
                 this.setState({sipPort : 8993});
               }else {
-                this.setState({sipServer : ''});
+                this.setState({sipServer : 'sandbox.mvoipctsi.com'});
                 this.setState({sipPort : 8993});
               }
             }else {
-              this.setState({sipServer : ''});
+              this.setState({sipServer : 'sandbox.mvoipctsi.com'});
                 this.setState({sipPort : 8993});
             }
             
           }
           
-        
           this.setState({sipTransport : 'TCP'});
           this.setState({sipUsername : apiResponse.app_cfg_data.sip_uid});
           this.setState({sipPassword : apiResponse.app_cfg_data.sip_pwd});

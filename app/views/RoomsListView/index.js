@@ -206,7 +206,7 @@ class RoomsListView extends React.Component {
      * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
      */
 
-    commonSipSettingFunc.getSipSettingsAndStart();
+    /*commonSipSettingFunc.getSipSettingsAndStart(); */
 
     if (appState === "foreground") {
       this.getSubscriptions();
