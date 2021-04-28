@@ -99,6 +99,7 @@ class CallScreen extends React.Component {
     }
     else {
       if (this.state.phoneNumber != null) {
+        console.debug('call screen called');
         this.makeCall();
       }
     }
