@@ -76,24 +76,28 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             Log.d("phoneNumber", phoneNumber + "");
 
             if (reactContext == null) {
-//                Intent intent = new Intent(mContext, MainActivity.class);
-//                intent.putExtra("incoming_call", true);
-//                intent.putExtra("phoneNumber", phoneNumber);
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("incoming_call", true);
+                intent.putExtra("phoneNumber", phoneNumber);
+                startActivity(intent);
+                finish();
 //
 //                if(!reactApplicationContext.hasActiveCatalystInstance()) {
 //                    return;
 //                }
-                ReactInstanceManager reactInstanceManager = getReactInstanceManager();
-                reactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
-                    @Override
-                    public void onReactContextInitialized(ReactContext context) {
-                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("CallAnswered", phoneNumber);
-                        reactInstanceManager.removeReactInstanceEventListener(this);
-                    }
-                });
+
+
+//                ReactInstanceManager reactInstanceManager = getReactInstanceManager();
+//                reactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
+//                    @Override
+//                    public void onReactContextInitialized(ReactContext context) {
+//                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+//                                .emit("CallAnswered", phoneNumber);
+//                        reactInstanceManager.removeReactInstanceEventListener(this);
+//                    }
+//                });
+
+
 //                reactApplicationContext
 //                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
 //                        .emit("CallAnswered", phoneNumber);
