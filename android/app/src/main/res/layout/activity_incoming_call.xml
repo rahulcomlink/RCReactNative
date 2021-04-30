@@ -28,7 +28,7 @@
             android:layout_margin="10dp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:text="+91 9011355859"
+            android:text="Unknown"
             android:textSize="35sp" />
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Tushar Patil"
+            android:text="No Name"
             android:textSize="20sp" />
     </LinearLayout>
 
