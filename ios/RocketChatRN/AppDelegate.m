@@ -75,7 +75,7 @@ static void InitializeFlipper(UIApplication *application) {
   
   
   SIPSDKBridge * obj = [[SIPSDKBridge alloc]init];
-  [obj startSipSetting];
+//  [obj startSipSetting];
   [obj getMicrophonePermission];
     
     [self voipRegistration];

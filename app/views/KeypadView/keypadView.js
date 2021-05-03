@@ -29,6 +29,7 @@ import call_back from '../../static/images/call_back.png';
 
 import { CountrySelection } from 'react-native-country-list';
   import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 class KeypadView extends React.Component {
@@ -143,113 +144,113 @@ class KeypadView extends React.Component {
           </View>
           <View>
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("1")}
               >
                 <Image style={styles.buttonicon} source={call_1_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("2")}
               >
                 <Image style={styles.buttonicon} source={call_2_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("3")}
               >
                 <Image style={styles.buttonicon} source={call_3_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
 
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("4")}
               >
                 <Image style={styles.buttonicon} source={call_4_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("5")}
               >
                 <Image style={styles.buttonicon} source={call_5_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("6")}
               >
                 <Image style={styles.buttonicon} source={call_6_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
 
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("7")}
               >
                 <Image style={styles.buttonicon} source={call_7_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("8")}
               >
                 <Image style={styles.buttonicon} source={call_8_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("9")}
               >
                 <Image style={styles.buttonicon} source={call_9_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
 
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("*")}
               >
                 <Image style={styles.buttonicon} source={call_star_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("0")}
               >
                 <Image style={styles.buttonicon} source={call_0_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
 
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 style={styles.button2}
                 onPress={() => this.onKeyPressed("#")}
               >
                 <Image style={styles.buttonicon} source={call_pound_3x} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
           </View>
         </View>
 
         <View style={styles.bottom}>
-          <TouchableOpacity
+          <TouchableWithoutFeedback
             style={styles.button1}
             onPress={() => console.debug("")}
-          ></TouchableOpacity>
-          <TouchableOpacity style={styles.button1} onPress={() => this.call()}>
+          ></TouchableWithoutFeedback>
+          <TouchableWithoutFeedback style={styles.button1} onPress={() => this.call()}>
             <Image style={styles.button1} source={calling_start} />
-          </TouchableOpacity>
-          <TouchableOpacity
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
             style={styles.button1}
             onPress={() => this.removeChar()}
           >
             <Image style={{ width: 35,height: 35, alignSelf: "center", resizeMode: "contain",margin : 35}} source={call_back} />
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );

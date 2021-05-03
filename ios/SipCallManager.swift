@@ -47,6 +47,7 @@ class SipCallManager {
     var remotePartyClid = ""
     var isInboundCall = false
     var incomingUUID : UUID?
+    var answerAction : CXAnswerCallAction?
     
     typealias ActionCompletion = (Error?) -> Void
     private var _actionCompletion: SingleFireCallback<Error>?
@@ -72,7 +73,7 @@ class SipCallManager {
     }
     
   func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String) {
-    if(!isInboundCall == true){
+  //  if(!isInboundCall == true){
     NSLog("start called")
     NSLog("turn port = %@", turnPort)
     NSLog("username = %@", username)
@@ -118,6 +119,8 @@ class SipCallManager {
                      }else if transport == "tls" || transport == "TLS" {
                          sipTransport = CM_TLS
                      }
+      
+      
     var stunPort1 = ""
     if stunPort == "-" {
       stunPort1 = ""
@@ -182,6 +185,8 @@ class SipCallManager {
       
      */
    
+      
+    
                 
                    // Get the absolute path to the ringback file
                  let ringbackPath = Bundle.main.path(forResource: "ring", ofType: "wav")
@@ -254,14 +259,14 @@ class SipCallManager {
         }
       }
     }*/
-  }
+  //}
     }
     
     func command(_ args: UnsafeMutablePointer<UnsafePointer<Int8>?>!){}
     
     func stop(){
         NSLog("stop")
-       // CmShutdown()
+        CmShutdown()
     }
     
     /*
@@ -390,55 +395,55 @@ let stunPort = "-"
 let turnPort = "-"
 let turnRealm = ""
 var stunPort1 = ""
-if stunPort == "-" {
-stunPort1 = ""
-}
-          let stunhostt = stunHost + (stunPort1 == "0" ? "" : (":" + stunPort1))
-         var stunHost1 = CString(from: "")
-if stunHost == "-" {
-stunHost1 = CString(from: "")
-}
-else {
-stunHost1 = CString(from: stunhostt)
-}
 
-
-var turnHost1 = CString(from: turnHost)
-var turnUsername1 = CString(from: turnUsername)
-var turnPassword1 = CString(from: turnPassword)
-var turnRealm1 = CString(from: "")
-
-if turnHost == "-"{
-turnHost1 = CString(from: "")
-}
-else {
-let turnhostt = turnHost + (turnPort == "0" ? "" : (":" + turnPort))
-turnHost1 = CString(from: turnhostt)
-}
-
-if turnUsername == "-"{
-turnUsername1 = CString(from: "")
-}
-else {
-turnUsername1 = CString(from: turnUsername)
-}
-
-if turnPassword == "-"{
-turnPassword1 = CString(from: "")
-}
-else {
-turnPassword1 = CString(from: turnPassword)
-}
-
-if turnRealm == "-"{
-turnRealm1 = CString(from: "")
-}
-else {
-turnRealm1 = CString(from: turnRealm)
-}
-  
-
+   
+      if stunPort == "-" {
+        stunPort1 = ""
+      }
+                    let stunhostt = stunHost + (stunPort1 == "0" ? "" : (":" + stunPort1))
+                   var stunHost1 = CString(from: "")
+        if stunHost == "-" {
+          stunHost1 = CString(from: "")
+        }
+        else {
+          stunHost1 = CString(from: stunhostt)
+        }
         
+        
+        var turnHost1 = CString(from: turnHost)
+        var turnUsername1 = CString(from: turnUsername)
+        var turnPassword1 = CString(from: turnPassword)
+        var turnRealm1 = CString(from: turnRealm)
+      
+      if turnHost == "-"{
+        turnHost1 = CString(from: "")
+      }
+      else {
+        let turnhostt = turnHost + (turnPort == "0" ? "" : (":" + turnPort))
+        turnHost1 = CString(from: turnhostt)
+      }
+      
+      if turnUsername == "-"{
+        turnUsername1 = CString(from: "")
+      }
+      else {
+        turnUsername1 = CString(from: turnUsername)
+      }
+      
+      if turnPassword == "-"{
+        turnPassword1 = CString(from: "")
+      }
+      else {
+        turnPassword1 = CString(from: turnPassword)
+      }
+      
+      if turnRealm == "-"{
+        turnRealm1 = CString(from: "")
+      }
+      else {
+        turnRealm1 = CString(from: turnRealm)
+      }
+
            // Get the absolute path to the ringback file
          let ringbackPath = Bundle.main.path(forResource: "ring", ofType: "wav")
          let ringbackAudioFile = CString(from: ringbackPath!)
@@ -495,6 +500,18 @@ cmConfig.device_id = CString(from: voipToken).value
       })
       _sipUriTemplate  = "sip:%s@\(sipServerHost):\(serverPort);transport=\(transport)"
 
+      
+      self._dispatchQueue.async {
+         do {
+           // Start waiting for a call here. Note that the following call doesn't block.
+           // Once the call arrives, the underlying layers will invoke onInboundCallArrived
+           // which will trip the blocking barrier.
+           self._waitingForInboundCall.setAndNotify(newValue: true)
+          try self.waitForCall(with: self.incomingUUID!)
+         } catch {
+          
+         }
+       }
       
     }
   }
@@ -933,6 +950,7 @@ cmConfig.device_id = CString(from: voipToken).value
     }
 
     _waitingForInboundCall.setAndNotify(newValue: false)
+    acceptCallAfterAppLaunch()
   }
   
   func getCallInfo(uuid: UUID) -> CallInfo {
@@ -963,6 +981,7 @@ cmConfig.device_id = CString(from: voipToken).value
     
   func onPushArrived(payload: PKPushPayload, phoneNumber : String) {
     NSLog("onPushArrived")
+    
       do {
         // Try to build an inbound call descriptor from the payload. If that is not
         // possible the InboundCallDescriptor constructor will throw.
@@ -1005,11 +1024,11 @@ cmConfig.device_id = CString(from: voipToken).value
           if let error = error {
             
           } else {
+           // startSipSettings()
             self.isInboundCall = true
             self.incomingUUID = uuid
             
-            let state = UIApplication.shared.applicationState
-           // if state == .active ||  state == .background {
+           /*
               self._dispatchQueue.async {
                 do {
                   // Start waiting for a call here. Note that the following call doesn't block.
@@ -1020,8 +1039,8 @@ cmConfig.device_id = CString(from: voipToken).value
                 } catch {
                  
                 }
-              }
-           // }
+              }*/
+          
             
           }
         }
@@ -1091,7 +1110,9 @@ cmConfig.device_id = CString(from: voipToken).value
     _pendingCallUUIDQueue.push(uuid)
     print("wait for call called")
     NSLog("wait for call called")
-    register()
+      self.register()
+  
+   
   }
   
   /// Handles the answer-call action. Invoked via the provider delegate trampoline.
@@ -1112,10 +1133,11 @@ cmConfig.device_id = CString(from: voipToken).value
     
     // This becomes our current call.
     _currentCallUuid = action.callUUID
-    
-    _dispatchQueue.async {
+    self.answerAction = action
+    self.startSipSettings()
+   /* _dispatchQueue.async {
       self._handleAnswerCallActionAsync(action)
-    }
+    }*/
   }
   
   fileprivate func _handleAnswerCallActionAsync(_ action: CXAnswerCallAction) {
@@ -1179,6 +1201,53 @@ cmConfig.device_id = CString(from: voipToken).value
     
     
   }
+  
+  func acceptCallAfterAppLaunch(){
+      NSLog("acceptCallAfterAppLaunch called ")
+    _suppressPublishedPropertyReset = false
+      configureAudioSession(AVAudioSession.sharedInstance())
+      
+      // Fulfill this action now. This is when CallKit will start initializing
+      // the audio session. Note that this happens despite our sassion already having been
+      // configured in the above step. Consequently, we end up configuring the session
+      // twice.
+      answerAction!.fulfill()
+      
+      // Now wait for the session to finish initializing. If we proceed and CallKit has not
+      // finished initializing the audio session and answer the call, the call will end up
+      // without audio.
+      //
+      // FIXME: for now, in case of timeout, we'll simply not answer the call. If we try
+      // to drop the call at this point we may crash. This needs to be investigated.
+  //    if (!_audioSessionReady.wait(untilEqualTo: true, timeout: 0.5)) {
+  //      return
+  //    }
+  //
+  //
+      
+      
+      do {
+        // At this point we know we have a call that we can answer.
+  //
+        _currentCallUuid = answerAction!.callUUID
+        try self.answerCall(uuid: answerAction!.callUUID)
+        
+        DispatchQueue.main.async {
+          // Let everyone know that we're no longer connecting (we're connected).
+          self.isConnecting = false;
+        }
+        
+        
+        startCallTimer()
+        
+      } catch {
+        NSLog("_handleAnswerCallActionAsync called %@",error.localizedDescription)
+        _logger.write("error.desc = \(error.localizedDescription)", type: .default)
+        _logger.writeError(error)
+        //dropCurrentCall()
+      }
+    }
+    
   
   func answerCall(uuid: UUID) throws {
     print("answer call")

@@ -50,6 +50,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BackHandler } from 'react-native';
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
+import commonSipSettingFunc from "../SipSettingView/commonSipSettingFunc";
 
 class PhonebookView extends React.Component {
   // static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -108,6 +109,7 @@ class PhonebookView extends React.Component {
 
   async componentDidMount() {
 
+    commonSipSettingFunc.getSipSettingsAndStart();
     const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: 'PhonebookView' })],
