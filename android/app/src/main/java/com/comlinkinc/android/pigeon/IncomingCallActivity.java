@@ -40,6 +40,8 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_incoming_call);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
             setTurnScreenOn(true);
@@ -51,7 +53,6 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         }
-        setContentView(R.layout.activity_incoming_call);
 
         mContext = IncomingCallActivity.this;
         findViews();
