@@ -62,7 +62,9 @@ import { networking } from "reactotron-react-native";
 import RNDrawOverlay from "react-native-draw-overlay";
 import AutoStart from "react-native-autostart";
 // We are importing the native Java module here
-import { NativeModules, NativeEventEmitter} from "react-native";
+import { NativeModules, NativeEventEmitter } from "react-native";
+import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+
 var NotificationSettings = NativeModules.NotificationSettings;
 
 const stateAttrsUpdate = [
@@ -987,7 +989,7 @@ class RoomView extends React.Component {
     ejson.rid = subscriptions.room._raw.rid;
     ejson.name = subscriptions.room._raw.name;
     ejson.type = subscriptions.room._raw.t;
-    ejson.host = "https://pigeon.mvoipctsi.com";
+    ejson.host = IMBaseUrl;
     ejson.messageType = "e2e";
 
     const sender = {};
