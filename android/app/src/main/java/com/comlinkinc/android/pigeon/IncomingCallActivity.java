@@ -84,7 +84,13 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
         if (v == btn_end_call) {
             // Handle clicks for btn_end_call
             CallManager.reject();
-            finish();
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                super.finishAndRemoveTask();
+            }
+            else {
+                super.finish();
+            }
         } else if (v == btn_accept_call) {
             // Handle clicks for btn_accept_call
             CallManager.stopRingTone();
