@@ -436,7 +436,7 @@ class SIPSettings extends React.Component {
               placeholder="Stun Host"
               title="STUN Server"
               keyBoardType="email-address"
-              textValue={this.state.stunServer}
+              textValue={this.state.stunServer.replaceAll(":", "")}
               onTextChange={this.onStunServerChanged}
             />
 

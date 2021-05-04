@@ -426,7 +426,7 @@ class getSipSettingsFromAPI extends React.Component {
               placeholder="url"
               title="STUN Server"
               keyBoardType="email-address"
-              textValue={this.state.stunServer}
+              textValue={this.state.stunServer.replaceAll(":", "")}
               onTextChange={this.onStunServerChanged}
             />
 
