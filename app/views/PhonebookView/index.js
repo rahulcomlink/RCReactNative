@@ -52,11 +52,11 @@ import { BackHandler } from 'react-native';
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
 import commonSipSettingFunc from "../SipSettingView/commonSipSettingFunc";
-import { DynamicValue, useDynamicValue } from 'react-native-dark-mode';
+//import { DynamicValue, useDynamicValue } from 'react-native-dark-mode';
 
-const lightLogo = require('../../static/images/btn_back.png')
-const darkLogo = require('../../static/images/left-arrow.png')
-const logoUri = new DynamicValue(lightLogo, darkLogo)
+// const lightLogo = require('../../static/images/btn_back.png')
+// const darkLogo = require('../../static/images/left-arrow.png')
+// const logoUri = new DynamicValue(lightLogo, darkLogo)
 
 class PhonebookView extends React.Component {
   // static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -76,7 +76,7 @@ class PhonebookView extends React.Component {
       title: "Phonebook",
     };
 
-    const source = useDynamicValue(logoUri)
+   // const source = useDynamicValue(logoUri)
 
     options.headerLeft = () => (
       <TouchableOpacity style= {{width : 40, height : 20, marginLeft : 20}}
@@ -85,7 +85,7 @@ class PhonebookView extends React.Component {
         { navigation.navigate('RoomsListView');
         console.debug("options.headerLeft called"); }
       } >  
-      <Image style= {{width : 10, height : 20 , resizeMode : 'contain', }}  source = {source}/>     
+      <Image style= {{width : 40, height : 20 , resizeMode : 'contain', }}  source = {left_arrow}/>     
       </TouchableOpacity>
     );
     
