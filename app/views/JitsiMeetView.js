@@ -1,3 +1,5 @@
+
+    
 import React from "react";
 import PropTypes from "prop-types";
 import JitsiMeet, {
@@ -60,7 +62,6 @@ class JitsiMeetView extends React.Component {
       }
     }, 1000);
   }
-
   componentWillUnmount() {
     logEvent(events.JM_CONFERENCE_TERMINATE);
     if (this.jitsiTimeout) {
@@ -108,3 +109,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(JitsiMeetView);
+

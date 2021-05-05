@@ -35,6 +35,7 @@
 #import <PushKit/PushKit.h>
 //#import "RNVoipPushNotificationManager.h"
 
+#import <assert.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -105,12 +106,13 @@ static void InitializeFlipper(UIApplication *application) {
 
       // Mark migration complete
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
-    }
+  //   }
   
-  [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isAppLaunch"];
-  [[NSUserDefaults standardUserDefaults]synchronize];
+  // [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isAppLaunch"];
+  // [[NSUserDefaults standardUserDefaults]synchronize];
 
-    return YES;
+}
+      return YES;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application{
