@@ -7,5 +7,5 @@
   "methodActAuthSub": "actauthsub",
   "methodActprovsub": "actprovsub",
 
-  "IMBaseUrl": "https://pigeon.mvoipctsi.com"
+  "pigeonBaseUrl": "https://pigeon.mvoipctsi.com"
 }

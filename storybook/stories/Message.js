@@ -8,7 +8,7 @@ import messagesStatus from '../../app/constants/messagesStatus';
 import MessageSeparator from '../../app/views/RoomView/Separator';
 
 import { themes } from '../../app/constants/colors';
-import { IMBaseUrl as IMBaseUrl } from "../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../app.json";
 
 
 let _theme = 'light';
@@ -29,7 +29,7 @@ const author = {
 	_id: 'userid',
 	username: 'diego.mello'
 };
-const baseUrl = IMBaseUrl;
+const baseUrl = pigeonBaseUrl;
 const date = new Date(2017, 10, 10, 10);
 const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
@@ -665,8 +665,8 @@ export default ({ theme }) => {
       <Message
         urls={[
           {
-            url: IMBaseUrl,
-            image: IMBaseUrl+"/images/blog/post.jpg",
+            url: pigeonBaseUrl,
+            image: pigeonBaseUrl+"/images/blog/post.jpg",
             title: "Pigeon - Free, Open Source, Enterprise Team Chat",
             description:
               "Pigeon is the leading open source team chat software solution. Free, unlimited and completely customizable with on-premises and SaaS cloud hosting.",

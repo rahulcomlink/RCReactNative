@@ -54,7 +54,7 @@ import Navigation from "../../lib/Navigation";
 import { withActionSheet } from "../ActionSheet";
 import { sanitizeLikeString } from "../../lib/database/utils";
 import { CustomIcon } from "../../lib/Icons";
-import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
 
 if (isAndroid) {
   require("./EmojiKeyboard");
@@ -780,7 +780,7 @@ class MessageBox extends Component {
     ejson.rid = subscriptions.room._raw.rid;
     ejson.name = subscriptions.room._raw.name;
     ejson.type = subscriptions.room._raw.t;
-    ejson.host = IMBaseUrl;
+    ejson.host = pigeonBaseUrl;
     ejson.messageType = "e2e";
 
     const sender = {};

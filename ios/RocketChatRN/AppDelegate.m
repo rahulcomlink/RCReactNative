@@ -106,13 +106,10 @@ static void InitializeFlipper(UIApplication *application) {
 
       // Mark migration complete
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
-  //   }
-  
-  // [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isAppLaunch"];
-  // [[NSUserDefaults standardUserDefaults]synchronize];
-
-}
-      return YES;
+    }
+  [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isAppLaunch"];
+  [[NSUserDefaults standardUserDefaults]synchronize];
+   return YES;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application{

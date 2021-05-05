@@ -63,7 +63,7 @@ import RNDrawOverlay from "react-native-draw-overlay";
 import AutoStart from "react-native-autostart";
 // We are importing the native Java module here
 import { NativeModules, NativeEventEmitter } from "react-native";
-import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
 
 var NotificationSettings = NativeModules.NotificationSettings;
 
@@ -991,7 +991,7 @@ class RoomView extends React.Component {
     ejson.rid = subscriptions.room._raw.rid;
     ejson.name = subscriptions.room._raw.name;
     ejson.type = subscriptions.room._raw.t;
-    ejson.host = IMBaseUrl;
+    ejson.host = pigeonBaseUrl;
     ejson.messageType = "e2e";
 
     const sender = {};

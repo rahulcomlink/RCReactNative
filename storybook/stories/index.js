@@ -18,11 +18,11 @@ import Avatar from './Avatar';
 
 import MessageContext from '../../app/containers/message/Context';
 import { themes } from '../../app/constants/colors';
-import { IMBaseUrl as IMBaseUrl } from "../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../app.json";
 
 
 // MessageProvider
-const baseUrl = IMBaseUrl;
+const baseUrl = pigeonBaseUrl;
 const user = {
 	id: '',
 	username: 'diego.mello',
@@ -40,11 +40,11 @@ const reducers = combineReducers({
     },
   }),
   server: () => ({
-    server: IMBaseUrl,
+    server: pigeonBaseUrl,
     version: "3.7.0",
   }),
   share: () => ({
-    server: IMBaseUrl,
+    server: pigeonBaseUrl,
     version: "3.7.0",
     settings: {},
   }),

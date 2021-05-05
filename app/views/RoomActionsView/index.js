@@ -30,7 +30,7 @@ import { E2E_ROOM_TYPES } from "../../lib/encryption/constants";
 import protectedFunction from "../../lib/methods/helpers/protectedFunction";
 import database from "../../lib/database";
 import { withDimensions } from "../../dimensions";
-import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
 
 
 class RoomActionsView extends React.Component {
@@ -690,7 +690,7 @@ class RoomActionsView extends React.Component {
     ejson.rid = subscriptions.room._raw.rid;
     ejson.name = subscriptions.room._raw.name;
     ejson.type = subscriptions.room._raw.t;
-    ejson.host = IMBaseUrl;
+    ejson.host = pigeonBaseUrl;
     ejson.messageType = "jitsi_call_started";
     ejson.onlyAudio = onlyAudio;
 

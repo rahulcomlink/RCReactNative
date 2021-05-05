@@ -9,7 +9,7 @@ import Item from './Item';
 import * as List from '../../containers/List';
 import { themes } from '../../constants/colors';
 import { ThemeContext } from '../../theme';
-import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
 
 
 const author = {
@@ -17,7 +17,7 @@ const author = {
   username: "pigeon.cat",
   name: "Pigeon Cat",
 };
-const baseUrl = IMBaseUrl;
+const baseUrl = pigeonBaseUrl;
 const date = new Date(2020, 10, 10, 10);
 const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const defaultItem = {
@@ -59,11 +59,11 @@ const reducers = combineReducers({
     },
   }),
   server: () => ({
-    server: IMBaseUrl,
+    server: pigeonBaseUrl,
     version: "3.7.0",
   }),
   share: () => ({
-    server: IMBaseUrl,
+    server: pigeonBaseUrl,
     version: "3.7.0",
   }),
   settings: () => ({

@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import Markdown from '../../app/containers/markdown';
 import StoriesSeparator from './StoriesSeparator';
 import { themes } from '../../app/constants/colors';
-import { IMBaseUrl as IMBaseUrl } from "../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../app.json";
 
 
 const styles = StyleSheet.create({
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-const baseUrl = IMBaseUrl;
+const baseUrl = pigeonBaseUrl;
 const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const lineBreakText = `a
 b

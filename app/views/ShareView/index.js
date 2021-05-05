@@ -24,7 +24,7 @@ import { getUserSelector } from '../../selectors/login';
 import StatusBar from '../../containers/StatusBar';
 import database from '../../lib/database';
 import { canUploadFile } from '../../utils/media';
-import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
 
 
 class ShareView extends Component {
@@ -315,7 +315,7 @@ class ShareView extends Component {
 		ejson.rid = subscriptions.room._raw.rid
 		ejson.name = subscriptions.room._raw.name
 		ejson.type = subscriptions.room._raw.t
-		ejson.host = IMBaseUrl
+		ejson.host = pigeonBaseUrl
 		ejson.messageType = 'e2e'
 
 		const sender = {}

@@ -7,7 +7,7 @@ import Avatar from '../../app/containers/Avatar/Avatar';
 import Status from '../../app/containers/Status/Status';
 import StoriesSeparator from './StoriesSeparator';
 import sharedStyles from '../../app/views/Styles';
-import { IMBaseUrl as IMBaseUrl } from "../../app.json";
+import { pigeonBaseUrl as pigeonBaseUrl } from "../../app.json";
 
 
 const styles = StyleSheet.create({
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-const server = IMBaseUrl;
+const server = pigeonBaseUrl;
 
 const Separator = ({ title, theme }) => <StoriesSeparator title={title} theme={theme} />;
 Separator.propTypes = {
