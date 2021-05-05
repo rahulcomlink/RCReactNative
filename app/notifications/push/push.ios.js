@@ -2,6 +2,7 @@ import NotificationsIOS, { NotificationAction, NotificationCategory } from 'reac
 import {Notifications} from 'react-native-notifications';
 import messaging from '@react-native-firebase/messaging';
 import { Alert , NativeEventEmitter, NativeModules} from 'react-native';
+import EJSON from 'ejson';
 import reduxStore from '../../lib/createStore';
 import I18n from '../../i18n';
 import Navigation from '../../lib/Navigation';
@@ -54,14 +55,15 @@ class PushNotification {
 		});
 		
 		NotificationsIOS.addEventListener('notificationReceivedForeground', (notification, completion) => {
-			console.debug('Notification received in foreground 1: ', notification);
+			console.debug('Notification received in foreground : ', notification);
+			
 			completion({ alert: true, sound: true, badge: true });
 		});
 
 		
 
 		NotificationsIOS.addEventListener('notificationReceivedBackground', (notification, completion) => {
-			console.debug('Notification received in foreground 1: ', notification);
+			console.debug('Notification received in background : ', notification);
 			completion({ alert: true, sound: true, badge: true });
 		});
 
@@ -72,11 +74,14 @@ class PushNotification {
 		  });
 
 		 messaging().onMessage(async remoteMessage => {
-			 console.debug('messaging().onMessage called');
-			//this.onNotification(remoteMessage.data);
-			//Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-			
-			//completion({ alert: true, sound: true, badge: true });
+			 
+			 const {
+				rid, name, sender, type, host, messageType
+			} = EJSON.parse(remoteMessage.data.ejson);
+	
+			if(messageType == 'jitsi_call_started'){
+				this.onNotification(remoteMessage.data);
+			}
 		  });
 
 		  messaging().onNotificationOpenedApp(remoteMessage => {
@@ -85,8 +90,7 @@ class PushNotification {
 			  remoteMessage,
 			);
 			this.onNotification(remoteMessage.data);
-			//Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-		   // navigation.navigate(remoteMessage.data.type);
+
 		  });
 
 		  messaging()
@@ -98,7 +102,6 @@ class PushNotification {
             remoteMessage.notification,
 		  );
 		  this.onNotification(remoteMessage.data);
-		  //Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
         }
       });
 
