@@ -51,6 +51,9 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  //[self redirectLogToDocuments];
+  NSLog(@"launchoptions = %@",launchOptions);
+  NSLog(@"didFinishLaunchingWithOptions");
     #if DEBUG
       InitializeFlipper(application);
     #endif
@@ -104,8 +107,27 @@ static void InitializeFlipper(UIApplication *application) {
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
     }
   
+  [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isAppLaunch"];
+  [[NSUserDefaults standardUserDefaults]synchronize];
 
     return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+  NSLog(@"applicationDidBecomeActive");
+  
+  if([[[NSUserDefaults standardUserDefaults]valueForKey:@"isAppLaunch"] isEqualToString:@"true"] && [[[NSUserDefaults standardUserDefaults]valueForKey:@"isVoipCall"] isEqualToString:@"true"]){
+    [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
+    [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isVoipCall"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self performSelector:@selector(callFuncAfterDelay) withObject:nil afterDelay:5.0];
+  }
+}
+
+- (void)callFuncAfterDelay{
+  SIPSDKBridge * obj = [[SIPSDKBridge alloc]init];
+  NSLog(@"isVoipCall value true");
+  [obj acceptCallAfterAppLaunch];
 }
 
 
@@ -157,6 +179,15 @@ static void InitializeFlipper(UIApplication *application) {
                      restorationHandler:restorationHandler];
 }
 
+
+- (void)applicationWillTerminate:(UIApplication *)application{
+  [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"isAppLaunch"];
+  [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"isVoipCall"];
+  [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+
+
 // Register for VoIP notifications
 - (void) voipRegistration {
   dispatch_queue_t mainQueue = dispatch_get_main_queue();
@@ -171,6 +202,7 @@ static void InitializeFlipper(UIApplication *application) {
 // --- Handle updated push credentials
 - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type {
   // Register VoIP push token (a property of PKPushCredentials) with server
+  NSLog(@"didUpdatePushCredentials");
   NSLog(@"voip token = %@",credentials.token);
     SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
     [object getVOIPTokenWithVoipToken:credentials];
@@ -188,30 +220,14 @@ static void InitializeFlipper(UIApplication *application) {
 // --- Handle incoming pushes
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type withCompletionHandler:(void (^)(void))completion {
   NSLog(@"push payload comes %@",payload);
-
-  // --- NOTE: apple forced us to invoke callkit ASAP when we receive voip push
-  // --- see: react-native-callkeep
-
-  // --- Retrieve information from your voip push payload
-  NSString *uuid = payload.dictionaryPayload[@"uuid"];
-  NSString *callerName = [NSString stringWithFormat:@"%@ (Connecting...)", payload.dictionaryPayload[@"callerName"]];
-  NSString *handle = payload.dictionaryPayload[@"handle"];
-  NSString *url = payload.dictionaryPayload[@"url"];
-
-  // --- this is optional, only required if you want to call `completion()` on the js side
-  //[RNVoipPushNotificationManager addCompletionHandler:uuid completionHandler:completion];
-
-  // --- Process the received push
- // [RNVoipPushNotificationManager didReceiveIncomingPushWithPayload:payload forType:(NSString *)type];
-
-  // --- You should make sure to report to callkit BEFORE execute `completion()`
-  [self redirectLogToDocuments];
+  
+  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
+  [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isVoipCall"];
+  [[NSUserDefaults standardUserDefaults]synchronize];
+  //[self redirectLogToDocuments];
   SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
   [object sendVoIPPhoneNumberWithPayload:payload];
-  
-//  [RNCallKeep reportNewIncomingCall:uuid handle:handle handleType:@"generic" hasVideo:false localizedCallerName:callerName fromPushKit: YES payload:nil];
-  
-  // --- You don't need to call it if you stored `completion()` and will call it on the js side.
+
   completion();
 }
 

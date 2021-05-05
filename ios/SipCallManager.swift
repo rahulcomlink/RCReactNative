@@ -48,6 +48,7 @@ class SipCallManager {
     var isInboundCall = false
     var incomingUUID : UUID?
     var answerAction : CXAnswerCallAction?
+    var isappkilled = true
     
     typealias ActionCompletion = (Error?) -> Void
     private var _actionCompletion: SingleFireCallback<Error>?
@@ -73,7 +74,7 @@ class SipCallManager {
     }
     
   func start(username : String, password : String, sipServer : String, sipRealm : String, stunHost : String, turnHost : String, turnUsername : String, turnPassword : String, turnRealm : String, iceEnabled : String, localPort : String, serverPort : String , transport : String, turnPort : String, stunPort : String) {
-  //  if(!isInboundCall == true){
+
     NSLog("start called")
     NSLog("turn port = %@", turnPort)
     NSLog("username = %@", username)
@@ -94,6 +95,7 @@ class SipCallManager {
     print("serverPort = \(serverPort)")
     print("transport = \(transport)")
     print("turnPort = \(turnPort)")
+    print("trasport = \(transport)")
     //print("VoIPToken = \(VoIPToken)")
    
     
@@ -183,8 +185,8 @@ class SipCallManager {
                   turnRealm1 = CString(from: turnRealm)
       }
       
-     */
-   
+     
+   */
       
     
                 
@@ -209,10 +211,10 @@ class SipCallManager {
                            cmConfig.sip_password = sipPassword.value
                            cmConfig.sip_transport = sipTransport
                            cmConfig.sip_realm = sipRealm.value
-                           cmConfig.stun_host = stunHost1.value
-                           cmConfig.turn_host = turnHost1.value
-                           cmConfig.turn_username = turnUsername1.value
-                           cmConfig.turn_password = turnPassword1.value
+    cmConfig.stun_host = stunHost1.value
+    cmConfig.turn_host = turnHost1.value
+    cmConfig.turn_username = turnUsername1.value
+    cmConfig.turn_password = turnPassword1.value
                            cmConfig.turn_realm = turnRealm1.value
                            cmConfig.ringback_audio_file = ringbackAudioFile.value
     
@@ -230,7 +232,6 @@ class SipCallManager {
                  command(&cargs)
                  cmConfig.desired_codecs = UnsafeMutablePointer(mutating: cargs)
                   cmConfig.enable_ice = iceEnabled == "true" ? CM_TRUE : CM_FALSE
-                        
                 if CmInitialize(&cmConfig) != CM_SUCCESS {
                    
                    DialerSubsystemFailure(
@@ -245,21 +246,74 @@ class SipCallManager {
               })
               _sipUriTemplate  = "sip:%s@\(sipServerHost):\(serverPort);transport=\(transport)"
     
+    /*
+    let sipServerHost = CString(from: sipServer)
+    let sipUsername = CString(from: username)
+    let sipPassword = CString(from: password)
+    let sipRealm = CString(from: sipRealm)
+    defer { CString.release(sipUsername, sipPassword, sipRealm) }
     
-    /*if(isInboundCall == true){
-      self._dispatchQueue.async {
-        do {
-          // Start waiting for a call here. Note that the following call doesn't block.
-          // Once the call arrives, the underlying layers will invoke onInboundCallArrived
-          // which will trip the blocking barrier.
-          self._waitingForInboundCall.setAndNotify(newValue: true)
-          try self.waitForCall(with: self.incomingUUID!)
-        } catch {
-         
-        }
-      }
-    }*/
-  //}
+    var sipTransport: CMSIPTRANSPORT = CM_UDP
+    
+    if transport == "tcp" || transport == "TCP" {
+      sipTransport = CM_TCP
+    }else if transport == "udp" || transport == "UDP" {
+      sipTransport = CM_UDP
+    }else if transport == "tls" || transport == "TLS" {
+      sipTransport = CM_TLS
+    }
+    
+    let stunHost1 = CString(from: stunHost)
+    
+    let turnHost1 = iceEnabled == "true" ? CString(from: turnHost) : CString(from: "")
+    let turnUsername1 = iceEnabled == "true" ? CString(from: turnUsername) : CString(from: "")
+    let turnPassword1 = iceEnabled == "true" ? CString(from: turnPassword) : CString(from: "")
+    let turnRealm1 = CString(from: "")
+    
+    let ringbackPath = Bundle.main.path(forResource: "ring", ofType: "wav")
+    let ringbackAudioFile = CString(from: ringbackPath!)
+    
+    defer {CString.release(stunHost1, turnHost1, turnUsername1, turnPassword1, turnRealm1,
+        ringbackAudioFile)
+    }
+    
+    var cmConfig = CMCONFIGURATION()
+    CmInitializeConfiguration(&cmConfig)
+    cmConfig.sip_server_host = sipServerHost.value
+    cmConfig.sip_local_port =   UInt16(Int(localPort) ?? 0)
+    cmConfig.sip_server_port =  UInt16(Int(serverPort) ?? 0)
+    cmConfig.sip_username = sipUsername.value
+    cmConfig.sip_password = sipPassword.value
+    cmConfig.sip_transport = sipTransport
+    cmConfig.sip_realm = sipRealm.value
+    cmConfig.stun_host = stunHost1.value
+    cmConfig.turn_host = turnHost1.value
+    cmConfig.turn_username = turnUsername1.value
+    cmConfig.turn_password = turnPassword1.value
+    cmConfig.turn_realm = turnRealm1.value
+    cmConfig.ringback_audio_file = ringbackAudioFile.value
+    
+    let array: [String?] = ["G729/8000/1", "opus/48000/2", "opus/24000/2","PCMU/8000/1","PCMA/8000/1", nil]
+    var cargs = array.map { $0.flatMap { UnsafePointer<Int8>(strdup($0)) } }
+    command(&cargs)
+    cmConfig.desired_codecs = UnsafeMutablePointer(mutating: cargs)
+    cmConfig.enable_ice = iceEnabled == "true" ? CM_TRUE : CM_FALSE
+    
+    if CmInitialize(&cmConfig) != CM_SUCCESS {
+      print("start sip server failed")
+       DialerSubsystemFailure(
+         details: DialerErrorDetails(CM_SUBSYSTEM_FAILURE, "Initialization failure"))
+     }else{
+       print("start sip server success")
+     }
+    
+    // Set up callbacks
+    CmSetInboundCallHandler({ handle in SipCallManager.shared.onInboundCall(handle: handle) })
+    CmSetCallStateChangeHandler({ handle in
+       SipCallManager.shared.onCallStateChanged(handle: handle)
+    })
+    _sipUriTemplate  = "sip:%s@\(sipServerHost):\(serverPort);transport=\(transport)"
+    */
     }
     
     func command(_ args: UnsafeMutablePointer<UnsafePointer<Int8>?>!){}
@@ -284,7 +338,7 @@ class SipCallManager {
         if status != CM_SUCCESS {
           NSLog("register failed")
           print("register failed")
-          //reset()
+          reset()
         }else {
           NSLog("register success")
           print("register success")
@@ -307,6 +361,10 @@ class SipCallManager {
         callHandle = nil
         remotePartyClid = ""
         self.isInboundCall = false
+        isappkilled = true
+      UserDefaults.standard.setValue("false", forKey: "isVoipCall")
+      UserDefaults.standard.setValue("false", forKey: "isAppLaunch")
+     
     }
     
   
@@ -950,7 +1008,6 @@ cmConfig.device_id = CString(from: voipToken).value
     }
 
     _waitingForInboundCall.setAndNotify(newValue: false)
-    acceptCallAfterAppLaunch()
   }
   
   func getCallInfo(uuid: UUID) -> CallInfo {
@@ -964,7 +1021,7 @@ cmConfig.device_id = CString(from: voipToken).value
   }
   
   func processPayload(payload: PKPushPayload, userInfo : NSDictionary){
-    NSLog("processPayload")
+    NSLog("processPayload \(userInfo)")
     if let url : String = userInfo.value(forKey: "url") as? String{
         let substring = url.replacingOccurrences(of: "pigeon://incomingcall/", with: "")
         
@@ -1024,12 +1081,14 @@ cmConfig.device_id = CString(from: voipToken).value
           if let error = error {
             
           } else {
-           // startSipSettings()
+            
             self.isInboundCall = true
             self.incomingUUID = uuid
             
-           /*
-              self._dispatchQueue.async {
+            startSipSettings()
+           
+           
+             /* self._dispatchQueue.async {
                 do {
                   // Start waiting for a call here. Note that the following call doesn't block.
                   // Once the call arrives, the underlying layers will invoke onInboundCallArrived
@@ -1134,10 +1193,13 @@ cmConfig.device_id = CString(from: voipToken).value
     // This becomes our current call.
     _currentCallUuid = action.callUUID
     self.answerAction = action
-    self.startSipSettings()
-   /* _dispatchQueue.async {
-      self._handleAnswerCallActionAsync(action)
-    }*/
+    
+    if UserDefaults.standard.value(forKey: "isAppLaunch") as! String == "false" && UserDefaults.standard.value(forKey: "isVoipCall")as! String == "true" {
+        _dispatchQueue.async {
+          self._handleAnswerCallActionAsync(action)
+        }
+    }
+    
   }
   
   fileprivate func _handleAnswerCallActionAsync(_ action: CXAnswerCallAction) {
@@ -1200,6 +1262,14 @@ cmConfig.device_id = CString(from: voipToken).value
     }
     
     
+  }
+  
+  func configureAudioSession1(){
+    configureAudioSession(AVAudioSession.sharedInstance())
+  }
+  
+  func showIncomingCallScreen(){
+    ModuleWithEmitter.emitter.sendEvent(withName: "getInboundCall", body: ["phoneNumber" : self.phoneNumber])
   }
   
   func acceptCallAfterAppLaunch(){
@@ -1271,7 +1341,8 @@ cmConfig.device_id = CString(from: voipToken).value
   print("handleEndCallAction called")
     // If the call being dropped is the current call then we reset our current
     // call state and all of the published properties.
-  
+    ModuleWithEmitter.emitter.sendEvent(withName: "onSessionConnect", body: ["callStatus" : "TERMINATED"])
+    
     if _currentCallUuid == action.callUUID {
       print("handleEndCallAction called 1")
       reset()

@@ -24,13 +24,6 @@ class SIPSDKBridge : NSObject{
        ];
       callback([NSNull() ,resultsDict])
     }
-    
-    /*
-    let resultsDict = [
-     "voiptoken" : "csjcjshjcsjcskjcksjcjs"
-     ];
-    callback([NSNull() ,resultsDict])
-    */
   }
   
   @objc func sipRegistration(_ username: String,  password: String,  sipServer: String,  sipRealm: String,  stunHost: String, turnHost : String,  turnUsername: String,  turnPassword: String,  turnRealm: String,  iceEnabled: String,  localPort: String,  serverPort: String, transport: String, turnPort: String, stunPort: String) -> Void{
@@ -115,6 +108,14 @@ class SIPSDKBridge : NSObject{
                 break
             }
     print("permissionCheck = \(permissionCheck)")
+  }
+  
+  @objc func configureAudioSession1(){
+    SipCallManager.shared.configureAudioSession1()
+  }
+  
+  @objc func acceptCallAfterAppLaunch(){
+    SipCallManager.shared.acceptCallAfterAppLaunch()
   }
  
 }

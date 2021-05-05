@@ -51,7 +51,7 @@ import call_pound_3x from "../../static/images/call_pound_d_1.png";
 import call_star_3x from "../../static/images/call_star_d_1.png";
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
-
+import {  StackActions } from '@react-navigation/native';
 
 /*
 const onSessionConnect = (event) => {
@@ -63,7 +63,9 @@ const eventEmitterIOS = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
 //eventEmitter.addListener('onSessionConnect', onSessionConnect);
 
 class CallScreen extends React.Component {
-  static navigationOptions = () => ({});
+  static navigationOptions = () => ({
+      
+  });
 
   constructor(props) {
     super(props);
@@ -79,7 +81,8 @@ class CallScreen extends React.Component {
       callStatusText: "calling",
       showKeypad: false,
       name: props.route.params?.name,
-      isVoipCall: props.route.params?.isVoipCall
+      isVoipCall: props.route.params?.isVoipCall,
+      popParam : props.route.params?.popParam
     };
 
     if (os == "android") {
@@ -153,7 +156,13 @@ class CallScreen extends React.Component {
   };
 
   endCall = () => {
-    this.props.navigation.pop();
+   
+    if (this.state.popParam == "1"){
+      this.props.navigation.navigate("PhonebookView", {});
+    }else {
+      this.props.navigation.navigate("KeypadView", {});
+    }
+    
     if (os == "android") {
       NativeModules.Sdk.endCall();
     } else {
@@ -172,12 +181,12 @@ class CallScreen extends React.Component {
     if (event == "TERMINATED") {
       this.setState({ callStatusText: "Terminated" });
       this.endCall();
-      this.props.navigation.pop();
+     // this.props.navigation.pop();
     }
     if (event == "DECLINED") {
       this.setState({ callStatusText: "Declined" });
       this.endCall();
-      this.props.navigation.pop();
+      //this.props.navigation.pop();
     }
   };
 
@@ -190,12 +199,10 @@ class CallScreen extends React.Component {
     }
     if (event.callStatus == "TERMINATED") {
       this.setState({ callStatusText: "Call terminated" });
-      this.props.navigation.pop();
       this.endCall();
     }
     if (event.callStatus == "DECLINED") {
       this.setState({ callStatusText: "Call declined" });
-      this.props.navigation.pop();
       this.endCall();
     }
   };

@@ -45,12 +45,18 @@ import SectionListContacts from "react-native-sectionlist-contacts";
 import SearchBox from "../../containers/SearchBox";
 import call_1_3x from '../../static/images/dial.png';
 import btn_back from '../../static/images/btn_back.png';
+import left_arrow from '../../static/images/left-arrow.png';
 import { StackActions, NavigationActions } from 'react-navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BackHandler } from 'react-native';
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
 import commonSipSettingFunc from "../SipSettingView/commonSipSettingFunc";
+import { DynamicValue, useDynamicValue } from 'react-native-dark-mode';
+
+const lightLogo = require('../../static/images/btn_back.png')
+const darkLogo = require('../../static/images/left-arrow.png')
+const logoUri = new DynamicValue(lightLogo, darkLogo)
 
 class PhonebookView extends React.Component {
   // static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -70,12 +76,16 @@ class PhonebookView extends React.Component {
       title: "Phonebook",
     };
 
+    const source = useDynamicValue(logoUri)
+
     options.headerLeft = () => (
       <TouchableOpacity style= {{width : 40, height : 20, marginLeft : 20}}
       onPress= {()=> 
-        { navigation.navigate('RoomsListView'); }
+          
+        { navigation.navigate('RoomsListView');
+        console.debug("options.headerLeft called"); }
       } >  
-      <Image style= {{width : 10, height : 20 , resizeMode : 'contain', }}  source = {btn_back}/>     
+      <Image style= {{width : 10, height : 20 , resizeMode : 'contain', }}  source = {source}/>     
       </TouchableOpacity>
     );
     
@@ -271,9 +281,10 @@ class PhonebookView extends React.Component {
               }
 
                 console.debug('item.name = ', no)
-                this.props.navigation.push('CallScreen', {
+                this.props.navigation.navigate('CallScreen', {
                   phoneNumber : no,
                   name : item.name,
+                  popParam : "1"
                });
               }}
               otherAlphabet="#"

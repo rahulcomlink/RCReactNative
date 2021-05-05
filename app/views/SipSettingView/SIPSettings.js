@@ -52,7 +52,7 @@ class SIPSettings extends React.Component {
         
         
 
-       { /*
+       /*
        this.state =  {
         sipServer : 'newxonesip.mvoipctsi.com',
         sipPort : '8993',
@@ -66,8 +66,8 @@ class SIPSettings extends React.Component {
         turnPassword : 'hgskSlGHgwSKfgsdUSDGhs',
         stunServer : 'turntaiwan.mvoipctsi.com',
         stunPort : '0'
-    }
-*/}
+       }
+*/
     
     
         this.selIndex = 0
@@ -189,7 +189,7 @@ class SIPSettings extends React.Component {
 
       getSIPUserData = async () =>{
         
-       // if(this.state.sipServer == null) {
+        if(this.state.sipServer == null) {
         try {
             const sipServer = await AsyncStorage.getItem('sipServer') ;
             console.debug('sipServerrrrr=',sipServer);
@@ -270,7 +270,7 @@ class SIPSettings extends React.Component {
        isPageOpen = 1;
     }
 
-       // }
+        }
       }
 
       componentWillMount(){

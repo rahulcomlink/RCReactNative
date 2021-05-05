@@ -75,6 +75,7 @@ class KeypadView extends React.Component {
       key = key.replace("#", "");
       this.props.navigation.push("CallScreen", {
         phoneNumber: cc + key,
+        popParam : "2"
       });
     }
   };
