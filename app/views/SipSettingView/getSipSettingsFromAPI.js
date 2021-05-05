@@ -86,13 +86,13 @@ class getSipSettingsFromAPI extends React.Component {
             // console.debug('stunServer==',this.state.stunServer);
             // console.debug('stunPort=',this.state.stunPort);
 
-        this.selIndex = 0
+        this.state.selectedIndex = 0;
         if(this.state.sipTransport == 'TCP'){
-            this.selIndex = 0
+            this.state.selectedIndex = 0;
         }else if(this.state.sipTransport == 'UDP'){
-            this.selIndex = 1
+            this.state.selectedIndex = 1;
         }else {
-            this.selIndex = 2
+            this.state.selectedIndex = 2;
         }
 
         // if(this.state.fromQRPage == true){
@@ -115,13 +115,13 @@ class getSipSettingsFromAPI extends React.Component {
         this.setState({stunServer : this.props.route.params?.stunServer})
         this.setState({stunPort : this.props.route.params?.stunPort})
 
-        this.selIndex = 0
+        this.state.selectedIndex = 0;
         if(this.state.sipTransport == 'TCP'){
-            this.selIndex = 0
+            this.state.selectedIndex = 0;
         }else if(this.state.sipTransport == 'UDP'){
-            this.selIndex = 1
+            this.state.selectedIndex = 1;
         }else {
-            this.selIndex = 2
+            this.state.selectedIndex = 2;
         }
     }
 
@@ -175,13 +175,13 @@ class getSipSettingsFromAPI extends React.Component {
     }
 
     setSegmentedControl = () => {
-        this.selIndex = 0
+        this.state.selectedIndex = 0;
         if(this.state.sipTransport == 'TCP'){
-            this.selIndex = 0
+            this.state.selectedIndex = 0;
         }else if(this.state.sipTransport == 'UDP'){
-            this.selIndex = 1
+            this.state.selectedIndex = 1;
         }else {
-            this.selIndex = 2
+            this.state.selectedIndex = 2;
         }
     }
 
@@ -315,79 +315,88 @@ class getSipSettingsFromAPI extends React.Component {
     render(){
      
         
-        return(
-            <KeyboardAwareScrollView style={styles.container}>
-                
+        return (
+          <KeyboardAwareScrollView style={styles.container}>
+            <InputContainer
+              placeholder="Sip Server"
+              title="SIP Server Host"
+              keyBoardType="email-address"
+              textValue={this.state.sipServer}
+              onTextChange={this.onSipServerTextChange}
+            />
+
+            <InputContainer
+              placeholder="Sip Port"
+              title="Port"
+              keyBoardType="number-pad"
+              textValue={this.state.sipPort + ""}
+              onTextChange={this.onSipPortChanged}
+            />
+
+            <SegmentedControl
+              style={styles.segmentControl}
+              values={["TCP", "UDP", "TLS"]}
+              selectedIndex={this.state.selectedIndex}
+              onChange={(event) => {
+                if (event.nativeEvent.selectedSegmentIndex == 0) {
+                  this.setState({ sipTransport: "TCP" });
+                  this.setState({
+                    selectedIndex: event.nativeEvent.selectedSegmentIndex,
+                  });
+                } else if (event.nativeEvent.selectedSegmentIndex == 1) {
+                  this.setState({ sipTransport: "UDP" });
+                  this.setState({
+                    selectedIndex: event.nativeEvent.selectedSegmentIndex,
+                  });
+                } else {
+                  this.setState({ sipTransport: "TLS" });
+                  this.setState({
+                    selectedIndex: event.nativeEvent.selectedSegmentIndex,
+                  });
+                }
+                // this.setState({sipTransport: event.nativeEvent.selectedSegmentIndex == 0 ? 'TCP' : });
+              }}
+            />
+
+            <InputContainer
+              placeholder="username"
+              title="SIP Username"
+              keyBoardType="email-address"
+              textValue={this.state.sipUsername}
+              onTextChange={this.onUsernameChanged}
+            />
+
+            <InputContainer
+              placeholder=" password"
+              title="SIP Password"
+              keyBoardType="email-address"
+              textValue={this.state.sipPassword}
+              onTextChange={this.onPasswordChange}
+            />
+
+            <View style={styles.switch_Container}>
+              <Text style={styles.switchText}>Enable ICE </Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "green" }}
+                thumbColor={"white"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={this.toggleSwitch}
+                value={this.state.iceEnabled}
+              />
+            </View>
+
+            {/* TURN container setup. Hide and show based on */}
+            {this.state.iceEnabled ? (
+              <View>
                 <InputContainer
-                    placeholder = 'Sip Server'
-                    title = 'SIP Server Host'
-                    keyBoardType = 'email-address'
-                    textValue = {this.state.sipServer}
-                    onTextChange = {this.onSipServerTextChange}
+                  placeholder="TURN Host"
+                  title="TURN Server"
+                  keyBoardType="email-address"
+                  textValue={this.state.turnServer}
+                  onTextChange={this.onTURNHostChanged}
                 />
 
-                <InputContainer
-                    placeholder = 'Sip Port'
-                    title = 'Port'
-                    keyBoardType = 'number-pad'
-                    textValue = {this.state.sipPort + ''}
-                    onTextChange = {this.onSipPortChanged}
-                />
-
-                <SegmentedControl style = {styles.segmentControl}
-                    values={['TCP', 'UDP', 'TLS']}
-                    selectedIndex= {this.selIndex}
-                    onChange={(event) => {
-                    if(event.nativeEvent.selectedSegmentIndex == 0) {
-                        this.setState({sipTransport: 'TCP'});
-                    }else if(event.nativeEvent.selectedSegmentIndex == 1) {
-                        this.setState({sipTransport: 'UDP'});
-                    }else {
-                        this.setState({sipTransport: 'TLS'});
-                    }
-                   // this.setState({sipTransport: event.nativeEvent.selectedSegmentIndex == 0 ? 'TCP' : });
-                    }}
-                />
-
-                <InputContainer
-                    placeholder = 'username'
-                    title = 'SIP Username'
-                    keyBoardType = 'email-address'
-                    textValue = {this.state.sipUsername}
-                    onTextChange = {this.onUsernameChanged}
-                />
-                
-                <InputContainer
-                    placeholder = ' password'
-                    title = 'SIP Password'
-                    keyBoardType = 'email-address'
-                    textValue = {this.state.sipPassword}
-                    onTextChange = {this.onPasswordChange}
-                />
-
-                <View style = {styles.switch_Container}>  
-                    <Text style = {styles.switchText}>Enable ICE </Text>
-                    <Switch
-                        trackColor={{ false: "#767577", true: 'green' }}
-                        thumbColor={'white'}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={this.toggleSwitch}
-                        value={this.state.iceEnabled}
-                    />
-                </View>
-
-                {/* TURN container setup. Hide and show based on */}
-                {this.state.iceEnabled ? 
-                    <View>  
-                        <InputContainer
-                            placeholder = 'TURN Host'
-                            title = 'TURN Server'
-                            keyBoardType = 'email-address'
-                            textValue = {this.state.turnServer}
-                            onTextChange = {this.onTURNHostChanged}
-                        />
-
-                        {/* <InputContainer
+                {/* <InputContainer
                             placeholder = 'Port'
                             title = 'TURN Port'
                             keyBoardType = 'number-pad'
@@ -395,33 +404,33 @@ class getSipSettingsFromAPI extends React.Component {
                             onTextChange = {this.onTURNPortChanged}
                         /> */}
 
-                        <InputContainer
-                            placeholder = 'Username'
-                            title = 'TURN Username'
-                            keyBoardType = 'email-address'
-                            textValue = {this.state.turnUsername}
-                            onTextChange = {this.onTURNUsernameChanged}
-                        /> 
-
-                        <InputContainer
-                            placeholder = ' Password'
-                            title = 'TURN Password'
-                            keyBoardType = 'email-address'
-                            textValue = {this.state.turnPassword}
-                            onTextChange = {this.onTURNPasswordChanged}
-                        /> 
-                    </View>
-                : null}
-
                 <InputContainer
-                    placeholder = 'url'
-                    title = 'STUN Server'
-                    keyBoardType = 'email-address'
-                    textValue = {this.state.stunServer}
-                    onTextChange = {this.onStunServerChanged}
+                  placeholder="Username"
+                  title="TURN Username"
+                  keyBoardType="email-address"
+                  textValue={this.state.turnUsername}
+                  onTextChange={this.onTURNUsernameChanged}
                 />
 
-                {/* <InputContainer
+                <InputContainer
+                  placeholder=" Password"
+                  title="TURN Password"
+                  keyBoardType="email-address"
+                  textValue={this.state.turnPassword}
+                  onTextChange={this.onTURNPasswordChanged}
+                />
+              </View>
+            ) : null}
+
+            <InputContainer
+              placeholder="url"
+              title="STUN Server"
+              keyBoardType="email-address"
+              textValue={this.state.stunServer}
+              onTextChange={this.onStunServerChanged}
+            />
+
+            {/* <InputContainer
                     placeholder = 'Port'
                     title = 'STUN Port'
                     keyBoardType = 'number-pad'
@@ -429,15 +438,14 @@ class getSipSettingsFromAPI extends React.Component {
                     onTextChange = {this.onStunPortChanged}
                 /> */}
 
-                <TouchableOpacity style = {styles.saveButton}
-                    onPress = {
-                        () => this.saveSIPInfo()
-                }>  
-                <Text style = {styles.saveButtonText}> Save </Text>
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={() => this.saveSIPInfo()}
+            >
+              <Text style={styles.saveButtonText}> Save </Text>
             </TouchableOpacity>
-
-            </KeyboardAwareScrollView>
-        )
+          </KeyboardAwareScrollView>
+        );
     }
 }
 

@@ -260,45 +260,45 @@ public class CallManager {
         String filePath = sdCards[0].listFiles()[0].getAbsolutePath();
         String deviceToken = Prefs.getSharedPreferenceString(mContext, Prefs.PREFS_DEVICE_TOKEN, "");
 
-//        Dialer.Configuration dialerConfig = new Dialer.Configuration();
-//        dialerConfig.sipServerHost = Constants.getServerHost(mContext);
-//        dialerConfig.sipServerPort = Constants.getServerPort(mContext);
-//        dialerConfig.sipLocalPort = Constants.getLocalPort(mContext);
-//        dialerConfig.sipTransport = getTransport(Constants.getSIPTransport(mContext));
-//        dialerConfig.sipUsername = Constants.getSIPUsername(mContext);
-//        dialerConfig.sipPassword = Constants.getSIPPassword(mContext);
-//        dialerConfig.sipRealm = Constants.getSIPRealm(mContext).replace("-","");
-//        dialerConfig.turnHost = Constants.getTURNHost(mContext).replace("-","");
-//        dialerConfig.turnUsername = Constants.getTUTNUsername(mContext).replace("-","");
-//        dialerConfig.turnPassword = Constants.getTURNPassword(mContext).replace("-","");
-//        dialerConfig.turnRealm = Constants.getTURNRealm(mContext).replace("-","");
-//        dialerConfig.stunHost = Constants.getSTUNHost(mContext).replaceAll(":","");
-//        dialerConfig.enableICE = Constants.getIsICEEnabled(mContext);
-//        dialerConfig.enableSRTP = Constants.getIsSRTPEnabled(mContext);
-//        dialerConfig.answerTimeout = Long.parseLong(Constants.getMiscTimeout(mContext));
-//        dialerConfig.ringbackAudioFile = filePath;
-//        dialerConfig.desiredCodecs = codecs;
-//        dialerConfig.deviceId = deviceToken;
-
         Dialer.Configuration dialerConfig = new Dialer.Configuration();
-        dialerConfig.sipServerHost = "newxonesip.mvoipctsi.com";
-        dialerConfig.sipServerPort = 8993;
-        dialerConfig.sipLocalPort = 8993;
-        dialerConfig.sipTransport = 1;
-        dialerConfig.sipUsername = "919011355859";
-        dialerConfig.sipPassword = "5ddcff69f37aab001cdb67ad";
-        dialerConfig.sipRealm = "*";
-        dialerConfig.turnHost = "turntaiwan.mvoipctsi.com";
-        dialerConfig.turnUsername = "comlinkxone";
-        dialerConfig.turnPassword = "hgskSlGHgwSKfgsdUSDGhs";
-        dialerConfig.turnRealm = "";
-        dialerConfig.stunHost = "turntaiwan.mvoipctsi.com";
-        dialerConfig.enableICE = false;
-        dialerConfig.enableSRTP = false;
-        dialerConfig.answerTimeout = 60;
+        dialerConfig.sipServerHost = Constants.getServerHost(mContext);
+        dialerConfig.sipServerPort = Constants.getServerPort(mContext);
+        dialerConfig.sipLocalPort = Constants.getLocalPort(mContext);
+        dialerConfig.sipTransport = getTransport(Constants.getSIPTransport(mContext));
+        dialerConfig.sipUsername = Constants.getSIPUsername(mContext);
+        dialerConfig.sipPassword = Constants.getSIPPassword(mContext);
+        dialerConfig.sipRealm = Constants.getSIPRealm(mContext).replace("-","");
+        dialerConfig.turnHost = Constants.getTURNHost(mContext).replace("-","");
+        dialerConfig.turnUsername = Constants.getTUTNUsername(mContext).replace("-","");
+        dialerConfig.turnPassword = Constants.getTURNPassword(mContext).replace("-","");
+        dialerConfig.turnRealm = Constants.getTURNRealm(mContext).replace("-","");
+        dialerConfig.stunHost = Constants.getSTUNHost(mContext).replaceAll(":","");
+        dialerConfig.enableICE = Constants.getIsICEEnabled(mContext);
+        dialerConfig.enableSRTP = Constants.getIsSRTPEnabled(mContext);
+        dialerConfig.answerTimeout = Long.parseLong(Constants.getMiscTimeout(mContext));
         dialerConfig.ringbackAudioFile = filePath;
         dialerConfig.desiredCodecs = codecs;
         dialerConfig.deviceId = deviceToken;
+
+//        Dialer.Configuration dialerConfig = new Dialer.Configuration();
+//        dialerConfig.sipServerHost = "newxonesip.mvoipctsi.com";
+//        dialerConfig.sipServerPort = 8993;
+//        dialerConfig.sipLocalPort = 8993;
+//        dialerConfig.sipTransport = 1;
+//        dialerConfig.sipUsername = "919011355859";
+//        dialerConfig.sipPassword = "5ddcff69f37aab001cdb67ad";
+//        dialerConfig.sipRealm = "*";
+//        dialerConfig.turnHost = "turntaiwan.mvoipctsi.com";
+//        dialerConfig.turnUsername = "comlinkxone";
+//        dialerConfig.turnPassword = "hgskSlGHgwSKfgsdUSDGhs";
+//        dialerConfig.turnRealm = "";
+//        dialerConfig.stunHost = "turntaiwan.mvoipctsi.com";
+//        dialerConfig.enableICE = false;
+//        dialerConfig.enableSRTP = false;
+//        dialerConfig.answerTimeout = 60;
+//        dialerConfig.ringbackAudioFile = filePath;
+//        dialerConfig.desiredCodecs = codecs;
+//        dialerConfig.deviceId = deviceToken;
 
         return dialerConfig;
     }
@@ -776,6 +776,7 @@ public class CallManager {
 
                 Intent touchNotification = new Intent(MainApplication.getAppContext(), IncomingCallActivity.class);
 //            touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                touchNotification.putExtra("Contact", contactFromPayload);
                 PendingIntent pendingIntent = PendingIntent.getActivity(MainApplication.getAppContext(), 0, touchNotification, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 // Answer Button Intent

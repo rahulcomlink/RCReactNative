@@ -30,6 +30,8 @@ import Direct from "./Direct";
 import SafeAreaView from "../../containers/SafeAreaView";
 import { goRoom } from "../../utils/goRoom";
 import Navigation from "../../lib/Navigation";
+import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+
 
 const PERMISSION_EDIT_ROOM = "edit-room";
 const getRoomTitle = (room, type, name, username, statusText, theme) =>
@@ -445,7 +447,7 @@ class RoomInfoView extends React.Component {
     ejson.rid = subscriptions.room._raw.rid;
     ejson.name = subscriptions.room._raw.name;
     ejson.type = subscriptions.room._raw.t;
-    ejson.host = "https://pigeon.mvoipctsi.com";
+    ejson.host = IMBaseUrl;
     ejson.messageType = "jitsi_call_started";
 
     const sender = {};

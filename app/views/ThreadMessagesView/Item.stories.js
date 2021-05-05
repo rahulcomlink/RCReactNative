@@ -9,13 +9,15 @@ import Item from './Item';
 import * as List from '../../containers/List';
 import { themes } from '../../constants/colors';
 import { ThemeContext } from '../../theme';
+import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+
 
 const author = {
   _id: "userid",
   username: "pigeon.cat",
   name: "Pigeon Cat",
 };
-const baseUrl = 'https://pigeon.mvoipctsi.com';
+const baseUrl = IMBaseUrl;
 const date = new Date(2020, 10, 10, 10);
 const longText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const defaultItem = {
@@ -57,11 +59,11 @@ const reducers = combineReducers({
     },
   }),
   server: () => ({
-    server: "https://pigeon.mvoipctsi.com",
+    server: IMBaseUrl,
     version: "3.7.0",
   }),
   share: () => ({
-    server: "https://pigeon.mvoipctsi.com",
+    server: IMBaseUrl,
     version: "3.7.0",
   }),
   settings: () => ({

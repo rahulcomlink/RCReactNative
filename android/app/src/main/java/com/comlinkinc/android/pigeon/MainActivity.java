@@ -192,8 +192,6 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
                 public void run() {
                     if (!called) {
                         called = true;
-//                        CallManager.stopRingTone();
-//                        CallManager.answer();
                         context
                                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("CallAnswered", phoneNumber);

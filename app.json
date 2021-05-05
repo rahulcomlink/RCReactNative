@@ -5,5 +5,7 @@
   
   "baseUrl": "https://testsipcc.mvoipctsi.com:7483/ctsiSvcMgr/svcs/",
   "methodActAuthSub": "actauthsub",
-  "methodActprovsub": "actprovsub"
+  "methodActprovsub": "actprovsub",
+
+  "IMBaseUrl": "https://pigeon.mvoipctsi.com"
 }

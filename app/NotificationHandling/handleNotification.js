@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import RocketChat from '../lib/rocketchat';
+import { IMBaseUrl as IMBaseUrl } from "../../app.json";
 
-const baseUrl = "https://pigeon.mvoipctsi.com";
+
+const baseUrl = IMBaseUrl;
 
 class handleNotification extends Component{ 
 

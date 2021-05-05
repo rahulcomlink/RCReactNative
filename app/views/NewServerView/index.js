@@ -30,6 +30,8 @@ import ServerInput from './ServerInput';
 import { sanitizeLikeString } from '../../lib/database/utils';
 import SSLPinning from '../../utils/sslPinning';
 import RocketChat from '../../lib/rocketchat';
+import { IMBaseUrl as IMBaseUrl } from "../../../app.json";
+
 
 const styles = StyleSheet.create({
   title: {
@@ -169,7 +171,7 @@ class NewServerView extends React.Component {
 		const { connectServer } = this.props;
 		// this.setState({ text: server });
 		// server = this.completeUrl(server);
-		connectServer("https://pigeon.mvoipctsi.com");
+		connectServer(IMBaseUrl);
 	}
 
 	onPressServerHistory = (serverHistory) => {
@@ -205,7 +207,7 @@ class NewServerView extends React.Component {
 		logEvent(events.NEWSERVER_JOIN_OPEN_WORKSPACE);
 		this.setState({ connectingOpen: true });
 		const { connectServer } = this.props;
-		connectServer("https://pigeon.mvoipctsi.com");
+		connectServer(IMBaseUrl);
 	}
 
 	basicAuth = async(server, text) => {

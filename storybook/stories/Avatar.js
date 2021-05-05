@@ -7,6 +7,8 @@ import Avatar from '../../app/containers/Avatar/Avatar';
 import Status from '../../app/containers/Status/Status';
 import StoriesSeparator from './StoriesSeparator';
 import sharedStyles from '../../app/views/Styles';
+import { IMBaseUrl as IMBaseUrl } from "../../app.json";
+
 
 const styles = StyleSheet.create({
 	status: {
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-const server = "https://pigeon.mvoipctsi.com";
+const server = IMBaseUrl;
 
 const Separator = ({ title, theme }) => <StoriesSeparator title={title} theme={theme} />;
 Separator.propTypes = {

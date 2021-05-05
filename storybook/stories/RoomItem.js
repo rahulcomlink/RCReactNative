@@ -6,8 +6,10 @@ import { themes } from '../../app/constants/colors';
 import RoomItemComponent from '../../app/presentation/RoomItem/RoomItem';
 import { longText } from '../utils';
 import StoriesSeparator from './StoriesSeparator';
+import { IMBaseUrl as IMBaseUrl } from "../../app.json";
 
-const baseUrl = "https://pigeon.mvoipctsi.com";
+
+const baseUrl = IMBaseUrl;
 const { width } = Dimensions.get('window');
 let _theme = 'light';
 const lastMessage = {
