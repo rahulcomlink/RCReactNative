@@ -14,13 +14,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-
-import static com.comlinkinc.android.pigeon.MainApplication.reactApplicationContext;
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
-import static com.reactnativerestart.RestartModule.getReactInstanceManager;
+
 
 public class IncomingCallActivity extends AppCompatActivity implements View.OnClickListener {
 
