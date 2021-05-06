@@ -82,7 +82,8 @@ class CallScreen extends React.Component {
       showKeypad: false,
       name: props.route.params?.name,
       isVoipCall: props.route.params?.isVoipCall,
-      popParam : props.route.params?.popParam
+      popParam : props.route.params?.popParam,
+      callend : 0
     };
 
     if (os == "android") {
@@ -157,11 +158,19 @@ class CallScreen extends React.Component {
 
   endCall = () => {
    
+    if(this.state.callend == 0){
     if (this.state.popParam == "1"){
+      console.debug('this.state.popParam  1 = ', this.state.popParam)
       this.props.navigation.navigate("PhonebookView", {});
-    }else {
+    }else if (this.state.popParam == "2"){
+      console.debug('this.state.popParam  2 = ', this.state.popParam)
       this.props.navigation.navigate("KeypadView", {});
+    }else {
+      console.debug('this.state.popParam  = 3 ')
+      this.props.navigation.pop()
     }
+    this.setState({ callend: 1 });
+  }
     
     if (os == "android") {
       NativeModules.Sdk.endCall();

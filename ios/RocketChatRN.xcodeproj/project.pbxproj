@@ -752,12 +752,9 @@
 				1EC6ACF422CB9FC300A41C61 /* Embed App Extensions */,
 				1E1EA8082326CCE300E22452 /* ShellScript */,
 				9558AC195A3506BB8472CE99 /* [CP] Embed Pods Frameworks */,
-<<<<<<< HEAD
-=======
 				C820AF3DF24797E83783C63F /* [CP-User] [RNFB] Core Configuration */,
 				9B04C9D21A91945B419276C2 /* [CP-User] [RNFB] Crashlytics Configuration */,
 				18AC7A8A25E8EEAB003D5EB1 /* ShellScript */,
->>>>>>> pigeon_without_sip
 			);
 			buildRules = (
 			);
@@ -1268,15 +1265,7 @@
 					"$(PROJECT_DIR)/Shared/SIP_SDK",
 					"$(PROJECT_DIR)/SIP_SDK",
 				);
-<<<<<<< HEAD
-<<<<<<< HEAD
 				MARKETING_VERSION = 1.0.1;
-=======
-				MARKETING_VERSION = 1.0.2;
->>>>>>> pigeon_without_sip
-=======
-				MARKETING_VERSION = 1.3.0;
->>>>>>> pigeon_without_sip
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
@@ -1334,15 +1323,7 @@
 					"$(PROJECT_DIR)/Shared/SIP_SDK",
 					"$(PROJECT_DIR)/SIP_SDK",
 				);
-<<<<<<< HEAD
-<<<<<<< HEAD
 				MARKETING_VERSION = 1.0.1;
-=======
-				MARKETING_VERSION = 1.0.2;
->>>>>>> pigeon_without_sip
-=======
-				MARKETING_VERSION = 1.3.0;
->>>>>>> pigeon_without_sip
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
@@ -1384,15 +1365,8 @@
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-<<<<<<< HEAD
-<<<<<<< HEAD
 				MARKETING_VERSION = 1.0.1;
-=======
-				MARKETING_VERSION = 1.0.2;
->>>>>>> pigeon_without_sip
-=======
-				MARKETING_VERSION = 1.3.0;
->>>>>>> pigeon_without_sip
+
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.NotificationService;
@@ -1428,16 +1402,8 @@
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-<<<<<<< HEAD
-<<<<<<< HEAD
 				MARKETING_VERSION = 1.0.1;
-=======
-				MARKETING_VERSION = 1.0.2;
->>>>>>> pigeon_without_sip
-=======
-				MARKETING_VERSION = 1.3.0;
->>>>>>> pigeon_without_sip
-				MTL_FAST_MATH = YES;
+                MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Inhouse_PushService_Pigeon;

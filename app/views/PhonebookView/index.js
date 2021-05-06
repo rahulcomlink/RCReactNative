@@ -79,7 +79,7 @@ class PhonebookView extends React.Component {
    // const source = useDynamicValue(logoUri)
 
     options.headerLeft = () => (
-      <TouchableOpacity style= {{width : 40, height : 20, marginLeft : 20}}
+      <TouchableOpacity style= {{width : 40, height : 20, marginLeft : 10}}
       onPress= {()=> 
           
         { navigation.navigate('RoomsListView');
