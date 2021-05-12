@@ -119,7 +119,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
 //                reactApplicationContext
 //                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
 //                        .emit("CallAnswered", phoneNumber);
-                finish();
+//                finish();
             } else {
 //                if (reactApplicationContext.hasActiveCatalystInstance()) {
                 reactContext
