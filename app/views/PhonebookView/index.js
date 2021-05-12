@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  NativeModules,
+  NativeModules
 } from "react-native";
 import { connect } from "react-redux";
 import prompt from "react-native-prompt-android";
@@ -52,11 +52,13 @@ import { BackHandler } from 'react-native';
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
 import commonSipSettingFunc from "../SipSettingView/commonSipSettingFunc";
+//import BackgroundFetch from "react-native-background-fetch";
 //import { DynamicValue, useDynamicValue } from 'react-native-dark-mode';
 
 // const lightLogo = require('../../static/images/btn_back.png')
 // const darkLogo = require('../../static/images/left-arrow.png')
 // const logoUri = new DynamicValue(lightLogo, darkLogo)
+
 
 class PhonebookView extends React.Component {
   // static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -77,6 +79,8 @@ class PhonebookView extends React.Component {
     };
 
    // const source = useDynamicValue(logoUri)
+
+   
 
     options.headerLeft = () => (
       <TouchableOpacity style= {{width : 40, height : 20, marginLeft : 10}}
@@ -119,13 +123,14 @@ class PhonebookView extends React.Component {
 
   async componentDidMount() {
 
-    commonSipSettingFunc.getSipSettingsAndStart();
+    //commonSipSettingFunc.getSipSettingsAndStart();
     const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: 'PhonebookView' })],
     });
     this.props.navigation.dispatch(resetAction)
 
+   /*
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === "granted") {
       const { data } = await Contacts.getContactsAsync({
@@ -147,13 +152,45 @@ class PhonebookView extends React.Component {
         }
       }
       this.forceUpdate()
+      
     }
+    */
 
+ 
+   this.loadContacts();
     if (os == "android") {
       NativeModules.Sdk.askStorageAndMicPermission();
     } 
   }
 
+
+  async loadContacts() {
+    // do stuff
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status === "granted") {
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.Name],
+        fields: [Contacts.Fields.PhoneNumbers],
+      });
+
+      if (data.length > 0) {
+        for (var i = 0; i < data.length; i++) {
+          const contact = data[i];
+          if (contact != null && contact.name != null) {
+            if (contact.phoneNumbers != null && contact.phoneNumbers[0] != null) { 
+            this.state.dataArray.push({
+              name: contact.name,
+              number: contact.phoneNumbers[0].number,
+            });
+          }
+          }
+        }
+      }
+      this.forceUpdate()
+      
+    }
+  };
+  
  
   componentWillReceiveProps() {
     this.setState({ searchArray: [] });

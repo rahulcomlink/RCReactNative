@@ -99,7 +99,12 @@ class CallScreen extends React.Component {
 
   componentDidMount() {
     if (this.state.isVoipCall == true) {
-      this.startTimer();
+      if(os == "android"){
+        this.startTimer();
+      }else {
+        this.setState({ callStatusText: "Connecting" });
+      }
+      
     }
     else {
       if (this.state.phoneNumber != null) {
@@ -114,7 +119,7 @@ class CallScreen extends React.Component {
     if (os == "android") {
       NativeModules.Sdk.setOnSpeker(this.state.isSpeakerOn);
     } else {
-      NativeModules.SIPSDKBridge.setSpeakerOn(this.state.isSpeakerOn);
+     // NativeModules.SIPSDKBridge.setSpeakerOn(this.state.isSpeakerOn);
     }
     return <Image style={styles.button1} source={imgSource} />;
   };
@@ -124,7 +129,7 @@ class CallScreen extends React.Component {
     if (os == "android") {
       NativeModules.Sdk.muteUnmuteCall(this.state.isMuteOn);
     } else {
-      NativeModules.SIPSDKBridge.setMuteOn(this.state.isMuteOn);
+      //NativeModules.SIPSDKBridge.setMuteOn(this.state.isMuteOn);
     }
     return <Image style={styles.button1} source={imgSource} />;
   };
@@ -147,13 +152,22 @@ class CallScreen extends React.Component {
   };
 
   setSpeaker = () => {
+    
     let value = this.state.isSpeakerOn ? false : true;
     this.setState({ isSpeakerOn: value });
+    if (os != "android") {
+      NativeModules.SIPSDKBridge.setSpeakerOn(this.state.isSpeakerOn);
+    }
   };
 
   setMute = () => {
+    
     let value = this.state.isMuteOn ? false : true;
     this.setState({ isMuteOn: value });
+    if (os != "android") {
+      NativeModules.SIPSDKBridge.setMuteOn(this.state.isMuteOn);
+    }
+    
   };
 
   endCall = () => {

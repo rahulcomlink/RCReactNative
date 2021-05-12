@@ -126,8 +126,8 @@ class qrScanner extends Component {
           }else {
             if(apiResponse.app_cfg_data.sip_svrs){
               if(apiResponse.app_cfg_data.sip_svrs.length > 0 ){
-                this.setState({sipServer : apiResponse.app_cfg_data.sip_svrs[0]});
-                this.setState({sipPort : 8993});
+                this.setState({sipServer : sipserver1.split(':')[0]});
+                this.setState({sipPort : sipserver1.split(':')[1]});
               }else {
                 this.setState({sipServer : 'sandbox.mvoipctsi.com'});
                 this.setState({sipPort : 8993});

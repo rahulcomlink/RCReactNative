@@ -67,7 +67,7 @@ class SIPSettings extends React.Component {
         stunServer : 'turntaiwan.mvoipctsi.com',
         stunPort : '0'
        }
-*/
+       */
     
     
         this.state.selectedIndex = 0;

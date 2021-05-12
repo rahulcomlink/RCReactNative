@@ -24,4 +24,8 @@ RCT_EXTERN_METHOD(setMuteOn:(BOOL *)on)
 RCT_EXTERN_METHOD(keyPressed:(NSString *)key)
 RCT_EXTERN_METHOD(sendVoIPPhoneNumber:(PKPushPayload *)payload)
 RCT_EXTERN_METHOD(getVOIPToken:(PKPushCredentials *)voipToken)
+RCT_EXTERN_METHOD(checkVoIPIncomingcallbackMethod:(RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(setAppLaunchFlag)
+RCT_EXTERN_METHOD(acceptCallAfterAppLaunch)
+
 @end
