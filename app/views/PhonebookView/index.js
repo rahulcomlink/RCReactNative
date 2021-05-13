@@ -172,13 +172,13 @@ class PhonebookView extends React.Component {
     this.setState({ searchArray: [] });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.dataArray !== nextState.dataArray) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.dataArray !== nextState.dataArray) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   /*
   onChangeSearchText = (e) => {
