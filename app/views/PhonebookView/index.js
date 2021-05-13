@@ -131,11 +131,11 @@ class PhonebookView extends React.Component {
     });
     this.props.navigation.dispatch(resetAction);
 
-    this.fetchContactsAsync()
+    this.fetchContactsAsync();
   }
 
   fetchContactsAsync = async () => {
-    let dataArray = []
+    let dataArray = [];
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === "granted") {
       const { data } = await Contacts.getContactsAsync({
@@ -145,20 +145,16 @@ class PhonebookView extends React.Component {
 
       if (data.length > 0) {
         data.map((item) => {
-            if (item != null ) {
-              if (
-                item.phoneNumbers != null
-              )
-                dataArray.push({
-                  name: item.name,
-                  number: item.phoneNumbers[0].number,
-                });
-              
-            }
+          if (item != null) {
+            if (item.phoneNumbers != null)
+              dataArray.push({
+                name: item.name,
+                number: item.phoneNumbers[0].number,
+              });
+          }
           return;
-        }
-        );
-        this.setState({dataArray:dataArray})
+        });
+        this.setState({ dataArray: dataArray });
       }
       this.forceUpdate();
     }
@@ -223,9 +219,9 @@ class PhonebookView extends React.Component {
       return item.name.toLowerCase().match(text);
     });
     if (!text || text === "") {
-      this.setState({
-        searchArray: initial,
-      });
+      // this.setState({
+      //   searchArray: initial,
+      // });
     } else if (!Array.isArray(filteredName) && !filteredName.length) {
       // set no data flag to true so as to render flatlist conditionally
       this.setState({
@@ -309,7 +305,7 @@ class PhonebookView extends React.Component {
               }}
               otherAlphabet="#"
             />
-            <ActivityIndicator size="large" color="#00ff00" />
+            <ActivityIndicator size="large" color="#000000" />
           </View>
         </ScrollView>
       </SafeAreaView>
