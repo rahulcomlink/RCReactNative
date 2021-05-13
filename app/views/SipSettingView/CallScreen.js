@@ -99,12 +99,7 @@ class CallScreen extends React.Component {
 
   componentDidMount() {
     if (this.state.isVoipCall == true) {
-      if(os == "android"){
         this.startTimer();
-      }else {
-        this.setState({ callStatusText: "Connecting" });
-      }
-      
     }
     else {
       if (this.state.phoneNumber != null) {

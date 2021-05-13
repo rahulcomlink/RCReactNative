@@ -72,6 +72,7 @@ final class CallManager {
   private var _waitingForInboundCall = BlockingBarrier<Bool>(withInitalValue: false)
   private var _makeCallInProgress = BlockingBarrier<Bool>(withInitalValue: false)
   private var _audioSessionReady = BlockingBarrier<Bool>(withInitalValue: false)
+  private var _addDelayinCallAnswer = BlockingBarrier<Bool>(withInitalValue: false)
   
   // When this field is set to true the call teardown sequence will not reset
   // the published properties (inCall, etc). This is, essentially, a kludge that provides
@@ -130,6 +131,7 @@ final class CallManager {
 
   /// Configuras the audio session. Invoked via the provider delegate trampoline.
   fileprivate func onAudioSessionActivated(_ audioSession: AVAudioSession) {
+    NSLog("onAudioSessionActivated")
     configureAudioSession(audioSession)
     
     // This becomes our audio session. Let everyone know that it is available.
@@ -142,6 +144,7 @@ final class CallManager {
   
   // Disassociates from the given audio session. Invoked via the provider delegate trampoline.
   fileprivate func onAudioSessionDeactivated(_ audioSession: AVAudioSession) {
+      NSLog("onAudioSessionDeactivated")
     _logger.write("deactivating audio session", type: .debug)
     
     if (audioSession == _activeAudioSession) {
@@ -154,6 +157,7 @@ final class CallManager {
   
   // Audio session configuration.
   fileprivate func configureAudioSession(_ audioSession: AVAudioSession) {
+      NSLog("configureAudioSession")
     _logger.write("configuring audio session", type: .debug)
     
     do {
@@ -161,6 +165,7 @@ final class CallManager {
       try audioSession.setMode(.voiceChat)
       try audioSession.setActive(true)
     } catch {
+      NSLog("error while configuring audio session %@", error.localizedDescription)
       _logger.writeError(error)
     }
   }
@@ -252,6 +257,7 @@ final class CallManager {
         UserDefaults.standard.synchronize()
       }
     }
+    ModuleWithEmitter.emitter.sendEvent(withName: "onSessionConnect", body: ["callStatus" : "TERMINATED"])
   }
 
   /// Starts the call manager.
@@ -405,7 +411,7 @@ final class CallManager {
       // the session to be active prior to call initiation.
       
       NSLog("_handleStartCallAsync do try")
-      try _audioSessionReady.waitAndThrowOnTimeout(untilEqualTo: true, timeout: 20.0)
+    //  try _audioSessionReady.waitAndThrowOnTimeout(untilEqualTo: true, timeout: 20.0)
 
       // Initiate the make call action.
       try Dialer.shared.makeCall(outpulse: action.handle.value, uuid: action.callUUID)
@@ -709,15 +715,19 @@ final class CallManager {
     // to drop the call at this point we may crash. This needs to be investigated.
     
     
-    if (!_audioSessionReady.wait(untilEqualTo: true, timeout: 20.0)) {
+    /*if (!_audioSessionReady.wait(untilEqualTo: true, timeout: 20.0)) {
       NSLog("audio session not ready")
       _logger.write("uid=[%@]: audio session not ready", action.callUUID.uuidString)
       return
-    }
+    }*/
+  
     
     NSLog("_handleAnswerCallActionAsync 3")
     
     do {
+      
+      //self._addDelayinCallAnswer.wait(untilEqualTo: true)
+      
       // At this point we know we have a call that we can answer.
       try Dialer.shared.answerCall(uuid: action.callUUID)
       
@@ -728,6 +738,7 @@ final class CallManager {
       NSLog("_handleAnswerCallActionAsync 4")
       startCallTimer()
       
+      ModuleWithEmitter.emitter.sendEvent(withName: "getInboundCall", body: ["phoneNumber" : self.remotePartyClid])
       
     } catch {
       NSLog("_handleAnswerCallActionAsync 5")
@@ -742,6 +753,10 @@ final class CallManager {
     
     _logger.write("uuid=[%@]", action.callUUID.uuidString)
     
+  /*  DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+      self._addDelayinCallAnswer.setAndNotify(newValue: true)
+    }*/
+    
     self.inCall = true
     self.isConnecting = true
     self.callDuration = 0
@@ -754,14 +769,14 @@ final class CallManager {
     _currentCallUuid = action.callUUID
     answerAction = action
     
-    ModuleWithEmitter.emitter.sendEvent(withName: "getInboundCall", body: ["phoneNumber" : self.remotePartyClid])
+ 
     
-    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+  //  DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
       self._dispatchQueue.async {
         NSLog("handleAnswerCallAction")
         self._handleAnswerCallActionAsync(action)
       }
-    }
+ //   }
   
   }
   
@@ -811,10 +826,12 @@ internal class ProviderDelegateTrampoline: NSObject, CXProviderDelegate {
   }
 
   func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
+    NSLog("_ provider: CXProvider, didActivate audioSession: AVAudioSession")
     CallManager.shared.onAudioSessionActivated(audioSession)
   }
   
   func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
+    NSLog("_ provider: CXProvider, didDeactivate audioSession: AVAudioSession")
     CallManager.shared.onAudioSessionDeactivated(audioSession)
   }
 

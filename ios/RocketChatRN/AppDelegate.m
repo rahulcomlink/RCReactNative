@@ -50,7 +50,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  //[self redirectLogToDocuments];
+  [self redirectLogToDocuments];
   NSLog(@"launchoptions = %@",launchOptions);
   NSLog(@"didFinishLaunchingWithOptions");
     #if DEBUG
