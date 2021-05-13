@@ -9,12 +9,14 @@
 import Foundation
 import PushKit
 import AVFoundation
+import Contacts
 
 @objc(SIPSDKBridge)
 class SIPSDKBridge : NSObject{
   
   static let shared = SIPSDKBridge()
   private var _sipUriTemplate: String = "sip:%%s@%s:8993;transport=tcp"
+  var callManager = CallManager.shared
   
   @objc func callbackMethod(_ callback: RCTResponseSenderBlock) -> Void {
     
@@ -28,19 +30,36 @@ class SIPSDKBridge : NSObject{
   
   @objc func sipRegistration(_ username: String,  password: String,  sipServer: String,  sipRealm: String,  stunHost: String, turnHost : String,  turnUsername: String,  turnPassword: String,  turnRealm: String,  iceEnabled: String,  localPort: String,  serverPort: String, transport: String, turnPort: String, stunPort: String) -> Void{
     
-    UserDefaults.standard.setValue(username, forKey: "username")
-    UserDefaults.standard.setValue(password, forKey: "password")
-    UserDefaults.standard.setValue(sipServer, forKey: "sipServer")
-    UserDefaults.standard.setValue(stunHost, forKey: "stunHost")
-    UserDefaults.standard.setValue(turnHost, forKey: "turnHost")
-    UserDefaults.standard.setValue(turnUsername, forKey: "turnUsername")
-    UserDefaults.standard.setValue(turnPassword, forKey: "turnPassword")
-    UserDefaults.standard.setValue(iceEnabled, forKey: "iceEnabled")
-    UserDefaults.standard.setValue(localPort, forKey: "localPort")
-    UserDefaults.standard.setValue(serverPort, forKey: "serverPort")
-    UserDefaults.standard.setValue(transport, forKey: "transport")
+    
+    let config = Configuration.shared
+    config.sipServerHost = sipServer
+    config.sipUsername = username
+    config.sipPassword = password
+    config.sipRealm = "*"
    
-    SipCallManager.shared.start(username: username, password: password, sipServer: sipServer, sipRealm: sipRealm, stunHost: stunHost, turnHost: turnHost, turnUsername: turnUsername, turnPassword: turnPassword, turnRealm: turnRealm, iceEnabled: iceEnabled, localPort: localPort, serverPort: serverPort, transport: transport, turnPort: turnPort, stunPort: stunPort)
+    if transport == "TCP" || transport == "tcp"{
+      config.sipTransport = 0
+    }else if transport == "TLS" || transport == "tls"{
+      config.sipTransport = 1
+    }else if transport == "UDP" || transport == "udp"{
+      config.sipTransport = 2
+    }
+    
+    config.sipLocalPort = localPort.isEmpty ? 0 : UInt16(localPort)!
+    config.sipServerPort = serverPort.isEmpty ? 0 : UInt16(serverPort)!
+    config.turnHost = turnHost
+    config.turnUsername = turnUsername
+    config.turnPassword = turnPassword
+    config.turnRealm = ""
+    config.stunHost = stunHost
+    config.iceEnabled = iceEnabled  == "true" ? true : false
+    config.srtpEnabled = false
+    config.answerTimeout = Double(60)
+    do {
+      try config.doPostUpdateActions()
+    } catch {
+      // FIXME: exception handling
+    }
   }
   
   @objc func sipStop() -> Void{
@@ -49,28 +68,40 @@ class SIPSDKBridge : NSObject{
   }
  
   @objc func makeCall(_ phoneNumber: String, sipServer: String, sipPort: String, sipTransport: String) -> Void{
-    SipCallManager.shared.makeCall(outpulse: phoneNumber, sipServer: sipServer, sipPort: sipPort, sipTransport: sipTransport)
+    self.callManager.makeCall(outpulse: phoneNumber)
+//    SipCallManager.shared.makeCall(outpulse: phoneNumber, sipServer: sipServer, sipPort: sipPort, sipTransport: sipTransport)
   }
  
   @objc func endCall()  -> Void{
-    SipCallManager.shared.DropAllCalls()
+    self.callManager.dropCurrentCall { error in
+      print("error while disconnecting call from RN")
+    }
+    //SipCallManager.shared.DropAllCalls()
    }
   
   @objc func setSpeakerOn(_ on: Bool) -> Void{
-    SipCallManager.shared.toggleSpeakerOnOff(on: on)
+    self.callManager.toggleSpeaker { error in
+      print("error while enabling sound")
+    }
+    //SipCallManager.shared.toggleSpeakerOnOff(on: on)
   }
   
   @objc func setMuteOn(_ on: Bool) -> Void{
-    SipCallManager.shared.toggleMicrophone(on: on)
+    self.callManager.muteOrUnmuteCall { error in
+      print("error while enabling mute")
+    }
+   // SipCallManager.shared.toggleMicrophone(on: on)
   }
   
   @objc func keyPressed(_ key: String) -> Void{
-    SipCallManager.shared.sendDTMFTone(tone: key)
+    CallManager.shared.sendDtmf(digit: key) { _ in /* Ignored */ }
+    //SipCallManager.shared.sendDTMFTone(tone: key)
   }
   
   @objc func sendVoIPPhoneNumber(payload : PKPushPayload){
     Logger.attachSDKLogger()
-    SipCallManager.shared.getPayload(payload: payload)
+    PushManager.shared.onPushArrived(payload)
+   // SipCallManager.shared.getPayload(payload: payload)
   }
   
   @objc func getVOIPToken(voipToken : PKPushCredentials){
@@ -115,7 +146,49 @@ class SIPSDKBridge : NSObject{
   }
   
   @objc func acceptCallAfterAppLaunch(){
-    SipCallManager.shared.acceptCallAfterAppLaunch()
+    callManager.answerFromAppLaunch()
+  }
+  
+  @objc func checkFlagValue() ->String {
+    if MyVariables.shared.yourVariable == true {
+      return "true"
+    }else {
+      return "false"
+    }
+  }
+  
+  @objc func checkVoIPIncomingcallbackMethod(_ callback: RCTResponseSenderBlock) -> Void {
+      let resultsDict = [
+        "isIncomingCall" : self.callManager.inCall == true ? "true" : "false",
+        "phoneNumber" : self.callManager.remotePartyClid
+       ];
+      callback([NSNull() ,resultsDict])
+  }
+  
+  @objc func setAppLaunchFlag(){
+    MyVariables.shared.yourVariable = true
+   // self.callManager.isAppLaunch = true
+    UserDefaults.standard.setValue("true", forKey: "isAppLaunch")
+    UserDefaults.standard.synchronize()
+  }
+
+  
+  //Start From New
+  
+  @objc func startSipAndPushOnAppLaunch(){
+   // PushManager.shared.start()
+    CallManager.shared.start()
+    
+    // Fire up the contact manager
+    try! ContactManager.shared.start()
+    
+    // Request contacts access for the one-time sync operation.
+    let contactStore = CNContactStore()
+    contactStore.requestAccess(for: CNEntityType.contacts) { (granted, error) in
+      if granted && error == nil {
+        ContactManager.shared.importNativeContacts()
+      }
+    }
   }
  
 }

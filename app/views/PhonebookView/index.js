@@ -197,7 +197,6 @@ class PhonebookView extends React.Component {
                 data.toLowerCase().includes(this.state.searchText.toLowerCase())
               ) {
                 if(this.state.searchArray.indexOf('data') > 0){
-
                 }else {
                   this.state.searchArray.push({ name: data });
                 }
