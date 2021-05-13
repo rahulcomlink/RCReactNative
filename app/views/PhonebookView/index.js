@@ -219,9 +219,9 @@ class PhonebookView extends React.Component {
       return item.name.toLowerCase().match(text);
     });
     if (!text || text === "") {
-      // this.setState({
-      //   searchArray: initial,
-      // });
+      this.setState({
+        searchArray: [],
+      });
     } else if (!Array.isArray(filteredName) && !filteredName.length) {
       // set no data flag to true so as to render flatlist conditionally
       this.setState({
