@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  ActivityIndicator,
   NativeModules,
 } from "react-native";
 import { connect } from "react-redux";
@@ -71,34 +72,39 @@ class PhonebookView extends React.Component {
   //   return options;
   // };
 
-   static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation }) => {
     const options = {
       title: "Phonebook",
     };
 
-   // const source = useDynamicValue(logoUri)
+    // const source = useDynamicValue(logoUri)
 
     options.headerLeft = () => (
-      <TouchableOpacity style= {{width : 40, height : 20, marginLeft : 10}}
-      onPress= {()=> 
-          
-        { navigation.navigate('RoomsListView');
-        console.debug("options.headerLeft called"); }
-      } >  
-      <Image style= {{width : 40, height : 20 , resizeMode : 'contain', }}  source = {left_arrow}/>     
+      <TouchableOpacity
+        style={{ width: 40, height: 20, marginLeft: 10 }}
+        onPress={() => {
+          navigation.navigate("RoomsListView");
+          console.debug("options.headerLeft called");
+        }}
+      >
+        <Image
+          style={{ width: 40, height: 20, resizeMode: "contain" }}
+          source={left_arrow}
+        />
       </TouchableOpacity>
     );
-    
-      options.headerRight = () => (
-        <TouchableOpacity style={phonebookstyle.button2} 
-        onPress= {()=> navigation.navigate('KeypadView')} >  
-        <Image style={phonebookstyle.button2}  source = {call_1_3x}/>   
-        </TouchableOpacity>
-      );
-  
+
+    options.headerRight = () => (
+      <TouchableOpacity
+        style={phonebookstyle.button2}
+        onPress={() => navigation.navigate("KeypadView")}
+      >
+        <Image style={phonebookstyle.button2} source={call_1_3x} />
+      </TouchableOpacity>
+    );
+
     return options;
   };
-
 
   static propTypes = {
     baseUrl: PropTypes.string,
@@ -118,14 +124,18 @@ class PhonebookView extends React.Component {
   }
 
   async componentDidMount() {
-
     commonSipSettingFunc.getSipSettingsAndStart();
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'PhonebookView' })],
+      actions: [NavigationActions.navigate({ routeName: "PhonebookView" })],
     });
-    this.props.navigation.dispatch(resetAction)
+    this.props.navigation.dispatch(resetAction);
 
+    this.fetchContactsAsync()
+  }
+
+  fetchContactsAsync = async () => {
+    let dataArray = []
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === "granted") {
       const { data } = await Contacts.getContactsAsync({
@@ -134,29 +144,40 @@ class PhonebookView extends React.Component {
       });
 
       if (data.length > 0) {
-        for (var i = 0; i < data.length; i++) {
-          const contact = data[i];
-          if (contact != null && contact.name != null) {
-            if (contact.phoneNumbers != null && contact.phoneNumbers[0] != null) { 
-            this.state.dataArray.push({
-              name: contact.name,
-              number: contact.phoneNumbers[0].number,
-            });
-          }
-          }
+        data.map((item) => {
+            if (item != null ) {
+              if (
+                item.phoneNumbers != null
+              )
+                dataArray.push({
+                  name: item.name,
+                  number: item.phoneNumbers[0].number,
+                });
+              
+            }
+          return;
         }
+        );
+        this.setState({dataArray:dataArray})
       }
-      this.forceUpdate()
+      this.forceUpdate();
     }
 
     if (os == "android") {
       NativeModules.Sdk.askStorageAndMicPermission();
-    } 
-  }
+    }
+  };
 
- 
   componentWillReceiveProps() {
     this.setState({ searchArray: [] });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.dataArray !== nextState.dataArray) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /*
@@ -195,27 +216,27 @@ class PhonebookView extends React.Component {
   };
   */
 
- onChangeSearchText = (e) => {
-    let text = e.toLowerCase()
-    let trucks = this.state.dataArray
+  onChangeSearchText = (e) => {
+    let text = e.toLowerCase();
+    let trucks = this.state.dataArray;
     let filteredName = trucks.filter((item) => {
-      return item.name.toLowerCase().match(text)
-    })
-    if (!text || text === '') {
+      return item.name.toLowerCase().match(text);
+    });
+    if (!text || text === "") {
       this.setState({
-        searchArray: initial
-      })
+        searchArray: initial,
+      });
     } else if (!Array.isArray(filteredName) && !filteredName.length) {
       // set no data flag to true so as to render flatlist conditionally
       this.setState({
-        searchArray: []
-      })
+        searchArray: [],
+      });
     } else if (Array.isArray(filteredName)) {
       this.setState({
-        searchArray: filteredName
-      })
+        searchArray: filteredName,
+      });
     }
-  }
+  };
 
   render() {
     let resultArray = [];
@@ -244,51 +265,51 @@ class PhonebookView extends React.Component {
               ref={(s) => (this.sectionList = s)}
               sectionListData={resultArray}
               sectionHeight={50}
-              initialNumToRender={resultArray.length}
               showsVerticalScrollIndicator={false}
               renderHeader={this._renderHeader}
               SectionListClickCallback={(item, index) => {
                 console.log("---SectionListClickCallback--:", item, index);
                 //Alert.alert("" + item.name +"\n"+item.number);
-                var no = item.number
-                no  = no.replace('*','')
-                no  = no.replace('#','')
-                no  = no.replace(' ','')
-                no  = no.replace('+','')
-                no  = no.replace('(','')
-                no  = no.replace(')','')
+                var no = item.number;
+                no = no.replace("*", "");
+                no = no.replace("#", "");
+                no = no.replace(" ", "");
+                no = no.replace("+", "");
+                no = no.replace("(", "");
+                no = no.replace(")", "");
 
-              if( no.indexOf('*') >= 0){
-                no  = no.replace('*','')
-              }
-              if( no.indexOf('#') >= 0){
-                no  = no.replace('#','')
-              }
-              if( no.indexOf(' ') >= 0){
-                no  = no.replace(' ','')
-              }
-              if( no.indexOf('+') >= 0){
-                no  = no.replace('+','')
-              }
-              if( no.indexOf('(') >= 0){
-                no  = no.replace('(','')
-              }
-              if( no.indexOf(')') >= 0){
-                no  = no.replace(')','')
-              }
-              if( no.indexOf('-') >= 0){
-                no  = no.replace('-','')
-              }
+                if (no.indexOf("*") >= 0) {
+                  no = no.replace("*", "");
+                }
+                if (no.indexOf("#") >= 0) {
+                  no = no.replace("#", "");
+                }
+                if (no.indexOf(" ") >= 0) {
+                  no = no.replace(" ", "");
+                }
+                if (no.indexOf("+") >= 0) {
+                  no = no.replace("+", "");
+                }
+                if (no.indexOf("(") >= 0) {
+                  no = no.replace("(", "");
+                }
+                if (no.indexOf(")") >= 0) {
+                  no = no.replace(")", "");
+                }
+                if (no.indexOf("-") >= 0) {
+                  no = no.replace("-", "");
+                }
 
-                console.debug('item.name = ', no)
-                this.props.navigation.navigate('CallScreen', {
-                  phoneNumber : no,
-                  name : item.name,
-                  popParam : "1"
-               });
+                console.debug("item.name = ", no);
+                this.props.navigation.navigate("CallScreen", {
+                  phoneNumber: no,
+                  name: item.name,
+                  popParam: "1",
+                });
               }}
               otherAlphabet="#"
             />
+            <ActivityIndicator size="large" color="#00ff00" />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -323,19 +344,18 @@ export default connect(
 const phonebookstyle = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
-  
+
   button2: {
-    width : 30,
-    height : 30,
-   // alignSelf : 'center',
-   // overflow: 'hidden',
-    resizeMode : 'contain',
-  //  backgroundColor : '#70E3E3',
-  //  borderRadius : 30/2,
-    marginRight : 20
- },
- 
+    width: 30,
+    height: 30,
+    // alignSelf : 'center',
+    // overflow: 'hidden',
+    resizeMode: "contain",
+    //  backgroundColor : '#70E3E3',
+    //  borderRadius : 30/2,
+    marginRight: 20,
+  },
 });
