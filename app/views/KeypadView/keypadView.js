@@ -44,7 +44,7 @@ class KeypadView extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const options = {
-      title: "Keypad",
+      title: "Dial a number",
     };
     return options;
   };
@@ -235,24 +235,39 @@ class KeypadView extends React.Component {
                 <Image style={styles.buttonicon} source={call_pound_3x} />
               </TouchableWithoutFeedback>
             </View>
+
+            <View style={{ flexDirection: "row", alignSelf: "center", marginTop: 20 }}>
+              <TouchableWithoutFeedback
+                style={styles.button2}
+                onPress={() => console.debug("")}
+              ></TouchableWithoutFeedback>
+
+              <TouchableWithoutFeedback
+                style={styles.button2}
+                onPress={() => this.call()}
+              >
+                <Image style={styles.buttonicon} source={calling_start} />
+              </TouchableWithoutFeedback>
+
+              <TouchableWithoutFeedback
+                style={styles.button2}
+                onPress={() => this.removeChar()}
+              >
+                <Image
+                  style={{
+                    width: 30,
+                    height: 30,
+                    alignSelf: "center",
+                    resizeMode: "contain",
+                    margin: 15,
+                  }}
+                  source={call_back}
+                />
+              </TouchableWithoutFeedback>
+            </View>
           </View>
         </View>
 
-        <View style={styles.bottom}>
-          <TouchableWithoutFeedback
-            style={styles.button1}
-            onPress={() => console.debug("")}
-          ></TouchableWithoutFeedback>
-          <TouchableWithoutFeedback style={styles.button1} onPress={() => this.call()}>
-            <Image style={styles.button1} source={calling_start} />
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            style={styles.button1}
-            onPress={() => this.removeChar()}
-          >
-            <Image style={{ width: 35,height: 35, alignSelf: "center", resizeMode: "contain",margin : 35}} source={call_back} />
-          </TouchableWithoutFeedback>
-        </View>
       </View>
     );
   }
