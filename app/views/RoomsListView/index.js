@@ -395,24 +395,6 @@ class RoomsListView extends React.Component {
       this.setHeader();
     }
 
-    /*NativeModules.SIPSDKBridge.checkVoIPIncomingcallbackMethod((err,value) => {
-      console.debug("checkVoIPIncomingcallbackMethod vale = ",value)
-     if(value.isIncomingCall == "true"){
-      NativeModules.SIPSDKBridge.acceptCallAfterAppLaunch()
-       navigation.navigate("CallScreen", {
-         phoneNumber: value.phoneNumber,
-         isVoipCall: true,
-       });
-       
-     }
-
-  });*/
-
-  setTimeout(() => {
-    NativeModules.SIPSDKBridge.setAppLaunchFlag();
-    //alert('set timeout called')
-  }, 5000);
-    
     // custom comlink changes to save device token on server
     const os1 = isIOS ? "ios" : "android";
 
