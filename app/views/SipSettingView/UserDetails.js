@@ -170,7 +170,7 @@ class Inputs extends Component<{navigation: any}> {
                underlineColorAndroid = "transparent"
                placeholder = "Phone number"
                placeholderTextColor = "black"
-    
+               keyboardType = "numbers-and-punctuation"
                autoCapitalize = "none"
                onChangeText = {this.handlephoneNumber}/>
             
@@ -179,6 +179,7 @@ class Inputs extends Component<{navigation: any}> {
                placeholder = "Email"
                placeholderTextColor = "black"
                autoCapitalize = "none"
+               keyboardType = "email-address"
                onChangeText = {this.handleEmail}/>
 
             <TouchableOpacity 
