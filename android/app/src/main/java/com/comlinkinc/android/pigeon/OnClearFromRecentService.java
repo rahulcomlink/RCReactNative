@@ -28,6 +28,7 @@ public class OnClearFromRecentService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         Log.e("ClearFromRecentService", "END");
         Prefs.setSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_IN_BACKGRUND, true);
+        Prefs.setSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_KILLED, true);
         CallManager.unRegisterDialer();
         CallManager.stopDialer();
         stopSelf();

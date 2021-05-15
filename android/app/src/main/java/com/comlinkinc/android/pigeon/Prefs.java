@@ -170,6 +170,7 @@ public class Prefs {
 
 
     public final static String PREFS_IS_APP_IN_BACKGRUND = "prefs_app_in_bg";
+    public final static String PREFS_IS_APP_KILLED = "prefs_app_is_killed";
 
 
     /**
