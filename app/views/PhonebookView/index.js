@@ -145,8 +145,8 @@ class PhonebookView extends React.Component {
 
       if (data.length > 0) {
         data.map((item) => {
-          if (item != null) {
-            if (item.phoneNumbers != null)
+          if (item != null && item.name != null) {
+            if (item.phoneNumbers != null && item.phoneNumbers[0] != null) 
               dataArray.push({
                 name: item.name,
                 number: item.phoneNumbers[0].number,
