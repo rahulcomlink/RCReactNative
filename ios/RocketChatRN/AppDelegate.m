@@ -108,37 +108,8 @@ static void InitializeFlipper(UIApplication *application) {
   [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
   [[NSUserDefaults standardUserDefaults]synchronize];
   
-  
-  
- 
    return YES;
 }
-
-- (void)applicationDidBecomeActive:(UIApplication *)application{
-  NSLog(@"applicationDidBecomeActive");
-
-//  [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isAppLaunch"];
-//  [[NSUserDefaults standardUserDefaults]synchronize];
-  
-  SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
-  NSString * flagValue = [object checkFlagValue];
-  /*
-  if([[[NSUserDefaults standardUserDefaults]valueForKey:@"isVoipCall"] isEqualToString:@"true"]){
- //  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
-   [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isVoipCall"];
-   [[NSUserDefaults standardUserDefaults]synchronize];
-   [self performSelector:@selector(callFuncAfterDelay) withObject:nil afterDelay:3.0];
- }
-  */
-}
-
-
-- (void)callFuncAfterDelay{
-  SIPSDKBridge * obj = [[SIPSDKBridge alloc]init];
-  NSLog(@"isVoipCall value true");
-  [obj acceptCallAfterAppLaunch];
-}
-
 
 - (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
 {
@@ -190,9 +161,6 @@ static void InitializeFlipper(UIApplication *application) {
 
 
 - (void)applicationWillTerminate:(UIApplication *)application{
-//  [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"isAppLaunch"];
-//  [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"isVoipCall"];
-  //[[NSUserDefaults standardUserDefaults]synchronize];
   NSLog(@"applicationWillTerminate");
   [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
   [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isVoipCall"];

@@ -42,9 +42,19 @@ struct InboundCallDescriptor {
       throw PayloadError.badPayload
     }
    
-    clid = url.pathComponents[0]
-    
+    let substring = (urlVal as! String).replacingOccurrences(of: "pigeon://incomingcall/", with: "")
+    if let phoneNo : String = substring.replacingOccurrences(of: "?proxy=testsipcc.mvoipctsi.com&sound=ring.wav", with: "") as? String{
+           print("phoneNo = \(phoneNo)")
+    clid = phoneNo
     localizedDisplayName = clid
+    }else {
+      clid = "Unknown"
+      localizedDisplayName = clid
+    }
+   
+   // clid = url.pathComponents[0]
+    
+    
   }
 }
 

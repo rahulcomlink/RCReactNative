@@ -162,6 +162,8 @@ class PhonebookView extends React.Component {
     if (os == "android") {
       NativeModules.Sdk.askStorageAndMicPermission();
     }
+
+
   };
 
   componentWillReceiveProps() {
