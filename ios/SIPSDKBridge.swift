@@ -69,39 +69,33 @@ class SIPSDKBridge : NSObject{
  
   @objc func makeCall(_ phoneNumber: String, sipServer: String, sipPort: String, sipTransport: String) -> Void{
     self.callManager.makeCall(outpulse: phoneNumber)
-//    SipCallManager.shared.makeCall(outpulse: phoneNumber, sipServer: sipServer, sipPort: sipPort, sipTransport: sipTransport)
   }
  
   @objc func endCall()  -> Void{
     self.callManager.dropCurrentCall { error in
       print("error while disconnecting call from RN")
     }
-    //SipCallManager.shared.DropAllCalls()
    }
   
   @objc func setSpeakerOn(_ on: Bool) -> Void{
     self.callManager.toggleSpeaker { error in
       print("error while enabling sound")
     }
-    //SipCallManager.shared.toggleSpeakerOnOff(on: on)
   }
   
   @objc func setMuteOn(_ on: Bool) -> Void{
     self.callManager.muteOrUnmuteCall { error in
       print("error while enabling mute")
     }
-   // SipCallManager.shared.toggleMicrophone(on: on)
   }
   
   @objc func keyPressed(_ key: String) -> Void{
     CallManager.shared.sendDtmf(digit: key) { _ in /* Ignored */ }
-    //SipCallManager.shared.sendDTMFTone(tone: key)
   }
   
   @objc func sendVoIPPhoneNumber(payload : PKPushPayload){
     Logger.attachSDKLogger()
     PushManager.shared.onPushArrived(payload)
-   // SipCallManager.shared.getPayload(payload: payload)
   }
   
   @objc func getVOIPToken(voipToken : PKPushCredentials){
@@ -112,11 +106,7 @@ class SIPSDKBridge : NSObject{
     print("voippToken = \(voippToken)")
     UserDefaults.standard.setValue(voippToken, forKey: "voipToken")
   }
-  
-  @objc func startSipSetting(){
-    SipCallManager.shared.startSipSettings()
-  }
-  
+
   @objc func getMicrophonePermission(){
     var permissionCheck:Bool = false
 
@@ -140,41 +130,7 @@ class SIPSDKBridge : NSObject{
             }
     print("permissionCheck = \(permissionCheck)")
   }
-  
-  @objc func configureAudioSession1(){
-    SipCallManager.shared.configureAudioSession1()
-  }
-  
-  @objc func acceptCallAfterAppLaunch(){
-    callManager.answerFromAppLaunch()
-  }
-  
-  @objc func checkFlagValue() ->String {
-    if MyVariables.shared.yourVariable == true {
-      return "true"
-    }else {
-      return "false"
-    }
-  }
-  
-  @objc func checkVoIPIncomingcallbackMethod(_ callback: RCTResponseSenderBlock) -> Void {
-      let resultsDict = [
-        "isIncomingCall" : self.callManager.inCall == true ? "true" : "false",
-        "phoneNumber" : self.callManager.remotePartyClid
-       ];
-      callback([NSNull() ,resultsDict])
-  }
-  
-  @objc func setAppLaunchFlag(){
-    MyVariables.shared.yourVariable = true
-   // self.callManager.isAppLaunch = true
-    UserDefaults.standard.setValue("true", forKey: "isAppLaunch")
-    UserDefaults.standard.synchronize()
-  }
 
-  
-  //Start From New
-  
   @objc func startSipAndPushOnAppLaunch(){
    // PushManager.shared.start()
     CallManager.shared.start()

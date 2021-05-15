@@ -350,15 +350,16 @@ final class CallManager {
       ModuleWithEmitter.emitter.sendEvent(withName: "onSessionConnect", body: ["callStatus" : "TERMINATED"])
     }
     
+    _dispatchQueue.async {
+      Dialer.shared.dropCall(uuid: action.callUUID)
+      action.fulfill()
+    }
     
     if _currentCallUuid == action.callUUID {
       reset()
     }
   
-    _dispatchQueue.async {
-      Dialer.shared.dropCall(uuid: action.callUUID)
-      action.fulfill()
-    }
+    
     
     doUserActionCleanup()
   }
@@ -768,25 +769,16 @@ final class CallManager {
     // This becomes our current call.
     _currentCallUuid = action.callUUID
     answerAction = action
-    
- 
-    
-  //  DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+   
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
       self._dispatchQueue.async {
         NSLog("handleAnswerCallAction")
         self._handleAnswerCallActionAsync(action)
       }
- //   }
-  
-  }
-  
-  
-  func answerFromAppLaunch(){
-    _dispatchQueue.async {
-      NSLog("answer action = %@", self.answerAction!)
-      self._handleAnswerCallActionAsync(self.answerAction!)
     }
+
   }
+ 
   
   fileprivate func getRemotePartyName(phoneNumber: String, defaultName: String) -> String {
     let results = ContactManager.shared.search(phoneNumber: phoneNumber)

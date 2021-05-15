@@ -167,6 +167,11 @@ class CallScreen extends React.Component {
 
   endCall = () => {
    
+    if (os == "android") {
+      NativeModules.Sdk.endCall();
+    } else {
+     // NativeModules.SIPSDKBridge.endCall();
+    }
     if(this.state.callend == 0){
     if (this.state.popParam == "1"){
       console.debug('this.state.popParam  1 = ', this.state.popParam)
@@ -181,11 +186,7 @@ class CallScreen extends React.Component {
     this.setState({ callend: 1 });
   }
     
-    if (os == "android") {
-      NativeModules.Sdk.endCall();
-    } else {
-      NativeModules.SIPSDKBridge.endCall();
-    }
+    
   };
 
   getCallStatusAndroid = (event) => {
@@ -438,7 +439,15 @@ class CallScreen extends React.Component {
 
           <TouchableOpacity
             style={styles.button1}
-            onPress={() => this.endCall()}
+            onPress={() => {
+              if (os == "android") {
+                //NativeModules.Sdk.endCall();
+              } else {
+                NativeModules.SIPSDKBridge.endCall();
+              }
+            
+              
+              this.endCall()}}
           >
             <Image style={styles.button1} source={calling_end} />
           </TouchableOpacity>

@@ -199,26 +199,27 @@ final class Dialer {
 
     // If this is a pending call then we don't yet have a handle for it. Therefore,
     // we just bail here.
-    if _pendingCallUUIDQueue.remove(uuid) {
-      return
-    }
-    
-    let handle = _callMap[uuid]!
-    _callMap[uuid] = nil
-    
+   
     var status: CMSTATUS
+    if let handle = _callMap[uuid] {
+    _callMap[uuid] = nil
     
     status = CmCallHangup(handle)
     
     if status != CM_SUCCESS {
       _logger.write("uuid=[%@], call hangup failure", type: .error, uuid.uuidString)
     }
-    
+    }
     status = CmUnregister()
 
     if status != CM_SUCCESS {
       _logger.write("uuid=[%@], failed to unregister", type: .error, uuid.uuidString)
     }
+    
+    if _pendingCallUUIDQueue.remove(uuid) {
+      return
+    }
+   
   }
 
   func holdCall(uuid: UUID) throws {
