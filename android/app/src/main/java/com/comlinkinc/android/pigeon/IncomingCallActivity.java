@@ -3,9 +3,13 @@ package com.comlinkinc.android.pigeon;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 
 
@@ -72,6 +77,14 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             txt_user_number.setText(phoneNumber);
 //            txt_user_name.setText(""+contact.getName());
             txt_user_name.setText("Incoming Call...");
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String name = getContactNameFromNumber(phoneNumber, mContext);
+                    txt_user_number.setText(name);
+                }
+            });
         }
     }
 
@@ -81,10 +94,9 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             // Handle clicks for btn_end_call
             CallManager.reject();
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 super.finishAndRemoveTask();
-            }
-            else {
+            } else {
                 super.finish();
             }
         } else if (v == btn_accept_call) {
@@ -133,5 +145,28 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             });
 
         }
+    }
+
+
+    public String getContactNameFromNumber(final String phoneNumber, Context context) {
+
+        String requiredPermission = android.Manifest.permission.READ_CONTACTS;
+        int checkVal = checkCallingOrSelfPermission(requiredPermission);
+        if (checkVal == PackageManager.PERMISSION_GRANTED) {
+            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+            String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
+            String contactName = "";
+            Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    contactName = cursor.getString(0);
+                }
+                cursor.close();
+            }
+            return contactName;
+        }
+
+        return phoneNumber;
     }
 }
