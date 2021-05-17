@@ -164,6 +164,11 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
                 }
                 cursor.close();
             }
+
+            if (contactName.equals("")){
+                return phoneNumber;
+            }
+
             return contactName;
         }
 
