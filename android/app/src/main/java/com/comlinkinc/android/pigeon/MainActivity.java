@@ -12,6 +12,7 @@ import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 
 import androidx.core.app.NotificationCompat;
@@ -178,6 +179,27 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
                                 .emit("CallAnswered", phoneNumber);
                     }
                 }, 1500);
+            }else{
+                new CountDownTimer(5000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        if (reactContext != null) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    reactContext
+                                            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                            .emit("CallAnswered", phoneNumber);
+                                }
+                            }, 1500);
+                        }
+                    }
+
+                    public void onFinish() {
+
+                    }
+
+                }.start();
             }
         }
     }
