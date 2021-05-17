@@ -94,38 +94,29 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             Log.d("phoneNumber", phoneNumber + "");
 
             if (reactContext == null) {
-                Intent intent = new Intent(mContext, MainActivity.class);
+                Intent intent = new Intent(MainApplication.getAppContext(), MainActivity.class);
                 intent.putExtra("incoming_call", true);
                 intent.putExtra("phoneNumber", phoneNumber);
-                startActivity(intent);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                MainApplication.getAppContext().startActivity(intent);
                 finish();
-//
-//                if(!reactApplicationContext.hasActiveCatalystInstance()) {
-//                    return;
-//                }
-
-
-//                ReactInstanceManager reactInstanceManager = getReactInstanceManager();
-//                reactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
-//                    @Override
-//                    public void onReactContextInitialized(ReactContext context) {
-//                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-//                                .emit("CallAnswered", phoneNumber);
-//                        reactInstanceManager.removeReactInstanceEventListener(this);
-//                    }
-//                });
-
-
-//                reactApplicationContext
-//                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-//                        .emit("CallAnswered", phoneNumber);
-//                finish();
             } else {
-//                if (reactApplicationContext.hasActiveCatalystInstance()) {
-                reactContext
+                boolean isAppkilled = Prefs.getSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_KILLED, false);
+                if (isAppkilled) {
+                    Intent intent = new Intent(MainApplication.getAppContext(), MainActivity.class);
+                    intent.putExtra("incoming_call", true);
+                    intent.putExtra("phoneNumber", phoneNumber);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MainApplication.getAppContext().startActivity(intent);
+                    finish();
+                }else{
+                    reactContext
                             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                             .emit("CallAnswered", phoneNumber);
                     finish();
+                }
             }
 
             runOnUiThread(new Runnable() {

@@ -775,6 +775,8 @@ public class CallManager {
                 }
 
                 Intent touchNotification = new Intent(MainApplication.getAppContext(), IncomingCallActivity.class);
+                touchNotification.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                touchNotification.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
                 touchNotification.putExtra("Contact", contactFromPayload);
                 PendingIntent pendingIntent = PendingIntent.getActivity(MainApplication.getAppContext(), 0, touchNotification, PendingIntent.FLAG_UPDATE_CURRENT);

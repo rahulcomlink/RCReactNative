@@ -3,34 +3,32 @@ package com.comlinkinc.android.pigeon;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-
 import android.content.ContentResolver;
-import android.media.AudioAttributes;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.media.AudioAttributes;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.core.app.NotificationCompat;
 
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.ReactRootView;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactFragmentActivity;
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.google.gson.Gson;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import com.tencent.mmkv.MMKV;
 import com.zoontek.rnbootsplash.RNBootSplash;
 
-import static com.comlinkinc.android.pigeon.MainApplication.reactApplicationContext;
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 
 class ThemePreferences {
@@ -64,10 +62,12 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
 
         instance = MainActivity.this;
 
-        if (getIntent() != null && getIntent().getExtras() != null){
+        if (getIntent() != null && getIntent().getExtras() != null) {
             isIncomingCall = getIntent().getExtras().getBoolean("incoming_call");
             phoneNumber = getIntent().getExtras().getString("phoneNumber");
         }
+
+        Prefs.setSharedPreferenceBoolean(MainApplication.getAppContext(), Prefs.PREFS_IS_APP_KILLED, false);
 
 
         // Start the MMKV container
@@ -157,15 +157,28 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
             manager.createNotificationChannel(notificationChannel);
         }
 
-        String []permissions = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.RECORD_AUDIO"};
+        String[] permissions = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.RECORD_AUDIO"};
 
         if (Utilities.checkPermissionsGranted(MainActivity.this, permissions)) {
             try {
                 CallManager.copyRingtoneToPhoneStorage(MainApplication.getAppContext());
             } catch (Exception e) {
             }
-        }else{
+        } else {
             Utilities.askForPermissions(MainActivity.this, permissions);
+        }
+
+        if (isIncomingCall) {
+            if (reactContext != null) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        reactContext
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("CallAnswered", phoneNumber);
+                    }
+                }, 1500);
+            }
         }
     }
 
@@ -215,7 +228,7 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
 
     @Override
     public void onReactContextInitialized(ReactContext context) {
-        if (isIncomingCall && context != null){
+        if (isIncomingCall && context != null) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
