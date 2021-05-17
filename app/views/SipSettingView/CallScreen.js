@@ -52,7 +52,7 @@ import call_star_3x from "../../static/images/call_star_d_1.png";
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
 import {  StackActions } from '@react-navigation/native';
-
+import * as Contacts from "expo-contacts";
 /*
 const onSessionConnect = (event) => {
     console.debug("onSessionConnect", event);
@@ -98,6 +98,7 @@ class CallScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.getCallerName(this.state.phoneNumber);
     if (this.state.isVoipCall == true) {
         this.startTimer();
     }
@@ -252,6 +253,66 @@ class CallScreen extends React.Component {
 
     this.setState({ callStatusText: hours + ":" + minutes + ":" + seconds });
   };
+
+   getCallerName = async(phoneNumber) => {
+    let dataArray = [];
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status === "granted") {
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.Name],
+        fields: [Contacts.Fields.PhoneNumbers],
+      });
+
+      if (data.length > 0) {
+        data.map((item) => {
+          if (item != null && item.name != null) {
+            if (item.phoneNumbers != null && item.phoneNumbers[0] != null) 
+              {
+               
+                var no = item.phoneNumbers[0].number;
+                no = no.replace("*", "");
+                no = no.replace("#", "");
+                no = no.replace(" ", "");
+                no = no.replace("+", "");
+                no = no.replace("(", "");
+                no = no.replace(")", "");
+
+                if (no.indexOf("*") >= 0) {
+                  no = no.replace("*", "");
+                }
+                if (no.indexOf("#") >= 0) {
+                  no = no.replace("#", "");
+                }
+                if (no.indexOf(" ") >= 0) {
+                  no = no.replace(" ", "");
+                }
+                if (no.indexOf("+") >= 0) {
+                  no = no.replace("+", "");
+                }
+                if (no.indexOf("(") >= 0) {
+                  no = no.replace("(", "");
+                }
+                if (no.indexOf(")") >= 0) {
+                  no = no.replace(")", "");
+                }
+                if (no.indexOf("-") >= 0) {
+                  no = no.replace("-", "");
+                }
+                if (no == phoneNumber){
+                  console.debug("no = ",no);
+                  console.debug("item.name = ",item.name);
+                  this.setState({ name : item.name  });
+                  return;
+                }
+              }
+          }
+          return;
+        });
+       
+      }
+      
+    }
+  }
 
   render() {
     return (

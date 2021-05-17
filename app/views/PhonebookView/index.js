@@ -124,7 +124,6 @@ class PhonebookView extends React.Component {
   }
 
   async componentDidMount() {
-    commonSipSettingFunc.getSipSettingsAndStart();
     const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: "PhonebookView" })],
