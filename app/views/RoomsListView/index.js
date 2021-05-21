@@ -485,7 +485,7 @@ class RoomsListView extends React.Component {
               testID="rooms-list-view-directory"
             />
             <HeaderButton.Item
-              iconName="administration"
+              iconName="phone"
               onPress={this.goToSipProvisioning}
               testID="rooms-list-view-sipSetting"
             />

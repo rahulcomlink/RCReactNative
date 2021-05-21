@@ -142,7 +142,7 @@ class getSipSettingsFromAPI extends React.Component {
     }
 
     onTURNHostChanged = (text) => {
-        this.setState({turnServer : text})
+        this.setState({turnServer : text.replace(" ", "")})
     }
 
     onTURNPortChanged = (text) => {
@@ -150,15 +150,15 @@ class getSipSettingsFromAPI extends React.Component {
     }
 
     onTURNUsernameChanged = (text) => {
-        this.setState({turnUsername : text})
+        this.setState({turnUsername : text.replace(" ", "")})
     }
 
     onTURNPasswordChanged = (text) => {
-        this.setState({turnPassword : text})
+        this.setState({turnPassword : text.replace(" ", "")})
     }
 
     onStunServerChanged = (text) => {
-        this.setState({stunServer : text})
+        this.setState({stunServer : text.replace(" ", "")})
     }
 
     onStunPortChanged = (text) => {
@@ -218,11 +218,11 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('sipUsername', this.state.sipUsername);
             await AsyncStorage.setItem('sipPassword', this.state.sipPassword);
             await AsyncStorage.setItem('iceEnabled', this.state.iceEnabled == true ? 'true' : 'false');
-            await AsyncStorage.setItem('turnServer', this.state.turnServer);
+            await AsyncStorage.setItem('turnServer', this.state.turnServer == "" ? " " : this.state.turnServer);
             await AsyncStorage.setItem('turnPort', "0");
-            await AsyncStorage.setItem('turnUsername', this.state.turnUsername);
-            await AsyncStorage.setItem('turnPassword', this.state.turnPassword);
-            await AsyncStorage.setItem('stunServer', this.state.stunServer);
+            await AsyncStorage.setItem('turnUsername', this.state.turnUsername == "" ? " " : this.state.turnUsername);
+            await AsyncStorage.setItem('turnPassword', this.state.turnPassword == "" ? " " : this.state.turnPassword);
+            await AsyncStorage.setItem('stunServer', this.state.stunServer == "" ? " " : this.state.stunServer);
             await AsyncStorage.setItem('stunPort', "0");
 
             alert('Sip Settings saved successfully.');

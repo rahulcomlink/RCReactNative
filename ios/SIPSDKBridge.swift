@@ -47,11 +47,11 @@ class SIPSDKBridge : NSObject{
     
     config.sipLocalPort = localPort.isEmpty ? 0 : UInt16(localPort)!
     config.sipServerPort = serverPort.isEmpty ? 0 : UInt16(serverPort)!
-    config.turnHost = turnHost
-    config.turnUsername = turnUsername
-    config.turnPassword = turnPassword
+    config.turnHost = turnHost == " " ? "" : turnHost
+    config.turnUsername = turnUsername == " " ? "" : turnUsername
+    config.turnPassword = turnPassword == " " ? "" : turnPassword
     config.turnRealm = ""
-    config.stunHost = stunHost
+    config.stunHost = stunHost == " " ? "" : stunHost
     config.iceEnabled = iceEnabled  == "true" ? true : false
     config.srtpEnabled = false
     config.answerTimeout = Double(60)
