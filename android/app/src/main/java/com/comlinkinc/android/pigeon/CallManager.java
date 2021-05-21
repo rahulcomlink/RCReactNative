@@ -155,6 +155,8 @@ public class CallManager {
         Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_SIP_ACCOUNT_SRTP_ENABLE, false);
         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_SIP_ACCOUNT_MISC_ANS_TIMEIOUT, "60");
 
+        Log.d("SIP_SETTINGS", turnServer + "\n" + turnUsername + "\n" + turnPassword + "\n" + turnPort + "\n" + stunServer + "\n" + stunPort);
+
         startDialer(MainApplication.getAppContext());
     }
 
@@ -174,9 +176,9 @@ public class CallManager {
                                                            String turnPort,
                                                            String stunPort) {
         String[] codecs = new String[5];
-        codecs[0] = "G729/8000/1";
-        codecs[1] = "opus/48000/2";
-        codecs[2] = "opus/24000/2";
+        codecs[0] = "opus/48000/2";
+        codecs[1] = "opus/24000/2";
+        codecs[2] = "G729/8000/1";
         codecs[3] = "PCMU/8000/1";
         codecs[4] = "PCMA/8000/1";
 

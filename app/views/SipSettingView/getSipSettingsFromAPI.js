@@ -142,7 +142,7 @@ class getSipSettingsFromAPI extends React.Component {
     }
 
     onTURNHostChanged = (text) => {
-        this.setState({turnServer : text.replace(" ", "")})
+        this.setState({ turnServer: text.replaceAll(" ", "") });
     }
 
     onTURNPortChanged = (text) => {
@@ -150,15 +150,15 @@ class getSipSettingsFromAPI extends React.Component {
     }
 
     onTURNUsernameChanged = (text) => {
-        this.setState({turnUsername : text.replace(" ", "")})
+        this.setState({ turnUsername: text.replaceAll(" ", "") });
     }
 
     onTURNPasswordChanged = (text) => {
-        this.setState({turnPassword : text.replace(" ", "")})
+        this.setState({ turnPassword: text.replaceAll(" ", "") });
     }
 
     onStunServerChanged = (text) => {
-        this.setState({stunServer : text.replace(" ", "")})
+        this.setState({stunServer : text.replaceAll(" ", "")})
     }
 
     onStunPortChanged = (text) => {
