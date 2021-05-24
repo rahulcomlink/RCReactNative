@@ -64,6 +64,7 @@ import AutoStart from "react-native-autostart";
 // We are importing the native Java module here
 import { NativeModules, NativeEventEmitter } from "react-native";
 import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
+import { fcmUrl as fcmUrl, fcmKey as fcmKey } from '../../../app.json';
 
 var NotificationSettings = NativeModules.NotificationSettings;
 
@@ -925,8 +926,6 @@ class RoomView extends React.Component {
     var type = "";
     var linkMessage = "";
     var titleMessage = "";
-    console.debug("got device token :", devicetoken);
-    console.debug("this subscription = ", subscriptions.room);
 
     switch (subscriptions.room._raw.t) {
       case "p":
@@ -957,15 +956,6 @@ class RoomView extends React.Component {
         break;
     }
 
-    console.debug("notification type :", type);
-    console.debug("notification linkMessage :", linkMessage);
-    console.debug("notification titleMessage :", titleMessage);
-
-    const params = {};
-    params.to =
-      "cs8RDCfb_yY:APA91bHxv-_GobwcF6qxDzh_3W583QUWiyBXSx4DNLAfc--Z7B12XgLU82nur563aams7Lw80jzOBf5tVaYQ7LhZjZVD0P3ZEO2gsCbzWay2afdLBQACaaEehLIM1UEXObVtMi5NmZzv";
-    params.priority = "high";
-
     const notification = {};
     notification.body = msg;
     notification.title = titleMessage;
@@ -984,8 +974,6 @@ class RoomView extends React.Component {
     androidData.chatRoomType = type;
     androidData.icon = "ic_notification";
 
-    params.notification = notification;
-    params.data = data;
 
     const ejson = {};
     ejson.rid = subscriptions.room._raw.rid;
@@ -1004,15 +992,20 @@ class RoomView extends React.Component {
     data.ejson = ejson;
     androidData.ejson = ejson;
 
-    console.debug("params of push notification : ", params);
-
+    
+    var paramData = {};
     if (os == "ios") {
-      const result = await fetch("https://fcm.googleapis.com/fcm/send", {
+      paramData = data;
+    }
+    else {
+      paramData = androidData;
+    }
+
+      const result = await fetch(fcmUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si",
+          Authorization:  fcmKey,
         },
         body: JSON.stringify({
           to: devicetoken,
@@ -1028,54 +1021,17 @@ class RoomView extends React.Component {
             icon: 'ic_notification',
             ejson: ejson,
           },
-          data: data,
+          data: paramData,
           ejson: ejson,
           badge: 1,
-          aps: {
-            alert: "Sample notification",
-            badge: "+1",
-            sound: "message_beep_tone.mp3",
-            soundName: "message_beep_tone.mp3",
-            icon: 'ic_notification',
-            category: "REACT_NATIVE",
-            "content-available": 1,
-          },
         }),
       })
         .then((response) => response.json())
         .then((json) => {
           console.debug("response of push notification new :", json);
         });
-    } else {
-      const result = await fetch("https://fcm.googleapis.com/fcm/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si",
-        },
-        body: JSON.stringify({
-          to: devicetoken,
-          priority: "high",
-          data: androidData,
-          badge: 1,
-          ejson: ejson,
-          notification: {
-            body: msg,
-            title: titleMessage,
-            sound: "message_beep_tone.mp3",
-            soundName: "message_beep_tone.mp3",
-            android_channel_id: "500",
-            icon: 'ic_notification',
-            ejson: ejson,
-          },
-        }),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.debug("response of push notification new :", json);
-        });
-    }
+
+        console.debug("result result :",result);
   };
 
   getMessages = () => {
