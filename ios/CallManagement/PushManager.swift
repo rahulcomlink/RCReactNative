@@ -52,7 +52,6 @@ class PushManager {
   
   func onPushArrived(_ payload: PKPushPayload) {
     _logger.write("push received", type: .debug)
-    NSLog("payload localized %@", payload.dictionaryPayload)
     do {
       // Try to build an inbound call descriptor from the payload. If that is not
       // possible the InboundCallDescriptor constructor will throw.

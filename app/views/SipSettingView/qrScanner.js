@@ -57,7 +57,6 @@ class qrScanner extends Component {
             sub_activation_token : e.data,
          };
         
-        console.debug('params of qr code', params);
         this.provisionUser(params);
     };
 
@@ -66,18 +65,6 @@ class qrScanner extends Component {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "text/plain");
       myHeaders.append("Accept", "text/plain");
-
-      /*
-      var params = {
-         auth_type : 'QRCODE',
-         app_id : this.props.route.params.responseAppID,
-         sub_auth_str : this.props.route.params.UserMobileNumber,
-         sub_dev_model : this.props.route.params.deviceModel,
-         sub_dev_os : this.props.route.params.OSType,
-         sub_dev_token : this.props.route.params.deviceToken,
-         sub_activation_token : this.state.authToken,
-      };
-      */
 
       var jsonString = JSON.stringify(params);
 
@@ -98,26 +85,18 @@ class qrScanner extends Component {
 
     handleResponse = (apiResponse) => {
       if(apiResponse.auth_success === true){
-          
-
-        console.debug("apiResponse",apiResponse);
-        //Alert.alert(apiResponse);
+  
           var sipserver1 = ''
           var sipServers =  apiResponse.app_cfg_data.sip_svrs
           var stunServers = apiResponse.app_cfg_data.stun_svrs
           var turnServers = apiResponse.app_cfg_data.turn_svrs
-          
-         // if(apiResponse.app_cfg_data.sip_svrs){
+       
             if(apiResponse.app_cfg_data.sip_svrs.length > 0 ){
             var sipserver1 =  apiResponse.app_cfg_data.sip_svrs[0]
             }else {
               var sipserver1 =  'sandbox.mvoipctsi.com'
             }
-         // }
-          
-
-
-      
+        
           if(sipserver1.indexOf(':') >= 0){
             
               this.setState({sipServer : sipserver1.split(':')[0]});

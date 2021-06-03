@@ -183,7 +183,6 @@ class RoomsListView extends React.Component {
       item: {},
     };
 
-    console.log("constructor");
     this.setHeader();
      if (os == "android") {
        DeviceEventEmitter.addListener("CallAnswered", this.getAnsweredCall);
@@ -198,7 +197,7 @@ class RoomsListView extends React.Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+   
 
     const { navigation, closeServerDropdown, appState } = this.props;
 
@@ -211,7 +210,6 @@ class RoomsListView extends React.Component {
      * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
      */
 
-    /*commonSipSettingFunc.getSipSettingsAndStart(); */
 
     if (appState === "foreground") {
       this.getSubscriptions();
@@ -401,7 +399,6 @@ class RoomsListView extends React.Component {
     messaging()
       .getToken()
       .then((token) => {
-        console.debug(token);
         const params = {};
         const customFields = {};
         customFields.devicetoken = token;

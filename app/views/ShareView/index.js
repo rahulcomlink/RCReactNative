@@ -197,14 +197,9 @@ class ShareView extends Component {
 						}
 					return Promise.resolve();
 				}));
-				console.debug('result of send attchment', result);
-				console.debug('result of send attchment response', result[0].respInfo.status);
-				//console.debug('result.response.success', result.response.success);
-			//	console.debug('result.status', result.success)
+	
 				if (result[0].respInfo.status == 200){
-					console.debug('result.status');
 					const subscriptions = this.state;
-					console.debug('subscription of share view ', subscriptions);
 					var msg = subscriptions.room.u.username + " " + "sent an attachment"
 					this.sendNotification(msg);
 				}
@@ -212,7 +207,6 @@ class ShareView extends Component {
 			// Send text message
 			} else if (text.length) {
 				const result = await RocketChat.sendMessage(room.rid, text, thread?.id, { id: user.id, token: user.token });
-				console.debug('result of attch with text',result);
 			}
 		} catch {
 			// Do nothing
@@ -225,12 +219,8 @@ class ShareView extends Component {
 	};
 
 	sendNotification = async(msg) => {
-		console.debug('send notification method called')
 		try {
-			console.debug('send notification method called')
-			console.debug('info about this room 1', this.state);
 			const membersList = await RocketChat.getRoomMembers(this.state.room.rid, true, 0 , 100);
-			console.debug('info about message:', msg);
 			const newMembers = membersList.records;
 			newMembers.map((member) => { console.debug('new member = ', member._id) 
 			this.getInfoOfUser(msg, member._id)
@@ -250,7 +240,6 @@ class ShareView extends Component {
 				const customFields = user.customFields;
 				const devicetoken = customFields.devicetoken;
 				const os = customFields.os;
-				console.debug('result of each user : ', user)
 				const subscriptions = this.state;
 				if (user.username == subscriptions.room.u.username) {
 					console.log('dont send notification to same user');

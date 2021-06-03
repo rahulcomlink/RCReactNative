@@ -680,10 +680,8 @@ class MessageBox extends Component {
         0,
         100
       );
-      console.debug("info about message:", msg);
       const newMembers = membersList.records;
       newMembers.map((member) => {
-        console.debug("new member = ", member._id);
         this.getInfoOfUser(msg, member._id);
       });
     } catch (e) {
@@ -699,7 +697,6 @@ class MessageBox extends Component {
         const customFields = user.customFields;
         const devicetoken = customFields.devicetoken;
         const os = customFields.os;
-        console.debug("result of each user : ", user);
         const subscriptions = this.state;
         if (user.username == subscriptions.room.u.username) {
           console.log("dont send notification to same user");

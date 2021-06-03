@@ -165,7 +165,6 @@ class ContactManager {
   ///
   func save(_ contact: Contact, completion: @escaping (Error?) -> Void = { _ in }) {
     _logger.write("uid=[%@]", type: .debug, contact.uid)
-    //print("contact to be save = \(contact)")
     DispatchQueue.main.async {
       let status = CdbSaveContact(contact._nativePtr)
       if status == CDB_SUCCESS {
@@ -256,7 +255,7 @@ class ContactManager {
             shadowPhoneNumber.number = phoneNo
            //let contactreference =  self.search(firstName: "", middleName: "", lastName: "", email: "", phoneNumber: phoneNumber.value.stringValue as String)
             let contactreference =  self.search(firstName: "", middleName: "", lastName: "", email: "", phoneNumber: phoneNo as String)
-            //print("contactreference = \(contactreference)")
+    
             if contactreference.count > 0 {
                toSave = false
             }

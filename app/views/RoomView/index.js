@@ -232,24 +232,6 @@ class RoomView extends React.Component {
       // if (AutoStart.isCustomAndroid()) {
       //   AutoStart.startAutostartSettings();
       // }
-
-      // Works on both Android and iOS
-      //   Alert.alert(
-      //     "",
-      //     "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
-      //     [
-      //       {
-      //         text: "Cancel",
-      //         onPress: () => console.log("Cancel Pressed"),
-      //         style: "cancel",
-      //       },
-      //       {
-      //         text: "OK",
-      //         onPress: () => this.openNofiticationSettingsFromJava(),
-      //       },
-      //     ],
-      //     { cancelable: false }
-      //   );
     }
   }
 
@@ -291,30 +273,6 @@ class RoomView extends React.Component {
       (key) => !isEqual(nextState.roomUpdate[key], roomUpdate[key])
     );
   }
-
-  getCallStatus = (event) => {
-		Alert.alert(
-      "",
-      "For better experience please enable below option from your app settings \n\n 1.  Floating Notification\n\n 2.  Sound",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => console.log("Cancel Pressed"),
-        },
-      ],
-      { cancelable: false }
-    );
-
-		console.debug("getCallStatus 1",event);
-		console.log("getCallStatus 1",event);
-        
-     }
-
 
   componentDidUpdate(prevProps, prevState) {
     const { roomUpdate } = this.state;
@@ -889,10 +847,8 @@ class RoomView extends React.Component {
         0,
         100
       );
-      console.debug("info about message:", msg);
       const newMembers = membersList.records;
       newMembers.map((member) => {
-        console.debug("new member = ", member._id);
         this.getInfoOfUser(msg, member._id);
       });
     } catch (e) {
@@ -908,10 +864,8 @@ class RoomView extends React.Component {
         const customFields = user.customFields;
         const devicetoken = customFields.devicetoken;
         const os = customFields.os;
-        console.debug("result of each user : ", user);
         const subscriptions = this.state;
         if (user.username == subscriptions.room.u.username) {
-          console.log("dont send notification to same user");
         } else {
           this.sendPushNotificationWithCustomPayload(msg, devicetoken, os);
         }
@@ -1028,10 +982,8 @@ class RoomView extends React.Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.debug("response of push notification new :", json);
         });
 
-        console.debug("result result :",result);
   };
 
   getMessages = () => {

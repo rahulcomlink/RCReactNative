@@ -63,8 +63,6 @@ class SIPSDKBridge : NSObject{
   }
   
   @objc func sipStop() -> Void{
-    NSLog("sipStop")
-    SipCallManager.shared.stop()
   }
  
   @objc func makeCall(_ phoneNumber: String, sipServer: String, sipPort: String, sipTransport: String) -> Void{
@@ -73,19 +71,19 @@ class SIPSDKBridge : NSObject{
  
   @objc func endCall()  -> Void{
     self.callManager.dropCurrentCall { error in
-      print("error while disconnecting call from RN")
+      print("error in end call = \(error)")
     }
    }
   
   @objc func setSpeakerOn(_ on: Bool) -> Void{
     self.callManager.toggleSpeaker { error in
-      print("error while enabling sound")
+      print("error in set Speaker  = \(error)")
     }
   }
   
   @objc func setMuteOn(_ on: Bool) -> Void{
     self.callManager.muteOrUnmuteCall { error in
-      print("error while enabling mute")
+      print("error in set Mute = \(error)")
     }
   }
   
@@ -103,7 +101,6 @@ class SIPSDKBridge : NSObject{
     let voippToken = voipToken.token.reduce("") {
         return $0 + String(format: "%02x", $1)
     }
-    print("voippToken = \(voippToken)")
     UserDefaults.standard.setValue(voippToken, forKey: "voipToken")
   }
 
@@ -128,7 +125,6 @@ class SIPSDKBridge : NSObject{
             default:
                 break
             }
-    print("permissionCheck = \(permissionCheck)")
   }
 
   @objc func startSipAndPushOnAppLaunch(){

@@ -44,7 +44,7 @@ struct InboundCallDescriptor {
    
     let substring = (urlVal as! String).replacingOccurrences(of: "pigeon://incomingcall/", with: "")
     if let phoneNo : String = substring.replacingOccurrences(of: "?proxy=testsipcc.mvoipctsi.com&sound=ring.wav", with: "") as? String{
-           print("phoneNo = \(phoneNo)")
+
     clid = phoneNo
     localizedDisplayName = clid
     }else {

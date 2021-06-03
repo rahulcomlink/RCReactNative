@@ -49,26 +49,6 @@ class SIPSettings extends React.Component {
             stunServer : props.route.params?.stunServer,
             stunPort : props.route.params?.stunPort
         }
-        
-        
-
-       /*
-       this.state =  {
-        sipServer : 'newxonesip.mvoipctsi.com',
-        sipPort : '8993',
-        sipTransport : 'TCP',
-        sipUsername :'919420429240',
-        sipPassword : '5d7d424b4c2f87001a71c411',
-        iceEnabled : true,
-        turnServer : 'turntaiwan.mvoipctsi.com',
-        turnPort : '0',
-        turnUsername : 'comlinkxone',
-        turnPassword : 'hgskSlGHgwSKfgsdUSDGhs',
-        stunServer : 'turntaiwan.mvoipctsi.com',
-        stunPort : '0'
-       }
-       */
-    
     
         this.state.selectedIndex = 0;
         if(this.state.sipTransport == 'TCP'){
@@ -153,19 +133,6 @@ class SIPSettings extends React.Component {
 
         try {
 
-            console.debug('sipServer===',this.state.sipServer);
-            console.debug('sipPort=',this.state.sipPort);
-            console.debug('sipTransport=',this.state.sipTransport);
-            console.debug('sipUsername=',this.state.sipUsername);
-            console.debug('sipPassword=',this.state.sipPassword);
-            console.debug('iceEnabled=',this.state.iceEnabled);
-            console.debug('turnServer=',this.state.turnServer);
-            console.debug('turnPort=',this.state.turnPort);
-            console.debug('turnUsername=',this.state.turnUsername);
-            console.debug('turnPassword=',this.state.turnPassword);
-            console.debug('stunServer==',this.state.stunServer);
-            console.debug('stunPort=',this.state.stunPort);
-
             await AsyncStorage.setItem('sipServer', this.state.sipServer);
             await AsyncStorage.setItem('sipPort', this.state.sipPort + '');
             await AsyncStorage.setItem('sipTransport', this.state.sipTransport);
@@ -192,7 +159,6 @@ class SIPSettings extends React.Component {
         if(this.state.sipServer == null) {
         try {
             const sipServer = await AsyncStorage.getItem('sipServer') ;
-            console.debug('sipServerrrrr=',sipServer);
             this.setState({ sipServer: sipServer})
             
 
@@ -213,39 +179,21 @@ class SIPSettings extends React.Component {
             this.setState({ iceEnabled: iceEnabled == 'true' ? true : false })
 
             const turnServer = await AsyncStorage.getItem('turnServer');
-            // if (turnServer == "-") { 
-            //     turnServer = ""
-            // }
             this.setState({ turnServer: turnServer });
 
             const turnPort = await AsyncStorage.getItem('turnPort');
-            // if (turnPort == "-") {
-            //   turnPort = "";
-            // }
             this.setState({ turnPort: turnPort })
 
             const turnUsername = await AsyncStorage.getItem('turnUsername');
-            //  if (turnUsername == "-") {
-            //    turnUsername = "";
-            //  }
             this.setState({ turnUsername: turnUsername})
 
             const turnPassword = await AsyncStorage.getItem('turnPassword');
-            //  if (turnPassword == "-") {
-            //    turnPassword = "";
-            //  }
             this.setState({ turnPassword: turnPassword })
 
             const stunServer = await AsyncStorage.getItem('stunServer');
-            //  if (stunServer == "-") {
-            //    stunServer = "";
-            //  }
             this.setState({ stunServer: stunServer })
 
             const stunPort = await AsyncStorage.getItem('stunPort');
-            //  if (stunPort == "-") {
-            //    stunPort = "";
-            //  }
             this.setState({ stunPort: stunPort })
 
            this.forceUpdate()
@@ -255,7 +203,6 @@ class SIPSettings extends React.Component {
             console.debug('error.message', error.message);
           }
         
-        console.debug('this.state.sipServer=',this.state.sipServer);
         if(this.state.sipServer == null){
         
         const { navigation, isMasterDetail } = this.props;
@@ -291,38 +238,6 @@ class SIPSettings extends React.Component {
       }
 
 
-      
-
-    /*componentDidMount(){
-       
-        this.getSIPUserData();
-
-        if(this.state.sipServer == '') {
-            //   Alert.alert('Please fill sip settings');
-            const { navigation, isMasterDetail } = this.props;
-               Alert.alert(
-                   "Alert Title",
-                   "My Alert Msg",
-                   [
-                     {
-                       text: "ok",
-                       onPress: () => {
-                           if (isMasterDetail) {
-                               navigation.navigate('ModalStackNavigator', { screen: 'Inputs' });
-                           } else {
-                               navigation.navigate('SipProvisioningStackNavigator');
-                           }	
-                       }
-                     },
-                     {
-                       text: "Cancel",
-                       onPress: () => console.log("Cancel Pressed"),
-                       style: "cancel"
-                     }
-                   ]
-                 );
-           }
-    }*/
 
     render(){
         return (
@@ -406,14 +321,6 @@ class SIPSettings extends React.Component {
                   onTextChange={this.onTURNHostChanged}
                 />
 
-                {/* <InputContainer
-                            placeholder = 'Port'
-                            title = 'TURN Port'
-                            keyBoardType = 'number-pad'
-                            textValue = {this.state.turnPort + ''}
-                            onTextChange = {this.onTURNPortChanged}
-                        /> */}
-
                 <InputContainer
                   placeholder="Username"
                   title="TURN Username"
@@ -439,14 +346,6 @@ class SIPSettings extends React.Component {
               textValue={this.state.stunServer}
               onTextChange={this.onStunServerChanged}
             />
-
-            {/* <InputContainer
-                    placeholder = 'Port'
-                    title = 'STUN Port'
-                    keyBoardType = 'number-pad'
-                    textValue = {this.state.stunPort + ''}
-                    onTextChange = {this.onStunPortChanged}
-                /> */}
 
             <TouchableOpacity
               style={styles.saveButton}

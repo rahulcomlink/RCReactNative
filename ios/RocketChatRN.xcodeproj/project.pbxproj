@@ -11,8 +11,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1822169425D410A700CA4462 /* SipCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1822169225D410A700CA4462 /* SipCallManager.swift */; };
 		1842B7AA25A33E04003C9D96 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 1842B7A625A33E03003C9D96 /* main.jsbundle */; };
+		1845F0EB2667B8E800687094 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1845F0EA2667B8E800687094 /* Intents.framework */; };
+		1845F0EE2667B8E800687094 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1845F0ED2667B8E800687094 /* IntentHandler.swift */; };
+		1845F0F22667B8E800687094 /* IntentHandling.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1845F0E92667B8E800687094 /* IntentHandling.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1845F0FB2667B9E500687094 /* UserActivityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1845F0FA2667B9E500687094 /* UserActivityExtension.swift */; };
 		18534AF025D2EA2700377FDC /* FIFO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AE425D2EA2700377FDC /* FIFO.swift */; };
 		18534AF125D2EA2700377FDC /* CString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AE525D2EA2700377FDC /* CString.swift */; };
 		18534AF225D2EA2700377FDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AE625D2EA2700377FDC /* Logger.swift */; };
@@ -169,6 +172,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1845F0F02667B8E800687094 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1845F0E82667B8E800687094;
+			remoteInfo = IntentHandling;
+		};
 		18765CF025ADC06C00AAAB56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -193,6 +203,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				18765CF225ADC06C00AAAB56 /* NotificationService.appex in Embed App Extensions */,
+				1845F0F22667B8E800687094 /* IntentHandling.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,8 +220,12 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RocketChatRN/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RocketChatRN/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RocketChatRN/main.m; sourceTree = "<group>"; };
-		1822169225D410A700CA4462 /* SipCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SipCallManager.swift; sourceTree = "<group>"; };
 		1842B7A625A33E03003C9D96 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		1845F0E92667B8E800687094 /* IntentHandling.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandling.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1845F0EA2667B8E800687094 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		1845F0ED2667B8E800687094 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		1845F0EF2667B8E800687094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1845F0FA2667B9E500687094 /* UserActivityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityExtension.swift; sourceTree = "<group>"; };
 		18534AE425D2EA2700377FDC /* FIFO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FIFO.swift; sourceTree = "<group>"; };
 		18534AE525D2EA2700377FDC /* CString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CString.swift; sourceTree = "<group>"; };
 		18534AE625D2EA2700377FDC /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -435,6 +450,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1845F0E62667B8E800687094 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1845F0EB2667B8E800687094 /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		18765CE825ADC06C00AAAB56 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -473,11 +496,19 @@
 				7A0D62D1242AB187006D5C06 /* LaunchScreen.storyboard */,
 				1ED00BB02513E04400A1331F /* ReplyNotification.swift */,
 				18C0BD0225D2891600A294C5 /* SIPSDKBridge.swift */,
-				1822169225D410A700CA4462 /* SipCallManager.swift */,
 				1891586625D6D22100AD9A2D /* ModuleWithEmitter.m */,
 				1891586A25D6D24000AD9A2D /* ModuleWithEmitter.swift */,
 			);
 			name = RocketChatRN;
+			sourceTree = "<group>";
+		};
+		1845F0EC2667B8E800687094 /* IntentHandling */ = {
+			isa = PBXGroup;
+			children = (
+				1845F0ED2667B8E800687094 /* IntentHandler.swift */,
+				1845F0EF2667B8E800687094 /* Info.plist */,
+			);
+			path = IntentHandling;
 			sourceTree = "<group>";
 		};
 		18534AE325D2EA2700377FDC /* Utilities */ = {
@@ -575,6 +606,7 @@
 				18A4109B2646DB6500D7BB7A /* CallManager.swift */,
 				18A4109C2646DB6500D7BB7A /* PushManager.swift */,
 				18A4109D2646DB6500D7BB7A /* Dialer.swift */,
+				1845F0FA2667B9E500687094 /* UserActivityExtension.swift */,
 			);
 			path = CallManagement;
 			sourceTree = "<group>";
@@ -727,6 +759,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				1EC6ACB122CB9FC300A41C61 /* ShareRocketChatRN */,
 				18765CEC25ADC06C00AAAB56 /* NotificationService */,
+				1845F0EC2667B8E800687094 /* IntentHandling */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				BB4B591B5FC44CD9986DB2A6 /* Frameworks */,
 				AF5E16F0398347E6A80C8CBE /* Resources */,
@@ -742,6 +775,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* Rocket.Chat Experimental.app */,
 				18765CEB25ADC06C00AAAB56 /* NotificationService.appex */,
+				1845F0E92667B8E800687094 /* IntentHandling.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -785,6 +819,7 @@
 				C235DC7B31A4D1578EDEF219 /* libPods-RocketChatRN.a */,
 				B0B41F834F20FC0ACC547296 /* libPods-ShareRocketChatRN.a */,
 				81411D280138EF5344596C2F /* libPods-NotificationService.a */,
+				1845F0EA2667B8E800687094 /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -814,11 +849,29 @@
 			);
 			dependencies = (
 				18765CF125ADC06C00AAAB56 /* PBXTargetDependency */,
+				1845F0F12667B8E800687094 /* PBXTargetDependency */,
 			);
 			name = RocketChatRN;
 			productName = "Hello World";
 			productReference = 13B07F961A680F5B00A75B9A /* Rocket.Chat Experimental.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1845F0E82667B8E800687094 /* IntentHandling */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1845F0F62667B8E800687094 /* Build configuration list for PBXNativeTarget "IntentHandling" */;
+			buildPhases = (
+				1845F0E52667B8E800687094 /* Sources */,
+				1845F0E62667B8E800687094 /* Frameworks */,
+				1845F0E72667B8E800687094 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentHandling;
+			productName = IntentHandling;
+			productReference = 1845F0E92667B8E800687094 /* IntentHandling.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		18765CEA25ADC06C00AAAB56 /* NotificationService */ = {
 			isa = PBXNativeTarget;
@@ -848,7 +901,7 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastSwiftUpdateCheck = 1160;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -870,6 +923,11 @@
 								enabled = 0;
 							};
 						};
+					};
+					1845F0E82667B8E800687094 = {
+						CreatedOnToolsVersion = 12.4;
+						DevelopmentTeam = RBV89AW5GB;
+						ProvisioningStyle = Automatic;
 					};
 					18765CEA25ADC06C00AAAB56 = {
 						CreatedOnToolsVersion = 11.6;
@@ -900,6 +958,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* RocketChatRN */,
 				18765CEA25ADC06C00AAAB56 /* NotificationService */,
+				1845F0E82667B8E800687094 /* IntentHandling */,
 			);
 		};
 /* End PBXProject section */
@@ -929,6 +988,13 @@
 				18E7CD8426089BFB008F66DF /* GoogleService-Info.plist in Resources */,
 				7A0D62D2242AB187006D5C06 /* LaunchScreen.storyboard in Resources */,
 				18A6ADD725C56E1600F0B424 /* message_beep_tone.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1845F0E72667B8E800687094 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,7 +1304,6 @@
 				18534AF025D2EA2700377FDC /* FIFO.swift in Sources */,
 				18534AF225D2EA2700377FDC /* Logger.swift in Sources */,
 				1891586B25D6D24000AD9A2D /* ModuleWithEmitter.swift in Sources */,
-				1822169425D410A700CA4462 /* SipCallManager.swift in Sources */,
 				18C0BD0525D28B2C00A294C5 /* SIPSDKBridge.m in Sources */,
 				18534AF125D2EA2700377FDC /* CString.swift in Sources */,
 				18C0BD0325D2891600A294C5 /* SIPSDKBridge.swift in Sources */,
@@ -1288,6 +1353,15 @@
 				1E76CBCF25152C310067298C /* NotificationType.swift in Sources */,
 				1E76CBDA25152C8E0067298C /* SendMessage.swift in Sources */,
 				18A410C52646E5E200D7BB7A /* EmailAddress.swift in Sources */,
+				1845F0FB2667B9E500687094 /* UserActivityExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1845F0E52667B8E800687094 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1845F0EE2667B8E800687094 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1325,6 +1399,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1845F0F12667B8E800687094 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1845F0E82667B8E800687094 /* IntentHandling */;
+			targetProxy = 1845F0F02667B8E800687094 /* PBXContainerItemProxy */;
+		};
 		18765CF125ADC06C00AAAB56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 18765CEA25ADC06C00AAAB56 /* NotificationService */;
@@ -1456,6 +1535,67 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		1845F0F32667B8E800687094 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = RBV89AW5GB;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentHandling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentHandling;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1845F0F42667B8E800687094 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RBV89AW5GB;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentHandling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentHandling;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1638,6 +1778,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1845F0F62667B8E800687094 /* Build configuration list for PBXNativeTarget "IntentHandling" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1845F0F32667B8E800687094 /* Debug */,
+				1845F0F42667B8E800687094 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
