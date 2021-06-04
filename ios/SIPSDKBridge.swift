@@ -142,6 +142,15 @@ class SIPSDKBridge : NSObject{
       }
     }
   }
- 
+  
+  @objc func startCallHandleSwift (useractivity : NSUserActivity) {
+    guard let handle = useractivity.startCallHandle else {
+        print("Could not determine start call handle from user activity: \(useractivity)")
+        return
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        ModuleWithEmitter.emitter.sendEvent(withName: "makeCallFromCallLog", body: ["phoneNumber" : handle])
+    }
+  }
 }
 

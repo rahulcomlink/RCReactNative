@@ -188,10 +188,8 @@ class RoomsListView extends React.Component {
        DeviceEventEmitter.addListener("CallAnswered", this.getAnsweredCall);
      } else {
        eventEmitterIOS.addListener("getInboundCall", this.getCallStatus);
+       eventEmitterIOS.addListener("makeCallFromCallLog", this.makeCallsFromCallLog);
      }
-
-   
-
 
      
   }
@@ -345,6 +343,14 @@ class RoomsListView extends React.Component {
       });
     }
   };
+
+  makeCallsFromCallLog = (event) => {
+    const { navigation, isMasterDetail } = this.props;
+    navigation.navigate("CallScreen", {
+      phoneNumber: event.phoneNumber,
+      isFromCallLog: true,
+    });
+  }
 
   componentDidUpdate(prevProps) {
     const {

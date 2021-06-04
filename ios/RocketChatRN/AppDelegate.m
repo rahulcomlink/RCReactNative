@@ -148,44 +148,19 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 // Only if your app is using [Universal Links](https://developer.apple.com/library/prerelease/ios/documentation/General/Conceptual/AppSearch/UniversalLinks.html).
-/*
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity
- restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
-{
-
-  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"alert"
-                                                      message:[userActivity description]
-                                                     delegate:nil
-                                            cancelButtonTitle:@"Okay"
-                                            otherButtonTitles:nil];
-  [alertView show];
-  
-  return [RCTLinkingManager application:application
-                   continueUserActivity:userActivity
-                     restorationHandler:restorationHandler];
-}
-*/
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
   
- /* UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"alert"
-                                                      message:[userActivity description]
-                                                     delegate:nil
-                                            cancelButtonTitle:@"Okay"
-                                            otherButtonTitles:nil];
-  [alertView show];*/
-  
+  if([userActivity.activityType isEqualToString:@"INStartCallIntent"] ){
+    SIPSDKBridge * obj = [[SIPSDKBridge alloc]init];
+    [obj startCallHandleSwiftWithUseractivity:userActivity];
+  }
+ 
   return [RCTLinkingManager application:application
                    continueUserActivity:userActivity
                      restorationHandler:restorationHandler];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application{
-
-  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
-  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isVoipCall"];
-  [[NSUserDefaults standardUserDefaults]synchronize];
-}
 
 // Register for VoIP notifications
 - (void) voipRegistration {

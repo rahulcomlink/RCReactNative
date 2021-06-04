@@ -108,6 +108,9 @@
 		18765D1525ADC74B00AAAB56 /* Encryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF5FBD0250C109E00614FEA /* Encryption.swift */; };
 		18765D1625ADC74E00AAAB56 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C2F7F250FCB69005DCE7D /* Database.swift */; };
 		18765D1725ADC75300AAAB56 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB8EF712510F1EE00F352B7 /* Storage.swift */; };
+		188260A22669143300A5CA91 /* NSUserActivity+StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882609F2669143200A5CA91 /* NSUserActivity+StartCallConvertible.swift */; };
+		188260A32669143300A5CA91 /* StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188260A02669143200A5CA91 /* StartCallConvertible.swift */; };
+		188260A42669143300A5CA91 /* URL+StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188260A12669143300A5CA91 /* URL+StartCallConvertible.swift */; };
 		1891586725D6D22100AD9A2D /* ModuleWithEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891586625D6D22100AD9A2D /* ModuleWithEmitter.m */; };
 		1891586B25D6D24000AD9A2D /* ModuleWithEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891586A25D6D24000AD9A2D /* ModuleWithEmitter.swift */; };
 		1894E4B825A6F996000A7EBA /* Piigeon Logo 01-04.png in Resources */ = {isa = PBXBuildFile; fileRef = 1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */; };
@@ -299,6 +302,9 @@
 		18765CEF25ADC06C00AAAB56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18765CF725ADC0B500AAAB56 /* NotificationService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotificationService-Bridging-Header.h"; sourceTree = "<group>"; };
 		18765CFA25ADC24600AAAB56 /* libPods-NotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-NotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1882609F2669143200A5CA91 /* NSUserActivity+StartCallConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+StartCallConvertible.swift"; sourceTree = "<group>"; };
+		188260A02669143200A5CA91 /* StartCallConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartCallConvertible.swift; sourceTree = "<group>"; };
+		188260A12669143300A5CA91 /* URL+StartCallConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+StartCallConvertible.swift"; sourceTree = "<group>"; };
 		1891586625D6D22100AD9A2D /* ModuleWithEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModuleWithEmitter.m; sourceTree = "<group>"; };
 		1891586A25D6D24000AD9A2D /* ModuleWithEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleWithEmitter.swift; sourceTree = "<group>"; };
 		1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Piigeon Logo 01-04.png"; sourceTree = "<group>"; };
@@ -607,6 +613,9 @@
 				18A4109C2646DB6500D7BB7A /* PushManager.swift */,
 				18A4109D2646DB6500D7BB7A /* Dialer.swift */,
 				1845F0FA2667B9E500687094 /* UserActivityExtension.swift */,
+				1882609F2669143200A5CA91 /* NSUserActivity+StartCallConvertible.swift */,
+				188260A02669143200A5CA91 /* StartCallConvertible.swift */,
+				188260A12669143300A5CA91 /* URL+StartCallConvertible.swift */,
 			);
 			path = CallManagement;
 			sourceTree = "<group>";
@@ -926,8 +935,8 @@
 					};
 					1845F0E82667B8E800687094 = {
 						CreatedOnToolsVersion = 12.4;
-						DevelopmentTeam = RBV89AW5GB;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 34P5YL94PL;
+						ProvisioningStyle = Manual;
 					};
 					18765CEA25ADC06C00AAAB56 = {
 						CreatedOnToolsVersion = 11.6;
@@ -1304,6 +1313,7 @@
 				18534AF025D2EA2700377FDC /* FIFO.swift in Sources */,
 				18534AF225D2EA2700377FDC /* Logger.swift in Sources */,
 				1891586B25D6D24000AD9A2D /* ModuleWithEmitter.swift in Sources */,
+				188260A42669143300A5CA91 /* URL+StartCallConvertible.swift in Sources */,
 				18C0BD0525D28B2C00A294C5 /* SIPSDKBridge.m in Sources */,
 				18534AF125D2EA2700377FDC /* CString.swift in Sources */,
 				18C0BD0325D2891600A294C5 /* SIPSDKBridge.swift in Sources */,
@@ -1344,12 +1354,14 @@
 				1E068CFE24FD2DC700A0FFC1 /* AppGroup.swift in Sources */,
 				1E76CBCE25152C2F0067298C /* RoomKey.swift in Sources */,
 				18534AF325D2EA2700377FDC /* BlockingBarrier.swift in Sources */,
+				188260A32669143300A5CA91 /* StartCallConvertible.swift in Sources */,
 				18A410A72646DB7500D7BB7A /* PushManager.swift in Sources */,
 				18A410C32646E5E200D7BB7A /* PhoneNumber.swift in Sources */,
 				18A410AC2646DB7500D7BB7A /* Configuration.swift in Sources */,
 				18534AF425D2EA2700377FDC /* Lock.swift in Sources */,
 				1891586725D6D22100AD9A2D /* ModuleWithEmitter.m in Sources */,
 				1E76CBCC25152C290067298C /* Message.swift in Sources */,
+				188260A22669143300A5CA91 /* NSUserActivity+StartCallConvertible.swift in Sources */,
 				1E76CBCF25152C310067298C /* NotificationType.swift in Sources */,
 				1E76CBDA25152C8E0067298C /* SendMessage.swift in Sources */,
 				18A410C52646E5E200D7BB7A /* EmailAddress.swift in Sources */,
@@ -1490,8 +1502,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RocketChatRN/RocketChatRN.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1528,7 +1540,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon;
 				PRODUCT_NAME = "Rocket.Chat Experimental";
-				PROVISIONING_PROFILE_SPECIFIER = InHouse_Pigeon;
+				PROVISIONING_PROFILE_SPECIFIER = Dev_Com.comlinkinc.pigeon;
 				SWIFT_OBJC_BRIDGING_HEADER = "RocketChatRN-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "RocketChatRN-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1550,17 +1562,18 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = RBV89AW5GB;
+				DEVELOPMENT_TEAM = 34P5YL94PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = IntentHandling/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentHandling;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentCallKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_Pigeon_Intent;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1581,17 +1594,18 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = RBV89AW5GB;
+				DEVELOPMENT_TEAM = 34P5YL94PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = IntentHandling/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentHandling;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentCallKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_Pigeon_Intent;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -1644,8 +1658,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1659,7 +1673,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Inhouse_PushService_Pigeon;
+				PROVISIONING_PROFILE_SPECIFIER = Dev_PushService_Pigeon;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "NotificationService/NotificationService-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

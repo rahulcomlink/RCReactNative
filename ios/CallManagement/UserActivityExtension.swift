@@ -8,7 +8,7 @@
 
 import Foundation
 import Intents
-
+/*
 @available(iOS 13.0, *)
 protocol SupportedStartCallIntent {
     var contacts: [INPerson]? { get }
@@ -28,3 +28,4 @@ extension NSUserActivity {
     }
 
 }
+*/
