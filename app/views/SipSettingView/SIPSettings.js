@@ -101,7 +101,7 @@ class SIPSettings extends React.Component {
     }
 
     onTURNHostChanged = (text) => {
-        this.setState({ turnServer: text.replaceAll(" ", "") });
+        this.setState({ turnServer: text });
     }
 
     onTURNPortChanged = (text) => {
@@ -109,15 +109,15 @@ class SIPSettings extends React.Component {
     }
 
     onTURNUsernameChanged = (text) => {
-        this.setState({ turnUsername: text.replaceAll(" ", "") });
+        this.setState({ turnUsername: text});
     }
 
     onTURNPasswordChanged = (text) => {
-        this.setState({ turnPassword: text.replaceAll(" ", "") });
+        this.setState({ turnPassword: text});
     }
 
     onStunServerChanged = (text) => {
-        this.setState({ stunServer: text.replaceAll(" ", "") });
+        this.setState({ stunServer: text});
     }
 
     onStunPortChanged = (text) => {
