@@ -276,6 +276,7 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation files('libs/ccomsdk-0.99.9-5.jar')
     addUnimodulesDependencies()
     implementation project(':watermelondb')
     implementation project(':@react-native-community_viewpager')
@@ -314,7 +315,7 @@ dependencies {
     implementation project(':react-native-draw-overlay')
     implementation project(':react-native-autostart')
 
-    implementation files('libs/ccomsdk-0.99.9-4.jar')
+    implementation files('libs/ccomsdk-0.99.9-5.jar')
 
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'

@@ -118,7 +118,7 @@ public class MainApplication extends Application implements ReactApplication, Li
 
   public static void loadLibrary() {
     try {
-      System.loadLibrary("ccomsdk-jni-0.99.9-4");
+      System.loadLibrary("ccomsdk-jni-0.99.9-5");
       Log.d("LIB_LOAD_SUCCESS", "Load library success");
 
       try {
