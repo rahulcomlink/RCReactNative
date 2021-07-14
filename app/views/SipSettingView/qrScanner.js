@@ -122,11 +122,11 @@ class qrScanner extends Component {
           this.setState({sipUsername : apiResponse.app_cfg_data.sip_uid});
           this.setState({sipPassword : apiResponse.app_cfg_data.sip_pwd});
           this.setState({iceEnabled : turnServers.length > 0 ? true : false});
-          this.setState({turnServer : turnServers.length > 0 ? turnServers[0] : ' '});
+          this.setState({turnServer : turnServers.length > 0 ? turnServers[0] : ''});
           this.setState({turnPort : 0});
-          this.setState({turnUsername : turnServers.length > 0 ? ' ' : ' '});
-          this.setState({turnPassword : turnServers.length > 0 ?  ' ' : ' '});
-          this.setState({stunServer : stunServers.length > 0 ? stunServers[0].replace(/:/gi, "") : ' '});
+          this.setState({turnUsername : turnServers.length > 0 ? '' : ''});
+          this.setState({turnPassword : turnServers.length > 0 ?  '' : ''});
+          this.setState({stunServer : stunServers.length > 0 ? stunServers[0].replace(/:/gi, "") : ''});
           this.setState({stunPort : 0});
           this.GoToSettingPage()
 
