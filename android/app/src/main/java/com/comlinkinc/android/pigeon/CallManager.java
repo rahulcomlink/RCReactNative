@@ -749,6 +749,19 @@ public class CallManager {
     }
 
 
+    /*******************************************************************************************
+     * This methos is get invoked if network get changed during call. (WIFI - MobileData)
+     *******************************************************************************************/
+    public static void handleNetworkChange() {
+        try {
+            System.out.println("Network change detected");
+            Dialer.handleNetworkAddressChange();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+
     // -- Notification -- //
     private static void createNotification(Map<String, String> data) {
 

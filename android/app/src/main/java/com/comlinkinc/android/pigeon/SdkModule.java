@@ -23,6 +23,7 @@ public class SdkModule extends ReactContextBaseJavaModule {
 
     public static AudioManager mAudioManager;
     public static ReactApplicationContext reactContext;
+    public static boolean isOnMic = false;
 
     //constructor
     public SdkModule(ReactApplicationContext rContext) {
@@ -109,9 +110,11 @@ public class SdkModule extends ReactContextBaseJavaModule {
             if (setSpecker) {
                 mAudioManager.setSpeakerphoneOn(true);
                 mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+                isOnMic = true;
             } else {
                 mAudioManager.setSpeakerphoneOn(false);
                 mAudioManager.setMode(AudioManager.MODE_IN_CALL);
+                isOnMic = false;
             }
 
         } catch (Exception e) {
