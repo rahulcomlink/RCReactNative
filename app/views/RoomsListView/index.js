@@ -183,22 +183,19 @@ class RoomsListView extends React.Component {
       item: {},
     };
 
-    console.log("constructor");
     this.setHeader();
      if (os == "android") {
        DeviceEventEmitter.addListener("CallAnswered", this.getAnsweredCall);
      } else {
        eventEmitterIOS.addListener("getInboundCall", this.getCallStatus);
+       eventEmitterIOS.addListener("makeCallFromCallLog", this.makeCallsFromCallLog);
      }
-
-   
-
 
      
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+   
 
     const { navigation, closeServerDropdown, appState } = this.props;
 
@@ -211,7 +208,6 @@ class RoomsListView extends React.Component {
      * which is going to change server and getSubscriptions will be triggered by componentWillReceiveProps
      */
 
-    /*commonSipSettingFunc.getSipSettingsAndStart(); */
 
     if (appState === "foreground") {
       this.getSubscriptions();
@@ -348,6 +344,14 @@ class RoomsListView extends React.Component {
     }
   };
 
+  makeCallsFromCallLog = (event) => {
+    const { navigation, isMasterDetail } = this.props;
+    navigation.navigate("CallScreen", {
+      phoneNumber: event.phoneNumber,
+      isFromCallLog: true,
+    });
+  }
+
   componentDidUpdate(prevProps) {
     const {
       sortBy,
@@ -401,7 +405,6 @@ class RoomsListView extends React.Component {
     messaging()
       .getToken()
       .then((token) => {
-        console.debug(token);
         const params = {};
         const customFields = {};
         customFields.devicetoken = token;

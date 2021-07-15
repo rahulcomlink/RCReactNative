@@ -18,7 +18,6 @@ struct SingleFireCallback<P> {
 
   mutating func fire(with parameter: P? = nil) {
     lock.lock()
-    print("Single FireBack >>> Line 21")
     defer { lock.unlock() }
 
     precondition(callback != nil, "SingleFireCallback already fired")

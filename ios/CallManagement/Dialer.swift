@@ -100,6 +100,11 @@ final class Dialer {
    // cmConfig.device_id = deviceId.value
     cmConfig.enable_ice = config.iceEnabled ? CM_TRUE : CM_FALSE
     cmConfig.enable_srtp = config.srtpEnabled ? CM_TRUE : CM_FALSE
+    
+    let array: [String?] = ["G729/8000/1", "opus/48000/2", "opus/24000/2","PCMU/8000/1","PCMA/8000/1", nil]
+    var cargs = array.map { $0.flatMap { UnsafePointer<Int8>(strdup($0)) } }
+    command(&cargs)
+    cmConfig.desired_codecs = UnsafeMutablePointer(mutating: cargs)
 
     if CmInitialize(&cmConfig) != CM_SUCCESS {
       throw DialerSubsystemFailure(
@@ -116,6 +121,8 @@ final class Dialer {
     _sipUriTemplate =
       "sip:%@@\(config.sipServerHost):\(config.sipServerPort);transport=\(transportName)"
   }
+  
+  func command(_ args: UnsafeMutablePointer<UnsafePointer<Int8>?>!){}
 
   func stop() throws {
     if CmShutdown() != CM_SUCCESS {

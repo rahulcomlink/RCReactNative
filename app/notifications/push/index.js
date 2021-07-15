@@ -8,13 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isIOS, isTablet } from '../../utils/deviceInfo';
 
 export const onNotification = (notification) => {
-	console.debug('onNotification methoid called :', notification)
+
 	if (notification) {
 
-		// const data = notification.getData();
-		// console.debug('data on click on notification : ', data);
-		// if (data) {
-		// 	try {
 				const {
 					rid, name, sender, type, host, messageType
 				} = EJSON.parse(notification.ejson);
@@ -34,10 +30,6 @@ export const onNotification = (notification) => {
 					isCall: messageType === 'jitsi_call_started'
 				};
 				store.dispatch(deepLinkingOpen(params));
-			//} catch (e) {
-			//	console.warn(e);
-			//}
-		//}
 	}
 };
 

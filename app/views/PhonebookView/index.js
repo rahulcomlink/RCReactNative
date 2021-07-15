@@ -53,38 +53,19 @@ import { BackHandler } from 'react-native';
 import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
 import commonSipSettingFunc from "../SipSettingView/commonSipSettingFunc";
-//import { DynamicValue, useDynamicValue } from 'react-native-dark-mode';
-
-// const lightLogo = require('../../static/images/btn_back.png')
-// const darkLogo = require('../../static/images/left-arrow.png')
-// const logoUri = new DynamicValue(lightLogo, darkLogo)
 
 class PhonebookView extends React.Component {
-  // static navigationOptions = ({ navigation, isMasterDetail }) => {
-  //   const options = {
-  //     title: I18n.t("Phonebook"),
-  //   };
-  //   if (!isMasterDetail) {
-  //     options.headerLeft = () => (
-  //       <HeaderButton.Drawer navigation={navigation} />
-  //     );
-  //   }
-  //   return options;
-  // };
-
+ 
   static navigationOptions = ({ navigation }) => {
     const options = {
       title: "Phonebook",
     };
-
-    // const source = useDynamicValue(logoUri)
 
     options.headerLeft = () => (
       <TouchableOpacity
         style={{ width: 40, height: 20, marginLeft: 10 }}
         onPress={() => {
           navigation.navigate("RoomsListView");
-          console.debug("options.headerLeft called");
         }}
       >
         <Image
@@ -114,7 +95,6 @@ class PhonebookView extends React.Component {
   constructor(props) {
     super(props);
 
-    //name字段必须,其他可有可无
     let nameData = [];
     this.state = {
       dataArray: nameData,
@@ -169,49 +149,6 @@ class PhonebookView extends React.Component {
     this.setState({ searchArray: [] });
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.dataArray !== nextState.dataArray) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-  /*
-  onChangeSearchText = (e) => {
-    let data = [];
-    if (e.length === 0) {
-      this.setState({ searchArray: [] });
-    }
-    if (e.length > 3) {
-      this.setState(
-        {
-          searchText: e,
-        },
-        () => {
-          if (this.state.searchText.length > 3) {
-            this.state.dataArray.map((item) => {
-              data.push(item.name);
-            });
-            data.filter((data) => {
-              if (
-                data.toLowerCase().includes(this.state.searchText.toLowerCase())
-              ) {
-                if(this.state.searchArray.indexOf('data') > 0){
-                }else {
-                  this.state.searchArray.push({ name: data });
-                }
-              }
-            });
-          } else {
-            this.setState({ searchArray: [] });
-          }
-        }
-      );
-    }
-  };
-  */
-
   onChangeSearchText = (e) => {
     let text = e.toLowerCase();
     let trucks = this.state.dataArray;
@@ -239,7 +176,6 @@ class PhonebookView extends React.Component {
     const { server, isMasterDetail, theme } = this.props;
     if (this.state.searchArray.length > 0) {
       resultArray = this.state.searchArray;
-      //this.setState({searchArray:[]})
     } else {
       resultArray = this.state.dataArray;
     }
@@ -264,8 +200,8 @@ class PhonebookView extends React.Component {
               showsVerticalScrollIndicator={false}
               renderHeader={this._renderHeader}
               SectionListClickCallback={(item, index) => {
-                console.log("---SectionListClickCallback--:", item, index);
-                //Alert.alert("" + item.name +"\n"+item.number);
+    
+    
                 var no = item.number;
                 no = no.replace("*", "");
                 no = no.replace("#", "");
@@ -296,7 +232,6 @@ class PhonebookView extends React.Component {
                   no = no.replace("-", "");
                 }
 
-                console.debug("item.name = ", no);
                 this.props.navigation.navigate("CallScreen", {
                   phoneNumber: no,
                   name: item.name,
@@ -347,11 +282,7 @@ const phonebookstyle = StyleSheet.create({
   button2: {
     width: 30,
     height: 30,
-    // alignSelf : 'center',
-    // overflow: 'hidden',
     resizeMode: "contain",
-    //  backgroundColor : '#70E3E3',
-    //  borderRadius : 30/2,
     marginRight: 20,
   },
 });

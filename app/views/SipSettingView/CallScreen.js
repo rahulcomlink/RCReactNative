@@ -53,14 +53,9 @@ import { isIOS, isTablet } from "../../utils/deviceInfo";
 const os = isIOS ? "ios" : "android";
 import {  StackActions } from '@react-navigation/native';
 import * as Contacts from "expo-contacts";
-/*
-const onSessionConnect = (event) => {
-    console.debug("onSessionConnect", event);
-    console.debug("event call status", event.callStatus);
-};
-*/
+
 const eventEmitterIOS = new NativeEventEmitter(NativeModules.ModuleWithEmitter);
-//eventEmitter.addListener('onSessionConnect', onSessionConnect);
+
 
 class CallScreen extends React.Component {
   static navigationOptions = () => ({
@@ -70,7 +65,6 @@ class CallScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    //13157244022
     this.state = {
       phoneNumber: props.route.params?.phoneNumber,
       isSpeakerOn: false,
@@ -82,6 +76,7 @@ class CallScreen extends React.Component {
       showKeypad: false,
       name: props.route.params?.name,
       isVoipCall: props.route.params?.isVoipCall,
+      isFromCallLog: props.route.params?.isFromCallLog,
       popParam : props.route.params?.popParam,
       callend : 0
     };
@@ -99,12 +94,16 @@ class CallScreen extends React.Component {
 
   componentDidMount() {
     this.getCallerName(this.state.phoneNumber);
+
     if (this.state.isVoipCall == true) {
         this.startTimer();
+    }else if (this.state.isFromCallLog == true){
+      if (this.state.phoneNumber != null) {
+        this.makeCall();
+      }
     }
     else {
       if (this.state.phoneNumber != null) {
-        console.debug('call screen called');
         this.makeCall();
       }
     }
@@ -171,17 +170,13 @@ class CallScreen extends React.Component {
     if (os == "android") {
       NativeModules.Sdk.endCall();
     } else {
-     // NativeModules.SIPSDKBridge.endCall();
     }
     if(this.state.callend == 0){
     if (this.state.popParam == "1"){
-      console.debug('this.state.popParam  1 = ', this.state.popParam)
       this.props.navigation.navigate("PhonebookView", {});
     }else if (this.state.popParam == "2"){
-      console.debug('this.state.popParam  2 = ', this.state.popParam)
       this.props.navigation.navigate("KeypadView", {});
     }else {
-      console.debug('this.state.popParam  = 3 ')
       this.props.navigation.pop()
     }
     this.setState({ callend: 1 });
@@ -193,7 +188,6 @@ class CallScreen extends React.Component {
   getCallStatusAndroid = (event) => {
     if (event == "ANSWERED") {
       this.startTimer();
-      // this.setState({ callStatusText: "Connected" });
     }
     if (event == "RINGING") {
       this.setState({ callStatusText: "Ringing" });
@@ -201,12 +195,10 @@ class CallScreen extends React.Component {
     if (event == "TERMINATED") {
       this.setState({ callStatusText: "Terminated" });
       this.endCall();
-     // this.props.navigation.pop();
     }
     if (event == "DECLINED") {
       this.setState({ callStatusText: "Declined" });
       this.endCall();
-      //this.props.navigation.pop();
     }
   };
 
@@ -227,7 +219,6 @@ class CallScreen extends React.Component {
     }
   };
 
-  //Timer
   startTimer = () => {
     let timer = setInterval(this.manageTimer.bind(this), 1000);
     this.setState({ timer });
@@ -299,8 +290,6 @@ class CallScreen extends React.Component {
                   no = no.replace("-", "");
                 }
                 if (no == phoneNumber){
-                  console.debug("no = ",no);
-                  console.debug("item.name = ",item.name);
                   this.setState({ name : item.name  });
                   return;
                 }
@@ -317,23 +306,6 @@ class CallScreen extends React.Component {
   render() {
     return (
       <View style={{ padding: 10, flex: 1, backgroundColor: "white" }}>
-        {/*
-                <InputContainer
-                    placeholder = 'Dial Number'
-                    title = 'Dial Number'
-                    keyBoardType = 'number-pad'
-                    textValue = {this.state.phoneNumber}
-                    onTextChange = {this.onTextChanged}
-                />
-
-               <TouchableOpacity style = {styles.saveButton}
-                    onPress = {
-                        () => this.makeCall()
-                }>  
-                <Text style = {styles.saveButtonText}> Dial Call </Text>
-               </TouchableOpacity> 
-               
-               */}
 
         <Image
           style={{

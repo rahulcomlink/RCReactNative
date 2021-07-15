@@ -11,8 +11,64 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1822169425D410A700CA4462 /* SipCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1822169225D410A700CA4462 /* SipCallManager.swift */; };
+		181AE670269EC63600BAB9BB /* libg7221codec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE63B269EC62100BAB9BB /* libg7221codec-arm64-apple-darwin_ios.a */; };
+		181AE671269EC63600BAB9BB /* libgpr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE63C269EC62100BAB9BB /* libgpr.a */; };
+		181AE672269EC63600BAB9BB /* libgrpc_cronet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE63D269EC62200BAB9BB /* libgrpc_cronet.a */; };
+		181AE673269EC63600BAB9BB /* libgrpc_unsecure.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE63E269EC62200BAB9BB /* libgrpc_unsecure.a */; };
+		181AE674269EC63600BAB9BB /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE63F269EC62200BAB9BB /* libprotobuf-lite.a */; };
+		181AE675269EC63600BAB9BB /* libabsl_raw_logging_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE640269EC62300BAB9BB /* libabsl_raw_logging_internal.a */; };
+		181AE676269EC63600BAB9BB /* libgrpc++_reflection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE641269EC62300BAB9BB /* libgrpc++_reflection.a */; };
+		181AE677269EC63600BAB9BB /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE642269EC62300BAB9BB /* libcares.a */; };
+		181AE678269EC63600BAB9BB /* libbcg729.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE643269EC62400BAB9BB /* libbcg729.a */; };
+		181AE679269EC63600BAB9BB /* libabsl_strings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE644269EC62400BAB9BB /* libabsl_strings.a */; };
+		181AE67A269EC63600BAB9BB /* libsrtp-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE645269EC62500BAB9BB /* libsrtp-arm64-apple-darwin_ios.a */; };
+		181AE67B269EC63600BAB9BB /* libpj-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE646269EC62500BAB9BB /* libpj-arm64-apple-darwin_ios.a */; };
+		181AE67C269EC63600BAB9BB /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE647269EC62500BAB9BB /* libcrypto.a */; };
+		181AE67D269EC63600BAB9BB /* libilbccodec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE648269EC62600BAB9BB /* libilbccodec-arm64-apple-darwin_ios.a */; };
+		181AE67E269EC63600BAB9BB /* libwebrtc-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE649269EC62600BAB9BB /* libwebrtc-arm64-apple-darwin_ios.a */; };
+		181AE67F269EC63600BAB9BB /* libgrpc++_alts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE64A269EC62600BAB9BB /* libgrpc++_alts.a */; };
+		181AE680269EC63600BAB9BB /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE64B269EC62700BAB9BB /* libz.a */; };
+		181AE681269EC63600BAB9BB /* libabsl_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE64C269EC62700BAB9BB /* libabsl_base.a */; };
+		181AE682269EC63600BAB9BB /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE64D269EC62800BAB9BB /* libopus.a */; };
+		181AE683269EC63600BAB9BB /* libgrpc++_error_details.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE64E269EC62800BAB9BB /* libgrpc++_error_details.a */; };
+		181AE684269EC63600BAB9BB /* libpjmedia-codec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE64F269EC62800BAB9BB /* libpjmedia-codec-arm64-apple-darwin_ios.a */; };
+		181AE685269EC63600BAB9BB /* libpjsua2-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE650269EC62900BAB9BB /* libpjsua2-arm64-apple-darwin_ios.a */; };
+		181AE686269EC63600BAB9BB /* libgrpc++_unsecure.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE651269EC62900BAB9BB /* libgrpc++_unsecure.a */; };
+		181AE687269EC63600BAB9BB /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE652269EC62A00BAB9BB /* libprotobuf.a */; };
+		181AE688269EC63600BAB9BB /* libgrpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE653269EC62A00BAB9BB /* libgrpc.a */; };
+		181AE689269EC63600BAB9BB /* libpjsua-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE654269EC62A00BAB9BB /* libpjsua-arm64-apple-darwin_ios.a */; };
+		181AE68A269EC63600BAB9BB /* libgrpc++.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE655269EC62B00BAB9BB /* libgrpc++.a */; };
+		181AE68B269EC63600BAB9BB /* libgsmcodec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE656269EC62B00BAB9BB /* libgsmcodec-arm64-apple-darwin_ios.a */; };
+		181AE68C269EC63600BAB9BB /* libyuv-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE657269EC62C00BAB9BB /* libyuv-arm64-apple-darwin_ios.a */; };
+		181AE68D269EC63600BAB9BB /* libpjsip-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE658269EC62C00BAB9BB /* libpjsip-arm64-apple-darwin_ios.a */; };
+		181AE68E269EC63600BAB9BB /* libabsl_int128.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE659269EC62D00BAB9BB /* libabsl_int128.a */; };
+		181AE68F269EC63600BAB9BB /* libpjsip-simple-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE65A269EC62D00BAB9BB /* libpjsip-simple-arm64-apple-darwin_ios.a */; };
+		181AE690269EC63600BAB9BB /* libgrpc_plugin_support.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE65B269EC62D00BAB9BB /* libgrpc_plugin_support.a */; };
+		181AE691269EC63600BAB9BB /* libaddress_sorting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE65C269EC62E00BAB9BB /* libaddress_sorting.a */; };
+		181AE692269EC63600BAB9BB /* libspeex-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE65D269EC62E00BAB9BB /* libspeex-arm64-apple-darwin_ios.a */; };
+		181AE693269EC63600BAB9BB /* libpjnath-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE65E269EC62E00BAB9BB /* libpjnath-arm64-apple-darwin_ios.a */; };
+		181AE694269EC63600BAB9BB /* libpjlib-util-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE65F269EC62F00BAB9BB /* libpjlib-util-arm64-apple-darwin_ios.a */; };
+		181AE695269EC63600BAB9BB /* libabsl_throw_delegate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE660269EC62F00BAB9BB /* libabsl_throw_delegate.a */; };
+		181AE696269EC63600BAB9BB /* libabsl_log_severity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE661269EC63000BAB9BB /* libabsl_log_severity.a */; };
+		181AE697269EC63600BAB9BB /* libpjmedia-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE662269EC63000BAB9BB /* libpjmedia-arm64-apple-darwin_ios.a */; };
+		181AE698269EC63600BAB9BB /* libgrpcpp_channelz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE663269EC63100BAB9BB /* libgrpcpp_channelz.a */; };
+		181AE699269EC63600BAB9BB /* libabsl_strings_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE664269EC63100BAB9BB /* libabsl_strings_internal.a */; };
+		181AE69A269EC63600BAB9BB /* libpjmedia-audiodev-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE665269EC63100BAB9BB /* libpjmedia-audiodev-arm64-apple-darwin_ios.a */; };
+		181AE69B269EC63600BAB9BB /* libpjmedia-videodev-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE666269EC63200BAB9BB /* libpjmedia-videodev-arm64-apple-darwin_ios.a */; };
+		181AE69C269EC63600BAB9BB /* libabsl_spinlock_wait.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE667269EC63200BAB9BB /* libabsl_spinlock_wait.a */; };
+		181AE69D269EC63600BAB9BB /* libabsl_bad_optional_access.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE668269EC63300BAB9BB /* libabsl_bad_optional_access.a */; };
+		181AE69E269EC63600BAB9BB /* libupb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE669269EC63300BAB9BB /* libupb.a */; };
+		181AE69F269EC63600BAB9BB /* libpjsip-ua-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE66A269EC63400BAB9BB /* libpjsip-ua-arm64-apple-darwin_ios.a */; };
+		181AE6A0269EC63600BAB9BB /* libprotoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE66B269EC63400BAB9BB /* libprotoc.a */; };
+		181AE6A1269EC63600BAB9BB /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE66C269EC63500BAB9BB /* libssl.a */; };
+		181AE6A2269EC63600BAB9BB /* libccomsdk-0.99.9-5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE66D269EC63500BAB9BB /* libccomsdk-0.99.9-5.a */; };
+		181AE6A3269EC63600BAB9BB /* libabsl_dynamic_annotations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE66E269EC63600BAB9BB /* libabsl_dynamic_annotations.a */; };
+		181AE6A4269EC63600BAB9BB /* libresample-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181AE66F269EC63600BAB9BB /* libresample-arm64-apple-darwin_ios.a */; };
 		1842B7AA25A33E04003C9D96 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 1842B7A625A33E03003C9D96 /* main.jsbundle */; };
+		1845F0EB2667B8E800687094 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1845F0EA2667B8E800687094 /* Intents.framework */; };
+		1845F0EE2667B8E800687094 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1845F0ED2667B8E800687094 /* IntentHandler.swift */; };
+		1845F0F22667B8E800687094 /* IntentHandling.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1845F0E92667B8E800687094 /* IntentHandling.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1845F0FB2667B9E500687094 /* UserActivityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1845F0FA2667B9E500687094 /* UserActivityExtension.swift */; };
 		18534AF025D2EA2700377FDC /* FIFO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AE425D2EA2700377FDC /* FIFO.swift */; };
 		18534AF125D2EA2700377FDC /* CString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AE525D2EA2700377FDC /* CString.swift */; };
 		18534AF225D2EA2700377FDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AE625D2EA2700377FDC /* Logger.swift */; };
@@ -25,58 +81,6 @@
 		18534AF925D2EA2700377FDC /* SingleFireCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AED25D2EA2700377FDC /* SingleFireCallback.swift */; };
 		18534AFA25D2EA2700377FDC /* DialerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AEE25D2EA2700377FDC /* DialerError.swift */; };
 		18534AFB25D2EA2700377FDC /* Isomorphism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18534AEF25D2EA2700377FDC /* Isomorphism.swift */; };
-		18534B3425D2EA7E00377FDC /* libgrpc++.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0025D2EA6400377FDC /* libgrpc++.a */; };
-		18534B3525D2EA7E00377FDC /* libresample-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0125D2EA6400377FDC /* libresample-arm64-apple-darwin_ios.a */; };
-		18534B3625D2EA7E00377FDC /* libgrpc++_unsecure.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0225D2EA6500377FDC /* libgrpc++_unsecure.a */; };
-		18534B3725D2EA7E00377FDC /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0325D2EA6500377FDC /* libssl.a */; };
-		18534B3825D2EA7E00377FDC /* libabsl_bad_optional_access.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0425D2EA6600377FDC /* libabsl_bad_optional_access.a */; };
-		18534B3925D2EA7E00377FDC /* libyuv-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0525D2EA6600377FDC /* libyuv-arm64-apple-darwin_ios.a */; };
-		18534B3A25D2EA7E00377FDC /* libpjmedia-codec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0625D2EA6700377FDC /* libpjmedia-codec-arm64-apple-darwin_ios.a */; };
-		18534B3B25D2EA7E00377FDC /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0725D2EA6700377FDC /* libopus.a */; };
-		18534B3C25D2EA7E00377FDC /* libabsl_throw_delegate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0825D2EA6800377FDC /* libabsl_throw_delegate.a */; };
-		18534B3D25D2EA7E00377FDC /* libaddress_sorting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0925D2EA6800377FDC /* libaddress_sorting.a */; };
-		18534B3E25D2EA7E00377FDC /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0A25D2EA6900377FDC /* libcares.a */; };
-		18534B3F25D2EA7E00377FDC /* libpjsip-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0B25D2EA6900377FDC /* libpjsip-arm64-apple-darwin_ios.a */; };
-		18534B4025D2EA7E00377FDC /* libgrpc++_reflection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0C25D2EA6A00377FDC /* libgrpc++_reflection.a */; };
-		18534B4125D2EA7E00377FDC /* libpjmedia-audiodev-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0D25D2EA6A00377FDC /* libpjmedia-audiodev-arm64-apple-darwin_ios.a */; };
-		18534B4225D2EA7E00377FDC /* libsrtp-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0E25D2EA6B00377FDC /* libsrtp-arm64-apple-darwin_ios.a */; };
-		18534B4325D2EA7E00377FDC /* libpjsip-ua-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B0F25D2EA6B00377FDC /* libpjsip-ua-arm64-apple-darwin_ios.a */; };
-		18534B4425D2EA7E00377FDC /* libgrpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1025D2EA6C00377FDC /* libgrpc.a */; };
-		18534B4525D2EA7E00377FDC /* libpj-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1125D2EA6C00377FDC /* libpj-arm64-apple-darwin_ios.a */; };
-		18534B4625D2EA7E00377FDC /* libgrpc++_error_details.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1225D2EA6D00377FDC /* libgrpc++_error_details.a */; };
-		18534B4725D2EA7E00377FDC /* libccomsdk-0.99.9-4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1325D2EA6E00377FDC /* libccomsdk-0.99.9-4.a */; };
-		18534B4825D2EA7E00377FDC /* libprotoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1425D2EA6E00377FDC /* libprotoc.a */; };
-		18534B4925D2EA7E00377FDC /* libpjmedia-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1525D2EA6F00377FDC /* libpjmedia-arm64-apple-darwin_ios.a */; };
-		18534B4A25D2EA7E00377FDC /* libpjsua-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1625D2EA6F00377FDC /* libpjsua-arm64-apple-darwin_ios.a */; };
-		18534B4B25D2EA7E00377FDC /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1725D2EA7000377FDC /* libprotobuf.a */; };
-		18534B4C25D2EA7E00377FDC /* libabsl_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1825D2EA7000377FDC /* libabsl_base.a */; };
-		18534B4D25D2EA7E00377FDC /* libpjsua2-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1925D2EA7100377FDC /* libpjsua2-arm64-apple-darwin_ios.a */; };
-		18534B4E25D2EA7E00377FDC /* libpjsip-simple-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1A25D2EA7100377FDC /* libpjsip-simple-arm64-apple-darwin_ios.a */; };
-		18534B4F25D2EA7E00377FDC /* libabsl_dynamic_annotations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1B25D2EA7200377FDC /* libabsl_dynamic_annotations.a */; };
-		18534B5025D2EA7E00377FDC /* libpjnath-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1C25D2EA7200377FDC /* libpjnath-arm64-apple-darwin_ios.a */; };
-		18534B5125D2EA7E00377FDC /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1D25D2EA7300377FDC /* libz.a */; };
-		18534B5225D2EA7E00377FDC /* libilbccodec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1E25D2EA7300377FDC /* libilbccodec-arm64-apple-darwin_ios.a */; };
-		18534B5325D2EA7E00377FDC /* libabsl_raw_logging_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B1F25D2EA7400377FDC /* libabsl_raw_logging_internal.a */; };
-		18534B5425D2EA7E00377FDC /* libgrpc_plugin_support.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2025D2EA7400377FDC /* libgrpc_plugin_support.a */; };
-		18534B5525D2EA7E00377FDC /* libabsl_strings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2125D2EA7500377FDC /* libabsl_strings.a */; };
-		18534B5625D2EA7E00377FDC /* libabsl_spinlock_wait.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2225D2EA7500377FDC /* libabsl_spinlock_wait.a */; };
-		18534B5725D2EA7E00377FDC /* libwebrtc-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2325D2EA7600377FDC /* libwebrtc-arm64-apple-darwin_ios.a */; };
-		18534B5825D2EA7E00377FDC /* libg7221codec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2425D2EA7600377FDC /* libg7221codec-arm64-apple-darwin_ios.a */; };
-		18534B5925D2EA7E00377FDC /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2525D2EA7700377FDC /* libcrypto.a */; };
-		18534B5A25D2EA7E00377FDC /* libabsl_log_severity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2625D2EA7700377FDC /* libabsl_log_severity.a */; };
-		18534B5B25D2EA7E00377FDC /* libgsmcodec-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2725D2EA7800377FDC /* libgsmcodec-arm64-apple-darwin_ios.a */; };
-		18534B5C25D2EA7E00377FDC /* libpjmedia-videodev-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2825D2EA7800377FDC /* libpjmedia-videodev-arm64-apple-darwin_ios.a */; };
-		18534B5D25D2EA7E00377FDC /* libupb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2925D2EA7900377FDC /* libupb.a */; };
-		18534B5E25D2EA7E00377FDC /* libgrpc_unsecure.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2A25D2EA7900377FDC /* libgrpc_unsecure.a */; };
-		18534B5F25D2EA7E00377FDC /* libspeex-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2B25D2EA7A00377FDC /* libspeex-arm64-apple-darwin_ios.a */; };
-		18534B6025D2EA7E00377FDC /* libbcg729.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2C25D2EA7A00377FDC /* libbcg729.a */; };
-		18534B6125D2EA7E00377FDC /* libabsl_strings_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2D25D2EA7B00377FDC /* libabsl_strings_internal.a */; };
-		18534B6225D2EA7E00377FDC /* libgpr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2E25D2EA7B00377FDC /* libgpr.a */; };
-		18534B6325D2EA7E00377FDC /* libgrpc++_alts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B2F25D2EA7C00377FDC /* libgrpc++_alts.a */; };
-		18534B6425D2EA7E00377FDC /* libpjlib-util-arm64-apple-darwin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B3025D2EA7C00377FDC /* libpjlib-util-arm64-apple-darwin_ios.a */; };
-		18534B6525D2EA7E00377FDC /* libgrpc_cronet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B3125D2EA7D00377FDC /* libgrpc_cronet.a */; };
-		18534B6625D2EA7E00377FDC /* libabsl_int128.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B3225D2EA7D00377FDC /* libabsl_int128.a */; };
-		18534B6725D2EA7E00377FDC /* libgrpcpp_channelz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18534B3325D2EA7D00377FDC /* libgrpcpp_channelz.a */; };
 		18534B6925D2EEBD00377FDC /* ring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18534B6825D2EEBC00377FDC /* ring.wav */; };
 		18765CEE25ADC06C00AAAB56 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18765CED25ADC06C00AAAB56 /* NotificationService.swift */; };
 		18765CF225ADC06C00AAAB56 /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 18765CEB25ADC06C00AAAB56 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -105,6 +109,9 @@
 		18765D1525ADC74B00AAAB56 /* Encryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF5FBD0250C109E00614FEA /* Encryption.swift */; };
 		18765D1625ADC74E00AAAB56 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C2F7F250FCB69005DCE7D /* Database.swift */; };
 		18765D1725ADC75300AAAB56 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB8EF712510F1EE00F352B7 /* Storage.swift */; };
+		188260A22669143300A5CA91 /* NSUserActivity+StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882609F2669143200A5CA91 /* NSUserActivity+StartCallConvertible.swift */; };
+		188260A32669143300A5CA91 /* StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188260A02669143200A5CA91 /* StartCallConvertible.swift */; };
+		188260A42669143300A5CA91 /* URL+StartCallConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188260A12669143300A5CA91 /* URL+StartCallConvertible.swift */; };
 		1891586725D6D22100AD9A2D /* ModuleWithEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1891586625D6D22100AD9A2D /* ModuleWithEmitter.m */; };
 		1891586B25D6D24000AD9A2D /* ModuleWithEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891586A25D6D24000AD9A2D /* ModuleWithEmitter.swift */; };
 		1894E4B825A6F996000A7EBA /* Piigeon Logo 01-04.png in Resources */ = {isa = PBXBuildFile; fileRef = 1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */; };
@@ -169,6 +176,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1845F0F02667B8E800687094 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1845F0E82667B8E800687094;
+			remoteInfo = IntentHandling;
+		};
 		18765CF025ADC06C00AAAB56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -193,6 +207,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				18765CF225ADC06C00AAAB56 /* NotificationService.appex in Embed App Extensions */,
+				1845F0F22667B8E800687094 /* IntentHandling.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,8 +224,68 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RocketChatRN/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RocketChatRN/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RocketChatRN/main.m; sourceTree = "<group>"; };
-		1822169225D410A700CA4462 /* SipCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SipCallManager.swift; sourceTree = "<group>"; };
+		181AE63B269EC62100BAB9BB /* libg7221codec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libg7221codec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE63C269EC62100BAB9BB /* libgpr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgpr.a; sourceTree = "<group>"; };
+		181AE63D269EC62200BAB9BB /* libgrpc_cronet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc_cronet.a; sourceTree = "<group>"; };
+		181AE63E269EC62200BAB9BB /* libgrpc_unsecure.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc_unsecure.a; sourceTree = "<group>"; };
+		181AE63F269EC62200BAB9BB /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libprotobuf-lite.a"; sourceTree = "<group>"; };
+		181AE640269EC62300BAB9BB /* libabsl_raw_logging_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_raw_logging_internal.a; sourceTree = "<group>"; };
+		181AE641269EC62300BAB9BB /* libgrpc++_reflection.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_reflection.a"; sourceTree = "<group>"; };
+		181AE642269EC62300BAB9BB /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcares.a; sourceTree = "<group>"; };
+		181AE643269EC62400BAB9BB /* libbcg729.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbcg729.a; sourceTree = "<group>"; };
+		181AE644269EC62400BAB9BB /* libabsl_strings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_strings.a; sourceTree = "<group>"; };
+		181AE645269EC62500BAB9BB /* libsrtp-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsrtp-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE646269EC62500BAB9BB /* libpj-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpj-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE647269EC62500BAB9BB /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		181AE648269EC62600BAB9BB /* libilbccodec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libilbccodec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE649269EC62600BAB9BB /* libwebrtc-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libwebrtc-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE64A269EC62600BAB9BB /* libgrpc++_alts.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_alts.a"; sourceTree = "<group>"; };
+		181AE64B269EC62700BAB9BB /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libz.a; sourceTree = "<group>"; };
+		181AE64C269EC62700BAB9BB /* libabsl_base.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_base.a; sourceTree = "<group>"; };
+		181AE64D269EC62800BAB9BB /* libopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libopus.a; sourceTree = "<group>"; };
+		181AE64E269EC62800BAB9BB /* libgrpc++_error_details.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_error_details.a"; sourceTree = "<group>"; };
+		181AE64F269EC62800BAB9BB /* libpjmedia-codec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-codec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE650269EC62900BAB9BB /* libpjsua2-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsua2-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE651269EC62900BAB9BB /* libgrpc++_unsecure.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_unsecure.a"; sourceTree = "<group>"; };
+		181AE652269EC62A00BAB9BB /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
+		181AE653269EC62A00BAB9BB /* libgrpc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc.a; sourceTree = "<group>"; };
+		181AE654269EC62A00BAB9BB /* libpjsua-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsua-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE655269EC62B00BAB9BB /* libgrpc++.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++.a"; sourceTree = "<group>"; };
+		181AE656269EC62B00BAB9BB /* libgsmcodec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgsmcodec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE657269EC62C00BAB9BB /* libyuv-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libyuv-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE658269EC62C00BAB9BB /* libpjsip-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsip-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE659269EC62D00BAB9BB /* libabsl_int128.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_int128.a; sourceTree = "<group>"; };
+		181AE65A269EC62D00BAB9BB /* libpjsip-simple-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsip-simple-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE65B269EC62D00BAB9BB /* libgrpc_plugin_support.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc_plugin_support.a; sourceTree = "<group>"; };
+		181AE65C269EC62E00BAB9BB /* libaddress_sorting.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaddress_sorting.a; sourceTree = "<group>"; };
+		181AE65D269EC62E00BAB9BB /* libspeex-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libspeex-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE65E269EC62E00BAB9BB /* libpjnath-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjnath-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE65F269EC62F00BAB9BB /* libpjlib-util-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjlib-util-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE660269EC62F00BAB9BB /* libabsl_throw_delegate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_throw_delegate.a; sourceTree = "<group>"; };
+		181AE661269EC63000BAB9BB /* libabsl_log_severity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_log_severity.a; sourceTree = "<group>"; };
+		181AE662269EC63000BAB9BB /* libpjmedia-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE663269EC63100BAB9BB /* libgrpcpp_channelz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpcpp_channelz.a; sourceTree = "<group>"; };
+		181AE664269EC63100BAB9BB /* libabsl_strings_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_strings_internal.a; sourceTree = "<group>"; };
+		181AE665269EC63100BAB9BB /* libpjmedia-audiodev-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-audiodev-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE666269EC63200BAB9BB /* libpjmedia-videodev-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-videodev-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE667269EC63200BAB9BB /* libabsl_spinlock_wait.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_spinlock_wait.a; sourceTree = "<group>"; };
+		181AE668269EC63300BAB9BB /* libabsl_bad_optional_access.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_bad_optional_access.a; sourceTree = "<group>"; };
+		181AE669269EC63300BAB9BB /* libupb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libupb.a; sourceTree = "<group>"; };
+		181AE66A269EC63400BAB9BB /* libpjsip-ua-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsip-ua-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE66B269EC63400BAB9BB /* libprotoc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotoc.a; sourceTree = "<group>"; };
+		181AE66C269EC63500BAB9BB /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		181AE66D269EC63500BAB9BB /* libccomsdk-0.99.9-5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libccomsdk-0.99.9-5.a"; sourceTree = "<group>"; };
+		181AE66E269EC63600BAB9BB /* libabsl_dynamic_annotations.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_dynamic_annotations.a; sourceTree = "<group>"; };
+		181AE66F269EC63600BAB9BB /* libresample-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libresample-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
+		181AE6A5269EC74D00BAB9BB /* cdbcapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdbcapi.h; sourceTree = "<group>"; };
+		181AE6A6269EC74E00BAB9BB /* cmcapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmcapi.h; sourceTree = "<group>"; };
+		181AE6A7269EC74E00BAB9BB /* clog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clog.h; sourceTree = "<group>"; };
 		1842B7A625A33E03003C9D96 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		1845F0E92667B8E800687094 /* IntentHandling.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandling.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1845F0EA2667B8E800687094 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		1845F0ED2667B8E800687094 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		1845F0EF2667B8E800687094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1845F0FA2667B9E500687094 /* UserActivityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityExtension.swift; sourceTree = "<group>"; };
 		18534AE425D2EA2700377FDC /* FIFO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FIFO.swift; sourceTree = "<group>"; };
 		18534AE525D2EA2700377FDC /* CString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CString.swift; sourceTree = "<group>"; };
 		18534AE625D2EA2700377FDC /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -223,67 +298,15 @@
 		18534AED25D2EA2700377FDC /* SingleFireCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleFireCallback.swift; sourceTree = "<group>"; };
 		18534AEE25D2EA2700377FDC /* DialerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialerError.swift; sourceTree = "<group>"; };
 		18534AEF25D2EA2700377FDC /* Isomorphism.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Isomorphism.swift; sourceTree = "<group>"; };
-		18534AFC25D2EA3800377FDC /* cdbcapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdbcapi.h; sourceTree = "<group>"; };
-		18534AFD25D2EA3900377FDC /* clog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clog.h; sourceTree = "<group>"; };
-		18534AFE25D2EA3900377FDC /* cmcapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmcapi.h; sourceTree = "<group>"; };
-		18534B0025D2EA6400377FDC /* libgrpc++.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++.a"; sourceTree = "<group>"; };
-		18534B0125D2EA6400377FDC /* libresample-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libresample-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B0225D2EA6500377FDC /* libgrpc++_unsecure.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_unsecure.a"; sourceTree = "<group>"; };
-		18534B0325D2EA6500377FDC /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
-		18534B0425D2EA6600377FDC /* libabsl_bad_optional_access.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_bad_optional_access.a; sourceTree = "<group>"; };
-		18534B0525D2EA6600377FDC /* libyuv-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libyuv-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B0625D2EA6700377FDC /* libpjmedia-codec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-codec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B0725D2EA6700377FDC /* libopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libopus.a; sourceTree = "<group>"; };
-		18534B0825D2EA6800377FDC /* libabsl_throw_delegate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_throw_delegate.a; sourceTree = "<group>"; };
-		18534B0925D2EA6800377FDC /* libaddress_sorting.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaddress_sorting.a; sourceTree = "<group>"; };
-		18534B0A25D2EA6900377FDC /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcares.a; sourceTree = "<group>"; };
-		18534B0B25D2EA6900377FDC /* libpjsip-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsip-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B0C25D2EA6A00377FDC /* libgrpc++_reflection.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_reflection.a"; sourceTree = "<group>"; };
-		18534B0D25D2EA6A00377FDC /* libpjmedia-audiodev-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-audiodev-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B0E25D2EA6B00377FDC /* libsrtp-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsrtp-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B0F25D2EA6B00377FDC /* libpjsip-ua-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsip-ua-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1025D2EA6C00377FDC /* libgrpc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc.a; sourceTree = "<group>"; };
-		18534B1125D2EA6C00377FDC /* libpj-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpj-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1225D2EA6D00377FDC /* libgrpc++_error_details.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_error_details.a"; sourceTree = "<group>"; };
-		18534B1325D2EA6E00377FDC /* libccomsdk-0.99.9-4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libccomsdk-0.99.9-4.a"; sourceTree = "<group>"; };
-		18534B1425D2EA6E00377FDC /* libprotoc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotoc.a; sourceTree = "<group>"; };
-		18534B1525D2EA6F00377FDC /* libpjmedia-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1625D2EA6F00377FDC /* libpjsua-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsua-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1725D2EA7000377FDC /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
-		18534B1825D2EA7000377FDC /* libabsl_base.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_base.a; sourceTree = "<group>"; };
-		18534B1925D2EA7100377FDC /* libpjsua2-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsua2-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1A25D2EA7100377FDC /* libpjsip-simple-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjsip-simple-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1B25D2EA7200377FDC /* libabsl_dynamic_annotations.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_dynamic_annotations.a; sourceTree = "<group>"; };
-		18534B1C25D2EA7200377FDC /* libpjnath-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjnath-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1D25D2EA7300377FDC /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libz.a; sourceTree = "<group>"; };
-		18534B1E25D2EA7300377FDC /* libilbccodec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libilbccodec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B1F25D2EA7400377FDC /* libabsl_raw_logging_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_raw_logging_internal.a; sourceTree = "<group>"; };
-		18534B2025D2EA7400377FDC /* libgrpc_plugin_support.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc_plugin_support.a; sourceTree = "<group>"; };
-		18534B2125D2EA7500377FDC /* libabsl_strings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_strings.a; sourceTree = "<group>"; };
-		18534B2225D2EA7500377FDC /* libabsl_spinlock_wait.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_spinlock_wait.a; sourceTree = "<group>"; };
-		18534B2325D2EA7600377FDC /* libwebrtc-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libwebrtc-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B2425D2EA7600377FDC /* libg7221codec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libg7221codec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B2525D2EA7700377FDC /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		18534B2625D2EA7700377FDC /* libabsl_log_severity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_log_severity.a; sourceTree = "<group>"; };
-		18534B2725D2EA7800377FDC /* libgsmcodec-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgsmcodec-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B2825D2EA7800377FDC /* libpjmedia-videodev-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjmedia-videodev-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B2925D2EA7900377FDC /* libupb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libupb.a; sourceTree = "<group>"; };
-		18534B2A25D2EA7900377FDC /* libgrpc_unsecure.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc_unsecure.a; sourceTree = "<group>"; };
-		18534B2B25D2EA7A00377FDC /* libspeex-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libspeex-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B2C25D2EA7A00377FDC /* libbcg729.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbcg729.a; sourceTree = "<group>"; };
-		18534B2D25D2EA7B00377FDC /* libabsl_strings_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_strings_internal.a; sourceTree = "<group>"; };
-		18534B2E25D2EA7B00377FDC /* libgpr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgpr.a; sourceTree = "<group>"; };
-		18534B2F25D2EA7C00377FDC /* libgrpc++_alts.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libgrpc++_alts.a"; sourceTree = "<group>"; };
-		18534B3025D2EA7C00377FDC /* libpjlib-util-arm64-apple-darwin_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpjlib-util-arm64-apple-darwin_ios.a"; sourceTree = "<group>"; };
-		18534B3125D2EA7D00377FDC /* libgrpc_cronet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpc_cronet.a; sourceTree = "<group>"; };
-		18534B3225D2EA7D00377FDC /* libabsl_int128.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libabsl_int128.a; sourceTree = "<group>"; };
-		18534B3325D2EA7D00377FDC /* libgrpcpp_channelz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgrpcpp_channelz.a; sourceTree = "<group>"; };
 		18534B6825D2EEBC00377FDC /* ring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ring.wav; sourceTree = "<group>"; };
 		18765CEB25ADC06C00AAAB56 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		18765CED25ADC06C00AAAB56 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		18765CEF25ADC06C00AAAB56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18765CF725ADC0B500AAAB56 /* NotificationService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotificationService-Bridging-Header.h"; sourceTree = "<group>"; };
 		18765CFA25ADC24600AAAB56 /* libPods-NotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-NotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1882609F2669143200A5CA91 /* NSUserActivity+StartCallConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+StartCallConvertible.swift"; sourceTree = "<group>"; };
+		188260A02669143200A5CA91 /* StartCallConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartCallConvertible.swift; sourceTree = "<group>"; };
+		188260A12669143300A5CA91 /* URL+StartCallConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+StartCallConvertible.swift"; sourceTree = "<group>"; };
 		1891586625D6D22100AD9A2D /* ModuleWithEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModuleWithEmitter.m; sourceTree = "<group>"; };
 		1891586A25D6D24000AD9A2D /* ModuleWithEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleWithEmitter.swift; sourceTree = "<group>"; };
 		1894E4B625A6F996000A7EBA /* Piigeon Logo 01-04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Piigeon Logo 01-04.png"; sourceTree = "<group>"; };
@@ -365,73 +388,82 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18534B6125D2EA7E00377FDC /* libabsl_strings_internal.a in Frameworks */,
-				18534B5125D2EA7E00377FDC /* libz.a in Frameworks */,
 				0C6E2DE448364EA896869ADF /* libc++.tbd in Frameworks */,
 				1E1EA81A2326CD5100E22452 /* libsqlite3.tbd in Frameworks */,
-				18534B4925D2EA7E00377FDC /* libpjmedia-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B5425D2EA7E00377FDC /* libgrpc_plugin_support.a in Frameworks */,
-				18534B5B25D2EA7E00377FDC /* libgsmcodec-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B4525D2EA7E00377FDC /* libpj-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE693269EC63600BAB9BB /* libpjnath-arm64-apple-darwin_ios.a in Frameworks */,
 				1E1EA8182326CD4B00E22452 /* libc.tbd in Frameworks */,
-				18534B3425D2EA7E00377FDC /* libgrpc++.a in Frameworks */,
-				18534B3925D2EA7E00377FDC /* libyuv-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE689269EC63600BAB9BB /* libpjsua-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE690269EC63600BAB9BB /* libgrpc_plugin_support.a in Frameworks */,
+				181AE67F269EC63600BAB9BB /* libgrpc++_alts.a in Frameworks */,
+				181AE692269EC63600BAB9BB /* libspeex-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE673269EC63600BAB9BB /* libgrpc_unsecure.a in Frameworks */,
+				181AE6A4269EC63600BAB9BB /* libresample-arm64-apple-darwin_ios.a in Frameworks */,
 				1E1EA8162326CD4500E22452 /* VideoToolbox.framework in Frameworks */,
-				18534B5F25D2EA7E00377FDC /* libspeex-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B6625D2EA7E00377FDC /* libabsl_int128.a in Frameworks */,
-				18534B6225D2EA7E00377FDC /* libgpr.a in Frameworks */,
+				181AE68C269EC63600BAB9BB /* libyuv-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE680269EC63600BAB9BB /* libz.a in Frameworks */,
+				181AE683269EC63600BAB9BB /* libgrpc++_error_details.a in Frameworks */,
 				1E1EA8142326CD3E00E22452 /* CoreVideo.framework in Frameworks */,
-				18534B5D25D2EA7E00377FDC /* libupb.a in Frameworks */,
-				18534B5E25D2EA7E00377FDC /* libgrpc_unsecure.a in Frameworks */,
+				181AE67C269EC63600BAB9BB /* libcrypto.a in Frameworks */,
+				181AE68A269EC63600BAB9BB /* libgrpc++.a in Frameworks */,
+				181AE698269EC63600BAB9BB /* libgrpcpp_channelz.a in Frameworks */,
+				181AE67D269EC63600BAB9BB /* libilbccodec-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE697269EC63600BAB9BB /* libpjmedia-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE6A3269EC63600BAB9BB /* libabsl_dynamic_annotations.a in Frameworks */,
+				181AE675269EC63600BAB9BB /* libabsl_raw_logging_internal.a in Frameworks */,
 				1E1EA8122326CD3900E22452 /* CoreAudio.framework in Frameworks */,
-				18534B3F25D2EA7E00377FDC /* libpjsip-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B5025D2EA7E00377FDC /* libpjnath-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B4F25D2EA7E00377FDC /* libabsl_dynamic_annotations.a in Frameworks */,
+				181AE687269EC63600BAB9BB /* libprotobuf.a in Frameworks */,
+				181AE686269EC63600BAB9BB /* libgrpc++_unsecure.a in Frameworks */,
+				181AE699269EC63600BAB9BB /* libabsl_strings_internal.a in Frameworks */,
+				181AE69A269EC63600BAB9BB /* libpjmedia-audiodev-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE696269EC63600BAB9BB /* libabsl_log_severity.a in Frameworks */,
 				1E1EA8102326CD3300E22452 /* GLKit.framework in Frameworks */,
-				18534B5C25D2EA7E00377FDC /* libpjmedia-videodev-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B5925D2EA7E00377FDC /* libcrypto.a in Frameworks */,
+				181AE691269EC63600BAB9BB /* libaddress_sorting.a in Frameworks */,
+				181AE69B269EC63600BAB9BB /* libpjmedia-videodev-arm64-apple-darwin_ios.a in Frameworks */,
 				1E1EA80E2326CD2F00E22452 /* CoreGraphics.framework in Frameworks */,
-				18534B4E25D2EA7E00377FDC /* libpjsip-simple-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B6425D2EA7E00377FDC /* libpjlib-util-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B5225D2EA7E00377FDC /* libilbccodec-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B5825D2EA7E00377FDC /* libg7221codec-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B5A25D2EA7E00377FDC /* libabsl_log_severity.a in Frameworks */,
-				18534B4B25D2EA7E00377FDC /* libprotobuf.a in Frameworks */,
-				18534B6525D2EA7E00377FDC /* libgrpc_cronet.a in Frameworks */,
-				18534B4D25D2EA7E00377FDC /* libpjsua2-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B3525D2EA7E00377FDC /* libresample-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B4225D2EA7E00377FDC /* libsrtp-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B3D25D2EA7E00377FDC /* libaddress_sorting.a in Frameworks */,
+				181AE671269EC63600BAB9BB /* libgpr.a in Frameworks */,
 				1E1EA80C2326CD2800E22452 /* AudioToolbox.framework in Frameworks */,
-				18534B4825D2EA7E00377FDC /* libprotoc.a in Frameworks */,
-				18534B4A25D2EA7E00377FDC /* libpjsua-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE677269EC63600BAB9BB /* libcares.a in Frameworks */,
 				1E1EA80A2326CD2200E22452 /* AVFoundation.framework in Frameworks */,
+				181AE681269EC63600BAB9BB /* libabsl_base.a in Frameworks */,
+				181AE674269EC63600BAB9BB /* libprotobuf-lite.a in Frameworks */,
+				181AE68D269EC63600BAB9BB /* libpjsip-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE69E269EC63600BAB9BB /* libupb.a in Frameworks */,
+				181AE68F269EC63600BAB9BB /* libpjsip-simple-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE682269EC63600BAB9BB /* libopus.a in Frameworks */,
+				181AE6A0269EC63600BAB9BB /* libprotoc.a in Frameworks */,
+				181AE684269EC63600BAB9BB /* libpjmedia-codec-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE678269EC63600BAB9BB /* libbcg729.a in Frameworks */,
+				181AE6A2269EC63600BAB9BB /* libccomsdk-0.99.9-5.a in Frameworks */,
+				181AE695269EC63600BAB9BB /* libabsl_throw_delegate.a in Frameworks */,
+				181AE676269EC63600BAB9BB /* libgrpc++_reflection.a in Frameworks */,
+				181AE68E269EC63600BAB9BB /* libabsl_int128.a in Frameworks */,
 				7ACD4897222860DE00442C55 /* JavaScriptCore.framework in Frameworks */,
-				18534B4725D2EA7E00377FDC /* libccomsdk-0.99.9-4.a in Frameworks */,
-				18534B5525D2EA7E00377FDC /* libabsl_strings.a in Frameworks */,
-				18534B6025D2EA7E00377FDC /* libbcg729.a in Frameworks */,
-				18534B3A25D2EA7E00377FDC /* libpjmedia-codec-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE694269EC63600BAB9BB /* libpjlib-util-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE672269EC63600BAB9BB /* libgrpc_cronet.a in Frameworks */,
 				24A2AEF2383D44B586D31C01 /* libz.tbd in Frameworks */,
+				181AE6A1269EC63600BAB9BB /* libssl.a in Frameworks */,
+				181AE68B269EC63600BAB9BB /* libgsmcodec-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE69F269EC63600BAB9BB /* libpjsip-ua-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE67B269EC63600BAB9BB /* libpj-arm64-apple-darwin_ios.a in Frameworks */,
 				DD2BA30A89E64F189C2C24AC /* libWatermelonDB.a in Frameworks */,
-				18534B6325D2EA7E00377FDC /* libgrpc++_alts.a in Frameworks */,
-				18534B5325D2EA7E00377FDC /* libabsl_raw_logging_internal.a in Frameworks */,
 				50046CB6BDA69B9232CF66D9 /* libPods-RocketChatRN.a in Frameworks */,
-				18534B4025D2EA7E00377FDC /* libgrpc++_reflection.a in Frameworks */,
-				18534B5625D2EA7E00377FDC /* libabsl_spinlock_wait.a in Frameworks */,
-				18534B4325D2EA7E00377FDC /* libpjsip-ua-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE685269EC63600BAB9BB /* libpjsua2-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE67A269EC63600BAB9BB /* libsrtp-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE688269EC63600BAB9BB /* libgrpc.a in Frameworks */,
 				6B04E9B3B53878C9EB379630 /* libPods-RocketChatRN.a in Frameworks */,
-				18534B4625D2EA7E00377FDC /* libgrpc++_error_details.a in Frameworks */,
-				18534B3E25D2EA7E00377FDC /* libcares.a in Frameworks */,
-				18534B4C25D2EA7E00377FDC /* libabsl_base.a in Frameworks */,
-				18534B6725D2EA7E00377FDC /* libgrpcpp_channelz.a in Frameworks */,
-				18534B3B25D2EA7E00377FDC /* libopus.a in Frameworks */,
-				18534B5725D2EA7E00377FDC /* libwebrtc-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B4125D2EA7E00377FDC /* libpjmedia-audiodev-arm64-apple-darwin_ios.a in Frameworks */,
-				18534B4425D2EA7E00377FDC /* libgrpc.a in Frameworks */,
-				18534B3825D2EA7E00377FDC /* libabsl_bad_optional_access.a in Frameworks */,
-				18534B3C25D2EA7E00377FDC /* libabsl_throw_delegate.a in Frameworks */,
-				18534B3725D2EA7E00377FDC /* libssl.a in Frameworks */,
-				18534B3625D2EA7E00377FDC /* libgrpc++_unsecure.a in Frameworks */,
+				181AE679269EC63600BAB9BB /* libabsl_strings.a in Frameworks */,
+				181AE69C269EC63600BAB9BB /* libabsl_spinlock_wait.a in Frameworks */,
+				181AE670269EC63600BAB9BB /* libg7221codec-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE67E269EC63600BAB9BB /* libwebrtc-arm64-apple-darwin_ios.a in Frameworks */,
+				181AE69D269EC63600BAB9BB /* libabsl_bad_optional_access.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1845F0E62667B8E800687094 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1845F0EB2667B8E800687094 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,10 +486,10 @@
 				18A410BD2646E5E200D7BB7A /* ContactManagement */,
 				18A4109A2646DB6500D7BB7A /* CallManagement */,
 				18A410A42646DB7500D7BB7A /* Configuration */,
+				181AE6A5269EC74D00BAB9BB /* cdbcapi.h */,
+				181AE6A7269EC74E00BAB9BB /* clog.h */,
+				181AE6A6269EC74E00BAB9BB /* cmcapi.h */,
 				18534AFF25D2EA5800377FDC /* SIP_SDK */,
-				18534AFC25D2EA3800377FDC /* cdbcapi.h */,
-				18534AFD25D2EA3900377FDC /* clog.h */,
-				18534AFE25D2EA3900377FDC /* cmcapi.h */,
 				18534AE325D2EA2700377FDC /* Utilities */,
 				60B2A6A31FC4588700BD58E5 /* RocketChatRN.entitlements */,
 				1842B7A625A33E03003C9D96 /* main.jsbundle */,
@@ -473,11 +505,19 @@
 				7A0D62D1242AB187006D5C06 /* LaunchScreen.storyboard */,
 				1ED00BB02513E04400A1331F /* ReplyNotification.swift */,
 				18C0BD0225D2891600A294C5 /* SIPSDKBridge.swift */,
-				1822169225D410A700CA4462 /* SipCallManager.swift */,
 				1891586625D6D22100AD9A2D /* ModuleWithEmitter.m */,
 				1891586A25D6D24000AD9A2D /* ModuleWithEmitter.swift */,
 			);
 			name = RocketChatRN;
+			sourceTree = "<group>";
+		};
+		1845F0EC2667B8E800687094 /* IntentHandling */ = {
+			isa = PBXGroup;
+			children = (
+				1845F0ED2667B8E800687094 /* IntentHandler.swift */,
+				1845F0EF2667B8E800687094 /* Info.plist */,
+			);
+			path = IntentHandling;
 			sourceTree = "<group>";
 		};
 		18534AE325D2EA2700377FDC /* Utilities */ = {
@@ -502,58 +542,59 @@
 		18534AFF25D2EA5800377FDC /* SIP_SDK */ = {
 			isa = PBXGroup;
 			children = (
-				18534B0425D2EA6600377FDC /* libabsl_bad_optional_access.a */,
-				18534B1825D2EA7000377FDC /* libabsl_base.a */,
-				18534B1B25D2EA7200377FDC /* libabsl_dynamic_annotations.a */,
-				18534B3225D2EA7D00377FDC /* libabsl_int128.a */,
-				18534B2625D2EA7700377FDC /* libabsl_log_severity.a */,
-				18534B1F25D2EA7400377FDC /* libabsl_raw_logging_internal.a */,
-				18534B2225D2EA7500377FDC /* libabsl_spinlock_wait.a */,
-				18534B2D25D2EA7B00377FDC /* libabsl_strings_internal.a */,
-				18534B2125D2EA7500377FDC /* libabsl_strings.a */,
-				18534B0825D2EA6800377FDC /* libabsl_throw_delegate.a */,
-				18534B0925D2EA6800377FDC /* libaddress_sorting.a */,
-				18534B2C25D2EA7A00377FDC /* libbcg729.a */,
-				18534B0A25D2EA6900377FDC /* libcares.a */,
-				18534B1325D2EA6E00377FDC /* libccomsdk-0.99.9-4.a */,
-				18534B2525D2EA7700377FDC /* libcrypto.a */,
-				18534B2425D2EA7600377FDC /* libg7221codec-arm64-apple-darwin_ios.a */,
-				18534B2E25D2EA7B00377FDC /* libgpr.a */,
-				18534B3125D2EA7D00377FDC /* libgrpc_cronet.a */,
-				18534B2025D2EA7400377FDC /* libgrpc_plugin_support.a */,
-				18534B2A25D2EA7900377FDC /* libgrpc_unsecure.a */,
-				18534B1025D2EA6C00377FDC /* libgrpc.a */,
-				18534B2F25D2EA7C00377FDC /* libgrpc++_alts.a */,
-				18534B1225D2EA6D00377FDC /* libgrpc++_error_details.a */,
-				18534B0C25D2EA6A00377FDC /* libgrpc++_reflection.a */,
-				18534B0225D2EA6500377FDC /* libgrpc++_unsecure.a */,
-				18534B0025D2EA6400377FDC /* libgrpc++.a */,
-				18534B3325D2EA7D00377FDC /* libgrpcpp_channelz.a */,
-				18534B2725D2EA7800377FDC /* libgsmcodec-arm64-apple-darwin_ios.a */,
-				18534B1E25D2EA7300377FDC /* libilbccodec-arm64-apple-darwin_ios.a */,
-				18534B0725D2EA6700377FDC /* libopus.a */,
-				18534B1125D2EA6C00377FDC /* libpj-arm64-apple-darwin_ios.a */,
-				18534B3025D2EA7C00377FDC /* libpjlib-util-arm64-apple-darwin_ios.a */,
-				18534B1525D2EA6F00377FDC /* libpjmedia-arm64-apple-darwin_ios.a */,
-				18534B0D25D2EA6A00377FDC /* libpjmedia-audiodev-arm64-apple-darwin_ios.a */,
-				18534B0625D2EA6700377FDC /* libpjmedia-codec-arm64-apple-darwin_ios.a */,
-				18534B2825D2EA7800377FDC /* libpjmedia-videodev-arm64-apple-darwin_ios.a */,
-				18534B1C25D2EA7200377FDC /* libpjnath-arm64-apple-darwin_ios.a */,
-				18534B0B25D2EA6900377FDC /* libpjsip-arm64-apple-darwin_ios.a */,
-				18534B1A25D2EA7100377FDC /* libpjsip-simple-arm64-apple-darwin_ios.a */,
-				18534B0F25D2EA6B00377FDC /* libpjsip-ua-arm64-apple-darwin_ios.a */,
-				18534B1625D2EA6F00377FDC /* libpjsua-arm64-apple-darwin_ios.a */,
-				18534B1925D2EA7100377FDC /* libpjsua2-arm64-apple-darwin_ios.a */,
-				18534B1725D2EA7000377FDC /* libprotobuf.a */,
-				18534B1425D2EA6E00377FDC /* libprotoc.a */,
-				18534B0125D2EA6400377FDC /* libresample-arm64-apple-darwin_ios.a */,
-				18534B2B25D2EA7A00377FDC /* libspeex-arm64-apple-darwin_ios.a */,
-				18534B0E25D2EA6B00377FDC /* libsrtp-arm64-apple-darwin_ios.a */,
-				18534B0325D2EA6500377FDC /* libssl.a */,
-				18534B2925D2EA7900377FDC /* libupb.a */,
-				18534B2325D2EA7600377FDC /* libwebrtc-arm64-apple-darwin_ios.a */,
-				18534B0525D2EA6600377FDC /* libyuv-arm64-apple-darwin_ios.a */,
-				18534B1D25D2EA7300377FDC /* libz.a */,
+				181AE668269EC63300BAB9BB /* libabsl_bad_optional_access.a */,
+				181AE64C269EC62700BAB9BB /* libabsl_base.a */,
+				181AE66E269EC63600BAB9BB /* libabsl_dynamic_annotations.a */,
+				181AE659269EC62D00BAB9BB /* libabsl_int128.a */,
+				181AE661269EC63000BAB9BB /* libabsl_log_severity.a */,
+				181AE640269EC62300BAB9BB /* libabsl_raw_logging_internal.a */,
+				181AE667269EC63200BAB9BB /* libabsl_spinlock_wait.a */,
+				181AE664269EC63100BAB9BB /* libabsl_strings_internal.a */,
+				181AE644269EC62400BAB9BB /* libabsl_strings.a */,
+				181AE660269EC62F00BAB9BB /* libabsl_throw_delegate.a */,
+				181AE65C269EC62E00BAB9BB /* libaddress_sorting.a */,
+				181AE643269EC62400BAB9BB /* libbcg729.a */,
+				181AE642269EC62300BAB9BB /* libcares.a */,
+				181AE66D269EC63500BAB9BB /* libccomsdk-0.99.9-5.a */,
+				181AE647269EC62500BAB9BB /* libcrypto.a */,
+				181AE63B269EC62100BAB9BB /* libg7221codec-arm64-apple-darwin_ios.a */,
+				181AE63C269EC62100BAB9BB /* libgpr.a */,
+				181AE63D269EC62200BAB9BB /* libgrpc_cronet.a */,
+				181AE65B269EC62D00BAB9BB /* libgrpc_plugin_support.a */,
+				181AE63E269EC62200BAB9BB /* libgrpc_unsecure.a */,
+				181AE653269EC62A00BAB9BB /* libgrpc.a */,
+				181AE64A269EC62600BAB9BB /* libgrpc++_alts.a */,
+				181AE64E269EC62800BAB9BB /* libgrpc++_error_details.a */,
+				181AE641269EC62300BAB9BB /* libgrpc++_reflection.a */,
+				181AE651269EC62900BAB9BB /* libgrpc++_unsecure.a */,
+				181AE655269EC62B00BAB9BB /* libgrpc++.a */,
+				181AE663269EC63100BAB9BB /* libgrpcpp_channelz.a */,
+				181AE656269EC62B00BAB9BB /* libgsmcodec-arm64-apple-darwin_ios.a */,
+				181AE648269EC62600BAB9BB /* libilbccodec-arm64-apple-darwin_ios.a */,
+				181AE64D269EC62800BAB9BB /* libopus.a */,
+				181AE646269EC62500BAB9BB /* libpj-arm64-apple-darwin_ios.a */,
+				181AE65F269EC62F00BAB9BB /* libpjlib-util-arm64-apple-darwin_ios.a */,
+				181AE662269EC63000BAB9BB /* libpjmedia-arm64-apple-darwin_ios.a */,
+				181AE665269EC63100BAB9BB /* libpjmedia-audiodev-arm64-apple-darwin_ios.a */,
+				181AE64F269EC62800BAB9BB /* libpjmedia-codec-arm64-apple-darwin_ios.a */,
+				181AE666269EC63200BAB9BB /* libpjmedia-videodev-arm64-apple-darwin_ios.a */,
+				181AE65E269EC62E00BAB9BB /* libpjnath-arm64-apple-darwin_ios.a */,
+				181AE658269EC62C00BAB9BB /* libpjsip-arm64-apple-darwin_ios.a */,
+				181AE65A269EC62D00BAB9BB /* libpjsip-simple-arm64-apple-darwin_ios.a */,
+				181AE66A269EC63400BAB9BB /* libpjsip-ua-arm64-apple-darwin_ios.a */,
+				181AE654269EC62A00BAB9BB /* libpjsua-arm64-apple-darwin_ios.a */,
+				181AE650269EC62900BAB9BB /* libpjsua2-arm64-apple-darwin_ios.a */,
+				181AE63F269EC62200BAB9BB /* libprotobuf-lite.a */,
+				181AE652269EC62A00BAB9BB /* libprotobuf.a */,
+				181AE66B269EC63400BAB9BB /* libprotoc.a */,
+				181AE66F269EC63600BAB9BB /* libresample-arm64-apple-darwin_ios.a */,
+				181AE65D269EC62E00BAB9BB /* libspeex-arm64-apple-darwin_ios.a */,
+				181AE645269EC62500BAB9BB /* libsrtp-arm64-apple-darwin_ios.a */,
+				181AE66C269EC63500BAB9BB /* libssl.a */,
+				181AE669269EC63300BAB9BB /* libupb.a */,
+				181AE649269EC62600BAB9BB /* libwebrtc-arm64-apple-darwin_ios.a */,
+				181AE657269EC62C00BAB9BB /* libyuv-arm64-apple-darwin_ios.a */,
+				181AE64B269EC62700BAB9BB /* libz.a */,
 			);
 			path = SIP_SDK;
 			sourceTree = "<group>";
@@ -575,6 +616,10 @@
 				18A4109B2646DB6500D7BB7A /* CallManager.swift */,
 				18A4109C2646DB6500D7BB7A /* PushManager.swift */,
 				18A4109D2646DB6500D7BB7A /* Dialer.swift */,
+				1845F0FA2667B9E500687094 /* UserActivityExtension.swift */,
+				1882609F2669143200A5CA91 /* NSUserActivity+StartCallConvertible.swift */,
+				188260A02669143200A5CA91 /* StartCallConvertible.swift */,
+				188260A12669143300A5CA91 /* URL+StartCallConvertible.swift */,
 			);
 			path = CallManagement;
 			sourceTree = "<group>";
@@ -727,6 +772,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				1EC6ACB122CB9FC300A41C61 /* ShareRocketChatRN */,
 				18765CEC25ADC06C00AAAB56 /* NotificationService */,
+				1845F0EC2667B8E800687094 /* IntentHandling */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				BB4B591B5FC44CD9986DB2A6 /* Frameworks */,
 				AF5E16F0398347E6A80C8CBE /* Resources */,
@@ -742,6 +788,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* Rocket.Chat Experimental.app */,
 				18765CEB25ADC06C00AAAB56 /* NotificationService.appex */,
+				1845F0E92667B8E800687094 /* IntentHandling.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -785,6 +832,7 @@
 				C235DC7B31A4D1578EDEF219 /* libPods-RocketChatRN.a */,
 				B0B41F834F20FC0ACC547296 /* libPods-ShareRocketChatRN.a */,
 				81411D280138EF5344596C2F /* libPods-NotificationService.a */,
+				1845F0EA2667B8E800687094 /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -814,11 +862,29 @@
 			);
 			dependencies = (
 				18765CF125ADC06C00AAAB56 /* PBXTargetDependency */,
+				1845F0F12667B8E800687094 /* PBXTargetDependency */,
 			);
 			name = RocketChatRN;
 			productName = "Hello World";
 			productReference = 13B07F961A680F5B00A75B9A /* Rocket.Chat Experimental.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1845F0E82667B8E800687094 /* IntentHandling */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1845F0F62667B8E800687094 /* Build configuration list for PBXNativeTarget "IntentHandling" */;
+			buildPhases = (
+				1845F0E52667B8E800687094 /* Sources */,
+				1845F0E62667B8E800687094 /* Frameworks */,
+				1845F0E72667B8E800687094 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentHandling;
+			productName = IntentHandling;
+			productReference = 1845F0E92667B8E800687094 /* IntentHandling.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		18765CEA25ADC06C00AAAB56 /* NotificationService */ = {
 			isa = PBXNativeTarget;
@@ -848,7 +914,7 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastSwiftUpdateCheck = 1160;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -870,6 +936,11 @@
 								enabled = 0;
 							};
 						};
+					};
+					1845F0E82667B8E800687094 = {
+						CreatedOnToolsVersion = 12.4;
+						DevelopmentTeam = 34P5YL94PL;
+						ProvisioningStyle = Manual;
 					};
 					18765CEA25ADC06C00AAAB56 = {
 						CreatedOnToolsVersion = 11.6;
@@ -900,6 +971,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* RocketChatRN */,
 				18765CEA25ADC06C00AAAB56 /* NotificationService */,
+				1845F0E82667B8E800687094 /* IntentHandling */,
 			);
 		};
 /* End PBXProject section */
@@ -929,6 +1001,13 @@
 				18E7CD8426089BFB008F66DF /* GoogleService-Info.plist in Resources */,
 				7A0D62D2242AB187006D5C06 /* LaunchScreen.storyboard in Resources */,
 				18A6ADD725C56E1600F0B424 /* message_beep_tone.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1845F0E72667B8E800687094 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,7 +1317,7 @@
 				18534AF025D2EA2700377FDC /* FIFO.swift in Sources */,
 				18534AF225D2EA2700377FDC /* Logger.swift in Sources */,
 				1891586B25D6D24000AD9A2D /* ModuleWithEmitter.swift in Sources */,
-				1822169425D410A700CA4462 /* SipCallManager.swift in Sources */,
+				188260A42669143300A5CA91 /* URL+StartCallConvertible.swift in Sources */,
 				18C0BD0525D28B2C00A294C5 /* SIPSDKBridge.m in Sources */,
 				18534AF125D2EA2700377FDC /* CString.swift in Sources */,
 				18C0BD0325D2891600A294C5 /* SIPSDKBridge.swift in Sources */,
@@ -1279,15 +1358,26 @@
 				1E068CFE24FD2DC700A0FFC1 /* AppGroup.swift in Sources */,
 				1E76CBCE25152C2F0067298C /* RoomKey.swift in Sources */,
 				18534AF325D2EA2700377FDC /* BlockingBarrier.swift in Sources */,
+				188260A32669143300A5CA91 /* StartCallConvertible.swift in Sources */,
 				18A410A72646DB7500D7BB7A /* PushManager.swift in Sources */,
 				18A410C32646E5E200D7BB7A /* PhoneNumber.swift in Sources */,
 				18A410AC2646DB7500D7BB7A /* Configuration.swift in Sources */,
 				18534AF425D2EA2700377FDC /* Lock.swift in Sources */,
 				1891586725D6D22100AD9A2D /* ModuleWithEmitter.m in Sources */,
 				1E76CBCC25152C290067298C /* Message.swift in Sources */,
+				188260A22669143300A5CA91 /* NSUserActivity+StartCallConvertible.swift in Sources */,
 				1E76CBCF25152C310067298C /* NotificationType.swift in Sources */,
 				1E76CBDA25152C8E0067298C /* SendMessage.swift in Sources */,
 				18A410C52646E5E200D7BB7A /* EmailAddress.swift in Sources */,
+				1845F0FB2667B9E500687094 /* UserActivityExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1845F0E52667B8E800687094 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1845F0EE2667B8E800687094 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1325,6 +1415,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1845F0F12667B8E800687094 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1845F0E82667B8E800687094 /* IntentHandling */;
+			targetProxy = 1845F0F02667B8E800687094 /* PBXContainerItemProxy */;
+		};
 		18765CF125ADC06C00AAAB56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 18765CEA25ADC06C00AAAB56 /* NotificationService */;
@@ -1371,7 +1466,7 @@
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = RocketChatRN/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
@@ -1411,8 +1506,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RocketChatRN/RocketChatRN.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1429,7 +1524,7 @@
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = RocketChatRN/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
@@ -1449,13 +1544,76 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon;
 				PRODUCT_NAME = "Rocket.Chat Experimental";
-				PROVISIONING_PROFILE_SPECIFIER = InHouse_Pigeon;
+				PROVISIONING_PROFILE_SPECIFIER = Dev_Com.comlinkinc.pigeon;
 				SWIFT_OBJC_BRIDGING_HEADER = "RocketChatRN-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "RocketChatRN-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		1845F0F32667B8E800687094 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 34P5YL94PL;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentHandling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentCallKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_Pigeon_Intent;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1845F0F42667B8E800687094 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 34P5YL94PL;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentHandling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.IntentCallKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_Pigeon_Intent;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1477,7 +1635,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = NotificationService/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 1.5.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -1504,8 +1662,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1513,13 +1671,13 @@
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = NotificationService/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 1.5.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.comlinkinc.pigeon.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Inhouse_PushService_Pigeon;
+				PROVISIONING_PROFILE_SPECIFIER = Dev_PushService_Pigeon;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "NotificationService/NotificationService-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1638,6 +1796,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1845F0F62667B8E800687094 /* Build configuration list for PBXNativeTarget "IntentHandling" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1845F0F32667B8E800687094 /* Debug */,
+				1845F0F42667B8E800687094 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

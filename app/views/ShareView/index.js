@@ -25,7 +25,7 @@ import StatusBar from '../../containers/StatusBar';
 import database from '../../lib/database';
 import { canUploadFile } from '../../utils/media';
 import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
-
+import { fcmUrl as fcmUrl, fcmKey as fcmKey } from '../../../app.json';
 
 class ShareView extends Component {
 	constructor(props) {
@@ -197,14 +197,9 @@ class ShareView extends Component {
 						}
 					return Promise.resolve();
 				}));
-				console.debug('result of send attchment', result);
-				console.debug('result of send attchment response', result[0].respInfo.status);
-				//console.debug('result.response.success', result.response.success);
-			//	console.debug('result.status', result.success)
+	
 				if (result[0].respInfo.status == 200){
-					console.debug('result.status');
 					const subscriptions = this.state;
-					console.debug('subscription of share view ', subscriptions);
 					var msg = subscriptions.room.u.username + " " + "sent an attachment"
 					this.sendNotification(msg);
 				}
@@ -212,7 +207,6 @@ class ShareView extends Component {
 			// Send text message
 			} else if (text.length) {
 				const result = await RocketChat.sendMessage(room.rid, text, thread?.id, { id: user.id, token: user.token });
-				console.debug('result of attch with text',result);
 			}
 		} catch {
 			// Do nothing
@@ -225,12 +219,8 @@ class ShareView extends Component {
 	};
 
 	sendNotification = async(msg) => {
-		console.debug('send notification method called')
 		try {
-			console.debug('send notification method called')
-			console.debug('info about this room 1', this.state);
 			const membersList = await RocketChat.getRoomMembers(this.state.room.rid, true, 0 , 100);
-			console.debug('info about message:', msg);
 			const newMembers = membersList.records;
 			newMembers.map((member) => { console.debug('new member = ', member._id) 
 			this.getInfoOfUser(msg, member._id)
@@ -250,7 +240,6 @@ class ShareView extends Component {
 				const customFields = user.customFields;
 				const devicetoken = customFields.devicetoken;
 				const os = customFields.os;
-				console.debug('result of each user : ', user)
 				const subscriptions = this.state;
 				if (user.username == subscriptions.room.u.username) {
 					console.log('dont send notification to same user');
@@ -270,8 +259,6 @@ class ShareView extends Component {
 		var type = '';
 		var linkMessage = ''
 		var titleMessage = ''
-		console.debug('got device token :', devicetoken)
-		console.debug('this subscription = ', subscriptions.room)
 		
 		switch (subscriptions.room._raw.t) {
 			case 'p' : {type = 'group_chat'; linkMessage = subscriptions.room._raw.rid + ',' + subscriptions.room._raw.name; titleMessage =  subscriptions.room._raw.name} break
@@ -280,14 +267,6 @@ class ShareView extends Component {
 			default : break
 		}
 
-		console.debug('notification type :', type)
-		console.debug('notification linkMessage :', linkMessage)
-		console.debug('notification titleMessage :', titleMessage)
-		
-		
-		const params = {}
-		params.to = 'cs8RDCfb_yY:APA91bHxv-_GobwcF6qxDzh_3W583QUWiyBXSx4DNLAfc--Z7B12XgLU82nur563aams7Lw80jzOBf5tVaYQ7LhZjZVD0P3ZEO2gsCbzWay2afdLBQACaaEehLIM1UEXObVtMi5NmZzv'
-		params.priority = 'high'
 
 		const notification = {}
 		notification.body = msg
@@ -308,9 +287,6 @@ class ShareView extends Component {
 		androidData.chatRoomType = type
 		androidData.click_action = 'com.comlinkinc.android.main.ui.MainActivity'
 
-		params.notification = notification
-		params.data = data
-
 		const ejson = {}
 		ejson.rid = subscriptions.room._raw.rid
 		ejson.name = subscriptions.room._raw.name
@@ -328,60 +304,34 @@ class ShareView extends Component {
 		data.ejson = ejson
 		androidData.ejson = ejson
 
+		const paramData = {};
+   		 if (os == "ios") {
+      		paramData = data;
+		}
+   		 else {
+      		paramData = androidData;
+   	    }
 		
-		console.debug('params of push notification : ', params)
-
-		if (os == 'ios') {
-		const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
+		const result =  await fetch(fcmUrl, { 
 			method : 'POST', 
 			headers : {
 				'Content-Type' : 'application/json',
-				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
+				'Authorization' : fcmKey
 			},
 			body : JSON.stringify({
 				'to' : devicetoken,
 				'priority' : 'high',
 				'alert' : {'body' : msg ,'title' : titleMessage },
 				'notification' : {'body' : msg ,'title' : titleMessage ,'sound' : 'message_beep_tone.mp3','soundName' : 'message_beep_tone.mp3', 'content-available' : '1','android_channel_id': "500", 'ejson' : ejson},
-				'data' : data,
+				'data' : paramData,
 				'ejson' : ejson,
 				'badge' : 1,
-				'aps': {
-					alert: 'Sample notification',
-					badge: '+1',
-					sound: 'default',
-					category: 'REACT_NATIVE',
-					'content-available': 1,
-				  }
 			})
 
 		}).then((response) => response.json())
 		.then((json) => {
 			console.debug('response of push notification new :', json)
 		  })
-		}else {
-			const result =  await fetch('https://fcm.googleapis.com/fcm/send', { 
-			method : 'POST', 
-			headers : {
-				'Content-Type' : 'application/json',
-				'Authorization' : 'key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si'
-			},
-			body : JSON.stringify({
-				'to' : devicetoken,
-				'priority' : 'high',
-				'data' : androidData,
-				'badge' : 1,
-				'ejson' : ejson,
-				'notification' : {'body' : msg ,'title' : titleMessage ,  'sound' : 'message_beep_tone.mp3','soundName' : 'message_beep_tone.mp3', 'content-available' : '1','android_channel_id': "500", 'ejson' : ejson}
-			})
-
-		}).then((response) => response.json())
-		.then((json) => {
-			console.debug('response of push notification new :', json)
-		  })
-		}
-		
-
 	}
 
 	selectFile = (item) => {

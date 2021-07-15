@@ -33,7 +33,6 @@ class JitsiMeetView extends React.Component {
   constructor(props) {
     super(props);
     this.rid = props.route.params?.rid;
-    console.debug("room id of jitsi video call", this.rid);
     this.onConferenceTerminated = this.onConferenceTerminated.bind(this);
     this.onConferenceJoined = this.onConferenceJoined.bind(this);
     this.jitsiTimeout = null;
@@ -47,13 +46,7 @@ class JitsiMeetView extends React.Component {
     const avatar = formatUrl(username, baseUrl, 100, avatarAuthURLFragment);
 
     setTimeout(() => {
-      // const userInfo = {
-      // 	displayName,
-      // 	avatar
-      // };
-      const url =
-        route.params?.url + "#userInfo.displayName=" + "\"" + displayName + "\"";
-      console.debug("url of jitsi video call", url);
+      const url = route.params?.url + "#userInfo.displayName=" + "\"" + displayName + "\"";
       const onlyAudio = route.params?.onlyAudio ?? false;
       if (onlyAudio) {
         JitsiMeet.audioCall(url);

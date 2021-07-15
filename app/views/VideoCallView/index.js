@@ -17,9 +17,6 @@ import callJitsi from '../../lib/methods/callJitsi';
 import { Platform } from 'react-native';
 import Sound from 'react-native-sound';
 
-
-//const { width } = Dimensions.get("window");
-
 const mainBundle = Platform.OS === 'ios'
     ? encodeURIComponent(Sound.MAIN_BUNDLE)
     : Sound.MAIN_BUNDLE;
@@ -29,12 +26,9 @@ const mainBundle = Platform.OS === 'ios'
       mainBundle,
       error => {
         if (error) {
-          //alert(error)
           console.debug("sound", error);
           return;
         }else{
-         // alert('Play Sound')
-          //sound.play(() => sound.release());
         }
       }
     );
@@ -50,15 +44,8 @@ class VideoCallView extends React.Component {
   }
 
   
-  
-  
   componentDidMount(){
-    console.debug('componentDidMount()');
-    this.playSound()
-
-    // setTimeout(function(){
-    //   this.handlePress()
-    // },5000);   
+    this.playSound()   
   }
 
   handlePress = async() => {
@@ -70,45 +57,15 @@ class VideoCallView extends React.Component {
   }
 
   playSound = () => {
-    // const mainBundle = Platform.OS === 'ios'
-    // ? encodeURIComponent(Sound.MAIN_BUNDLE)
-    // : Sound.MAIN_BUNDLE;
-    // Sound.setCategory('Playback', true)
-    // const sound = new Sound(
-    //   'tring_tring_tring.mp3',
-    //   mainBundle,
-    //   error => {
-    //     if (error) {
-    //       //alert(error)
-    //       console.debug("sound", error);
-    //       return;
-    //     }else{
-    //      // alert('Play Sound')
-    //       sound.play(() => sound.release());
-    //     }
-    //   }
-    // );
-     // The play dispatcher
     sound.play();
-  }
-
-  componentDidUpdate(){
-    //this.handlePress.bind(this)
-  }
-
-  componentWillUpdate(){
-    //this.handlePress.bind(this)
   }
 
   componentWillUnmount(){
     sound.stop()
-    //sound.stop(() => sound.release());
   }
   constructor(props) {
     super(props);
-    console.debug('this.props', props);
     this.rid = props.route.params?.roomId;
-    console.debug('getting rid from video view', this.rid);
     this.name =  props.route.params?.username;
     this.state = {
     };

@@ -17,16 +17,6 @@ class getSipSettingsFromAPI extends React.Component {
         title: "Sip Settings",
     });
 
-   
-    //   static navigationOptions = ({ navigation, isMasterDetail }) => ({
-	// 	headerLeft: () => (isMasterDetail ? (
-	// 		<HeaderButton.CloseModal navigation={navigation} testID='sip-settings-view-close' />
-	// 	) : (
-	// 		<HeaderButton.Drawer navigation={navigation} testID='sip-settings-view-drawer' />
-	// 	)),
-	// 	 title: 'Sip Settings'
-	// });
-
     static propTypes = {
 		navigation: PropTypes.object,
 		route: PropTypes.object
@@ -52,39 +42,6 @@ class getSipSettingsFromAPI extends React.Component {
             stunPort : props.route.params?.stunPort
         }
         
-        
-
-        /*
-        this.state =  {
-            sipServer : 'newxonesip.mvoipctsi.com',
-            sipPort : '8993',
-            sipTransport : 'TCP',
-            sipUsername :'919420429240',
-            sipPassword : '5d7d424b4c2f87001a71c411',
-            iceEnabled : true,
-            turnServer : 'turntaiwan.mvoipctsi.com',
-            turnPort : '0',
-            turnUsername : 'comlinkxone',
-            turnPassword : 'hgskSlGHgwSKfgsdUSDGhs',
-            stunServer : 'turntaiwan.mvoipctsi.com',
-            stunPort : '0',
-            fromQRPage : this.props.route.params?.fromQRPage
-        }
-        */
-        
-
-            // console.debug('sipServer===',this.state.sipServer);
-            // console.debug('sipPort=',this.state.sipPort);
-            // console.debug('sipTransport=',this.state.sipTransport);
-            // console.debug('sipUsername=',this.state.sipUsername);
-            // console.debug('sipPassword=',this.state.sipPassword);
-            // console.debug('iceEnabled=',this.state.iceEnabled);
-            // console.debug('turnServer=',this.state.turnServer);
-            // console.debug('turnPort=',this.state.turnPort);
-            // console.debug('turnUsername=',this.state.turnUsername);
-            // console.debug('turnPassword=',this.state.turnPassword);
-            // console.debug('stunServer==',this.state.stunServer);
-            // console.debug('stunPort=',this.state.stunPort);
 
         this.state.selectedIndex = 0;
         if(this.state.sipTransport == 'TCP'){
@@ -95,9 +52,6 @@ class getSipSettingsFromAPI extends React.Component {
             this.state.selectedIndex = 2;
         }
 
-        // if(this.state.fromQRPage == true){
-        //     props.navigation.setOptions({ title: "Sip Settings" });
-        //  }
       }
 
     setValues = () => {
@@ -167,11 +121,6 @@ class getSipSettingsFromAPI extends React.Component {
 
     toggleSwitch = (value) => {
         this.setState({iceEnabled : value})
-        if(value == true){
-            // Open TURN server container 
-        }else{
-            // Hide TURN server configurations
-        }
     }
 
     setSegmentedControl = () => {
@@ -186,7 +135,6 @@ class getSipSettingsFromAPI extends React.Component {
     }
 
     saveSIPInfo = () => {
-       // alert(JSON.stringify(this.state))
        this.storeData()
     }
 
@@ -194,23 +142,6 @@ class getSipSettingsFromAPI extends React.Component {
        
         try {
 
-            console.debug('sipServer===',this.state.sipServer);
-            console.debug('sipPort=',this.state.sipPort);
-            console.debug('sipTransport=',this.state.sipTransport);
-            console.debug('sipUsername=',this.state.sipUsername);
-            console.debug('sipPassword=',this.state.sipPassword);
-            console.debug('iceEnabled=',this.state.iceEnabled);
-            console.debug('turnServer=',this.state.turnServer);
-            console.debug('turnPort=',this.state.turnPort);
-            console.debug('turnUsername=',this.state.turnUsername);
-            console.debug('turnPassword=',this.state.turnPassword);
-            console.debug('stunServer==',this.state.stunServer);
-            console.debug('stunPort=',this.state.stunPort);
-
-           /* if(this.state.sipServer == null) {
-                this.state.sipServer = 'sandbox.mvoipctsi.com';
-                this.setState({sipServer: 'sandbox.mvoipctsi.com'});
-            }*/
 
             await AsyncStorage.setItem('sipServer', this.state.sipServer);
             await AsyncStorage.setItem('sipPort', this.state.sipPort + '');
@@ -218,11 +149,11 @@ class getSipSettingsFromAPI extends React.Component {
             await AsyncStorage.setItem('sipUsername', this.state.sipUsername);
             await AsyncStorage.setItem('sipPassword', this.state.sipPassword);
             await AsyncStorage.setItem('iceEnabled', this.state.iceEnabled == true ? 'true' : 'false');
-            await AsyncStorage.setItem('turnServer', this.state.turnServer == "" ? " " : this.state.turnServer);
+            await AsyncStorage.setItem('turnServer', this.state.turnServer == "" ? "" : this.state.turnServer);
             await AsyncStorage.setItem('turnPort', "0");
-            await AsyncStorage.setItem('turnUsername', this.state.turnUsername == "" ? " " : this.state.turnUsername);
-            await AsyncStorage.setItem('turnPassword', this.state.turnPassword == "" ? " " : this.state.turnPassword);
-            await AsyncStorage.setItem('stunServer', this.state.stunServer == "" ? " " : this.state.stunServer);
+            await AsyncStorage.setItem('turnUsername', this.state.turnUsername == "" ? "" : this.state.turnUsername);
+            await AsyncStorage.setItem('turnPassword', this.state.turnPassword == "" ? "" : this.state.turnPassword);
+            await AsyncStorage.setItem('stunServer', this.state.stunServer == "" ? "" : this.state.stunServer);
             await AsyncStorage.setItem('stunPort', "0");
 
             alert('Sip Settings saved successfully.');
@@ -258,39 +189,21 @@ class getSipSettingsFromAPI extends React.Component {
             this.state.iceEnabled = iceEnabled == 'true' ? true : false;
 
             const turnServer = await AsyncStorage.getItem('turnServer');
-            // if (turnServer == "-") {
-            //   turnServer = "";
-            // }
             this.state.turnServer = turnServer;
 
             const turnPort = await AsyncStorage.getItem('turnPort');
-            // if (turnPort == "-") {
-            //   turnPort = "";
-            // }
             this.state.turnPort = turnPort;
 
             const turnUsername = await AsyncStorage.getItem('turnUsername');
-            // if (turnUsername == "-") {
-            //   turnUsername = "";
-            // }
             this.state.turnUsername = turnUsername;
 
             const turnPassword = await AsyncStorage.getItem('turnPassword');
-            // if (turnPassword == "-") {
-            //   turnPassword = "";
-            // }
             this.state.turnPassword = turnPassword;
 
             const stunServer = await AsyncStorage.getItem('stunServer');
-            // if (stunServer == "-") {
-            //   stunServer = "";
-            // }
             this.state.stunServer = stunServer;
 
             const stunPort = await AsyncStorage.getItem('stunPort');
-            // if (stunPort == "-") {
-            //   stunPort = "";
-            // }
             this.state.stunPort = stunPort;
 
            this.forceUpdate()
@@ -304,13 +217,7 @@ class getSipSettingsFromAPI extends React.Component {
 
       }
 
-    componentDidMount(){
-       // this.getSIPUserData();
-       /*if(this.state.sipServer == null || this.state.sipServer != "") {
-        this.state.sipServer = 'sandbox.mvoipctsi.com';
-        this.setState({sipServer: 'sandbox.mvoipctsi.com'});
-    }*/
-    }
+    componentDidMount(){}
 
     render(){
      
@@ -354,7 +261,6 @@ class getSipSettingsFromAPI extends React.Component {
                     selectedIndex: event.nativeEvent.selectedSegmentIndex,
                   });
                 }
-                // this.setState({sipTransport: event.nativeEvent.selectedSegmentIndex == 0 ? 'TCP' : });
               }}
             />
 
@@ -396,14 +302,6 @@ class getSipSettingsFromAPI extends React.Component {
                   onTextChange={this.onTURNHostChanged}
                 />
 
-                {/* <InputContainer
-                            placeholder = 'Port'
-                            title = 'TURN Port'
-                            keyBoardType = 'number-pad'
-                            textValue = {this.state.turnPort + ''}
-                            onTextChange = {this.onTURNPortChanged}
-                        /> */}
-
                 <InputContainer
                   placeholder="Username"
                   title="TURN Username"
@@ -429,14 +327,6 @@ class getSipSettingsFromAPI extends React.Component {
               textValue={this.state.stunServer}
               onTextChange={this.onStunServerChanged}
             />
-
-            {/* <InputContainer
-                    placeholder = 'Port'
-                    title = 'STUN Port'
-                    keyBoardType = 'number-pad'
-                    textValue = {this.state.stunPort + ''}
-                    onTextChange = {this.onStunPortChanged}
-                /> */}
 
             <TouchableOpacity
               style={styles.saveButton}

@@ -149,6 +149,15 @@ EXPORT CMSTATUS CmInitialize(const CMCONFIGURATION* csi);
 EXPORT CMSTATUS CmShutdown();
 
 ///
+/// \brief Handles network address change.
+///
+/// In case of a transition between WiFi to mobile or vice versa, this function
+/// must be invoked so that the underlying SIP stack may perform any necessary
+/// adjustments to keep the registration and any currently active calls alive.
+///
+EXPORT CMSTATUS CmHandleNetworkAddressChange();
+
+///
 /// \brief Starts the SIP registration session with the SIP registrar server.
 ///
 /// This SIP registration session will be maintained internally by the library,
