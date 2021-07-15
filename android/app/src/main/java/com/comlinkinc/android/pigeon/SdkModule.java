@@ -186,7 +186,8 @@ public class SdkModule extends ReactContextBaseJavaModule {
                 CallManager.startDialer(activity);
             }
 
-            Dialer.register();
+//            Dialer.register();
+            CallManager.registerDialer();
 
             CallManager.ringing = false;
             CallManager.answered = false;

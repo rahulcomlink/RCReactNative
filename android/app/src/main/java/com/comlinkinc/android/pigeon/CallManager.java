@@ -1,6 +1,7 @@
 package com.comlinkinc.android.pigeon;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -12,6 +13,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -82,6 +87,13 @@ public class CallManager {
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";
     public static Contact contactFromPayload = null;
+
+    //Screen lock if call ongoing
+    private static SensorManager sensorManager;
+    private static Sensor sensor;
+    private static PowerManager mPowerManager;
+    private static PowerManager.WakeLock mWakeLock;
+    private static final String TAG = "CallManager";
 
 
     /********************************************************************************************
@@ -238,6 +250,18 @@ public class CallManager {
 //            Toast.makeText(KulfiApplication.getAppContext(), "Registration failed", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+
+
+        sensorManager = (SensorManager) reactContext.getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        mPowerManager = (PowerManager) reactContext.getSystemService(Context.POWER_SERVICE);
+
+
+        if (sensorManager != null) {
+            sensorManager.registerListener(proxiListener, sensor,
+                    SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
     }
 
     public static void unRegisterDialer() {
@@ -245,6 +269,16 @@ public class CallManager {
             Dialer.unregister();
         } catch (DialerException e) {
             e.printStackTrace();
+        }
+
+        if (sensorManager != null && proxiListener != null) {
+            sensorManager.unregisterListener(proxiListener);
+        }
+
+        if (mWakeLock != null) {
+            if (mWakeLock.isHeld()) {
+                mWakeLock.release();
+            }
         }
     }
 
@@ -859,8 +893,59 @@ public class CallManager {
 
             }
         });
+    }
 
+    public static SensorEventListener proxiListener = new SensorEventListener() {
+        public void onAccuracyChanged(Sensor sensor, int acc) {
+        }
 
+        public void onSensorChanged(SensorEvent event) {
+            float proximity = event.values[0];
+            // if proximity is 0 means Near
+            // if proximity us 5 means Away
+
+            if ((int) proximity == 0) {
+                turnOffScreen();
+
+            } else if ((int) proximity == 5) {
+                turnOnScreen();
+            }
+        }
+    };
+
+    @SuppressLint("InvalidWakeLockTag")
+    public static void turnOnScreen() {
+        // turn on screen
+        try {
+            if (mPowerManager != null) {
+                mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, TAG);
+                mWakeLock.acquire();
+            }
+        } catch (Exception e) {
+            if (mWakeLock != null) {
+                if (mWakeLock.isHeld()) {
+                    mWakeLock.release();
+                }
+            }
+        }
+    }
+
+    @SuppressLint("InvalidWakeLockTag")
+    @TargetApi(21) //Suppress lint error for PROXIMITY_SCREEN_OFF_WAKE_LOCK
+    public static void turnOffScreen() {
+        // turn off screen
+        try {
+            if (mPowerManager != null) {
+                mWakeLock = mPowerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, TAG);
+                mWakeLock.acquire();
+            }
+        } catch (Exception e) {
+            if (mWakeLock != null) {
+                if (mWakeLock.isHeld()) {
+                    mWakeLock.release();
+                }
+            }
+        }
     }
 
 }

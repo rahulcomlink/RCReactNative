@@ -1,14 +1,20 @@
 package com.comlinkinc.android.pigeon;
 
+import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +43,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
     boolean isVoipCall = true;
     private Context mContext;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +63,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
         }
 
         mContext = IncomingCallActivity.this;
+
         findViews();
     }
 
@@ -200,9 +208,20 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+
     @Override
     public void networkUnavailable() {
         Log.d("Network_Changed", "Network Unvailable");
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }
