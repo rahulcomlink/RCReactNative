@@ -277,6 +277,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation files('libs/ccomsdk-0.99.9-5.jar')
+    implementation files('libs/ccomsdk-0.99.9-5.jar')
     addUnimodulesDependencies()
     implementation project(':watermelondb')
     implementation project(':@react-native-community_viewpager')

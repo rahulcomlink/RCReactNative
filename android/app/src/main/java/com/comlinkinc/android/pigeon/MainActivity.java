@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.AudioAttributes;
@@ -14,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -44,12 +46,15 @@ class SortPreferences {
   Boolean showUnread;
 }
 
-public class MainActivity extends ReactFragmentActivity implements ReactInstanceManager.ReactInstanceEventListener {
+public class MainActivity extends ReactFragmentActivity implements ReactInstanceManager.ReactInstanceEventListener, NetworkStateReceiver.NetworkStateReceiverListener {
 
     public static MainActivity instance;
     boolean isIncomingCall = false;
     String phoneNumber = "";
     boolean called = false;
+
+    private NetworkStateReceiver networkStateReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +207,11 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
                 }.start();
             }
         }
+
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener(this);
+        registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+
     }
 
     /**
@@ -263,6 +273,50 @@ public class MainActivity extends ReactFragmentActivity implements ReactInstance
                 }
             }, 1500);
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (networkStateReceiver != null) {
+            networkStateReceiver.removeListener(this);
+            unregisterReceiver(networkStateReceiver);
+        }
+    }
+
+
+    /****************************************************************************************************************************
+     **
+     * Ongoing call will not be disconnect while network change. We can easily switch network between WiFi to Mobile data or vice versa.
+     *
+     * This method handle network change.
+     *
+     ****************************************************************************************************************************/
+    @Override
+    public void networkAvailable() {
+
+        Log.d("Network_Changed", "Network Available");
+        /* TODO: Your connection-oriented stuff here */
+//            AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (SdkModule.mAudioManager != null) {
+            CallManager.handleNetworkChange();
+            if (SdkModule.isOnMic) {
+                SdkModule.mAudioManager.setMicrophoneMute(false);
+                SdkModule.mAudioManager.setSpeakerphoneOn(false);
+            } else {
+                SdkModule.mAudioManager.setMicrophoneMute(false);
+                SdkModule.mAudioManager.setSpeakerphoneOn(true);
+            }
+        }else{
+            CallManager.handleNetworkChange();
+        }
+    }
+
+
+    @Override
+    public void networkUnavailable() {
+        Log.d("Network_Changed", "Network Unvailable");
     }
 }
 

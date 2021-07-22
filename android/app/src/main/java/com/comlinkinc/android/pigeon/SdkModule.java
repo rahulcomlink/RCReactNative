@@ -110,11 +110,11 @@ public class SdkModule extends ReactContextBaseJavaModule {
             if (setSpecker) {
                 mAudioManager.setSpeakerphoneOn(true);
                 mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-                isOnMic = true;
+                isOnMic = false;
             } else {
                 mAudioManager.setSpeakerphoneOn(false);
                 mAudioManager.setMode(AudioManager.MODE_IN_CALL);
-                isOnMic = false;
+                isOnMic = true;
             }
 
         } catch (Exception e) {

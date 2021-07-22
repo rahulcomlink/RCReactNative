@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.hardware.Sensor;
@@ -29,7 +30,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import static com.comlinkinc.android.pigeon.SdkModule.reactContext;
 
 
-public class IncomingCallActivity extends AppCompatActivity implements View.OnClickListener, NetworkStateReceiver.NetworkStateReceiverListener {
+public class IncomingCallActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";
@@ -42,7 +43,6 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
     public static String phoneNumber = "";
     boolean isVoipCall = true;
     private Context mContext;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,37 +183,6 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
         return phoneNumber;
     }
 
-    /****************************************************************************************************************************
-     **
-     * Ongoing call will not be disconnect while network change. We can easily switch network between WiFi to Mobile data or vice versa.
-     *
-     * This method handle network change.
-     *
-     ****************************************************************************************************************************/
-    @Override
-    public void networkAvailable() {
-
-        Log.d("Network_Changed", "Network Available");
-        /* TODO: Your connection-oriented stuff here */
-//            AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        if (SdkModule.mAudioManager != null) {
-            CallManager.handleNetworkChange();
-            if (SdkModule.isOnMic) {
-                SdkModule.mAudioManager.setMicrophoneMute(false);
-                SdkModule.mAudioManager.setSpeakerphoneOn(false);
-            } else {
-                SdkModule.mAudioManager.setMicrophoneMute(false);
-                SdkModule.mAudioManager.setSpeakerphoneOn(true);
-            }
-        }
-    }
-
-
-    @Override
-    public void networkUnavailable() {
-        Log.d("Network_Changed", "Network Unvailable");
-    }
-
 
     @Override
     protected void onResume() {
@@ -224,4 +193,5 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
     protected void onStop() {
         super.onStop();
     }
+
 }
