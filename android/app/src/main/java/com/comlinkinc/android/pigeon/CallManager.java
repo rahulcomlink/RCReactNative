@@ -586,6 +586,14 @@ public class CallManager {
             String absPath = newSoundFile.getAbsolutePath();
             Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_CP_RING_TO_PHONE, true);
             startDialer(mContext);
+        }else{
+            try{
+                File ringtoneuri = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.comlinkinc.android.pigeon/files/ring.wav");
+                if (!ringtoneuri.exists()){
+                    Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREFS_CP_RING_TO_PHONE, false);
+                    copyRingtoneToPhoneStorage(mContext);
+                }
+            }catch (Exception e){}
         }
     }
 
@@ -789,7 +797,7 @@ public class CallManager {
     public static void handleNetworkChange() {
         try {
             System.out.println("Network change detected");
-            Dialer.handleNetworkAddressChange();
+//            Dialer.handleNetworkAddressChange();
         } catch (Exception e) {
             System.out.println(e);
         }
