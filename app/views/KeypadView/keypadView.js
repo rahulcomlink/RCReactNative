@@ -33,15 +33,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 class KeypadView extends React.Component {
-  // static navigationOptions = ({ navigation, isMasterDetail }) => ({
-  // 	headerLeft: () => (isMasterDetail ? (
-  // 		<HeaderButton.CloseModal navigation={navigation} testID='keypad-view-close' />
-  // 	) : (
-  // 		<HeaderButton.Drawer navigation={navigation} testID='keypad-view-drawer' />
-  // 	)),
-  // 	 title: ''
-  // });
-
+  
   static navigationOptions = ({ navigation }) => {
     const options = {
       title: "Dial a number",
@@ -93,8 +85,6 @@ class KeypadView extends React.Component {
   };
 
   getCountryCode = (cc) => {
-    console.debug("cc = ", cc.selected.callingCode);
-    // this.setState({ selectedCC: "+" + cc.selected.callingCode });
     this.getSavedCC();
   };
 
@@ -105,7 +95,6 @@ class KeypadView extends React.Component {
     } else {
        this.setState({ selectedCC: "+" + ccd });
     }
-    console.debug("CODE_COUNTRY_KEYPAD", ccd);
   };
 
   render() {

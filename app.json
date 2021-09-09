@@ -7,5 +7,8 @@
   "methodActAuthSub": "actauthsub",
   "methodActprovsub": "actprovsub",
 
-  "pigeonBaseUrl": "https://pigeon.mvoipctsi.com"
+  "pigeonBaseUrl": "https://pigeon.mvoipctsi.com",
+  
+  "fcmUrl": "https://fcm.googleapis.com/fcm/send",
+  "fcmKey": "key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si"
 }

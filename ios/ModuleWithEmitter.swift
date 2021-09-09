@@ -32,6 +32,6 @@ open class ModuleWithEmitter: RCTEventEmitter {
     }
 
   open override func supportedEvents() -> [String] {
-    ["onSessionConnect", "onPending", "onFailure","getInboundCall","VoipCall","testCall"]
+    ["onSessionConnect","getInboundCall", "makeCallFromCallLog"]
   }
 }

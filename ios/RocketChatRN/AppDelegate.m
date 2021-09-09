@@ -51,8 +51,7 @@ static void InitializeFlipper(UIApplication *application) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [self redirectLogToDocuments];
-  NSLog(@"launchoptions = %@",launchOptions);
-  NSLog(@"didFinishLaunchingWithOptions");
+ 
     #if DEBUG
       InitializeFlipper(application);
     #endif
@@ -105,9 +104,7 @@ static void InitializeFlipper(UIApplication *application) {
       // Mark migration complete
       [defaultMMKV setBool:YES forKey:@"alreadyMigrated"];
     }
-  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
-  [[NSUserDefaults standardUserDefaults]synchronize];
-  
+ 
    return YES;
 }
 
@@ -151,21 +148,19 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 // Only if your app is using [Universal Links](https://developer.apple.com/library/prerelease/ios/documentation/General/Conceptual/AppSearch/UniversalLinks.html).
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity
- restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
-{
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
+  
+  if([userActivity.activityType isEqualToString:@"INStartCallIntent"] ){
+    SIPSDKBridge * obj = [[SIPSDKBridge alloc]init];
+    [obj startCallHandleSwiftWithUseractivity:userActivity];
+  }
+ 
   return [RCTLinkingManager application:application
                    continueUserActivity:userActivity
                      restorationHandler:restorationHandler];
 }
 
-
-- (void)applicationWillTerminate:(UIApplication *)application{
-  NSLog(@"applicationWillTerminate");
-  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
-  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isVoipCall"];
-  [[NSUserDefaults standardUserDefaults]synchronize];
-}
 
 // Register for VoIP notifications
 - (void) voipRegistration {
@@ -181,8 +176,7 @@ static void InitializeFlipper(UIApplication *application) {
 // --- Handle updated push credentials
 - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(PKPushType)type {
   // Register VoIP push token (a property of PKPushCredentials) with server
-  NSLog(@"didUpdatePushCredentials");
-  NSLog(@"voip token = %@",credentials.token);
+ 
     SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
     [object getVOIPTokenWithVoipToken:credentials];
  
@@ -195,11 +189,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 // --- Handle incoming pushes
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type withCompletionHandler:(void (^)(void))completion {
-  NSLog(@"push payload comes %@",payload);
-  
-//  [[NSUserDefaults standardUserDefaults]setValue:@"false" forKey:@"isAppLaunch"];
-  [[NSUserDefaults standardUserDefaults]setValue:@"true" forKey:@"isVoipCall"];
-  [[NSUserDefaults standardUserDefaults]synchronize];
+
   [self redirectLogToDocuments];
   SIPSDKBridge * object = [[SIPSDKBridge alloc]init];
   [object sendVoIPPhoneNumberWithPayload:payload];

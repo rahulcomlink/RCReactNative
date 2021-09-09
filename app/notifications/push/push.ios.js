@@ -36,17 +36,10 @@ class PushNotification {
 
 		VoipPushNotification.addEventListener('register', (token) => {
 			// --- send token to your apn provider server
-			console.debug('token token',token);
 			this.saveVoIPToken(token);
         });
 
-		// window.addEventListener('VoipCall', (event) => {
-		// 	this.getVoIPCall;
-		// });
-
-		
 		NotificationsIOS.addEventListener('notificationOpened', (notification, completion) => {
-			console.debug("Notification Received - Foreground", notification.payload);
 			 const { background } = reduxStore.getState().app;
 			 if (background) {
 				this.onNotification(notification);
@@ -55,22 +48,18 @@ class PushNotification {
 		});
 		
 		NotificationsIOS.addEventListener('notificationReceivedForeground', (notification, completion) => {
-			console.debug('Notification received in foreground : ', notification);
-			
 			completion({ alert: true, sound: true, badge: true });
 		});
 
 		
 
 		NotificationsIOS.addEventListener('notificationReceivedBackground', (notification, completion) => {
-			console.debug('Notification received in background : ', notification);
 			completion({ alert: true, sound: true, badge: true });
 		});
 
 		
 
 		messaging().setBackgroundMessageHandler(async remoteMessage => {
-			console.debug('Message handled in the background!', remoteMessage);
 		  });
 
 		 messaging().onMessage(async remoteMessage => {
@@ -85,10 +74,6 @@ class PushNotification {
 		  });
 
 		  messaging().onNotificationOpenedApp(remoteMessage => {
-			console.debug(
-			  'Notification caused app to open from background state from background',
-			  remoteMessage,
-			);
 			this.onNotification(remoteMessage.data);
 
 		  });
@@ -97,10 +82,6 @@ class PushNotification {
       .getInitialNotification()
       .then(remoteMessage => {
         if (remoteMessage) {
-          console.debug(
-            'Notification caused app to open from quit state:',
-            remoteMessage.notification,
-		  );
 		  this.onNotification(remoteMessage.data);
         }
       });
@@ -131,13 +112,11 @@ class PushNotification {
 	}
 
 	getVoIPCall = (event) => {
-		Alert('getVoIPCall called')
 		Navigation.navigate('CallScreen', { phoneNumber : event.phoneNumber, isVoIPCall : true});
 	}
 
 	saveVoIPToken = async(token) => {
 		try {
-			console.debug('tokennnn = ',token)
 			await AsyncStorage.setItem('VoIPToken', token);
 		}catch (error) {
 			// Error retrieving data
@@ -150,7 +129,6 @@ class PushNotification {
 		this.onNotification = params.onNotification;
 
 		const initial = await NotificationsIOS.getInitialNotification();
-		// NotificationsIOS.consumeBackgroundQueue();
 		return Promise.resolve(initial);
 	}
 }

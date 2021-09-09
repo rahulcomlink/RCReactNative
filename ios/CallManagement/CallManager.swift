@@ -131,7 +131,6 @@ final class CallManager {
 
   /// Configuras the audio session. Invoked via the provider delegate trampoline.
   fileprivate func onAudioSessionActivated(_ audioSession: AVAudioSession) {
-    NSLog("onAudioSessionActivated")
     configureAudioSession(audioSession)
     
     // This becomes our audio session. Let everyone know that it is available.
@@ -144,7 +143,6 @@ final class CallManager {
   
   // Disassociates from the given audio session. Invoked via the provider delegate trampoline.
   fileprivate func onAudioSessionDeactivated(_ audioSession: AVAudioSession) {
-      NSLog("onAudioSessionDeactivated")
     _logger.write("deactivating audio session", type: .debug)
     
     if (audioSession == _activeAudioSession) {
@@ -157,7 +155,7 @@ final class CallManager {
   
   // Audio session configuration.
   fileprivate func configureAudioSession(_ audioSession: AVAudioSession) {
-      NSLog("configureAudioSession")
+  
     _logger.write("configuring audio session", type: .debug)
     
     do {
@@ -165,7 +163,7 @@ final class CallManager {
       try audioSession.setMode(.voiceChat)
       try audioSession.setActive(true)
     } catch {
-      NSLog("error while configuring audio session %@", error.localizedDescription)
+
       _logger.writeError(error)
     }
   }
@@ -411,7 +409,6 @@ final class CallManager {
       // Otherwise, we end up with no audio. The underlying call handling code needs
       // the session to be active prior to call initiation.
       
-      NSLog("_handleStartCallAsync do try")
     //  try _audioSessionReady.waitAndThrowOnTimeout(untilEqualTo: true, timeout: 20.0)
 
       // Initiate the make call action.
@@ -423,7 +420,6 @@ final class CallManager {
       
     } catch {
       action.fail()
-      NSLog("_handleStartCallAsync catch failed")
       //_logger.writeError("error = \(error)" as! Error)
       reset()
       doUserActionCleanup(error: error)
@@ -682,8 +678,7 @@ final class CallManager {
   }
   
   fileprivate func _handleAnswerCallActionAsync(_ action: CXAnswerCallAction) {
-    
-    NSLog("_handleAnswerCallActionAsync 1")
+   
     // Enable published property reset
     _suppressPublishedPropertyReset = false
 
@@ -692,7 +687,6 @@ final class CallManager {
     if !_waitingForInboundCall.wait(untilEqualTo: false,
                                     timeout: Configuration.shared.answerTimeout) {
       _logger.write("uid=[%@]: call did not arrive in time", action.callUUID.uuidString)
-      NSLog("_handleAnswerCallActionAsync 2")
       action.fail()
       return
     }
@@ -722,9 +716,6 @@ final class CallManager {
       return
     }*/
   
-    
-    NSLog("_handleAnswerCallActionAsync 3")
-    
     do {
       
       //self._addDelayinCallAnswer.wait(untilEqualTo: true)
@@ -736,13 +727,11 @@ final class CallManager {
         // Let everyone know that we're no longer connecting (we're connected).
         self.isConnecting = false;
       }
-      NSLog("_handleAnswerCallActionAsync 4")
       startCallTimer()
       
       ModuleWithEmitter.emitter.sendEvent(withName: "getInboundCall", body: ["phoneNumber" : self.remotePartyClid])
       
     } catch {
-      NSLog("_handleAnswerCallActionAsync 5")
       _logger.writeError(error)
       dropCurrentCall()
     }
@@ -772,7 +761,6 @@ final class CallManager {
    
     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
       self._dispatchQueue.async {
-        NSLog("handleAnswerCallAction")
         self._handleAnswerCallActionAsync(action)
       }
     }
@@ -818,12 +806,10 @@ internal class ProviderDelegateTrampoline: NSObject, CXProviderDelegate {
   }
 
   func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
-    NSLog("_ provider: CXProvider, didActivate audioSession: AVAudioSession")
     CallManager.shared.onAudioSessionActivated(audioSession)
   }
   
   func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
-    NSLog("_ provider: CXProvider, didDeactivate audioSession: AVAudioSession")
     CallManager.shared.onAudioSessionDeactivated(audioSession)
   }
 

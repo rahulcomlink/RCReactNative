@@ -46,7 +46,6 @@ class Inputs extends Component<{navigation: any}> {
 
    handleQRTape = () => {
      // this.props.navigation.navigate('SIPSettings');
-      console.debug('this.state.responseAppID',this.state.responseAppID)
       this.props.navigation.push('qrScanner', {
          deviceModel : this.state.deviceModel,
          OSType : this.state.deviceOS,
@@ -58,8 +57,7 @@ class Inputs extends Component<{navigation: any}> {
    }
 
    getCountryCode = (item) => {
-      console.debug('get country code',item)
-      this.props.navigation.goBack();
+    this.props.navigation.goBack();
    }
 
 
@@ -104,8 +102,6 @@ class Inputs extends Component<{navigation: any}> {
             sub_dev_token : vt,
             sub_email : this.state.email
          };
-
-         console.debug('params of api call',params);
    
          var jsonString = JSON.stringify(params);
    
@@ -143,7 +139,6 @@ class Inputs extends Component<{navigation: any}> {
    else {
       NativeModules.SIPSDKBridge.callbackMethod((err,voipToken) => {
          vt = voipToken.voiptoken
-       console.debug('voip token from native',voipToken);
          this.setState({deviceToken : voipToken.voiptoken});
          this.state.deviceToken =  voipToken.voiptoken
 

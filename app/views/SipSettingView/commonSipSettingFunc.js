@@ -13,9 +13,7 @@ class commonSipSettingFunc extends React.Component {
     try {
       if (os == "android") {
         NativeModules.Sdk.stopDialer();
-      } else {
-        //NativeModules.SIPSDKBridge.sipStop();
-      }
+      } else {}
 
       const sipServer = await AsyncStorage.getItem("sipServer");
       const sipPort = await AsyncStorage.getItem("sipPort");
@@ -83,7 +81,7 @@ class commonSipSettingFunc extends React.Component {
       const sipTransport = await AsyncStorage.getItem("sipTransport");
 
       if (sipServer == null) {
-        Alert("Please complete Sip Provisioning");
+        Alert.alert("Please complete Sip Provisioning");
       } else {
         if (os == "android") {
           NativeModules.Sdk.makeCall(

@@ -29,14 +29,12 @@ class SelectCountryCode extends React.Component {
 
     onCountrySelection = (item) => {
       this.setState({ selected: this.state.item })
-            // this.saveCC();
       AsyncStorage.setItem("lastSelectedCountryCode", item.callingCode);
-        this.props.navigation.goBack();
+     this.props.navigation.goBack();
       this.props.route.params.onSelect({ selected: item });
     }
   
   saveCC = async () => {
-    console.debug("CODE_COUNTRY_POPUP", item.callingCode);
     await AsyncStorage.setItem("lastSelectedCountryCode", item.callingCode);
   }
 

@@ -7,7 +7,7 @@ class NotificationService: UNNotificationServiceExtension {
   var rocketchat: RocketChat?
   
   override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-    print("push notification receive")
+
     self.contentHandler = contentHandler
     bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
     if let bestAttemptContent = bestAttemptContent {

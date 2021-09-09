@@ -31,7 +31,7 @@ import protectedFunction from "../../lib/methods/helpers/protectedFunction";
 import database from "../../lib/database";
 import { withDimensions } from "../../dimensions";
 import { pigeonBaseUrl as pigeonBaseUrl } from "../../../app.json";
-
+import { fcmUrl as fcmUrl, fcmKey as fcmKey } from '../../../app.json';
 
 class RoomActionsView extends React.Component {
   static navigationOptions = ({ navigation, isMasterDetail }) => {
@@ -576,10 +576,8 @@ class RoomActionsView extends React.Component {
         0,
         100
       );
-      console.debug("info about message:", msg);
       const newMembers = membersList.records;
       newMembers.map((member) => {
-        console.debug("new member = ", member._id);
         this.getInfoOfUser(msg, member._id, onlyAudio);
       });
     } catch (e) {
@@ -595,7 +593,6 @@ class RoomActionsView extends React.Component {
         const customFields = user.customFields;
         const devicetoken = customFields.devicetoken;
         const os = customFields.os;
-        console.debug("result of each user : ", user);
         const subscriptions = this.state;
         if (user.username == subscriptions.room.u.username) {
           console.log("dont send notification to same user");
@@ -623,8 +620,7 @@ class RoomActionsView extends React.Component {
     var type = "";
     var linkMessage = "";
     var titleMessage = "";
-    console.debug("got device token :", devicetoken);
-    console.debug("this subscription = ", subscriptions.room);
+    
 
     switch (subscriptions.room._raw.t) {
       case "p":
@@ -655,15 +651,6 @@ class RoomActionsView extends React.Component {
         break;
     }
 
-    console.debug("notification type :", type);
-    console.debug("notification linkMessage :", linkMessage);
-    console.debug("notification titleMessage :", titleMessage);
-
-    const params = {};
-    params.to =
-      "cs8RDCfb_yY:APA91bHxv-_GobwcF6qxDzh_3W583QUWiyBXSx4DNLAfc--Z7B12XgLU82nur563aams7Lw80jzOBf5tVaYQ7LhZjZVD0P3ZEO2gsCbzWay2afdLBQACaaEehLIM1UEXObVtMi5NmZzv";
-    params.priority = "high";
-
     const notification = {};
     notification.body = msg;
     notification.title = titleMessage;
@@ -683,8 +670,6 @@ class RoomActionsView extends React.Component {
     androidData.soundName = "tring_tring_tring.mp3";
     androidData.playSound = true
 
-    params.notification = notification;
-    params.data = data;
 
     const ejson = {};
     ejson.rid = subscriptions.room._raw.rid;
@@ -704,15 +689,19 @@ class RoomActionsView extends React.Component {
     data.ejson = ejson;
     androidData.ejson = ejson;
 
-    console.debug("params of push notification : ", params);
-
+    const paramData = {};
     if (os == "ios") {
-      const result = await fetch("https://fcm.googleapis.com/fcm/send", {
+      paramData = data;
+    }
+    else {
+      paramData = androidData;
+    }
+
+      const result = await fetch(fcmUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si",
+          Authorization:  fcmKey,
         },
         body: JSON.stringify({
           to: devicetoken,
@@ -726,54 +715,18 @@ class RoomActionsView extends React.Component {
             android_channel_id: "600",
             "content-available": "1",
             ejson: ejson,
-          },
-          data: data,
-          ejson: ejson,
-          badge: 1,
-          aps: {
-            alert: "Sample notification",
-            badge: "+1",
-            sound: "default",
-            category: "REACT_NATIVE",
-            "content-available": 1,
-          },
-        }),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.debug("response of push notification new :", json);
-        });
-    } else {
-      const result = await fetch("https://fcm.googleapis.com/fcm/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "key=AAAAKpkrYJY:APA91bEvF6F2nU7UlmMDiPVQHU4WKw23lkaY47OfGjppxaBZ6vHth_IZ1uoKZvHQfz6cvju2ofnIQg_0rliyReJjkcWEHJocHwLI6RaXAwDU1RVAaiiOJZFGOromzZdcApnIV70Z10Si",
-        },
-        body: JSON.stringify({
-          to: devicetoken,
-          priority: "high",
-          data: androidData,
-          badge: 1,
-          ejson: ejson,
-          notification: {
-            body: msg,
-            title: titleMessage,
-            sound: "tring_tring_tring.mp3",
-            soundName: "tring_tring_tring.mp3",
             playSound: true,
-            android_channel_id: "600",
-            "content-available": "1",
-            ejson: ejson,
           },
+          data: paramData,
+          ejson: ejson,
+          badge: 1,
         }),
       })
         .then((response) => response.json())
         .then((json) => {
           console.debug("response of push notification new :", json);
         });
-    }
+    
   };
 
   renderE2EEncryption = () => {
