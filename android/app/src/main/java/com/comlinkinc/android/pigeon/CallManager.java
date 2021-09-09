@@ -769,7 +769,12 @@ public class CallManager {
 
         stopRingTone();
         CallManager.reject();
-        Log.d("onCallTerminated", "onCallTerminated "+ call);
+        Log.d("onCallTerminated", "onCallTerminated " + call);
+        if (IncomingCallActivity.incomingCall) {
+            IncomingCallActivity.incomingCall = false;
+            if (IncomingCallActivity.incomingCallActivity != null)
+                IncomingCallActivity.incomingCallActivity.finish();
+        }
     }
 
     public static void onCallDeclined(Call call) {

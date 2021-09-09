@@ -1,6 +1,7 @@
 package com.comlinkinc.android.pigeon;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +44,8 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
     public static String phoneNumber = "";
     boolean isVoipCall = true;
     private Context mContext;
+    public static boolean incomingCall = false;
+    public static Activity incomingCallActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,9 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
         }
 
         mContext = IncomingCallActivity.this;
+
+        incomingCall = true;
+        incomingCallActivity = this;
 
         findViews();
     }
